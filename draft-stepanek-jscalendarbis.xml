@@ -898,9 +898,14 @@ signed-duration = ["+" / "-"] duration
                 <li>due</li>
                 <li>duration</li>
                 <li>estimatedDuration</li>
+                <li>excluded</li>
+                <li>excludedRecurrenceRules</li>
                 <li>freeBusyStatus</li>
                 <li>privacy</li>
+                <li>recurrenceId</li>
+                <li>recurrenceIdTimeZone</li>
                 <li>recurrenceOverrides (Only patches that apply to another permissible property are allowed to be shared.)</li>
+                <li>recurrenceRules</li>
                 <li>sequence</li>
                 <li>showWithoutTime</li>
                 <li>start</li>
