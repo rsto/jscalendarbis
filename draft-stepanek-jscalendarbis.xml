@@ -1447,7 +1447,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
   "@type": "Group",
   "uid": "bf0ac22b-4989-4caf-9ebd-54301b4ee51a",
   "updated": "2020-01-15T18:00:00Z",
-  "name": "A simple group",
+  "title": "A simple group",
   "entries": [{
     "@type": "Event",
     "uid": "a8df6573-0474-496d-8496-033ad45d7fea",
