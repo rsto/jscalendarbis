@@ -62,7 +62,7 @@
       <t>This specification defines a data model and JSON representation of calendar data that can be used for storage and data exchange in a calendaring and scheduling environment. It aims to be an alternative and, over time, successor to the widely deployed iCalendar data format. It also aims to be unambiguous, extendable, and simple to process. In contrast to the jCal format, which is also based on JSON, JSCalendar is not a direct mapping from iCalendar but defines the data model independently and expands semantics where appropriate.</t>
     </abstract>
     <note removeInRFC="true">
-      <t>This document is based on the contents of RFC 8984. Until this document is finished, significant changes will be preceded with the verbatim text <strong>BIS:</strong> to help dentify where this document and RFC 8984 differ. Insignificant changes, such as formatting, grammar or typos will not be marked.</t>
+      <t>This document is based on the contents of RFC 8984. Until this document is finished, significant changes will be preceded with the verbatim text <strong>BIS:</strong> to help dentify where this document and RFC 8984 differ. Insignificant changes, such as errata for RFC 8984, formatting, grammar or typos will not be marked.</t>
     </note>
   </front>
   <middle>
