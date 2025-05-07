@@ -1838,39 +1838,5 @@ reqstatus = statcode ";" statdesc [";" extdata]
       <name>Acknowledgments</name>
       <t>The authors would like to thank the members of CalConnect for their valuable contributions. This specification originated from the work of the API technical committee of CalConnect: The Calendaring and Scheduling Consortium.</t>
     </section>
-    <section anchor="authors-addresses" numbered="false" toc="include">
-      <name>Authors' Addresses</name>
-      <author initials="N." surname="Jenkins" fullname="Neil Jenkins">
-        <organization showOnFrontPage="true">Fastmail</organization>
-        <address>
-          <postal>
-            <street>P.O. Box 234</street>
-            <extaddr>Collins St. West</extaddr>
-            <city>Melbourne</city>
-            <code>VIC 8007</code>
-            <country>Australia</country>
-            <region/>
-          </postal>
-          <phone/>
-          <email>neilj@fastmailteam.com</email>
-          <uri>https://www.fastmail.com</uri>
-        </address>
-      </author>
-      <author initials="R." surname="Stepanek" fullname="Robert Stepanek">
-        <organization showOnFrontPage="true">Fastmail</organization>
-        <address>
-          <postal>
-            <street>P.O. Box 234</street>
-            <extaddr>Collins St. West</extaddr>
-            <city>Melbourne</city>
-            <code>VIC 8007</code>
-            <country>Australia</country>
-            <region/>
-          </postal>
-          <email>rsto@fastmailteam.com</email>
-          <uri>https://www.fastmail.com</uri>
-        </address>
-      </author>
-    </section>
   </back>
 </rfc>
