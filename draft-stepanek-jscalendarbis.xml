@@ -1843,884 +1843,884 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <name>Initial Contents of the "JSCalendar Properties" Registry</name>
             <thead>
               <tr>
-                <th align="left" colspan="1" rowspan="1">Property Name</th>
-                <th align="left" colspan="1" rowspan="1">Property Type</th>
-                <th align="left" colspan="1" rowspan="1">Property Context</th>
-                <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                <th align="left">Property Name</th>
+                <th align="left">Property Type</th>
+                <th align="left">Property Context</th>
+                <th align="left">Reference or Description</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td align="left" colspan="1" rowspan="1">@type</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Group, AbsoluteTrigger, Alert, Link, Location, NDay, OffsetTrigger, Participant, RecurrenceRule, Relation, TimeZone, TimeZoneRule, VirtualLocation</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-type"/>, <xref target="prop-alerts"/>, <xref target="type-Link"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/>, <xref target="prop-recurrenceRules"/>, <xref target="type-Relation"/>, <xref target="prop-timeZones"/>, <xref target="prop-virtualLocations"/></td>
+                <td align="left">@type</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task, Group, AbsoluteTrigger, Alert, Link, Location, NDay, OffsetTrigger, Participant, RecurrenceRule, Relation, TimeZone, TimeZoneRule, VirtualLocation</td>
+                <td align="left"><xref target="prop-type"/>, <xref target="prop-alerts"/>, <xref target="type-Link"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/>, <xref target="prop-recurrenceRules"/>, <xref target="type-Relation"/>, <xref target="prop-timeZones"/>, <xref target="prop-virtualLocations"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">acknowledged</td>
-                <td align="left" colspan="1" rowspan="1">UTCDateTime</td>
-                <td align="left" colspan="1" rowspan="1">Alert</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">acknowledged</td>
+                <td align="left">UTCDateTime</td>
+                <td align="left">Alert</td>
+                <td align="left">
                   <xref target="prop-alerts"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">action</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Alert</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">action</td>
+                <td align="left">String</td>
+                <td align="left">Alert</td>
+                <td align="left">
                   <xref target="prop-alerts"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">alerts</td>
-                <td align="left" colspan="1" rowspan="1">Id[Alert]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">alerts</td>
+                <td align="left">Id[Alert]</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-alerts"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">aliases</td>
-                <td align="left" colspan="1" rowspan="1">String[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">TimeZone</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">aliases</td>
+                <td align="left">String[Boolean]</td>
+                <td align="left">TimeZone</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">byDay</td>
-                <td align="left" colspan="1" rowspan="1">NDay[]</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">byDay</td>
+                <td align="left">NDay[]</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">byHour</td>
-                <td align="left" colspan="1" rowspan="1">UnsignedInt[]</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">byHour</td>
+                <td align="left">UnsignedInt[]</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">byMinute</td>
-                <td align="left" colspan="1" rowspan="1">UnsignedInt[]</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">byMinute</td>
+                <td align="left">UnsignedInt[]</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">byMonth</td>
-                <td align="left" colspan="1" rowspan="1">String[]</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">byMonth</td>
+                <td align="left">String[]</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">byMonthDay</td>
-                <td align="left" colspan="1" rowspan="1">Int[]</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">byMonthDay</td>
+                <td align="left">Int[]</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">bySecond</td>
-                <td align="left" colspan="1" rowspan="1">UnsignedInt[]</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">bySecond</td>
+                <td align="left">UnsignedInt[]</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">bySetPosition</td>
-                <td align="left" colspan="1" rowspan="1">Int[]</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">bySetPosition</td>
+                <td align="left">Int[]</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">byWeekNo</td>
-                <td align="left" colspan="1" rowspan="1">Int[]</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">byWeekNo</td>
+                <td align="left">Int[]</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">byYearDay</td>
-                <td align="left" colspan="1" rowspan="1">Int[]</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">byYearDay</td>
+                <td align="left">Int[]</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">categories</td>
-                <td align="left" colspan="1" rowspan="1">String[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Group</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">categories</td>
+                <td align="left">String[Boolean]</td>
+                <td align="left">Event, Task, Group</td>
+                <td align="left">
                   <xref target="prop-categories"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">cid</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Link</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">cid</td>
+                <td align="left">String</td>
+                <td align="left">Link</td>
+                <td align="left">
                   <xref target="type-Link"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">color</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Group</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">color</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task, Group</td>
+                <td align="left">
                   <xref target="prop-color"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">comments</td>
-                <td align="left" colspan="1" rowspan="1">String[]</td>
-                <td align="left" colspan="1" rowspan="1">TimeZoneRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">comments</td>
+                <td align="left">String[]</td>
+                <td align="left">TimeZoneRule</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">contentType</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Link</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">contentType</td>
+                <td align="left">String</td>
+                <td align="left">Link</td>
+                <td align="left">
                   <xref target="type-Link"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">coordinates</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Location</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">coordinates</td>
+                <td align="left">String</td>
+                <td align="left">Location</td>
+                <td align="left">
                   <xref target="prop-locations"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">count</td>
-                <td align="left" colspan="1" rowspan="1">UnsignedInt</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">count</td>
+                <td align="left">UnsignedInt</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">created</td>
-                <td align="left" colspan="1" rowspan="1">UTCDateTime</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Group</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">created</td>
+                <td align="left">UTCDateTime</td>
+                <td align="left">Event, Task, Group</td>
+                <td align="left">
                   <xref target="prop-created"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">day</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">NDay</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">day</td>
+                <td align="left">String</td>
+                <td align="left">NDay</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">daylight</td>
-                <td align="left" colspan="1" rowspan="1">TimeZoneRule[]</td>
-                <td align="left" colspan="1" rowspan="1">TimeZone</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">daylight</td>
+                <td align="left">TimeZoneRule[]</td>
+                <td align="left">TimeZone</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">delegatedFrom</td>
-                <td align="left" colspan="1" rowspan="1">Id[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">delegatedFrom</td>
+                <td align="left">Id[Boolean]</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">delegatedTo</td>
-                <td align="left" colspan="1" rowspan="1">Id[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">delegatedTo</td>
+                <td align="left">Id[Boolean]</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">description</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Location, Participant, VirtualLocation</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-description"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/>, <xref target="prop-virtualLocations"/></td>
+                <td align="left">description</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task, Location, Participant, VirtualLocation</td>
+                <td align="left"><xref target="prop-description"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/>, <xref target="prop-virtualLocations"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">description​ContentType</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">description​ContentType</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-descriptionContentType"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">display</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Link</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">display</td>
+                <td align="left">String</td>
+                <td align="left">Link</td>
+                <td align="left">
                   <xref target="type-Link"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">due</td>
-                <td align="left" colspan="1" rowspan="1">LocalDateTime</td>
-                <td align="left" colspan="1" rowspan="1">Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">due</td>
+                <td align="left">LocalDateTime</td>
+                <td align="left">Task</td>
+                <td align="left">
                   <xref target="prop-due"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">duration</td>
-                <td align="left" colspan="1" rowspan="1">Duration</td>
-                <td align="left" colspan="1" rowspan="1">Event</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">duration</td>
+                <td align="left">Duration</td>
+                <td align="left">Event</td>
+                <td align="left">
                   <xref target="prop-duration"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">email</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">email</td>
+                <td align="left">String</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">entries</td>
-                <td align="left" colspan="1" rowspan="1">(Task|Event)[]</td>
-                <td align="left" colspan="1" rowspan="1">Group</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">entries</td>
+                <td align="left">(Task|Event)[]</td>
+                <td align="left">Group</td>
+                <td align="left">
                   <xref target="prop-entries"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">estimatedDuration</td>
-                <td align="left" colspan="1" rowspan="1">Duration</td>
-                <td align="left" colspan="1" rowspan="1">Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">estimatedDuration</td>
+                <td align="left">Duration</td>
+                <td align="left">Task</td>
+                <td align="left">
                   <xref target="prop-estimatedDuration"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">excluded</td>
-                <td align="left" colspan="1" rowspan="1">Boolean</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">excluded</td>
+                <td align="left">Boolean</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-excluded"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">excluded​RecurrenceRules</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule[]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">excluded​RecurrenceRules</td>
+                <td align="left">RecurrenceRule[]</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-excludedRecurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">expectReply</td>
-                <td align="left" colspan="1" rowspan="1">Boolean</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">expectReply</td>
+                <td align="left">Boolean</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">features</td>
-                <td align="left" colspan="1" rowspan="1">String[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">VirtualLocation</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">features</td>
+                <td align="left">String[Boolean]</td>
+                <td align="left">VirtualLocation</td>
+                <td align="left">
                   <xref target="prop-virtualLocations"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">firstDayOfWeek</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">firstDayOfWeek</td>
+                <td align="left">String</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">freeBusyStatus</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">freeBusyStatus</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-freeBusyStatus"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">frequency</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">frequency</td>
+                <td align="left">String</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">href</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Link</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">href</td>
+                <td align="left">String</td>
+                <td align="left">Link</td>
+                <td align="left">
                   <xref target="type-Link"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">interval</td>
-                <td align="left" colspan="1" rowspan="1">UnsignedInt</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">interval</td>
+                <td align="left">UnsignedInt</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">invitedBy</td>
-                <td align="left" colspan="1" rowspan="1">Id</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">invitedBy</td>
+                <td align="left">Id</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">keywords</td>
-                <td align="left" colspan="1" rowspan="1">String[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Group</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">keywords</td>
+                <td align="left">String[Boolean]</td>
+                <td align="left">Event, Task, Group</td>
+                <td align="left">
                   <xref target="prop-keywords"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">kind</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">kind</td>
+                <td align="left">String</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">language</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">language</td>
+                <td align="left">String</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">links</td>
-                <td align="left" colspan="1" rowspan="1">Id[Link]</td>
-                <td align="left" colspan="1" rowspan="1">Group, Event, Task, Location, Participant</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-links"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/></td>
+                <td align="left">links</td>
+                <td align="left">Id[Link]</td>
+                <td align="left">Group, Event, Task, Location, Participant</td>
+                <td align="left"><xref target="prop-links"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">locale</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Group, Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">locale</td>
+                <td align="left">String</td>
+                <td align="left">Group, Event, Task</td>
+                <td align="left">
                   <xref target="prop-locale"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">localizations</td>
-                <td align="left" colspan="1" rowspan="1">String​[PatchObject]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">localizations</td>
+                <td align="left">String​[PatchObject]</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-localizations"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">locationId</td>
-                <td align="left" colspan="1" rowspan="1">Id</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">locationId</td>
+                <td align="left">Id</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">locations</td>
-                <td align="left" colspan="1" rowspan="1">Id[Location]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">locations</td>
+                <td align="left">Id[Location]</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-locations"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">locationTypes</td>
-                <td align="left" colspan="1" rowspan="1">String[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">Location</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">locationTypes</td>
+                <td align="left">String[Boolean]</td>
+                <td align="left">Location</td>
+                <td align="left">
                   <xref target="prop-locations"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">memberOf</td>
-                <td align="left" colspan="1" rowspan="1">Id[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">memberOf</td>
+                <td align="left">Id[Boolean]</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">method</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">method</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-method"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">name</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Location, VirtualLocation, Participant</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-locations"/>, <xref target="prop-virtualLocations"/>, <xref target="prop-participants"/></td>
+                <td align="left">name</td>
+                <td align="left">String</td>
+                <td align="left">Location, VirtualLocation, Participant</td>
+                <td align="left"><xref target="prop-locations"/>, <xref target="prop-virtualLocations"/>, <xref target="prop-participants"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">names</td>
-                <td align="left" colspan="1" rowspan="1">String[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">TimeZoneRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">names</td>
+                <td align="left">String[Boolean]</td>
+                <td align="left">TimeZoneRule</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">nthOfPeriod</td>
-                <td align="left" colspan="1" rowspan="1">Int</td>
-                <td align="left" colspan="1" rowspan="1">NDay</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">nthOfPeriod</td>
+                <td align="left">Int</td>
+                <td align="left">NDay</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">offset</td>
-                <td align="left" colspan="1" rowspan="1">SignedDuration</td>
-                <td align="left" colspan="1" rowspan="1">OffsetTrigger</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">offset</td>
+                <td align="left">SignedDuration</td>
+                <td align="left">OffsetTrigger</td>
+                <td align="left">
                   <xref target="prop-alerts"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">offsetFrom</td>
-                <td align="left" colspan="1" rowspan="1">UTCDateTime</td>
-                <td align="left" colspan="1" rowspan="1">TimeZoneRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">offsetFrom</td>
+                <td align="left">UTCDateTime</td>
+                <td align="left">TimeZoneRule</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">offsetTo</td>
-                <td align="left" colspan="1" rowspan="1">UTCDateTime</td>
-                <td align="left" colspan="1" rowspan="1">TimeZoneRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">offsetTo</td>
+                <td align="left">UTCDateTime</td>
+                <td align="left">TimeZoneRule</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">participants</td>
-                <td align="left" colspan="1" rowspan="1">Id[Participant]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">participants</td>
+                <td align="left">Id[Participant]</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">participation​Comment</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">participation​Comment</td>
+                <td align="left">String</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">participationStatus</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">participationStatus</td>
+                <td align="left">String</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">percentComplete</td>
-                <td align="left" colspan="1" rowspan="1">UnsignedInt</td>
-                <td align="left" colspan="1" rowspan="1">Task, Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">percentComplete</td>
+                <td align="left">UnsignedInt</td>
+                <td align="left">Task, Participant</td>
+                <td align="left">
                   <xref target="prop-percentComplete"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">priority</td>
-                <td align="left" colspan="1" rowspan="1">Int</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">priority</td>
+                <td align="left">Int</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-priority"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">privacy</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">privacy</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-privacy"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">prodId</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Group</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">prodId</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task, Group</td>
+                <td align="left">
                   <xref target="prop-prodId"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">progress</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Task, Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">progress</td>
+                <td align="left">String</td>
+                <td align="left">Task, Participant</td>
+                <td align="left">
                   <xref target="prop-progress"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">progressUpdated</td>
-                <td align="left" colspan="1" rowspan="1">UTCDateTime</td>
-                <td align="left" colspan="1" rowspan="1">Task, Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">progressUpdated</td>
+                <td align="left">UTCDateTime</td>
+                <td align="left">Task, Participant</td>
+                <td align="left">
                   <xref target="prop-progressUpdated"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">recurrenceId</td>
-                <td align="left" colspan="1" rowspan="1">LocalDateTime</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">recurrenceId</td>
+                <td align="left">LocalDateTime</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-recurrenceId"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">recurrenceIdTimeZone</td>
-                <td align="left" colspan="1" rowspan="1">TimeZoneId|null</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">recurrenceIdTimeZone</td>
+                <td align="left">TimeZoneId|null</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-recurrenceIdTimeZone"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">recurrenceOverrides</td>
-                <td align="left" colspan="1" rowspan="1">LocalDateTime​[PatchObject]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, TimeZoneRule</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-recurrenceOverrides"/>, <xref target="prop-timeZones"/></td>
+                <td align="left">recurrenceOverrides</td>
+                <td align="left">LocalDateTime​[PatchObject]</td>
+                <td align="left">Event, Task, TimeZoneRule</td>
+                <td align="left"><xref target="prop-recurrenceOverrides"/>, <xref target="prop-timeZones"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">recurrenceRules</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule[]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, TimeZoneRule</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-recurrenceRules"/>, <xref target="prop-timeZones"/></td>
+                <td align="left">recurrenceRules</td>
+                <td align="left">RecurrenceRule[]</td>
+                <td align="left">Event, Task, TimeZoneRule</td>
+                <td align="left"><xref target="prop-recurrenceRules"/>, <xref target="prop-timeZones"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">rel</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Link</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">rel</td>
+                <td align="left">String</td>
+                <td align="left">Link</td>
+                <td align="left">
                   <xref target="type-Link"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">relatedTo</td>
-                <td align="left" colspan="1" rowspan="1">String[Relation]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Alert</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-relatedTo"/>, <xref target="prop-alerts"/></td>
+                <td align="left">relatedTo</td>
+                <td align="left">String[Relation]</td>
+                <td align="left">Event, Task, Alert</td>
+                <td align="left"><xref target="prop-relatedTo"/>, <xref target="prop-alerts"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">relation</td>
-                <td align="left" colspan="1" rowspan="1">String[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">Relation</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">relation</td>
+                <td align="left">String[Boolean]</td>
+                <td align="left">Relation</td>
+                <td align="left">
                   <xref target="type-Relation"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">relativeTo</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">OffsetTrigger, Location</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-alerts"/>, <xref target="prop-locations"/></td>
+                <td align="left">relativeTo</td>
+                <td align="left">String</td>
+                <td align="left">OffsetTrigger, Location</td>
+                <td align="left"><xref target="prop-alerts"/>, <xref target="prop-locations"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">replyTo</td>
-                <td align="left" colspan="1" rowspan="1">String[String]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">replyTo</td>
+                <td align="left">String[String]</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-replyTo"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">requestStatus</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">requestStatus</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-requestStatus"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">roles</td>
-                <td align="left" colspan="1" rowspan="1">String[Boolean]</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">roles</td>
+                <td align="left">String[Boolean]</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">rscale</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">rscale</td>
+                <td align="left">String</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">sentBy</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Participant</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-sentBy"/>, <xref target="prop-participants"/></td>
+                <td align="left">sentBy</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task, Participant</td>
+                <td align="left"><xref target="prop-sentBy"/>, <xref target="prop-participants"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">standard</td>
-                <td align="left" colspan="1" rowspan="1">TimeZoneRule[]</td>
-                <td align="left" colspan="1" rowspan="1">TimeZone</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">standard</td>
+                <td align="left">TimeZoneRule[]</td>
+                <td align="left">TimeZone</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">start</td>
-                <td align="left" colspan="1" rowspan="1">LocalDateTime</td>
-                <td align="left" colspan="1" rowspan="1">TimeZoneRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">start</td>
+                <td align="left">LocalDateTime</td>
+                <td align="left">TimeZoneRule</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">scheduleAgent</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">scheduleAgent</td>
+                <td align="left">String</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">scheduleForceSend</td>
-                <td align="left" colspan="1" rowspan="1">Boolean</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">scheduleForceSend</td>
+                <td align="left">Boolean</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">scheduleSequence</td>
-                <td align="left" colspan="1" rowspan="1">UnsignedInt</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">scheduleSequence</td>
+                <td align="left">UnsignedInt</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">scheduleStatus</td>
-                <td align="left" colspan="1" rowspan="1">String[]</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">scheduleStatus</td>
+                <td align="left">String[]</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">scheduleUpdated</td>
-                <td align="left" colspan="1" rowspan="1">UTCDateTime</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">scheduleUpdated</td>
+                <td align="left">UTCDateTime</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">sendTo</td>
-                <td align="left" colspan="1" rowspan="1">String[String]</td>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">sendTo</td>
+                <td align="left">String[String]</td>
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">sequence</td>
-                <td align="left" colspan="1" rowspan="1">UnsignedInt</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">sequence</td>
+                <td align="left">UnsignedInt</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-sequence"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">showWithoutTime</td>
-                <td align="left" colspan="1" rowspan="1">Boolean</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">showWithoutTime</td>
+                <td align="left">Boolean</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-showWithoutTime"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">size</td>
-                <td align="left" colspan="1" rowspan="1">UnsignedInt</td>
-                <td align="left" colspan="1" rowspan="1">Link</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">size</td>
+                <td align="left">UnsignedInt</td>
+                <td align="left">Link</td>
+                <td align="left">
                   <xref target="type-Link"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">skip</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">skip</td>
+                <td align="left">String</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">source</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Group</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">source</td>
+                <td align="left">String</td>
+                <td align="left">Group</td>
+                <td align="left">
                   <xref target="prop-source"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">start</td>
-                <td align="left" colspan="1" rowspan="1">LocalDateTime</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-start-jsevent"/>, <xref target="prop-start-jstask"/></td>
+                <td align="left">start</td>
+                <td align="left">LocalDateTime</td>
+                <td align="left">Event, Task</td>
+                <td align="left"><xref target="prop-start-jsevent"/>, <xref target="prop-start-jstask"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">status</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">status</td>
+                <td align="left">String</td>
+                <td align="left">Event</td>
+                <td align="left">
                   <xref target="prop-status-jsevent"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">timeZone</td>
-                <td align="left" colspan="1" rowspan="1">TimeZoneId|null</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Location</td>
-                <td align="left" colspan="1" rowspan="1"><xref target="prop-timeZone"/>, <xref target="prop-locations"/></td>
+                <td align="left">timeZone</td>
+                <td align="left">TimeZoneId|null</td>
+                <td align="left">Event, Task, Location</td>
+                <td align="left"><xref target="prop-timeZone"/>, <xref target="prop-locations"/></td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">timeZones</td>
-                <td align="left" colspan="1" rowspan="1">TimeZoneId​[TimeZone]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">timeZones</td>
+                <td align="left">TimeZoneId​[TimeZone]</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">title</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Group, Link</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">title</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task, Group, Link</td>
+                <td align="left">
                   <xref target="prop-title"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">trigger</td>
-                <td align="left" colspan="1" rowspan="1">OffsetTrigger|​AbsoluteTrigger|​UnknownTrigger</td>
-                <td align="left" colspan="1" rowspan="1">Alert</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">trigger</td>
+                <td align="left">OffsetTrigger|​AbsoluteTrigger|​UnknownTrigger</td>
+                <td align="left">Alert</td>
+                <td align="left">
                   <xref target="prop-alerts"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">tzId</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">TimeZone</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">tzId</td>
+                <td align="left">String</td>
+                <td align="left">TimeZone</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">uid</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Group</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">uid</td>
+                <td align="left">String</td>
+                <td align="left">Event, Task, Group</td>
+                <td align="left">
                   <xref target="prop-uid"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">until</td>
-                <td align="left" colspan="1" rowspan="1">LocalDateTime</td>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">until</td>
+                <td align="left">LocalDateTime</td>
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">updated</td>
-                <td align="left" colspan="1" rowspan="1">UTCDateTime</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task, Group</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">updated</td>
+                <td align="left">UTCDateTime</td>
+                <td align="left">Event, Task, Group</td>
+                <td align="left">
                   <xref target="prop-updated"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">uri</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">VirtualLocation</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">uri</td>
+                <td align="left">String</td>
+                <td align="left">VirtualLocation</td>
+                <td align="left">
                   <xref target="prop-virtualLocations"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">url</td>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">TimeZone</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">url</td>
+                <td align="left">String</td>
+                <td align="left">TimeZone</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">useDefaultAlerts</td>
-                <td align="left" colspan="1" rowspan="1">Boolean</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">useDefaultAlerts</td>
+                <td align="left">Boolean</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="useDefaultAlerts"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">validUntil</td>
-                <td align="left" colspan="1" rowspan="1">UTCDateTime</td>
-                <td align="left" colspan="1" rowspan="1">TimeZone</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">validUntil</td>
+                <td align="left">UTCDateTime</td>
+                <td align="left">TimeZone</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">virtualLocations</td>
-                <td align="left" colspan="1" rowspan="1">Id​[VirtualLocation]</td>
-                <td align="left" colspan="1" rowspan="1">Event, Task</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">virtualLocations</td>
+                <td align="left">Id​[VirtualLocation]</td>
+                <td align="left">Event, Task</td>
+                <td align="left">
                   <xref target="prop-virtualLocations"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">when</td>
-                <td align="left" colspan="1" rowspan="1">UTCDateTime</td>
-                <td align="left" colspan="1" rowspan="1">AbsoluteTrigger</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">when</td>
+                <td align="left">UTCDateTime</td>
+                <td align="left">AbsoluteTrigger</td>
+                <td align="left">
                   <xref target="prop-alerts"/>
                 </td>
               </tr>
@@ -2751,140 +2751,140 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <name>Initial Contents of the "JSCalendar Types" Registry</name>
             <thead>
               <tr>
-                <th align="left" colspan="1" rowspan="1">Type Name</th>
-                <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                <th align="left">Type Name</th>
+                <th align="left">Reference or Description</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td align="left" colspan="1" rowspan="1">Alert</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">Alert</td>
+                <td align="left">
                   <xref target="prop-alerts"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">Boolean</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">Boolean</td>
+                <td align="left">
                   <xref target="type-signatures"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">Duration</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">Duration</td>
+                <td align="left">
                   <xref target="type-Duration"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">Id</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">Id</td>
+                <td align="left">
                   <xref target="type-Id"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">Int</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">Int</td>
+                <td align="left">
                   <xref target="type-Int"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">LocalDateTime</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">LocalDateTime</td>
+                <td align="left">
                   <xref target="type-LocalDateTime"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">Link</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">Link</td>
+                <td align="left">
                   <xref target="type-Link"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">Location</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">Location</td>
+                <td align="left">
                   <xref target="prop-locations"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">NDay</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">NDay</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">Number</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">Number</td>
+                <td align="left">
                   <xref target="type-signatures"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">Participant</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">Participant</td>
+                <td align="left">
                   <xref target="prop-participants"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">PatchObject</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">PatchObject</td>
+                <td align="left">
                   <xref target="type-PatchObject"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">RecurrenceRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">RecurrenceRule</td>
+                <td align="left">
                   <xref target="prop-recurrenceRules"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">Relation</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">Relation</td>
+                <td align="left">
                   <xref target="type-Relation"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">SignedDuration</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">SignedDuration</td>
+                <td align="left">
                   <xref target="type-SignedDuration"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">String</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">String</td>
+                <td align="left">
                   <xref target="type-signatures"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">TimeZone</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">TimeZone</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">TimeZoneId</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">TimeZoneId</td>
+                <td align="left">
                   <xref target="type-timeZoneId"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">TimeZoneRule</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">TimeZoneRule</td>
+                <td align="left">
                   <xref target="prop-timeZones"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">UnsignedInt</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">UnsignedInt</td>
+                <td align="left">
                   <xref target="type-UnsignedInt"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">UTCDateTime</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">UTCDateTime</td>
+                <td align="left">
                   <xref target="type-UTCDateTime"/>
                 </td>
               </tr>
               <tr>
-                <td align="left" colspan="1" rowspan="1">VirtualLocation</td>
-                <td align="left" colspan="1" rowspan="1">
+                <td align="left">VirtualLocation</td>
+                <td align="left">
                   <xref target="prop-virtualLocations"/>
                 </td>
               </tr>
@@ -2935,20 +2935,20 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for action (Context: Alert)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">display</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">display</td>
+                    <td align="left">
                       <xref target="prop-alerts"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">email</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">email</td>
+                    <td align="left">
                       <xref target="prop-alerts"/>
                     </td>
                   </tr>
@@ -2969,32 +2969,32 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for display (Context: Link)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">badge</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">badge</td>
+                    <td align="left">
                       <xref target="type-Link"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">graphic</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">graphic</td>
+                    <td align="left">
                       <xref target="type-Link"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">fullsize</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">fullsize</td>
+                    <td align="left">
                       <xref target="type-Link"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">thumbnail</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">thumbnail</td>
+                    <td align="left">
                       <xref target="type-Link"/>
                     </td>
                   </tr>
@@ -3015,50 +3015,50 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for features (Context: VirtualLocation)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">audio</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">audio</td>
+                    <td align="left">
                       <xref target="prop-virtualLocations"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">chat</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">chat</td>
+                    <td align="left">
                       <xref target="prop-virtualLocations"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">feed</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">feed</td>
+                    <td align="left">
                       <xref target="prop-virtualLocations"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">moderator</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">moderator</td>
+                    <td align="left">
                       <xref target="prop-virtualLocations"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">phone</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">phone</td>
+                    <td align="left">
                       <xref target="prop-virtualLocations"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">screen</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">screen</td>
+                    <td align="left">
                       <xref target="prop-virtualLocations"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">video</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">video</td>
+                    <td align="left">
                       <xref target="prop-virtualLocations"/>
                     </td>
                   </tr>
@@ -3079,20 +3079,20 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for freeBusyStatus (Context: Event, Task)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">free</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">free</td>
+                    <td align="left">
                       <xref target="prop-freeBusyStatus"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">busy</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">busy</td>
+                    <td align="left">
                       <xref target="prop-freeBusyStatus"/>
                     </td>
                   </tr>
@@ -3113,32 +3113,32 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for kind (Context: Participant)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">individual</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">individual</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">group</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">group</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">resource</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">resource</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">location</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">location</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
@@ -3159,38 +3159,38 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for participationStatus (Context: Participant)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">needs-action</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">needs-action</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">accepted</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">accepted</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">declined</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">declined</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">tentative</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">tentative</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">delegated</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">delegated</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
@@ -3211,26 +3211,26 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for privacy (Context: Event, Task)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">public</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">public</td>
+                    <td align="left">
                       <xref target="prop-privacy"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">private</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">private</td>
+                    <td align="left">
                       <xref target="prop-privacy"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">secret</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">secret</td>
+                    <td align="left">
                       <xref target="prop-privacy"/>
                     </td>
                   </tr>
@@ -3251,38 +3251,38 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for progress (Context: Task, Participant)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">needs-action</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">needs-action</td>
+                    <td align="left">
                       <xref target="prop-progress"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">in-process</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">in-process</td>
+                    <td align="left">
                       <xref target="prop-progress"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">completed</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">completed</td>
+                    <td align="left">
                       <xref target="prop-progress"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">failed</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">failed</td>
+                    <td align="left">
                       <xref target="prop-progress"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">cancelled</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">cancelled</td>
+                    <td align="left">
                       <xref target="prop-progress"/>
                     </td>
                   </tr>
@@ -3303,32 +3303,32 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for relation (Context: Relation)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">first</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">first</td>
+                    <td align="left">
                       <xref target="type-Relation"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">next</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">next</td>
+                    <td align="left">
                       <xref target="type-Relation"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">child</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">child</td>
+                    <td align="left">
                       <xref target="type-Relation"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">parent</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">parent</td>
+                    <td align="left">
                       <xref target="type-Relation"/>
                     </td>
                   </tr>
@@ -3349,20 +3349,20 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for relativeTo (Context: OffsetTrigger, Location)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">start</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">start</td>
+                    <td align="left">
                       <xref target="prop-alerts"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">end</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">end</td>
+                    <td align="left">
                       <xref target="prop-alerts"/>
                     </td>
                   </tr>
@@ -3383,44 +3383,44 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for roles (Context: Participant)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">owner</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">owner</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">attendee</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">attendee</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">optional</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">optional</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">informational</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">informational</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">chair</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">chair</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">contact</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">contact</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
@@ -3441,26 +3441,26 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for scheduleAgent (Context: Participant)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">server</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">server</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">client</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">client</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">none</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">none</td>
+                    <td align="left">
                       <xref target="prop-participants"/>
                     </td>
                   </tr>
@@ -3481,26 +3481,26 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <name>JSCalendar Enum Values for status (Context: Event)</name>
                 <thead>
                   <tr>
-                    <th align="left" colspan="1" rowspan="1">Enum Value</th>
-                    <th align="left" colspan="1" rowspan="1">Reference or Description</th>
+                    <th align="left">Enum Value</th>
+                    <th align="left">Reference or Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">confirmed</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">confirmed</td>
+                    <td align="left">
                       <xref target="prop-status-jsevent"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">cancelled</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">cancelled</td>
+                    <td align="left">
                       <xref target="prop-status-jsevent"/>
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" colspan="1" rowspan="1">tentative</td>
-                    <td align="left" colspan="1" rowspan="1">
+                    <td align="left">tentative</td>
+                    <td align="left">
                       <xref target="prop-status-jsevent"/>
                     </td>
                   </tr>
