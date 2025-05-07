@@ -102,8 +102,7 @@
         <t>Type signatures are given for all JSON values in this document. The following conventions are used:</t>
         <dl newline="false">
           <dt><tt>*</tt>:</dt>
-          <dd>The type is undefined (the value could be any type, although permitted values may be constrained
-	      by the context of this value).</dd>
+          <dd>The type is undefined (the value could be any type, although permitted values may be constrained by the context of this value).</dd>
           <dt><tt>String</tt>:</dt>
           <dd>This is the JSON string type.</dd>
           <dt><tt>Number</tt>:</dt>
@@ -111,8 +110,7 @@
           <dt><tt>Boolean</tt>:</dt>
           <dd>This is the JSON boolean type.</dd>
           <dt><tt>A[B]</tt>:</dt>
-          <dd>The keys are all of type <tt>A</tt> and the values are all of type
-	      <tt>B</tt> for a JSON object.</dd>
+          <dd>The keys are all of type <tt>A</tt> and the values are all of type <tt>B</tt> for a JSON object.</dd>
           <dt><tt>A[]</tt>:</dt>
           <dd>There is an array of values of type <tt>A</tt></dd>
           <dt><tt>A|B</tt>:</dt>
@@ -253,26 +251,19 @@ signed-duration = ["+" / "-"] duration
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Link</tt>.</dd>
             <dt>href: <tt>String</tt> (mandatory)</dt>
             <dd>
-              <t>This is a URI <xref target="RFC3986"/> from which the resource may be fetched.</t>
-              <t>This <bcp14>MAY</bcp14> be a <tt>data:</tt> URL <xref target="RFC2397"/>, but it is recommended that the file be hosted on a server to avoid embedding arbitrarily large data in JSCalendar object instances.</t>
+              <t>This is a URI<xref target="RFC3986"/> from which the resource may be fetched.</t>
+              <t>This <bcp14>MAY</bcp14> be a <tt>data:</tt> URL <xref target="RFC2397"/> , but it is recommended that the file be hosted on a server to avoid embedding arbitrarily large data in JSCalendar object instances.</t>
             </dd>
-            <dt>cid: <tt>String</tt> (optional)
-            </dt>
+            <dt>cid: <tt>String</tt> (optional)</dt>
             <dd>
-              <t>This <bcp14>MUST</bcp14> be a valid <tt>content-id</tt> value according to the definition of <xref target="RFC2392" section="2"/>. The value <bcp14>MUST</bcp14> be unique within this Link object but has no meaning beyond that. It <bcp14>MAY</bcp14> be different from the link id for this Link object.</t>
+              <t>This <bcp14>MUST</bcp14> be a valid <tt>content-id</tt> value according to the definition of <xref target="RFC2392" section="2"/> . The value <bcp14>MUST</bcp14> be unique within this Link object but has no meaning beyond that. It <bcp14>MAY</bcp14> be different from the link id for this Link object.</t>
             </dd>
             <dt>contentType: <tt>String</tt> (optional)</dt>
-            <dd>This is the media type <xref target="RFC6838"/> of the resource, if
-	            known.</dd>
+            <dd>This is the media type <xref target="RFC6838"/> of the resource, if known.</dd>
             <dt>size: <tt>UnsignedInt</tt> (optional)</dt>
-            <dd>This is the size, in octets, of the resource when fully decoded (i.e., the number of octets
-	            in the
-		          file the user would download), if known. Note that this is an informational estimate, and
-			        implementations must be prepared to handle the actual size being quite different when the
-				      resource is fetched.</dd>
+            <dd>This is the size, in octets, of the resource when fully decoded (i.e., the number of octets in the file the user would download), if known. Note that this is an informational estimate, and implementations must be prepared to handle the actual size being quite different when the resource is fetched.</dd>
             <dt>rel: <tt>String</tt> (optional)</dt>
-            <dd>This identifies the relation of the linked resource to the object. If set, the value
-	            <bcp14>MUST</bcp14> be a relation type from the IANA "Link Relations" registry <xref target="LINKRELS"/>, as established in <xref target="RFC8288"/>.</dd>
+            <dd>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a relation type from the IANA "Link Relations" registry <xref target="LINKRELS"/> , as established in <xref target="RFC8288"/> .</dd>
             <dt>display: <tt>String</tt> (optional)</dt>
             <dd>
               <t>This describes the intended purpose of a link to an image. If set, the <tt>rel</tt> property <bcp14>MUST</bcp14> be set to <tt>icon</tt>. The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
@@ -284,8 +275,7 @@ signed-duration = ["+" / "-"] duration
                 <dt><tt>fullsize</tt>:</dt>
                 <dd>an image that is used to enhance the object</dd>
                 <dt><tt>thumbnail</tt>:</dt>
-                <dd>a smaller variant of <tt>fullsize</tt> to be used when space for the image is
-		constrained</dd>
+                <dd>a smaller variant of <tt>fullsize</tt> to be used when space for the image is constrained</dd>
               </dl>
             </dd>
             <dt>title: <tt>String</tt> (optional)</dt>
@@ -430,24 +420,18 @@ signed-duration = ["+" / "-"] duration
             <dt>name: <tt>String</tt> (optional)</dt>
             <dd>This is the human-readable name of the location.</dd>
             <dt>description: <tt>String</tt> (optional)</dt>
-            <dd>This is the human-readable, plain-text instructions for accessing this location. This may be
-	            an address, set of directions, door access code, etc.</dd>
+            <dd>This is the human-readable, plain-text instructions for accessing this location. This may be an address, set of directions, door access code, etc.</dd>
             <dt>locationTypes: <tt>String[Boolean]</tt> (optional)</dt>
-            <dd>This is a set of one or more location types that describe this location. All types
-	            <bcp14>MUST</bcp14> be from the "Location Types Registry" <xref target="LOCATIONTYPES"/>, as defined in <xref target="RFC4589"/>. The set is
-		          represented as a map, with the keys being the location types. The value for each key in the map
-			        <bcp14>MUST</bcp14> be true.</dd>
+            <dd>This is a set of one or more location types that describe this location. All types <bcp14>MUST</bcp14> be from the "Location Types Registry" <xref target="LOCATIONTYPES"/> , as defined in <xref target="RFC4589"/> . The set is represented as a map, with the keys being the location types. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
             <dt>relativeTo: <tt>String</tt> (optional)</dt>
             <dd>
               <t>This specifies the relation between this location and the time of the JSCalendar object. This is primarily to allow events representing travel to specify the location of departure (at the start of the event) and location of arrival (at the end); this is particularly important if these locations are in different time zones, as a client may wish to highlight this information for the user.</t>
               <t>This <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>). Any value the client or server doesn't understand should be treated the same as if this property is omitted.</t>
               <dl newline="false">
                 <dt><tt>start</tt>:</dt>
-                <dd>The event/task described by this JSCalendar object occurs at this location at the time the
-		event/task starts.</dd>
+                <dd>The event/task described by this JSCalendar object occurs at this location at the time the event/task starts.</dd>
                 <dt><tt>end</tt>:</dt>
-                <dd>The event/task described by this JSCalendar object occurs at this location at the time the
-		event/task ends.</dd>
+                <dd>The event/task described by this JSCalendar object occurs at this location at the time the event/task ends.</dd>
               </dl>
             </dd>
             <dt>timeZone: <tt>TimeZoneId</tt> (optional)</dt>
@@ -455,9 +439,7 @@ signed-duration = ["+" / "-"] duration
             <dt>coordinates: <tt>String</tt> (optional)</dt>
             <dd>This is a <tt>geo:</tt> URI <xref target="RFC5870"/> for the location.</dd>
             <dt>links: <tt>Id[Link]</tt> (optional)</dt>
-            <dd>This is a map of link ids to Link objects, representing external resources associated with
-	            this location, for example, a vCard or image. If there are no links, this
-		          <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
+            <dd>This is a map of link ids to Link objects, representing external resources associated with this location, for example, a vCard or image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
           </dl>
         </section>
         <section anchor="prop-virtualLocations">
@@ -467,17 +449,15 @@ signed-duration = ["+" / "-"] duration
           <t>A VirtualLocation object has the following properties.</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be
-	            <tt>VirtualLocation</tt>.</dd>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>VirtualLocation</tt>.</dd>
             <dt>name: <tt>String</tt> (optional, default: empty String)</dt>
             <dd>This is the human-readable name of the virtual location.</dd>
             <dt>description: <tt>String</tt> (optional)</dt>
-            <dd>These are human-readable plain-text instructions for accessing this virtual location. This
-	            may be a conference access code, etc.</dd>
+            <dd>These are human-readable plain-text instructions for accessing this virtual location. This may be a conference access code, etc.</dd>
             <dt>uri: <tt>String</tt> (mandatory)</dt>
             <dd>
-              <t>This is a URI <xref target="RFC3986"/> that represents how to connect to this virtual location.</t>
-              <t>This may be a telephone number (represented using the <tt>tel:</tt> scheme, e.g., <tt>tel:+1-555-555-5555</tt>) for a teleconference, a web address for online chat, or any custom URI.</t>
+              <t>This is a URI<xref target="RFC3986"/> that represents how to connect to this virtual location.</t>
+              <t>This may be a telephone number (represented using the <tt>tel:</tt> scheme, e.g., <tt>tel:+1-555-555-5555</tt> ) for a teleconference, a web address for online chat, or any custom URI.</t>
             </dd>
             <dt>features: <tt>String[Boolean]</tt> (optional)</dt>
             <dd>
@@ -565,11 +545,10 @@ signed-duration = ["+" / "-"] duration
           <t>A RecurrenceRule object is a JSON object mapping of a RECUR value type in iCalendar <xref target="RFC5545"/> <xref target="RFC7529"/> and has the same semantics. It has the following properties:</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be
-	            <tt>RecurrenceRule</tt>.</dd>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>RecurrenceRule</tt>.</dd>
             <dt>frequency: <tt>String</tt> (mandatory)</dt>
             <dd>
-              <t>This is the time span covered by each iteration of this recurrence rule (see <xref target="recurrence-semantics"/> for full semantics). This <bcp14>MUST</bcp14> be one of the following values:</t>
+              <t>This is the time span covered by each iteration of this recurrence rule (see<xref target="recurrence-semantics"/> for full semantics). This <bcp14>MUST</bcp14> be one of the following values:</t>
               <ul>
                 <li>
                   <tt>yearly</tt>
@@ -603,7 +582,7 @@ signed-duration = ["+" / "-"] duration
             <dt>rscale: <tt>String</tt> (optional, default: "gregorian")</dt>
             <dd>
               <t>This is the calendar system in which this recurrence rule operates, in lowercase. This <bcp14>MUST</bcp14> be either a CLDR-registered calendar system name <xref target="CLDR"/> or a vendor-specific value (see <xref target="custom-properties"/>).</t>
-              <t>This is the RSCALE part from iCalendar <xref target="RFC7529">RSCALE</xref>, converted to lowercase.</t>
+              <t>This is the RSCALE part from iCalendar<xref target="RFC7529">RSCALE</xref> , converted to lowercase.</t>
             </dd>
             <dt>skip: <tt>String</tt> (optional, default: "omit")</dt>
             <dd>
@@ -619,7 +598,7 @@ signed-duration = ["+" / "-"] duration
                   <tt>forward</tt>
                 </li>
               </ul>
-              <t>This is the SKIP part from iCalendar <xref target="RFC7529">RSCALE</xref>, converted to lowercase.</t>
+              <t>This is the SKIP part from iCalendar<xref target="RFC7529">RSCALE</xref> , converted to lowercase.</t>
             </dd>
             <dt>firstDayOfWeek: <tt>String</tt> (optional, default: "mo")</dt>
             <dd>
@@ -667,15 +646,14 @@ signed-duration = ["+" / "-"] duration
                 </dd>
               </dl>
             </dd>
-            <dt>byMonthDay: <tt>Int[]</tt> (optional)
-            </dt>
+            <dt>byMonthDay: <tt>Int[]</tt> (optional)</dt>
             <dd>
               <t>These are the days of the month on which to repeat. Valid values are between 1 and the maximum number of days any month may have in the calendar given by the <tt>rscale</tt> property and the negative values of these numbers. For example, in the Gregorian calendar, valid values are 1 to 31 and -31 to -1. Negative values offset from the end of the month. The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYMONTHDAY part in iCalendar.</t>
             </dd>
             <dt>byMonth: <tt>String[]</tt> (optional)</dt>
             <dd>
-              <t>These are the months in which to repeat. Each entry is a string representation of a number, starting from "1" for the first month in the calendar (e.g., "1" means January with the Gregorian calendar), with an optional "L" suffix (see <xref target="RFC7529"/>) for leap months (this <bcp14>MUST</bcp14> be uppercase, e.g., "3L"). The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
+              <t>These are the months in which to repeat. Each entry is a string representation of a number, starting from "1" for the first month in the calendar (e.g., "1" means January with the Gregorian calendar), with an optional "L" suffix (see<xref target="RFC7529"/>) for leap months (this <bcp14>MUST</bcp14> be uppercase, e.g., "3L"). The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYMONTH part from iCalendar.</t>
             </dd>
             <dt>byYearDay: <tt>Int[]</tt> (optional)</dt>
@@ -692,8 +670,7 @@ signed-duration = ["+" / "-"] duration
             <dd>
               <t>These are the hours of the day in which to repeat. Valid values are 0 to 23. The array <bcp14>MUST</bcp14> have at least one entry if included. This is the BYHOUR part from iCalendar.</t>
             </dd>
-            <dt>byMinute: <tt>UnsignedInt[]</tt> (optional)
-            </dt>
+            <dt>byMinute: <tt>UnsignedInt[]</tt> (optional)</dt>
             <dd>
               <t>These are the minutes of the hour in which to repeat. Valid values are 0 to 59. The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYMINUTE part from iCalendar.</t>
@@ -704,9 +681,7 @@ signed-duration = ["+" / "-"] duration
               <t>This is the BYSECOND part from iCalendar.</t>
             </dd>
             <dt>bySetPosition: <tt>Int[]</tt> (optional)</dt>
-            <dd>These are the occurrences within the recurrence interval to include in the final results.
-	            Negative values offset from the end of the list of occurrences. The array <bcp14>MUST</bcp14>
-		          have at least one entry if included. This is the BYSETPOS part from iCalendar.</dd>
+            <dd>These are the occurrences within the recurrence interval to include in the final results. Negative values offset from the end of the list of occurrences. The array <bcp14>MUST</bcp14> have at least one entry if included. This is the BYSETPOS part from iCalendar.</dd>
             <dt>count: <tt>UnsignedInt</tt> (optional)</dt>
             <dd>
               <t>These are the number of occurrences at which to range-bound the recurrence. This <bcp14>MUST NOT</bcp14> be included if an <tt>until</tt> property is specified.</t>
@@ -741,9 +716,9 @@ signed-duration = ["+" / "-"] duration
                   <dt><tt>daily</tt>:</dt>
                   <dd>every second from midnight at the start of the day (inclusive) to midnight at the end of the day (exclusive).</dd>
                   <dt><tt>hourly</tt>:</dt>
-                  <dd> every second from the beginning of the hour (inclusive) to the beginning of the next hour (exclusive).</dd>
+                  <dd>every second from the beginning of the hour (inclusive) to the beginning of the next hour (exclusive).</dd>
                   <dt><tt>minutely</tt>:</dt>
-                  <dd> every second from the beginning of the minute (inclusive) to the beginning of the next minute (exclusive).</dd>
+                  <dd>every second from the beginning of the minute (inclusive) to the beginning of the next minute (exclusive).</dd>
                   <dt><tt>secondly</tt>:</dt>
                   <dd>only the second itself.</dd>
                 </dl>
@@ -764,8 +739,7 @@ signed-duration = ["+" / "-"] duration
                     <t>If the date-time is not valid (this may happen when generating candidates with a <tt>skip</tt> property in effect), it is always eliminated by this property.</t>
                   </dd>
                   <dt>byMonthDay:</dt>
-                  <dd>The date-time is on the given day of the month. Negative numbers mean the nth last day of
-		      the month.</dd>
+                  <dd>The date-time is on the given day of the month. Negative numbers mean the nth last day of the month.</dd>
                   <dt>byDay:</dt>
                   <dd>The date-time is on the given day of the week. If the day is prefixed by a number, it is the nth occurrence of that day of the week within the month (if frequency is monthly) or year (if frequency is yearly). Negative numbers mean the nth last occurrence within that period.</dd>
                   <dt>byHour:</dt>
@@ -890,8 +864,7 @@ signed-duration = ["+" / "-"] duration
           <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>). Any value the client or server doesn't understand should be preserved but treated as equivalent to <tt>private</tt>.</t>
           <dl newline="false">
             <dt><tt>public</tt>:</dt>
-            <dd>The full details of the object are visible to those whom the object's calendar is shared
-		    with.</dd>
+            <dd>The full details of the object are visible to those whom the object's calendar is shared with.</dd>
             <dt><tt>private</tt>:</dt>
             <dd>
               <t>The details of the object are hidden; only the basic time and metadata are shared. The following properties <bcp14>MAY</bcp14> be shared; any other properties <bcp14>MUST NOT</bcp14> be shared:</t>
@@ -919,8 +892,7 @@ signed-duration = ["+" / "-"] duration
               </ul>
             </dd>
             <dt><tt>secret</tt>:</dt>
-            <dd>The object is hidden completely (as though it did not exist) when the calendar this object is
-		    in is shared.</dd>
+            <dd>The object is hidden completely (as though it did not exist) when the calendar this object is in is shared.</dd>
           </dl>
         </section>
         <section anchor="prop-replyTo">
@@ -930,15 +902,11 @@ signed-duration = ["+" / "-"] duration
           <t>The following methods are defined:</t>
           <dl newline="false">
             <dt><tt>imip</tt>:</dt>
-            <dd>The organizer accepts an iCalendar Message-Based Interoperability Protocol (iMIP) <xref target="RFC6047"/> response at this email address. The value <bcp14>MUST</bcp14>
-            be a <tt>mailto:</tt> URI.</dd>
+            <dd>The organizer accepts an iCalendar Message-Based Interoperability Protocol (iMIP) <xref target="RFC6047"/> response at this email address. The value <bcp14>MUST</bcp14> be a <tt>mailto:</tt> URI.</dd>
             <dt><tt>web</tt>:</dt>
-            <dd> Opening this URI in a web browser will provide the user with a page where they can submit a
-		    reply to the organizer. The value <bcp14>MUST</bcp14> be a URL using the <tt>https:</tt>
-            scheme.</dd>
+            <dd>Opening this URI in a web browser will provide the user with a page where they can submit a reply to the organizer. The value <bcp14>MUST</bcp14> be a URL using the <tt>https:</tt> scheme.</dd>
             <dt><tt>other</tt>:</dt>
-            <dd> The organizer is identified by this URI, but the method for submitting the response is
-		    undefined.</dd>
+            <dd>The organizer is identified by this URI, but the method for submitting the response is undefined.</dd>
           </dl>
         </section>
         <section anchor="prop-sentBy">
@@ -958,10 +926,9 @@ signed-duration = ["+" / "-"] duration
             <dt>name: <tt>String</tt> (optional)</dt>
             <dd>This is the display name of the participant (e.g., "Joe Bloggs").</dd>
             <dt>email: <tt>String</tt> (optional)</dt>
-            <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/>.</dd>
+            <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</dd>
             <dt>description: <tt>String</tt> (optional)</dt>
-            <dd>This is a plain-text description of this participant. For example, this may include more
-	             information about their role in the event or how best to contact them.</dd>
+            <dd>This is a plain-text description of this participant. For example, this may include more information about their role in the event or how best to contact them.</dd>
             <dt>sendTo: <tt>String[String]</tt> (optional)</dt>
             <dd>
               <t>This represents methods by which the participant may receive the invitation and updates to the calendar object.</t>
@@ -969,12 +936,9 @@ signed-duration = ["+" / "-"] duration
               <t>The following methods are defined:</t>
               <dl newline="false">
                 <dt><tt>imip</tt>:</dt>
-                <dd>The participant accepts an iMIP <xref target="RFC6047"/> request at this email address. The value <bcp14>MUST</bcp14> be a
-		<tt>mailto:</tt> URI. It <bcp14>MAY</bcp14> be different from the value of the participant's
-		<tt>email</tt> property.</dd>
+                <dd>The participant accepts an iMIP <xref target="RFC6047"/> request at this email address. The value <bcp14>MUST</bcp14> be a <tt>mailto:</tt> URI. It <bcp14>MAY</bcp14> be different from the value of the participant's <tt>email</tt> property.</dd>
                 <dt><tt>other</tt>:</dt>
-                <dd>The participant is identified by this URI, but the method for submitting the invitation is
-		undefined.</dd>
+                <dd>The participant is identified by this URI, but the method for submitting the invitation is undefined.</dd>
               </dl>
             </dd>
             <dt>kind: <tt>String</tt> (optional)</dt>
@@ -983,11 +947,11 @@ signed-duration = ["+" / "-"] duration
               <t>This <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>). Any value the client or server doesn't understand should be treated the same as if this property is omitted.</t>
               <dl newline="false">
                 <dt><tt>individual</tt>:</dt>
-                <dd> a single person</dd>
+                <dd>a single person</dd>
                 <dt><tt>group</tt>:</dt>
                 <dd>a collection of people invited as a whole</dd>
                 <dt><tt>location</tt>:</dt>
-                <dd> a physical location that needs to be scheduled, e.g., a conference room</dd>
+                <dd>a physical location that needs to be scheduled, e.g., a conference room</dd>
                 <dt><tt>resource</tt>:</dt>
                 <dd>a non-human resource other than a location, such as a projector</dd>
               </dl>
@@ -998,21 +962,17 @@ signed-duration = ["+" / "-"] duration
               <t>At least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
               <dl newline="false">
                 <dt><tt>owner</tt>:</dt>
-                <dd> The participant is an owner of the object. This signifies they have permission to make
-		changes to it that affect the other participants. Nonowner participants may only change
-		properties that affect only themselves (for example, setting their own alerts or changing their
-		RSVP status).</dd>
+                <dd>The participant is an owner of the object. This signifies they have permission to make changes to it that affect the other participants. Nonowner participants may only change properties that affect only themselves (for example, setting their own alerts or changing their RSVP status).</dd>
                 <dt><tt>attendee</tt>:</dt>
                 <dd>The participant is expected to be present at the event.</dd>
                 <dt><tt>optional</tt>:</dt>
-                <dd>The participant's involvement with the event is optional. This is expected to be primarily
-		combined with the "attendee" role.</dd>
+                <dd>The participant's involvement with the event is optional. This is expected to be primarily combined with the "attendee" role.</dd>
                 <dt><tt>informational</tt>:</dt>
-                <dd> The participant is copied for informational reasons and is not expected to attend.</dd>
+                <dd>The participant is copied for informational reasons and is not expected to attend.</dd>
                 <dt><tt>chair</tt>:</dt>
-                <dd> The participant is in charge of the event/task when it occurs.</dd>
+                <dd>The participant is in charge of the event/task when it occurs.</dd>
                 <dt><tt>contact</tt>:</dt>
-                <dd> The participant is someone that may be contacted for information about the event.</dd>
+                <dd>The participant is someone that may be contacted for information about the event.</dd>
               </dl>
               <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "attendee" and "informational" be present; if more than one are given, "attendee" takes precedence over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
             </dd>
@@ -1022,50 +982,43 @@ signed-duration = ["+" / "-"] duration
               <t>If the value does not correspond to any location id in the <tt>locations</tt> property of the JSCalendar object, this <bcp14>MUST</bcp14> be treated the same as if the participant's locationId were omitted.</t>
             </dd>
             <dt>language: <tt>String</tt> (optional)</dt>
-            <dd>This is the language tag, as defined in <xref target="RFC5646"/>, that best
-	            describes
-		          the participant's preferred language, if known.</dd>
-            <dt>participationStatus: <tt>String</tt> (optional, default: <tt>needs-action</tt>)</dt>
+            <dd>This is the language tag, as defined in <xref target="RFC5646"/> , that best describes the participant's preferred language, if known.</dd>
+            <dt>participationStatus: <tt>String</tt> (optional, default: <tt>needs-action</tt> )</dt>
             <dd>
               <t>This is the participation status, if any, of this participant.</t>
               <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
               <dl newline="false">
                 <dt><tt>needs-action</tt>:</dt>
-                <dd> No status has yet been set by the participant.</dd>
+                <dd>No status has yet been set by the participant.</dd>
                 <dt><tt>accepted</tt>:</dt>
-                <dd> The invited participant will participate.</dd>
+                <dd>The invited participant will participate.</dd>
                 <dt><tt>declined</tt>:</dt>
                 <dd>The invited participant will not participate.</dd>
                 <dt><tt>tentative</tt>:</dt>
-                <dd> The invited participant may participate.</dd>
+                <dd>The invited participant may participate.</dd>
                 <dt><tt>delegated</tt>:</dt>
-                <dd> The invited participant has delegated their attendance to another participant, as
-		specified in the <tt>delegatedTo</tt> property.</dd>
+                <dd>The invited participant has delegated their attendance to another participant, as specified in the <tt>delegatedTo</tt> property.</dd>
               </dl>
             </dd>
             <dt>participationComment: <tt>String</tt> (optional)</dt>
             <dd>This is a  note from the participant to explain their participation status.</dd>
             <dt>expectReply: <tt>Boolean</tt> (optional, default: false)</dt>
-            <dd>If true, the organizer is expecting the participant to notify them of their participation
-	            status.</dd>
-            <dt>scheduleAgent: <tt>String</tt> (optional, default: <tt>server</tt>)</dt>
+            <dd>If true, the organizer is expecting the participant to notify them of their participation status.</dd>
+            <dt>scheduleAgent: <tt>String</tt> (optional, default: <tt>server</tt> )</dt>
             <dd>
               <t>This is who is responsible for sending scheduling messages with this calendar object to the participant.</t>
               <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
               <dl newline="false">
                 <dt><tt>server</tt>:</dt>
-                <dd> The calendar server will send the scheduling messages.</dd>
+                <dd>The calendar server will send the scheduling messages.</dd>
                 <dt><tt>client</tt>:</dt>
-                <dd> The calendar client will send the scheduling messages.</dd>
+                <dd>The calendar client will send the scheduling messages.</dd>
                 <dt><tt>none</tt>:</dt>
-                <dd> No scheduling messages are to be sent to this participant.</dd>
+                <dd>No scheduling messages are to be sent to this participant.</dd>
               </dl>
             </dd>
             <dt>scheduleForceSend: <tt>Boolean</tt> (optional, default: false)</dt>
-            <dd>A client may set the property on a participant to true to request that the server send a
-	            scheduling message to the participant when it would not normally do so (e.g., if no significant
-		          change is made the object or the scheduleAgent is set to client). The property <bcp14>MUST NOT</bcp14> be stored in the JSCalendar object on the server or appear in a scheduling
-				      message.</dd>
+            <dd>A client may set the property on a participant to true to request that the server send a scheduling message to the participant when it would not normally do so (e.g., if no significant change is made the object or the scheduleAgent is set to client). The property <bcp14>MUST NOT</bcp14> be stored in the JSCalendar object on the server or appear in a scheduling message.</dd>
             <dt>scheduleSequence: <tt>UnsignedInt</tt> (optional, default: 0)</dt>
             <dd>
               <t>This is the sequence number of the last response from the participant. If defined, this <bcp14>MUST</bcp14> be a nonnegative integer.</t>
@@ -1073,7 +1026,7 @@ signed-duration = ["+" / "-"] duration
             </dd>
             <dt>scheduleStatus: <tt>String[]</tt> (optional)</dt>
             <dd>
-              <t>This is a list of status codes, returned from the processing of the most recent scheduling message sent to this participant. The status codes MUST be valid <tt>statcode</tt> values as defined in the ABNF in <xref target="RFC5545" section="3.8.8.3"/>.</t>
+              <t>This is a list of status codes, returned from the processing of the most recent scheduling message sent to this participant. The status codes MUST be valid <tt>statcode</tt> values as defined in the ABNF in <xref target="RFC5545" section="3.8.8.3"/> .</t>
               <t>Servers <bcp14>MUST</bcp14> only add or change this property when they send a scheduling message to the participant. Clients <bcp14>SHOULD NOT</bcp14> change or remove this property if it was provided by the server. Clients <bcp14>MAY</bcp14> add, change, or remove the property for participants where the client is handling the scheduling.</t>
               <t>This property <bcp14>MUST NOT</bcp14> be included in scheduling messages.</t>
             </dd>
@@ -1084,39 +1037,21 @@ signed-duration = ["+" / "-"] duration
             </dd>
             <dt>sentBy: <tt>String</tt> (optional)</dt>
             <dd>
-              <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. This SHOULD only be set if the email address is different to that in the mailto URI of this participant's <tt>imip</tt> method in the <tt>sendTo</tt> property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/>.</t>
+              <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. This SHOULD only be set if the email address is different to that in the mailto URI of this participant's <tt>imip</tt> method in the <tt>sendTo</tt> property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</t>
             </dd>
             <dt>invitedBy: <tt>Id</tt> (optional)</dt>
             <dd>This is the id of the participant who added this participant to the event/task, if known.</dd>
             <dt>delegatedTo: <tt>Id[Boolean]</tt> (optional)</dt>
-            <dd>This is set of participant ids that this participant has delegated their participation to.
-		          Each key
-			        in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map
-				      <bcp14>MUST</bcp14> be true. If there are no delegates, this <bcp14>MUST</bcp14> be omitted
-				            (rather than specified as an empty set).</dd>
+            <dd>This is set of participant ids that this participant has delegated their participation to. Each key in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegates, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>delegatedFrom: <tt>Id[Boolean]</tt> (optional)</dt>
-            <dd>This is a set of participant ids that this participant is acting as a delegate for. Each key
-	            in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map
-		          <bcp14>MUST</bcp14> be true. If there are no delegators, this <bcp14>MUST</bcp14> be omitted
-			        (rather than specified as an empty set).</dd>
+            <dd>This is a set of participant ids that this participant is acting as a delegate for. Each key in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegators, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>memberOf: <tt>Id[Boolean]</tt> (optional)</dt>
-            <dd>This is a set of group participants that were invited to this calendar object, which caused
-	            this
-		          participant to be invited due to their membership in the group(s). Each key in the set
-			        <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map
-				      <bcp14>MUST</bcp14> be true. If there are no groups, this <bcp14>MUST</bcp14> be omitted (rather
-				            than specified as an empty set).</dd>
+            <dd>This is a set of group participants that were invited to this calendar object, which caused this participant to be invited due to their membership in the group(s). Each key in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no groups, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>links: <tt>Id[Link]</tt> (optional)</dt>
-            <dd>This is a map of link ids to Link objects, representing external resources associated with
-	            this participant, for example, a vCard or image. If there are no links, this <bcp14>MUST</bcp14>
-		          be omitted (rather than specified as an empty set).</dd>
+            <dd>This is a map of link ids to Link objects, representing external resources associated with this participant, for example, a vCard or image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>progress: <tt>String</tt> (optional; only allowed for participants of a Task)</dt>
-            <dd>This represents the progress of the participant for this task. It <bcp14>MUST NOT</bcp14> be
-		    set if
-		        the <tt>participationStatus</tt> of this participant is any value other than <tt>accepted</tt>. See
-			    <xref target="prop-progress"/> for allowed values and semantics.</dd>
-            <dt>progressUpdated: <tt>UTCDateTime</tt> (optional; only allowed for participants of a
-	        Task)</dt>
+            <dd>This represents the progress of the participant for this task. It <bcp14>MUST NOT</bcp14> be set if the <tt>participationStatus</tt> of this participant is any value other than <tt>accepted</tt>. See <xref target="prop-progress"/> for allowed values and semantics.</dd>
+            <dt>progressUpdated: <tt>UTCDateTime</tt> (optional; only allowed for participants of a Task)</dt>
             <dd>This specifies the date-time the <tt>progress</tt> property was last set on this participant. See <xref target="prop-progressUpdated"/> for allowed values and semantics.</dd>
             <dt>percentComplete: <tt>UnsignedInt</tt> (optional; only allowed for participants of a Task)</dt>
             <dd>This represents the percent completion of the participant for this task. The property value <bcp14>MUST</bcp14> be a positive integer between 0 and 100.</dd>
@@ -1154,32 +1089,28 @@ reqstatus = statcode ";" statdesc [";" extdata]
               <t>An <tt>OffsetTrigger</tt> object has the following properties:</t>
               <dl newline="true">
                 <dt>@type: <tt>String</tt> (mandatory)</dt>
-                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be
-		    <tt>OffsetTrigger</tt>.</dd>
+                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>OffsetTrigger</tt>.</dd>
                 <dt>offset: <tt>SignedDuration</tt> (mandatory)</dt>
-                <dd>This defines the offset at which to trigger the alert relative to the time property
-		    defined in the <tt>relativeTo</tt> property of the alert. Negative durations signify alerts
-		      before the time property; positive durations signify alerts after the time property.</dd>
-                <dt>relativeTo: <tt>String</tt> (optional, default: <tt>start</tt>)</dt>
+                <dd>This defines the offset at which to trigger the alert relative to the time property defined in the <tt>relativeTo</tt> property of the alert. Negative durations signify alerts before the time property; positive durations signify alerts after the time property.</dd>
+                <dt>relativeTo: <tt>String</tt> (optional, default: <tt>start</tt> )</dt>
                 <dd>
                   <t>This specifies the time property that the alert offset is relative to. The value <bcp14>MUST</bcp14> be one of the following:</t>
                   <dl newline="false">
                     <dt><tt>start</tt>:</dt>
-                    <dd> triggers the alert relative to the start of the calendar object</dd>
+                    <dd>triggers the alert relative to the start of the calendar object</dd>
                     <dt><tt>end</tt>:</dt>
-                    <dd> triggers the alert relative to the end/due time of the calendar object</dd>
+                    <dd>triggers the alert relative to the end/due time of the calendar object</dd>
                   </dl>
                 </dd>
               </dl>
               <t>An <tt>AbsoluteTrigger</tt> object has the following properties:</t>
               <dl newline="true">
                 <dt>@type: <tt>String</tt> (mandatory)</dt>
-                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be
-		    <tt>AbsoluteTrigger</tt>.</dd>
+                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>AbsoluteTrigger</tt>.</dd>
                 <dt>when: <tt>UTCDateTime</tt> (mandatory)</dt>
                 <dd>This defines a specific UTC date-time when the alert is triggered.</dd>
               </dl>
-              <t>An <tt>UnknownTrigger</tt> object is an object that contains an <tt>@type</tt> property whose value is not recognized (i.e., not <tt>OffsetTrigger</tt> or <tt>AbsoluteTrigger</tt>) plus zero or more other properties. This is for compatibility with client extensions and future specifications. Implementations <bcp14>SHOULD NOT</bcp14> trigger for trigger types they do not understand but <bcp14>MUST</bcp14> preserve them.</t>
+              <t>An <tt>UnknownTrigger</tt> object is an object that contains an <tt>@type</tt> property whose value is not recognized (i.e., not <tt>OffsetTrigger</tt> or <tt>AbsoluteTrigger</tt> ) plus zero or more other properties. This is for compatibility with client extensions and future specifications. Implementations <bcp14>SHOULD NOT</bcp14> trigger for trigger types they do not understand but <bcp14>MUST</bcp14> preserve them.</t>
             </dd>
             <dt>acknowledged: <tt>UTCDateTime</tt> (optional)</dt>
             <dd>
@@ -1188,11 +1119,8 @@ reqstatus = statcode ";" statdesc [";" extdata]
               <t>Certain kinds of alert action may not provide feedback as to when the user sees them, for example, email-based alerts. For those kinds of alerts, this property <bcp14>MUST</bcp14> be set immediately when the alert is triggered and the action is successfully carried out.</t>
             </dd>
             <dt>relatedTo: <tt>String[Relation]</tt> (optional)</dt>
-            <dd>This relates this alert to other alerts in the same JSCalendar object. If the user wishes to
-		          snooze an alert, the application <bcp14>MUST</bcp14> create an alert to trigger after snoozing.
-			        This new snooze alert <bcp14>MUST</bcp14> set a parent relation to the identifier of the original
-				      alert.</dd>
-            <dt>action: <tt>String</tt> (optional, default: <tt>display</tt>)</dt>
+            <dd>This relates this alert to other alerts in the same JSCalendar object. If the user wishes to snooze an alert, the application <bcp14>MUST</bcp14> create an alert to trigger after snoozing. This new snooze alert <bcp14>MUST</bcp14> set a parent relation to the identifier of the original alert.</dd>
+            <dt>action: <tt>String</tt> (optional, default: <tt>display</tt> )</dt>
             <dd>
               <t>This describes how to alert the user.</t>
               <t>The value <bcp14>MUST</bcp14> be at most one of the following values, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
@@ -1200,8 +1128,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
                 <dt><tt>display</tt>:</dt>
                 <dd>The alert should be displayed as appropriate for the current device and user context.</dd>
                 <dt><tt>email</tt>:</dt>
-                <dd>The alert should trigger an email sent out to the user, notifying them of the alert. This
-		action is typically only appropriate for server implementations.</dd>
+                <dd>The alert should trigger an email sent out to the user, notifying them of the alert. This action is typically only appropriate for server implementations.</dd>
               </dl>
             </dd>
           </dl>
@@ -1246,28 +1173,24 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <dt>@type: <tt>String</tt> (mandatory)</dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>TimeZone</tt>.</dd>
             <dt>tzId: <tt>String</tt> (mandatory)</dt>
-            <dd>This is the TZID property from iCalendar. Note that this implies that the value <bcp14>MUST</bcp14> be a valid <tt>paramtext</tt> value as specified in Section 3.1. of <xref target="RFC5545"/>.</dd>
+            <dd>This is the TZID property from iCalendar. Note that this implies that the value <bcp14>MUST</bcp14> be a valid <tt>paramtext</tt> value as specified in Section 3.1. of <xref target="RFC5545"/> .</dd>
             <dt>updated: <tt>UTCDateTime</tt> (optional)</dt>
             <dd>This is the LAST-MODIFIED property from iCalendar.</dd>
             <dt>url: <tt>String</tt> (optional)</dt>
             <dd>This is the TZURL property from iCalendar.</dd>
             <dt>validUntil: <tt>UTCDateTime</tt> (optional)</dt>
-            <dd>This is the TZUNTIL property from iCalendar, specified in <xref target="RFC7808"/>.</dd>
+            <dd>This is the TZUNTIL property from iCalendar, specified in <xref target="RFC7808"/> .</dd>
             <dt>aliases: <tt>String[Boolean]</tt> (optional)</dt>
-            <dd>This maps the TZID-ALIAS-OF properties from iCalendar, specified in <xref target="RFC7808"/>, to a JSON set of aliases. The set is represented as an object, with the keys
-	            being the aliases. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
+            <dd>This maps the TZID-ALIAS-OF properties from iCalendar, specified in <xref target="RFC7808"/> , to a JSON set of aliases. The set is represented as an object, with the keys being the aliases. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
             <dt>standard: <tt>TimeZoneRule[]</tt> (optional)</dt>
-            <dd>This the STANDARD sub-components from iCalendar. The order <bcp14>MUST</bcp14> be preserved
-	            during conversion.</dd>
+            <dd>This the STANDARD sub-components from iCalendar. The order <bcp14>MUST</bcp14> be preserved during conversion.</dd>
             <dt>daylight: <tt>TimeZoneRule[]</tt> (optional)</dt>
-            <dd>This the DAYLIGHT sub-components from iCalendar. The order <bcp14>MUST</bcp14> be preserved
-	            during conversion.</dd>
+            <dd>This the DAYLIGHT sub-components from iCalendar. The order <bcp14>MUST</bcp14> be preserved during conversion.</dd>
           </dl>
           <t>A TimeZoneRule object maps a STANDARD or DAYLIGHT sub-component from iCalendar, with the restriction that, at most, one recurrence rule is allowed per rule. It has the following properties:</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be
-	            <tt>TimeZoneRule</tt>.</dd>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>TimeZoneRule</tt>.</dd>
             <dt>start: <tt>LocalDateTime</tt> (mandatory)</dt>
             <dd>This is the DTSTART property from iCalendar.</dd>
             <dt>offsetFrom: <tt>String</tt> (mandatory)</dt>
@@ -1275,19 +1198,13 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <dt>offsetTo: <tt>String</tt> (mandatory)</dt>
             <dd>This is the TZOFFSETTO property from iCalendar.</dd>
             <dt>recurrenceRules: <tt>RecurrenceRule[]</tt> (optional)</dt>
-            <dd>This is the RRULE property mapped, as specified in <xref target="prop-recurrenceRules"/>. During recurrence rule evaluation, the <tt>until</tt> property value
-	            <bcp14>MUST</bcp14> be interpreted as a local time in the UTC time zone.</dd>
+            <dd>This is the RRULE property mapped, as specified in <xref target="prop-recurrenceRules"/> . During recurrence rule evaluation, the <tt>until</tt> property value <bcp14>MUST</bcp14> be interpreted as a local time in the UTC time zone.</dd>
             <dt>recurrenceOverrides: <tt>LocalDateTime[PatchObject]</tt> (optional)</dt>
-            <dd>This maps the RDATE properties from iCalendar. The set is represented as an object, with the
-	            keys being the recurrence dates. The patch object <bcp14>MUST</bcp14> be the empty JSON object
-		          ({}).</dd>
+            <dd>This maps the RDATE properties from iCalendar. The set is represented as an object, with the keys being the recurrence dates. The patch object <bcp14>MUST</bcp14> be the empty JSON object ({}).</dd>
             <dt>names: <tt>String[Boolean]</tt> optional)</dt>
-            <dd>This maps the TZNAME properties from iCalendar to a JSON set. The set is represented as an
-	            object, with the keys being the names, excluding any <tt>tznparam</tt> component from iCalendar.
-		          The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
+            <dd>This maps the TZNAME properties from iCalendar to a JSON set. The set is represented as an object, with the keys being the names, excluding any <tt>tznparam</tt> component from iCalendar. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
             <dt>comments: <tt>String[]</tt> (optional)</dt>
-            <dd> This maps the COMMENT properties from iCalendar. The order <bcp14>MUST</bcp14> be preserved
-		    during conversion.</dd>
+            <dd>This maps the COMMENT properties from iCalendar. The order <bcp14>MUST</bcp14> be preserved during conversion.</dd>
           </dl>
         </section>
       </section>
@@ -1353,9 +1270,9 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <dt><tt>completed</tt>:</dt>
             <dd>if the <tt>progress</tt> property value of all participants is <tt>completed</tt></dd>
             <dt><tt>failed</tt>:</dt>
-            <dd> if at least one <tt>progress</tt> property value of a participant is <tt>failed</tt></dd>
+            <dd>if at least one <tt>progress</tt> property value of a participant is <tt>failed</tt></dd>
             <dt><tt>in-process</tt>:</dt>
-            <dd> if at least one <tt>progress</tt> property value of a participant is <tt>in-process</tt></dd>
+            <dd>if at least one <tt>progress</tt> property value of a participant is <tt>in-process</tt></dd>
             <dt><tt>needs-action</tt>:</dt>
             <dd>if none of the other criteria match</dd>
           </dl>
