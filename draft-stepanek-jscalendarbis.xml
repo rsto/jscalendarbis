@@ -1,11 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" version="3" category="std" consensus="true" docName="draft-ietf-calext-jscalendar-32" indexInclude="true" ipr="trust200902" number="8984" prepTime="2021-07-16T11:32:34" scripts="Common,Latin" sortRefs="true" submissionType="IETF" symRefs="true" tocDepth="3" tocInclude="true" xml:lang="en">
-  <link href="https://datatracker.ietf.org/doc/draft-ietf-calext-jscalendar-32" rel="prev"/>
-  <link href="https://dx.doi.org/10.17487/rfc8984" rel="alternate"/>
-  <link href="urn:issn:2070-1721" rel="alternate"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE rfc [
+<!ENTITY nbsp "&#160;">
+<!ENTITY zwsp "&#8203;">
+<!ENTITY nbhy "&#8209;">
+<!ENTITY wj "&#8288;">
+]>
+<?xml-stylesheet type="text/xsl" href="rfc2629.xslt"?>
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc iprnotified="no"?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-stepanek-jscalendarbis-0" obsoletes="8984" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <front>
     <title abbrev="JSCalendar">JSCalendar: A JSON Representation of Calendar Data</title>
-    <seriesInfo name="RFC" value="8984" stream="IETF"/>
+    <seriesInfo name="Internet-Draft" value="draft-stepanek-jscalendarbis-0"/>
     <author initials="N." surname="Jenkins" fullname="Neil Jenkins">
       <organization showOnFrontPage="true">Fastmail</organization>
       <address>
