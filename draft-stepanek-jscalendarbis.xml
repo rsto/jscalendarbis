@@ -550,7 +550,7 @@ signed-duration = ["+" / "-"] duration
         <section anchor="prop-recurrenceIdTimeZone">
           <name>recurrenceIdTimeZone</name>
           <t>Type: <tt>TimeZoneId|null</tt> (optional, default: null)</t>
-          <t>Identifies the time zone of the main JSCalendar object, of which this JSCalendar object is a recurrence instance. This property <bcp14>MUST</bcp14> be set if the <tt>recurrenceId</tt> property is set. It <bcp14>MUST NOT</bcp14> be set if the <tt>recurrenceId</tt> property is not set.</t>
+          <t>Identifies the time zone of the main JSCalendar object, of which this JSCalendar object is a recurrence instance. It <bcp14>MUST NOT</bcp14> be set if the <tt>recurrenceId</tt> property is not set.</t>
         </section>
         <section anchor="prop-recurrenceRules">
           <name>recurrenceRules</name>
