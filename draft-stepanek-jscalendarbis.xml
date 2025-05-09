@@ -423,6 +423,11 @@ signed-duration = ["+" / "-"] duration
             <dd>This is a map of link ids to Link objects, representing external resources associated with this location, for example, a vCard or image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
           </dl>
         </section>
+        <section anchor="prop-mainLocationId">
+          <name>mainLocationId</name>
+          <t>Type: <tt>String</tt> (optional)</t>
+          <t>This indicates which of the multiple entries in the <tt>locations</tt> property can be considered the main location for the event or task. A client implementation <bcp14>MAY</bcp14> choose to display this location more prominently. The main location is undefined if this property is not set or if its value does not match the key of any Location object.</t>
+        </section>
         <section anchor="prop-virtualLocations">
           <name>virtualLocations</name>
           <t>Type: <tt>Id[VirtualLocation]</tt> (optional)</t>
@@ -1859,6 +1864,14 @@ reqstatus = statcode ";" statdesc [";" extdata]
       <section>
         <name>New Properties</name>
         <t>The following new properties were defined:</t>
+        <!-- mainLocationId -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>mainLocationId</strong>:</dt>
+          <dd>
+            <t>This got introduced for better interoperatibility with iCalendar, where the VEVENT and VTODO components allow at most one LOCATION property to be present. While <xref target="RFC9073" section="7.2" sectionFormat="parens">VLOCATION components</xref> may occur multiple times, implementations need to know which Location to choose for the LOCATION property.</t>
+            <t>See <xref target="prop-mainLocationId" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
         <!-- organizerCalendarAddress -->
         <dl newline="true" spacing="normal">
           <dt><strong>organizerCalendarAddress</strong>:</dt>
