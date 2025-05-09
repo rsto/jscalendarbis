@@ -226,8 +226,7 @@ signed-duration = ["+" / "-"] duration
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Relation</tt>.</dd>
             <dt>relation: <tt>String[Boolean]</tt> (optional, default: empty Object)</dt>
             <dd>
-              <t>This describes how the linked object is related to the linking object. The relation is defined as a set of relation types. If empty, the relationship between the two objects is unspecified.</t>
-              <t>Keys in the set <bcp14>MUST</bcp14> be one of the following values, specified in the property definition where the Relation object is used, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+              <t>This describes how the linked object is related to the linking object. The relation is defined as a set of relation types. Keys in the set <bcp14>MUST</bcp14> be one of the following values, specified in the property definition where the Relation object is used, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
               <dl newline="false">
                 <dt><tt>first</tt>:</dt>
                 <dd>The linked object is the first in a series the linking object is part of.</dd>
@@ -238,7 +237,7 @@ signed-duration = ["+" / "-"] duration
                 <dt><tt>parent</tt>:</dt>
                 <dd>The linking object is a subpart of the linked object.</dd>
               </dl>
-              <t>The value for each key in the map <bcp14>MUST</bcp14> be true.</t>
+              <t>The value for each key in the map <bcp14>MUST</bcp14> be true.  The empty Object value represents a "parent" relation, unless otherwise specified for the object type.</t>
             </dd>
           </dl>
         </section>
@@ -1793,6 +1792,14 @@ reqstatus = statcode ";" statdesc [";" extdata]
           <dd>
             <t>The original definition instructed to set the "parent" relation on a snooze alert. It now instructs to set the newly defined "snooze" relation, for compatibility with the VALARM "SNOOZE" relationship type (<xref target="RFC9074" section="7" sectionFormat="of"/>.</t>
             <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Relation.relation -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Relation.relation</strong>:</dt>
+          <dd>
+            <t>The original definition specified the empty relation to represent an unspecified relationship. It now defines the empty relation to default to "parent", unless overridden, for compatibility with the <xref target="RFC5545" section="3.8.4.5" sectionFormat="parens">RELATED-TO property</xref>.</t>
+            <t>See <xref target="type-Relation" sectionFormat="of"/>.</t>
           </dd>
         </dl>
       </section>
