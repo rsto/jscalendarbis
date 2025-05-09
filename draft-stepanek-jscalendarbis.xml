@@ -257,7 +257,7 @@ signed-duration = ["+" / "-"] duration
             <dt>size: <tt>UnsignedInt</tt> (optional)</dt>
             <dd>This is the size, in octets, of the resource when fully decoded (i.e., the number of octets in the file the user would download), if known. Note that this is an informational estimate, and implementations must be prepared to handle the actual size being quite different when the resource is fetched.</dd>
             <dt>rel: <tt>String</tt> (optional)</dt>
-            <dd>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a relation type from the IANA "Link Relations" registry <xref target="LINKRELS"/> , as established in <xref target="RFC8288"/> .</dd>
+            <dd>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a link relation type as defined in <xref target="RFC8288" section="2.1" sectionFormat="of"/> .</dd>
             <dt>display: <tt>String</tt> (optional)</dt>
             <dd>
               <t>This describes the intended purpose of a link to an image. If set, the <tt>rel</tt> property <bcp14>MUST</bcp14> be set to <tt>icon</tt>. The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
@@ -1615,6 +1615,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8984.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9073.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9074.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9253.xml"/>
       </references>
       <references>
         <name>Informative References</name>
@@ -1628,14 +1629,6 @@ reqstatus = statcode ";" statdesc [";" extdata]
           </front>
           <seriesInfo name="ISO/IEC" value="9070:1991"/>
           <refcontent>Edition 2</refcontent>
-        </reference>
-        <reference anchor="LINKRELS" target="https://www.iana.org/assignments/link-relations" quoteTitle="true" derivedAnchor="LINKRELS">
-          <front>
-            <title>Link Relations: Link Relation Types</title>
-            <author>
-              <organization showOnFrontPage="true">IANA</organization>
-            </author>
-          </front>
         </reference>
         <reference anchor="LOCATIONTYPES" target="https://www.iana.org/assignments/location-type-registry" quoteTitle="true" derivedAnchor="LOCATIONTYPES">
           <front>
@@ -1792,6 +1785,14 @@ reqstatus = statcode ";" statdesc [";" extdata]
           <dd>
             <t>The original definition instructed to set the "parent" relation on a snooze alert. It now instructs to set the newly defined "snooze" relation, for compatibility with the VALARM "SNOOZE" relationship type (<xref target="RFC9074" section="7" sectionFormat="of"/>.</t>
             <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Link.rel -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Link.rel</strong>:</dt>
+          <dd>
+            <t>The original definition restricted the value of this property to registered link types. It now also allows extension relation types for compatibility with the <xref target="RFC9253" section="6.1" sectionFormat="parens">LINKREL parameter</xref>.</t>
+            <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
           </dd>
         </dl>
         <!-- Relation.relation -->
