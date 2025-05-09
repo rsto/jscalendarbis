@@ -413,7 +413,7 @@ signed-duration = ["+" / "-"] duration
           <name>locations</name>
           <t>Type: <tt>Id[Location]</tt> (optional)</t>
           <t>This is a map of location ids to Location objects, representing locations associated with the object.</t>
-          <t>A Location object has the following properties. It <bcp14>MUST</bcp14> have at least one property other than the <tt>relativeTo</tt> property.</t>
+          <t>A Location object has the following properties. It <bcp14>MUST</bcp14> have at least one property other than the <tt>@type</tt> property.</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Location</tt>.</dd>
@@ -423,19 +423,6 @@ signed-duration = ["+" / "-"] duration
             <dd>This is the human-readable, plain-text instructions for accessing this location. This may be an address, set of directions, door access code, etc.</dd>
             <dt>locationTypes: <tt>String[Boolean]</tt> (optional)</dt>
             <dd>This is a set of one or more location types that describe this location. All types <bcp14>MUST</bcp14> be from the "Location Types Registry" <xref target="LOCATIONTYPES"/> , as defined in <xref target="RFC4589"/> . The set is represented as a map, with the keys being the location types. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
-            <dt>relativeTo: <tt>String</tt> (optional)</dt>
-            <dd>
-              <t>This specifies the relation between this location and the time of the JSCalendar object. This is primarily to allow events representing travel to specify the location of departure (at the start of the event) and location of arrival (at the end); this is particularly important if these locations are in different time zones, as a client may wish to highlight this information for the user.</t>
-              <t>This <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>). Any value the client or server doesn't understand should be treated the same as if this property is omitted.</t>
-              <dl newline="false">
-                <dt><tt>start</tt>:</dt>
-                <dd>The event/task described by this JSCalendar object occurs at this location at the time the event/task starts.</dd>
-                <dt><tt>end</tt>:</dt>
-                <dd>The event/task described by this JSCalendar object occurs at this location at the time the event/task ends.</dd>
-              </dl>
-            </dd>
-            <dt>timeZone: <tt>TimeZoneId</tt> (optional)</dt>
-            <dd>This is a time zone for this location.</dd>
             <dt>coordinates: <tt>String</tt> (optional)</dt>
             <dd>This is a <tt>geo:</tt> URI <xref target="RFC5870"/> for the location.</dd>
             <dt>links: <tt>Id[Link]</tt> (optional)</dt>
@@ -1218,7 +1205,11 @@ reqstatus = statcode ";" statdesc [";" extdata]
           <name>duration</name>
           <t>Type: <tt>Duration</tt> (optional, default: <tt>PT0S</tt>)</t>
           <t>This is the zero or positive duration of the event in the event's start time zone. The end time of an event can be found by adding the duration to the event's start time.</t>
-          <t>An Event <bcp14>MAY</bcp14> involve start and end locations that are in different time zones (e.g., a transcontinental flight). This can be expressed using the <tt>relativeTo</tt> and <tt>timeZone</tt> properties of the Event's Location objects (see <xref target="prop-locations"/>).</t>
+        </section>
+        <section anchor="prop-endTimeZone">
+          <name>endTimeZone</name>
+          <t>Type: <tt>TimeZoneId</tt> (optional)</t>
+          <t>This identifies the time zone in which this event ends, for cases where the start and time zones of the event differ (e.g., a transcontinental flight). If this property is not set, then the event starts and ends in the same time zone. This property <bcp14>MUST NOT</bcp14> be set if the <tt>timeZone</tt> property value is null or not set at all.</t>
         </section>
         <section anchor="prop-status-jsevent">
           <name>status</name>
@@ -1770,6 +1761,20 @@ reqstatus = statcode ";" statdesc [";" extdata]
         <t>The following properties became obsolete:</t>
         <ul>
           <li>
+            <t><strong>Location.{relativeTo|timeZone}</strong>: These got replaced with the newly defined <xref target="prop-endTimeZone">Event.endTimeZone</xref> property:</t>
+            <ul>
+              <li>They were meant to be equivalent to the iCalendar <xref target="RFC5545" section="3.8.2.2" sectionFormat="parens">DTEND property</xref>. But the semantics were undefined if multiple Location objects had "relativeTo=end" and the "timeZone" property set.</li>
+              <li>Their semantics were undefined for Task objects.</li>
+              <li>They were incompatible with the iCalendar <xref target="RFC9073" section="7.2" sectionFormat="parens">VLOCATION component</xref>, which neither defines how to set a time zone identifier or how the VLOCATION relates to start and end.</li>
+            </ul>
+            <dl spacing="compact">
+              <dt>Reference:</dt>
+              <dd>
+                <xref target="RFC8984" section="4.2.5" sectionFormat="comma"/>
+              </dd>
+            </dl>
+          </li>
+          <li>
             <t><strong>Participant.locationId</strong>: This is incompatible with the iCalendar <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>:</t>
             <ul>
               <li>The PARTICIPANT component may contain multiple VLOCATION components and LOCATION properties.</li>
@@ -1779,6 +1784,21 @@ reqstatus = statcode ";" statdesc [";" extdata]
               <dt>Reference:</dt>
               <dd>
                 <xref target="RFC8984" section="4.4.6" sectionFormat="comma"/>
+              </dd>
+            </dl>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <name>New Properties</name>
+        <t>The following new properties were defined:</t>
+        <ul>
+          <li>
+            <t><strong>Event.endTimeZone</strong>: This replaces the obsoleted Location.relativeTo and Location.timeZone properties.</t>
+            <dl spacing="compact">
+              <dt>Reference:</dt>
+              <dd>
+                <xref target="prop-endTimeZone"/>
               </dd>
             </dl>
           </li>
