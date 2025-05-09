@@ -1071,7 +1071,14 @@ reqstatus = statcode ";" statdesc [";" extdata]
               <t>Certain kinds of alert action may not provide feedback as to when the user sees them, for example, email-based alerts. For those kinds of alerts, this property <bcp14>MUST</bcp14> be set immediately when the alert is triggered and the action is successfully carried out.</t>
             </dd>
             <dt>relatedTo: <tt>String[Relation]</tt> (optional)</dt>
-            <dd>This relates this alert to other alerts in the same JSCalendar object. If the user wishes to snooze an alert, the application <bcp14>MUST</bcp14> create an alert to trigger after snoozing. This new snooze alert <bcp14>MUST</bcp14> set a parent relation to the identifier of the original alert.</dd>
+            <dd>
+              <t>This relates this alert to other alerts in the same JSCalendar object. In addition to the relation values defined in <xref target="type-Relation"/>, the following key is allowed:</t>
+              <dl newline="false">
+                <dt><tt>snooze</tt>:</dt>
+                <dd>The linked alert is snoozed by this alert.</dd>
+              </dl>
+              <t>If the user wishes to snooze an alert, the application <bcp14>MUST</bcp14> create an alert to trigger after snoozing. This new snooze alert <bcp14>MUST</bcp14> set a "snooze" relation to the identifier of the original alert.</t>
+            </dd>
             <dt>action: <tt>String</tt> (optional, default: <tt>display</tt> )</dt>
             <dd>
               <t>This describes how to alert the user.</t>
@@ -1774,6 +1781,18 @@ reqstatus = statcode ";" statdesc [";" extdata]
               <li>The newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</li>
             </ul>
             <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <name>Updated Properties</name>
+        <t>The following new properties were updated:</t>
+        <!-- Alert.relatedTo -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Alert.relatedTo</strong>:</dt>
+          <dd>
+            <t>The original definition instructed to set the "parent" relation on a snooze alert. It now instructs to set the newly defined "snooze" relation, for compatibility with the VALARM "SNOOZE" relationship type (<xref target="RFC9074" section="7" sectionFormat="of"/>.</t>
+            <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
           </dd>
         </dl>
       </section>
