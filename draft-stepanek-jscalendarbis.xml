@@ -808,7 +808,6 @@ signed-duration = ["+" / "-"] duration
             <li>recurrenceOverrides</li>
             <li>recurrenceRules</li>
             <li>relatedTo</li>
-            <li>sentBy</li>
             <li>uid</li>
           </ul>
         </section>
@@ -879,11 +878,6 @@ signed-duration = ["+" / "-"] duration
           <name>organizerCalendarAddress</name>
           <t>Type: <tt>String</tt> (optional)</t>
           <t>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular organizer, even across different calendaring objects.</t>
-        </section>
-        <section anchor="prop-sentBy">
-          <name>sentBy</name>
-          <t>Type: <tt>String</tt> (optional)</t>
-          <t>This is the email address in the "From" header of the email in which this calendar object was received. This is only relevant if the calendar object is received via iMIP or as an attachment to a message.  If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/>.</t>
         </section>
         <section anchor="prop-participants">
           <name>participants</name>
@@ -1728,6 +1722,14 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <dd>
               <t>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by the IETF calext working group. The newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</t>
               <t>See <xref target="RFC8984" section="4.4.4" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- sentBy -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>sentBy</strong>:</dt>
+            <dd>
+              <t>No equivalent element exists in iCalendar and the semantics of this property indicate it to be used in context of a mail client. In contrast, the Participant.sentBy property does <em>not</em> become reserved: it is equivalent to the iCalendar <xref target="RFC5545" section="3.2.18" sectionFormat="parens">SENT-BY</xref> parameter.</t>
+              <t>See <xref target="RFC8984" section="4.4.5" sectionFormat="of"/>.</t>
             </dd>
           </dl>
           <!-- useDefaultAlerts -->
