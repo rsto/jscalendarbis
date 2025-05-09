@@ -1719,66 +1719,62 @@ reqstatus = statcode ";" statdesc [";" extdata]
       </section>
       <section>
         <name>Reserved Properties</name>
-        <t>The following properties became reserved:</t>
-        <!-- replyTo -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>replyTo</strong>:</dt>
-          <dd>
-            <t>This became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
-            <ul>
-              <li>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by the IETF calext working group.</li>
-              <li>The newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</li>
-            </ul>
-            <t>See <xref target="RFC8984" section="4.4.4" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- useDefaultAlerts -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>useDefaultAlerts</strong>:</dt>
-          <dd>
-            <t>This became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
-            <ul>
-              <li>No equivalent element exists in iCalendar and no consensus for default alarms in CalDAV and iCalendar was found at IETF as part of <xref target="RFC9074"/>.</li>
-            </ul>
-            <t>See <xref target="RFC8984" section="4.4.1" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.scheduleAgent -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.scheduleAgent</strong>:</dt>
-          <dd>
-            <t>This became reserved for a future JSCalendar extension of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref>.</t>
-            <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.scheduleForceSend -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.scheduleForceSend</strong>:</dt>
-          <dd>
-            <t>This became reserved for a future JSCalendar extension of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref>.</t>
-            <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.scheduleStatus -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.scheduleStatus</strong>:</dt>
-          <dd>
-            <t>This became reserved for a future JSCalendar extension of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref>.</t>
-            <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.sendTo -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.sendTo</strong>:</dt>
-          <dd>
-            <t>This became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
-            <ul>
-              <li>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by the IETF calext working group.</li>
-              <li>The newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</li>
-            </ul>
-            <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
+        <section toc="exclude">
+          <name>JMAP for Calendars</name>
+          <t>The following common use properties became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
+          <!-- replyTo -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>replyTo</strong>:</dt>
+            <dd>
+              <t>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by the IETF calext working group. The newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</t>
+              <t>See <xref target="RFC8984" section="4.4.4" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- useDefaultAlerts -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>useDefaultAlerts</strong>:</dt>
+            <dd>
+              <t>No equivalent element exists in iCalendar and no consensus for default alarms in CalDAV and iCalendar was found at IETF as part of <xref target="RFC9074"/>.</t>
+              <t>See <xref target="RFC8984" section="4.4.1" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.sendTo -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.sendTo</strong>:</dt>
+            <dd>
+              <t>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by the IETF calext working group. The newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+        </section>
+        <section toc="exclude">
+          <name>Scheduling Extensions for CalDAV</name>
+          <t>The following common use properties became reserved for a future JSCalendar extension of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref>:</t>
+          <!-- Participant.scheduleAgent -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.scheduleAgent</strong>:</dt>
+            <dd>
+              <t>This only is applicable in scheduling over CalDAV.</t>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.scheduleForceSend -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.scheduleForceSend</strong>:</dt>
+            <dd>
+              <t>This only is applicable in scheduling over CalDAV.</t>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.scheduleStatus -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.scheduleStatus</strong>:</dt>
+            <dd>
+              <t>This only is applicable in scheduling over CalDAV.</t>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+        </section>
       </section>
       <section>
         <name>Updated Properties</name>
