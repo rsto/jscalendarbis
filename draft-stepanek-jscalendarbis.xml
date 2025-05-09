@@ -1759,50 +1759,40 @@ reqstatus = statcode ";" statdesc [";" extdata]
       <section>
         <name>Obsoleted Properties</name>
         <t>The following properties became obsolete:</t>
-        <ul>
-          <li>
-            <t><strong>Location.{relativeTo|timeZone}</strong>: These got replaced with the newly defined <xref target="prop-endTimeZone">Event.endTimeZone</xref> property:</t>
+        <dl newline="true" spacing="normal">
+          <dt><strong>Location.{relativeTo|timeZone}</strong>:</dt>
+          <dd>
+            <t>These got replaced with the newly defined Event.endTimeZone property:</t>
             <ul>
               <li>They were meant to be equivalent to the iCalendar <xref target="RFC5545" section="3.8.2.2" sectionFormat="parens">DTEND property</xref>. But the semantics were undefined if multiple Location objects had "relativeTo=end" and the "timeZone" property set.</li>
               <li>Their semantics were undefined for Task objects.</li>
               <li>They were incompatible with the iCalendar <xref target="RFC9073" section="7.2" sectionFormat="parens">VLOCATION component</xref>, which neither defines how to set a time zone identifier or how the VLOCATION relates to start and end.</li>
             </ul>
-            <dl spacing="compact">
-              <dt>Reference:</dt>
-              <dd>
-                <xref target="RFC8984" section="4.2.5" sectionFormat="comma"/>
-              </dd>
-            </dl>
-          </li>
-          <li>
-            <t><strong>Participant.locationId</strong>: This is incompatible with the iCalendar <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>:</t>
+            <t>See <xref target="RFC8984" section="4.2.5" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.locationId</strong>:</dt>
+          <dd>
+            <t>This is incompatible with the iCalendar <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>:</t>
             <ul>
               <li>The PARTICIPANT component may contain multiple VLOCATION components and LOCATION properties.</li>
               <li>The PARTICIPANT component does not support referring to other VLOCATION components or LOCATION properties</li>
             </ul>
-            <dl spacing="compact">
-              <dt>Reference:</dt>
-              <dd>
-                <xref target="RFC8984" section="4.4.6" sectionFormat="comma"/>
-              </dd>
-            </dl>
-          </li>
-        </ul>
+            <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
       </section>
       <section>
         <name>New Properties</name>
         <t>The following new properties were defined:</t>
-        <ul>
-          <li>
-            <t><strong>Event.endTimeZone</strong>: This replaces the obsoleted Location.relativeTo and Location.timeZone properties.</t>
-            <dl spacing="compact">
-              <dt>Reference:</dt>
-              <dd>
-                <xref target="prop-endTimeZone"/>
-              </dd>
-            </dl>
-          </li>
-        </ul>
+        <dl newline="true" spacing="normal">
+          <dt><strong>Event.endTimeZone</strong>:</dt>
+          <dd>
+            <t>This replaces the obsoleted Location.relativeTo and Location.timeZone properties.</t>
+            <t>See <xref target="prop-endTimeZone" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
       </section>
     </section>
     <section anchor="acknowledgments" numbered="false">
