@@ -932,10 +932,10 @@ signed-duration = ["+" / "-"] duration
                 <dd>The participant is copied for informational reasons and is not expected to attend.</dd>
                 <dt><tt>chair</tt>:</dt>
                 <dd>The participant is in charge of the event/task when it occurs.</dd>
-                <dt><tt>contact</tt>:</dt>
-                <dd>The participant is someone that may be contacted for information about the event.</dd>
+                <dt><tt>required</tt>:</dt>
+                <dd>The participant is required to be present at the event.</dd>
               </dl>
-              <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "attendee" and "informational" be present; if more than one are given, "attendee" takes precedence over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
+              <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "required", "optional", "informational" and "chair" be present; if more than one are given, they take precendence as follows: "required" over "chair", either of them over "optional", all of them over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
             </dd>
             <dt>language: <tt>String</tt> (optional)</dt>
             <dd>This is the language tag, as defined in <xref target="RFC5646"/> , that best describes the participant's preferred language, if known.</dd>
@@ -1793,6 +1793,18 @@ reqstatus = statcode ";" statdesc [";" extdata]
           <dd>
             <t>The original definition restricted the value of this property to registered link types. It now also allows extension relation types for compatibility with the <xref target="RFC9253" section="6.1" sectionFormat="parens">LINKREL parameter</xref>.</t>
             <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.role -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.role</strong>:</dt>
+          <dd>
+            <t>The original definition was incompatible with iCalendar:</t>
+            <ul>
+              <li>It did not cover the "REQ-PARTICIPANT" value of the <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>. It now defines the "required" role and precendence of roles got redefined to best reflect the single-valued ROLE parameter.</li>
+              <li>It defined a "contact" role, but this role later got redefined as an enumerated value of the <xref target="RFC9073" section="6.2" sectionFormat="parens">PARTICIPANT-TYPE property</xref>. It now removed this role and leaves defining participant types to a future JSCalendar extension.</li>
+            </ul>
+            <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
           </dd>
         </dl>
         <!-- Relation.relation -->
