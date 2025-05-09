@@ -1684,7 +1684,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
         </ul>
       </section>
       <section>
-        <name>Obsoleted Properties</name>
+        <name>Obsolete Properties</name>
         <t>The following properties became obsolete:</t>
         <!-- timeZones -->
         <dl newline="true" spacing="normal">
