@@ -960,31 +960,10 @@ signed-duration = ["+" / "-"] duration
             <dd>This is a  note from the participant to explain their participation status.</dd>
             <dt>expectReply: <tt>Boolean</tt> (optional, default: false)</dt>
             <dd>If true, the organizer is expecting the participant to notify them of their participation status.</dd>
-            <dt>scheduleAgent: <tt>String</tt> (optional, default: <tt>server</tt> )</dt>
-            <dd>
-              <t>This is who is responsible for sending scheduling messages with this calendar object to the participant.</t>
-              <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
-              <dl newline="false">
-                <dt><tt>server</tt>:</dt>
-                <dd>The calendar server will send the scheduling messages.</dd>
-                <dt><tt>client</tt>:</dt>
-                <dd>The calendar client will send the scheduling messages.</dd>
-                <dt><tt>none</tt>:</dt>
-                <dd>No scheduling messages are to be sent to this participant.</dd>
-              </dl>
-            </dd>
-            <dt>scheduleForceSend: <tt>Boolean</tt> (optional, default: false)</dt>
-            <dd>A client may set the property on a participant to true to request that the server send a scheduling message to the participant when it would not normally do so (e.g., if no significant change is made the object or the scheduleAgent is set to client). The property <bcp14>MUST NOT</bcp14> be stored in the JSCalendar object on the server or appear in a scheduling message.</dd>
             <dt>scheduleSequence: <tt>UnsignedInt</tt> (optional, default: 0)</dt>
             <dd>
               <t>This is the sequence number of the last response from the participant. If defined, this <bcp14>MUST</bcp14> be a nonnegative integer.</t>
               <t>This can be used to determine whether the participant has sent a new response following significant changes to the calendar object and to determine if future responses are responding to a current or older view of the data.</t>
-            </dd>
-            <dt>scheduleStatus: <tt>String[]</tt> (optional)</dt>
-            <dd>
-              <t>This is a list of status codes, returned from the processing of the most recent scheduling message sent to this participant. The status codes MUST be valid <tt>statcode</tt> values as defined in the ABNF in <xref target="RFC5545" section="3.8.8.3"/> .</t>
-              <t>Servers <bcp14>MUST</bcp14> only add or change this property when they send a scheduling message to the participant. Clients <bcp14>SHOULD NOT</bcp14> change or remove this property if it was provided by the server. Clients <bcp14>MAY</bcp14> add, change, or remove the property for participants where the client is handling the scheduling.</t>
-              <t>This property <bcp14>MUST NOT</bcp14> be included in scheduling messages.</t>
             </dd>
             <dt>scheduleUpdated: <tt>UTCDateTime</tt> (optional)</dt>
             <dd>
@@ -1603,6 +1582,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5546.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5646.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5870.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6638.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6838.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6901.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7493.xml"/>
@@ -1761,6 +1741,30 @@ reqstatus = statcode ";" statdesc [";" extdata]
               <li>No equivalent element exists in iCalendar and no consensus for default alarms in CalDAV and iCalendar was found at IETF as part of <xref target="RFC9074"/>.</li>
             </ul>
             <t>See <xref target="RFC8984" section="4.4.1" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.scheduleAgent -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.scheduleAgent</strong>:</dt>
+          <dd>
+            <t>This became reserved for a future JSCalendar extension of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref>.</t>
+            <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.scheduleForceSend -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.scheduleForceSend</strong>:</dt>
+          <dd>
+            <t>This became reserved for a future JSCalendar extension of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref>.</t>
+            <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.scheduleStatus -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.scheduleStatus</strong>:</dt>
+          <dd>
+            <t>This became reserved for a future JSCalendar extension of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref>.</t>
+            <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
           </dd>
         </dl>
         <!-- Participant.sendTo -->
