@@ -284,7 +284,7 @@ signed-duration = ["+" / "-"] duration
       <section anchor="jsevent">
         <name>Event</name>
         <t>Media type: <tt>application/jscalendar+json;type=event</tt></t>
-        <t>An Event represents a scheduled amount of time on a calendar, typically a meeting, appointment, reminder, or anniversary. It is required to start at a certain point in time and typically has a non-zero duration. Multiple participants may partake in the event at multiple locations.</t>
+        <t>An Event represents a scheduled amount of time on a calendar, typically a meeting, appointment, reminder, or anniversary. It is required to start at a certain point in time and typically has a non-zero duration. Multiple participants may partake in the event.</t>
         <t>The <xref target="prop-type">@type</xref> property value <bcp14>MUST</bcp14> be <tt>Event</tt>.</t>
       </section>
       <section anchor="jstask">
@@ -1699,6 +1699,11 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <ul>
               <li>The PARTICIPANT component may contain multiple VLOCATION components and LOCATION properties.</li>
               <li>The PARTICIPANT component does not support referring to other VLOCATION components or LOCATION properties</li>
+            </ul>
+            <t>The description of the Event object type in <xref target="jsevent"/> reflects this:</t>
+            <ul>
+              <li>It stated: "Multiple participants may partake in the event at multiple locations."</li>
+              <li>It now states: "Multiple participants may partake in the event."</li>
             </ul>
             <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
           </dd>
