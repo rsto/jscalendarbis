@@ -950,8 +950,6 @@ signed-duration = ["+" / "-"] duration
                 <dd>The invited participant has delegated their attendance to another participant, as specified in the <tt>delegatedTo</tt> property.</dd>
               </dl>
             </dd>
-            <dt>participationComment: <tt>String</tt> (optional)</dt>
-            <dd>This is a  note from the participant to explain their participation status.</dd>
             <dt>expectReply: <tt>Boolean</tt> (optional, default: false)</dt>
             <dd>If true, the organizer is expecting the participant to notify them of their participation status.</dd>
             <dt>sentBy: <tt>String</tt> (optional)</dt>
@@ -1703,6 +1701,18 @@ reqstatus = statcode ";" statdesc [";" extdata]
               <li>The PARTICIPANT component does not support referring to other VLOCATION components or LOCATION properties</li>
             </ul>
             <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.participationComment -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.participationComment</strong>:</dt>
+          <dd>
+            <t>This became obsolete for the following reasons:</t>
+            <ul>
+              <li>It is incompatible with the iCalendar <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>, which may contain multiple COMMENT components.</li>
+              <li>The property is meant to be used in scheduling, but updating iTIP scheduling for JSCalendar and the PARTICIPANT component requires further work by IETF.</li>
+            </ul>
+            <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
           </dd>
         </dl>
         <!-- Participant.progressUpdated, Task.progressUpated -->
