@@ -976,11 +976,6 @@ signed-duration = ["+" / "-"] duration
               </dl>
               <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "attendee" and "informational" be present; if more than one are given, "attendee" takes precedence over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
             </dd>
-            <dt>locationId: <tt>Id</tt> (optional)</dt>
-            <dd>
-              <t>This is the location at which this participant is expected to be attending.</t>
-              <t>If the value does not correspond to any location id in the <tt>locations</tt> property of the JSCalendar object, this <bcp14>MUST</bcp14> be treated the same as if the participant's locationId were omitted.</t>
-            </dd>
             <dt>language: <tt>String</tt> (optional)</dt>
             <dd>This is the language tag, as defined in <xref target="RFC5646"/> , that best describes the participant's preferred language, if known.</dd>
             <dt>participationStatus: <tt>String</tt> (optional, default: <tt>needs-action</tt> )</dt>
@@ -1707,6 +1702,8 @@ reqstatus = statcode ";" statdesc [";" extdata]
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8288.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8984.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9073.xml"/>
       </references>
       <references>
         <name>Informative References</name>
@@ -1765,6 +1762,25 @@ reqstatus = statcode ";" statdesc [";" extdata]
           </li>
           <li>
             <eref target="https://www.rfc-editor.org/errata/eid8028">Errata 8028</eref>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <name>Obsoleted Properties</name>
+        <t>The following properties became obsolete:</t>
+        <ul>
+          <li>
+            <t><strong>Participant.locationId</strong>: This is incompatible with the iCalendar <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>:</t>
+            <ul>
+              <li>The PARTICIPANT component may contain multiple VLOCATION components and LOCATION properties.</li>
+              <li>The PARTICIPANT component does not support referring to other VLOCATION components or LOCATION properties</li>
+            </ul>
+            <dl spacing="compact">
+              <dt>Reference:</dt>
+              <dd>
+                <xref target="RFC8984" section="4.4.6" sectionFormat="comma"/>
+              </dd>
+            </dl>
           </li>
         </ul>
       </section>
