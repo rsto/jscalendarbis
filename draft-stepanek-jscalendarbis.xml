@@ -800,6 +800,8 @@ signed-duration = ["+" / "-"] duration
             <li>@type</li>
             <li>excludedRecurrenceRules</li>
             <li>method</li>
+            <li>organizerCalendarAddress</li>
+            <li>participants/*/calendarAddress</li>
             <li>privacy</li>
             <li>prodId</li>
             <li>recurrenceId</li>
@@ -807,7 +809,6 @@ signed-duration = ["+" / "-"] duration
             <li>recurrenceOverrides</li>
             <li>recurrenceRules</li>
             <li>relatedTo</li>
-            <li>replyTo</li>
             <li>sentBy</li>
             <li>uid</li>
           </ul>
@@ -875,19 +876,10 @@ signed-duration = ["+" / "-"] duration
             <dd>The object is hidden completely (as though it did not exist) when the calendar this object is in is shared.</dd>
           </dl>
         </section>
-        <section anchor="prop-replyTo">
-          <name>replyTo</name>
-          <t>Type: <tt>String[String]</tt> (optional)</t>
-          <t>This represents methods by which participants may submit their response to the organizer of the calendar object. The keys in the property value are the available methods and <bcp14>MUST</bcp14> only contain ASCII alphanumeric characters (A-Za-z0-9). The value is a URI for the method specified in the key. Future methods may be defined in future specifications and registered with IANA; a calendar client <bcp14>MUST</bcp14> ignore any method it does not understand but <bcp14>MUST</bcp14> preserve the method key and URI. This property <bcp14>MUST</bcp14> be omitted if no method is defined (rather than being specified as an empty object).</t>
-          <t>The following methods are defined:</t>
-          <dl newline="false">
-            <dt><tt>imip</tt>:</dt>
-            <dd>The organizer accepts an iCalendar Message-Based Interoperability Protocol (iMIP) <xref target="RFC6047"/> response at this email address. The value <bcp14>MUST</bcp14> be a <tt>mailto:</tt> URI.</dd>
-            <dt><tt>web</tt>:</dt>
-            <dd>Opening this URI in a web browser will provide the user with a page where they can submit a reply to the organizer. The value <bcp14>MUST</bcp14> be a URL using the <tt>https:</tt> scheme.</dd>
-            <dt><tt>other</tt>:</dt>
-            <dd>The organizer is identified by this URI, but the method for submitting the response is undefined.</dd>
-          </dl>
+        <section anchor="prop-organizerCalendarAddress">
+          <name>organizerCalendarAddress</name>
+          <t>Type: <tt>String</tt> (optional)</t>
+          <t>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular organizer, even across different calendaring objects.</t>
         </section>
         <section anchor="prop-sentBy">
           <name>sentBy</name>
@@ -898,7 +890,7 @@ signed-duration = ["+" / "-"] duration
           <name>participants</name>
           <t>Type: <tt>Id[Participant]</tt> (optional)</t>
           <t>This is a map of participant ids to participants, describing their participation in the calendar object.</t>
-          <t>If this property is set and any participant has a <tt>sendTo</tt> property, then the <tt>replyTo</tt> property of this calendar object <bcp14>MUST</bcp14> define at least one reply method.</t>
+          <t>If this property is set and any participant has a <tt>calendarAddress</tt> property set, then the <tt>organizerCalendarAddress</tt> property of this calendar object <bcp14>MUST</bcp14> be set.</t>
           <t>A Participant object has the following properties:</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
@@ -909,18 +901,8 @@ signed-duration = ["+" / "-"] duration
             <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</dd>
             <dt>description: <tt>String</tt> (optional)</dt>
             <dd>This is a plain-text description of this participant. For example, this may include more information about their role in the event or how best to contact them.</dd>
-            <dt>sendTo: <tt>String[String]</tt> (optional)</dt>
-            <dd>
-              <t>This represents methods by which the participant may receive the invitation and updates to the calendar object.</t>
-              <t>The keys in the property value are the available methods and <bcp14>MUST</bcp14> only contain ASCII alphanumeric characters (A-Za-z0-9). The value is a URI for the method specified in the key. Future methods may be defined in future specifications and registered with IANA; a calendar client <bcp14>MUST</bcp14> ignore any method it does not understand but <bcp14>MUST</bcp14> preserve the method key and URI. This property <bcp14>MUST</bcp14> be omitted if no method is defined (rather than being specified as an empty object).</t>
-              <t>The following methods are defined:</t>
-              <dl newline="false">
-                <dt><tt>imip</tt>:</dt>
-                <dd>The participant accepts an iMIP <xref target="RFC6047"/> request at this email address. The value <bcp14>MUST</bcp14> be a <tt>mailto:</tt> URI. It <bcp14>MAY</bcp14> be different from the value of the participant's <tt>email</tt> property.</dd>
-                <dt><tt>other</tt>:</dt>
-                <dd>The participant is identified by this URI, but the method for submitting the invitation is undefined.</dd>
-              </dl>
-            </dd>
+            <dt>calendarAddress: <tt>String</tt> (optional)</dt>
+            <dd>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.1" sectionFormat="parens">ATTENDEE property</xref> or <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular participant, even across different calendaring objects.</dd>
             <dt>kind: <tt>String</tt> (optional)</dt>
             <dd>
               <t>This is what kind of entity this participant is, if known.</t>
@@ -1012,7 +994,7 @@ signed-duration = ["+" / "-"] duration
             </dd>
             <dt>sentBy: <tt>String</tt> (optional)</dt>
             <dd>
-              <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. This SHOULD only be set if the email address is different to that in the mailto URI of this participant's <tt>imip</tt> method in the <tt>sendTo</tt> property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</t>
+              <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. This SHOULD only be set if the email address is different to that in the mailto URI of this participant's <tt>calendarAddress</tt> property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</t>
             </dd>
             <dt>invitedBy: <tt>Id</tt> (optional)</dt>
             <dd>This is the id of the participant who added this participant to the event/task, if known.</dd>
@@ -1045,11 +1027,6 @@ reqstatus = statcode ";" statdesc [";" extdata]
       </section>
       <section anchor="alerts-properties">
         <name>Alerts Properties</name>
-        <section anchor="useDefaultAlerts">
-          <name>useDefaultAlerts</name>
-          <t>Type: <tt>Boolean</tt> (optional, default: false)</t>
-          <t>If true, use the user's default alerts and ignore the value of the <tt>alerts</tt> property. Fetching user defaults is dependent on the API from which this JSCalendar object is being fetched and is not defined in this specification. If an implementation cannot determine the user's default alerts, or none are set, it <bcp14>MUST</bcp14> process the <tt>alerts</tt> property as if <tt>useDefaultAlerts</tt> is set to false.</t>
-        </section>
         <section anchor="prop-alerts">
           <name>alerts</name>
           <t>Type: <tt>Id[Alert]</tt> (optional)</t>
@@ -1490,17 +1467,14 @@ reqstatus = statcode ";" statdesc [";" extdata]
     "@type": "RecurrenceRule",
     "frequency": "weekly"
   }],
-  "replyTo": {
-    "imip": "mailto:f245f875-7f63-4a5e-a2c8@schedule.example.com"
-  },
+  "organizerCalendarAddress":
+    "mailto:f245f875-7f63-4a5e-a2c8@schedule.example.com",
   "participants": {
     "dG9tQGZvb2Jhci5xlLmNvbQ": {
       "@type": "Participant",
       "name": "Tom Tool",
       "email": "tom@foobar.example.com",
-      "sendTo": {
-        "imip": "mailto:tom@calendar.example.com"
-      },
+      "calendarAddress": "mailto:tom@calendar.example.com",
       "participationStatus": "accepted",
       "roles": {
         "attendee": true
@@ -1510,9 +1484,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
       "@type": "Participant",
       "name": "Zoe Zelda",
       "email": "zoe@foobar.example.com",
-      "sendTo": {
-        "imip": "mailto:zoe@foobar.example.com"
-      },
+      "calendarAddress": mailto:zoe@foobar.example.com",
       "participationStatus": "accepted",
       "roles": {
         "owner": true,
@@ -1625,7 +1597,6 @@ reqstatus = statcode ";" statdesc [";" extdata]
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5546.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5646.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5870.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6047.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6838.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6901.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7493.xml"/>
@@ -1637,6 +1608,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8607.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8984.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9073.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9074.xml"/>
       </references>
       <references>
         <name>Informative References</name>
@@ -1674,6 +1646,19 @@ reqstatus = statcode ";" statdesc [";" extdata]
               <organization showOnFrontPage="true">IANA</organization>
             </author>
           </front>
+        </reference>
+        <reference anchor="I-D.ietf-jmap-calendars" target="https://datatracker.ietf.org/doc/draft-ietf-jmap-calendars/">
+          <front>
+            <title>JMAP for Calendars</title>
+            <author fullname="Neil Jenkins" initials="N.M." surname="Jenkins">
+              <organization>Fastmail</organization>
+            </author>
+            <author fullname="Michael Douglass" initials="M." surname="Douglass">
+              <organization>Spherical Cow Group</organization>
+            </author>
+            <date day="22" month="July" year="2024"/>
+          </front>
+          <seriesInfo name="Internet-Draft" value="draft-ietf-jmap-calendars"/>
         </reference>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6376.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7265.xml"/>
@@ -1731,7 +1716,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
         <dl newline="true" spacing="normal">
           <dt><strong>Location.{relativeTo|timeZone}</strong>:</dt>
           <dd>
-            <t>These got replaced with the newly defined Event.endTimeZone property:</t>
+            <t>These got replaced with the newly defined <xref target="prop-endTimeZone">Event.endTimeZone property</xref>:</t>
             <ul>
               <li>They were meant to be equivalent to the iCalendar <xref target="RFC5545" section="3.8.2.2" sectionFormat="parens">DTEND property</xref>. But the semantics were undefined if multiple Location objects had "relativeTo=end" and the "timeZone" property set.</li>
               <li>Their semantics were undefined for Task objects.</li>
@@ -1754,14 +1739,69 @@ reqstatus = statcode ";" statdesc [";" extdata]
         </dl>
       </section>
       <section>
+        <name>Reserved Properties</name>
+        <t>The following properties became reserved:</t>
+        <!-- replyTo -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>replyTo</strong>:</dt>
+          <dd>
+            <t>This became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
+            <ul>
+              <li>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by the IETF calext working group.</li>
+              <li>The newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</li>
+            </ul>
+            <t>See <xref target="RFC8984" section="4.4.4" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- useDefaultAlerts -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>useDefaultAlerts</strong>:</dt>
+          <dd>
+            <t>This became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
+            <ul>
+              <li>No equivalent element exists in iCalendar and no consensus for default alarms in CalDAV and iCalendar was found at IETF as part of <xref target="RFC9074"/>.</li>
+            </ul>
+            <t>See <xref target="RFC8984" section="4.4.1" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.sendTo -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.sendTo</strong>:</dt>
+          <dd>
+            <t>This became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
+            <ul>
+              <li>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by the IETF calext working group.</li>
+              <li>The newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</li>
+            </ul>
+            <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+      </section>
+      <section>
         <name>New Properties</name>
         <t>The following new properties were defined:</t>
+        <!-- organizerCalendarAddress -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>organizerCalendarAddress</strong>:</dt>
+          <dd>
+            <t>This replaces the reserved replyTo property.</t>
+            <t>See <xref target="prop-organizerCalendarAddress" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
         <!-- Event.endTimeZone -->
         <dl newline="true" spacing="normal">
           <dt><strong>Event.endTimeZone</strong>:</dt>
           <dd>
             <t>This replaces the obsoleted Location.relativeTo and Location.timeZone properties.</t>
             <t>See <xref target="prop-endTimeZone" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.calendarAddress -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.calendarAddress</strong>:</dt>
+          <dd>
+            <t>This replaces the reserved Participant.sendTo property.</t>
+            <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
           </dd>
         </dl>
       </section>
