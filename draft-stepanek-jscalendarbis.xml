@@ -970,8 +970,6 @@ signed-duration = ["+" / "-"] duration
             <dd>This is a map of link ids to Link objects, representing external resources associated with this participant, for example, a vCard or image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>progress: <tt>String</tt> (optional; only allowed for participants of a Task)</dt>
             <dd>This represents the progress of the participant for this task. It <bcp14>MUST NOT</bcp14> be set if the <tt>participationStatus</tt> of this participant is any value other than <tt>accepted</tt>. See <xref target="prop-progress"/> for allowed values and semantics.</dd>
-            <dt>progressUpdated: <tt>UTCDateTime</tt> (optional; only allowed for participants of a Task)</dt>
-            <dd>This specifies the date-time the <tt>progress</tt> property was last set on this participant. See <xref target="prop-progressUpdated"/> for allowed values and semantics.</dd>
             <dt>percentComplete: <tt>UnsignedInt</tt> (optional; only allowed for participants of a Task)</dt>
             <dd>This represents the percent completion of the participant for this task. The property value <bcp14>MUST</bcp14> be a positive integer between 0 and 100.</dd>
           </dl>
@@ -1164,12 +1162,6 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <dt><tt>cancelled</tt>:</dt>
             <dd>indicates the task was cancelled</dd>
           </dl>
-        </section>
-        <section anchor="prop-progressUpdated">
-          <name>progressUpdated</name>
-          <t>Type: <tt>UTCDateTime</tt> (optional)</t>
-          <t>This specifies the date/time the <tt>progress</tt> property of either the task overall ( <xref target="prop-progress"/>) or a specific participant ( <xref target="prop-participants"/>) was last updated.</t>
-          <t>If the task is recurring and has future instances, a client may want to keep track of the last progress update timestamp of a specific task recurrence but leave other instances unchanged. One way to achieve this is by overriding the <tt>progressUpdated</tt> property in the task <tt>recurrenceOverrides</tt> property. However, this could produce a long list of timestamps for regularly recurring tasks. An alternative approach is to split the Task into a current, single instance of Task with this instance progress update time and a future recurring instance. See also <xref target="prop-relatedTo"/> on splitting.</t>
         </section>
       </section>
       <section anchor="jsgroup-props">
@@ -1623,6 +1615,19 @@ reqstatus = statcode ";" statdesc [";" extdata]
           </front>
           <seriesInfo name="Internet-Draft" value="draft-ietf-jmap-calendars"/>
         </reference>
+        <reference anchor="I-D.ietf-calext-ical-tasks" target="https://datatracker.ietf.org/doc/draft-ietf-calext-ical-tasks">
+          <front>
+            <title>Task Extensions to iCalendar</title>
+            <author fullname="Michael Douglass" initials="M." surname="Douglass">
+              <organization>Bedework Commercial Services</organization>
+            </author>
+            <author fullname="Adrian Apthorp" initials="A." surname="Apthorp">
+              <organization>DHL Express</organization>
+            </author>
+            <date day="30" month="July" year="2024"/>
+          </front>
+          <seriesInfo name="Internet-Draft" value="draft-ietf-calext-ical-tasks"/>
+        </reference>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6376.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7265.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7986.xml"/>
@@ -1700,6 +1705,18 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
           </dd>
         </dl>
+        <!-- Participant.progressUpdated, Task.progressUpated -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>{Participant|Task}.progressUpdated</strong>:</dt>
+          <dd>
+            <t>This became obsolete for the following reasons:</t>
+            <ul>
+              <li>It is incompatible with the newly introduced iCalendar <xref target="I-D.ietf-calext-ical-tasks" section="12.1" sectionFormat="parens">VSTATUS component</xref>, which may occur multiple times in the PARTICIPANT and VTODO components.</li>
+              <li>The VSTATUS component introduces new semantics to a task's progress and status, which better be defined by a future JSCalendar extension for tasks.</li>
+            </ul>
+            <t>See <xref target="RFC8984" section="4.4.6"/> and <xref target="RFC8984" section="5.2.6"/>.</t>
+          </dd>
+        </dl>
       </section>
       <section>
         <name>Reserved Properties</name>
@@ -1710,7 +1727,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
           <dl newline="true" spacing="normal">
             <dt><strong>replyTo</strong>:</dt>
             <dd>
-              <t>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by the IETF calext working group. The newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</t>
+              <t>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by IETF. The newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</t>
               <t>See <xref target="RFC8984" section="4.4.4" sectionFormat="of"/>.</t>
             </dd>
           </dl>
@@ -1734,7 +1751,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.sendTo</strong>:</dt>
             <dd>
-              <t>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by the IETF calext working group. The newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
+              <t>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by IETF. The newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
               <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
             </dd>
           </dl>
