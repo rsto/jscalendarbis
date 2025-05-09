@@ -1753,6 +1753,21 @@ reqstatus = statcode ";" statdesc [";" extdata]
     <section anchor="differences-from-rfc8984">
       <name>Differences from RFC 8984</name>
       <t>This section documents all significant differences from RFC 8984. Insignificant differences, such as formatting, grammar or typos are not documented.</t>
+      <section>
+        <name>Applied Errata</name>
+        <t>All verified errata of RFC 8984 was applied to this document:</t>
+        <ul>
+          <li>
+            <eref target="https://www.rfc-editor.org/errata/eid6872">Errata 6872</eref>
+          </li>
+          <li>
+            <eref target="https://www.rfc-editor.org/errata/eid6873">Errata 6873</eref>
+          </li>
+          <li>
+            <eref target="https://www.rfc-editor.org/errata/eid8028">Errata 8028</eref>
+          </li>
+        </ul>
+      </section>
     </section>
     <section anchor="acknowledgments" numbered="false">
       <name>Acknowledgments</name>
