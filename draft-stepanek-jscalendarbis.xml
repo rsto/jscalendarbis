@@ -253,10 +253,6 @@ signed-duration = ["+" / "-"] duration
               <t>This is a URI<xref target="RFC3986"/> from which the resource may be fetched.</t>
               <t>This <bcp14>MAY</bcp14> be a <tt>data:</tt> URL <xref target="RFC2397"/> , but it is recommended that the file be hosted on a server to avoid embedding arbitrarily large data in JSCalendar object instances.</t>
             </dd>
-            <dt>cid: <tt>String</tt> (optional)</dt>
-            <dd>
-              <t>This <bcp14>MUST</bcp14> be a valid <tt>content-id</tt> value according to the definition of <xref target="RFC2392" section="2"/> . The value <bcp14>MUST</bcp14> be unique within this Link object but has no meaning beyond that. It <bcp14>MAY</bcp14> be different from the link id for this Link object.</t>
-            </dd>
             <dt>contentType: <tt>String</tt> (optional)</dt>
             <dd>This is the media type <xref target="RFC6838"/> of the resource, if known.</dd>
             <dt>size: <tt>UnsignedInt</tt> (optional)</dt>
@@ -400,7 +396,7 @@ signed-duration = ["+" / "-"] duration
         <section anchor="prop-descriptionContentType">
           <name>descriptionContentType</name>
           <t>Type: <tt>String</tt> (optional, default: <tt>text/plain</tt>)</t>
-          <t>This describes the media type <xref target="RFC6838"/> of the contents of the <tt>description</tt> property. Media types <bcp14>MUST</bcp14> be subtypes of type <tt>text</tt> and <bcp14>SHOULD</bcp14> be <tt>text/plain</tt> or <tt>text/html</tt> <xref target="MEDIATYPES"/>. They <bcp14>MAY</bcp14> include parameters, and the <tt>charset</tt> parameter value <bcp14>MUST</bcp14> be <tt>utf-8</tt>, if specified. Descriptions of type <tt>text/html</tt> <bcp14>MAY</bcp14> contain <tt>cid</tt> URLs <xref target="RFC2392"/> to reference links in the calendar object by use of the <tt>cid</tt> property of the Link object.</t>
+          <t>This describes the media type <xref target="RFC6838"/> of the contents of the <tt>description</tt> property. Media types <bcp14>MUST</bcp14> be subtypes of type <tt>text</tt> and <bcp14>SHOULD</bcp14> be <tt>text/plain</tt> or <tt>text/html</tt> <xref target="MEDIATYPES"/>. They <bcp14>MAY</bcp14> include parameters, and the <tt>charset</tt> parameter value <bcp14>MUST</bcp14> be <tt>utf-8</tt>, if specified.</t>
         </section>
         <section anchor="prop-showWithoutTime">
           <name>showWithoutTime</name>
@@ -1617,7 +1613,6 @@ reqstatus = statcode ";" statdesc [";" extdata]
           </front>
         </reference>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2392.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2397.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3339.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3986.xml"/>
@@ -1639,6 +1634,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8288.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8607.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8984.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9073.xml"/>
       </references>
@@ -1716,6 +1712,19 @@ reqstatus = statcode ";" statdesc [";" extdata]
               <li>The property contradicts the stated goal of JSCalendar to avoid ambiguities and pitfalls of iCalendar, defined in <xref target="RFC8984" section="1.1" sectionFormat="of"/>.</li>
             </ul>
             <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Link.cid -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Link.cid</strong>:</dt>
+          <dd>
+            <t>This property was obsoleted for the following reasons:</t>
+            <ul>
+              <li>It only is relevant for rich-text descriptions, but the related iCalendar <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref> does not support referring to attached media. </li>
+              <li>It only is applicable for Link objects having a "data:" URI as href property value. But even the definition of the Link object recommends not to use "data:" URIs as values in the href property.</li>
+              <li>A Link with "data:" URI converts to an iCalendar <xref target="RFC5545" section="3.3.1" sectionFormat="parens">BINARY value</xref>. But these are marginally supported by CalDAV clients, which tend to prefer using WebDAV managed attachments <xref target="RFC8607"/>.</li>
+            </ul>
+            <t>See <xref target="RFC8984" section="1.4.11" sectionFormat="of"/>.</t>
           </dd>
         </dl>
         <!-- Location.relativeTo, Location.timeZone -->
