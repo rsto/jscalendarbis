@@ -191,8 +191,7 @@ signed-duration = ["+" / "-"] duration
         </section>
         <section anchor="type-timeZoneId">
           <name>TimeZoneId</name>
-          <t>Where <tt>TimeZoneId</tt> is given as a data type, it means a <tt>String</tt> that is either a time zone name in the IANA Time Zone Database <xref target="TZDB"/> or a custom time zone identifier defined in the <tt>timeZones</tt> property (see <xref target="prop-timeZones"/>).</t>
-          <t>Where an IANA time zone is specified, the zone rules of the respective zone records apply. Custom time zones are interpreted as described in <xref target="prop-timeZones"/>.</t>
+          <t>Where <tt>TimeZoneId</tt> is given as a data type, it means a <tt>String</tt> that is a time zone name in the IANA Time Zone Database <xref target="TZDB"/>. The zone rules of the respective IANA time zone records apply.</t>
         </section>
         <section anchor="type-PatchObject">
           <name>PatchObject</name>
@@ -814,7 +813,6 @@ signed-duration = ["+" / "-"] duration
             <li>relatedTo</li>
             <li>replyTo</li>
             <li>sentBy</li>
-            <li>timeZones</li>
             <li>uid</li>
           </ul>
         </section>
@@ -873,7 +871,6 @@ signed-duration = ["+" / "-"] duration
                 <li>showWithoutTime</li>
                 <li>start</li>
                 <li>timeZone</li>
-                <li>timeZones</li>
                 <li>uid</li>
                 <li>updated</li>
               </ul>
@@ -1137,57 +1134,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
         <section anchor="prop-timeZone">
           <name>timeZone</name>
           <t>Type: <tt>TimeZoneId|null</tt> (optional, default: null)</t>
-          <t>This identifies the time zone the object is scheduled in or is null for floating time. This is either a name from the IANA Time Zone Database <xref target="TZDB"/> or the TimeZoneId of a custom time zone from the <tt>timeZones</tt> property ( <xref target="prop-timeZones"/>). If omitted, this <bcp14>MUST</bcp14> be presumed to be null (i.e., floating time).</t>
-        </section>
-        <section anchor="prop-timeZones">
-          <name>timeZones</name>
-          <t>Type: <tt>TimeZoneId[TimeZone]</tt> (optional)</t>
-          <t>This maps identifiers of custom time zones to their time zone definitions. The following restrictions apply for each key in the map:</t>
-          <ul>
-            <li>To avoid conflict with names in the IANA Time Zone Database <xref target="TZDB"/>, it <bcp14>MUST</bcp14> start with the <tt>/</tt> character.</li>
-            <li>It <bcp14>MUST</bcp14> be a valid <tt>paramtext</tt> value, as specified in <xref target="RFC5545" section="3.1"/>.</li>
-            <li>At least one other property in the same JSCalendar object <bcp14>MUST</bcp14> reference a time zone using this identifier (i.e., orphaned time zones are not allowed).</li>
-          </ul>
-          <t>An identifier need only be unique to this JSCalendar object. It <bcp14>MAY</bcp14> differ from the <tt>tzId</tt> property value of the TimeZone object it maps to.</t>
-          <t>A JSCalendar object may be part of a hierarchy of other JSCalendar objects (say, an Event is an entry in a Group). In this case, the set of time zones is the sum of the time zone definitions of this object and its parent objects. If multiple time zones with the same identifier exist, then the definition closest to the calendar object in relation to its parents <bcp14>MUST</bcp14> be used. (In context of Event, a time zone definition in its <tt>timeZones</tt> property has precedence over a definition of the same id in the Group). Time zone definitions in any children of the calendar object <bcp14>MUST</bcp14> be ignored.</t>
-          <t>A TimeZone object maps a VTIMEZONE component from iCalendar, and the semantics are as defined in <xref target="RFC5545"/>. A valid time zone <bcp14>MUST</bcp14> define at least one transition rule in the <tt>standard</tt> or <tt>daylight</tt> property. Its properties are:</t>
-          <dl newline="true">
-            <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>TimeZone</tt>.</dd>
-            <dt>tzId: <tt>String</tt> (mandatory)</dt>
-            <dd>This is the TZID property from iCalendar. Note that this implies that the value <bcp14>MUST</bcp14> be a valid <tt>paramtext</tt> value as specified in Section 3.1. of <xref target="RFC5545"/> .</dd>
-            <dt>updated: <tt>UTCDateTime</tt> (optional)</dt>
-            <dd>This is the LAST-MODIFIED property from iCalendar.</dd>
-            <dt>url: <tt>String</tt> (optional)</dt>
-            <dd>This is the TZURL property from iCalendar.</dd>
-            <dt>validUntil: <tt>UTCDateTime</tt> (optional)</dt>
-            <dd>This is the TZUNTIL property from iCalendar, specified in <xref target="RFC7808"/> .</dd>
-            <dt>aliases: <tt>String[Boolean]</tt> (optional)</dt>
-            <dd>This maps the TZID-ALIAS-OF properties from iCalendar, specified in <xref target="RFC7808"/> , to a JSON set of aliases. The set is represented as an object, with the keys being the aliases. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
-            <dt>standard: <tt>TimeZoneRule[]</tt> (optional)</dt>
-            <dd>This the STANDARD sub-components from iCalendar. The order <bcp14>MUST</bcp14> be preserved during conversion.</dd>
-            <dt>daylight: <tt>TimeZoneRule[]</tt> (optional)</dt>
-            <dd>This the DAYLIGHT sub-components from iCalendar. The order <bcp14>MUST</bcp14> be preserved during conversion.</dd>
-          </dl>
-          <t>A TimeZoneRule object maps a STANDARD or DAYLIGHT sub-component from iCalendar, with the restriction that, at most, one recurrence rule is allowed per rule. It has the following properties:</t>
-          <dl newline="true">
-            <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>TimeZoneRule</tt>.</dd>
-            <dt>start: <tt>LocalDateTime</tt> (mandatory)</dt>
-            <dd>This is the DTSTART property from iCalendar.</dd>
-            <dt>offsetFrom: <tt>String</tt> (mandatory)</dt>
-            <dd>This is the TZOFFSETFROM property from iCalendar.</dd>
-            <dt>offsetTo: <tt>String</tt> (mandatory)</dt>
-            <dd>This is the TZOFFSETTO property from iCalendar.</dd>
-            <dt>recurrenceRules: <tt>RecurrenceRule[]</tt> (optional)</dt>
-            <dd>This is the RRULE property mapped, as specified in <xref target="prop-recurrenceRules"/> . During recurrence rule evaluation, the <tt>until</tt> property value <bcp14>MUST</bcp14> be interpreted as a local time in the UTC time zone.</dd>
-            <dt>recurrenceOverrides: <tt>LocalDateTime[PatchObject]</tt> (optional)</dt>
-            <dd>This maps the RDATE properties from iCalendar. The set is represented as an object, with the keys being the recurrence dates. The patch object <bcp14>MUST</bcp14> be the empty JSON object ({}).</dd>
-            <dt>names: <tt>String[Boolean]</tt> optional)</dt>
-            <dd>This maps the TZNAME properties from iCalendar to a JSON set. The set is represented as an object, with the keys being the names, excluding any <tt>tznparam</tt> component from iCalendar. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
-            <dt>comments: <tt>String[]</tt> (optional)</dt>
-            <dd>This maps the COMMENT properties from iCalendar. The order <bcp14>MUST</bcp14> be preserved during conversion.</dd>
-          </dl>
+          <t>This identifies the time zone the object is scheduled in or is null for floating time. If omitted, this <bcp14>MUST</bcp14> be presumed to be null (i.e., floating time).</t>
         </section>
       </section>
     </section>
@@ -1300,7 +1247,6 @@ reqstatus = statcode ";" statdesc [";" extdata]
           <li>keywords</li>
           <li>categories</li>
           <li>color</li>
-          <li>timeZones</li>
         </ul>
         <t>In addition, the following Group-specific properties are supported:</t>
         <section anchor="prop-entries">
@@ -1689,7 +1635,7 @@ reqstatus = statcode ";" statdesc [";" extdata]
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6901.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7493.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7529.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7808.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7809.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8288.xml"/>
@@ -1759,6 +1705,18 @@ reqstatus = statcode ";" statdesc [";" extdata]
       <section>
         <name>Obsoleted Properties</name>
         <t>The following properties became obsolete:</t>
+        <dl newline="true" spacing="normal">
+          <dt><strong>timeZones</strong>:</dt>
+          <dd>
+            <t>This property was obsoleted for the following reasons:</t>
+            <ul>
+              <li>Custom time zones in calendaring data increase implementation complexity, introduce inefficiencies and are error-prone, as described for CalDAV and iCalendar in <xref target="RFC7809"/>.</li>
+              <li>In practice, the only non-IANA time zone identifiers are Microsoft time zone names. These can be converted to IANA time zones, e.g. using the <eref target="https://icu.unicode.org/">International Components for Unicode</eref> software library.</li>
+              <li>The property contradicts the stated goal of JSCalendar to avoid ambiguities and pitfalls of iCalendar, defined in <xref target="RFC8984" section="1.1" sectionFormat="of"/>.</li>
+            </ul>
+            <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
         <dl newline="true" spacing="normal">
           <dt><strong>Location.{relativeTo|timeZone}</strong>:</dt>
           <dd>
