@@ -954,16 +954,6 @@ signed-duration = ["+" / "-"] duration
             <dd>This is a  note from the participant to explain their participation status.</dd>
             <dt>expectReply: <tt>Boolean</tt> (optional, default: false)</dt>
             <dd>If true, the organizer is expecting the participant to notify them of their participation status.</dd>
-            <dt>scheduleSequence: <tt>UnsignedInt</tt> (optional, default: 0)</dt>
-            <dd>
-              <t>This is the sequence number of the last response from the participant. If defined, this <bcp14>MUST</bcp14> be a nonnegative integer.</t>
-              <t>This can be used to determine whether the participant has sent a new response following significant changes to the calendar object and to determine if future responses are responding to a current or older view of the data.</t>
-            </dd>
-            <dt>scheduleUpdated: <tt>UTCDateTime</tt> (optional)</dt>
-            <dd>
-              <t>This is the timestamp for the most recent response from this participant.</t>
-              <t>This is the <tt>updated</tt> property of the last response when using iTIP. It can be compared to the <tt>updated</tt> property in future responses to detect and discard older responses delivered out of order.</t>
-            </dd>
             <dt>sentBy: <tt>String</tt> (optional)</dt>
             <dd>
               <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. This SHOULD only be set if the email address is different to that in the mailto URI of this participant's <tt>calendarAddress</tt> property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</t>
@@ -1745,6 +1735,22 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <dt><strong>Participant.sendTo</strong>:</dt>
             <dd>
               <t>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by the IETF calext working group. The newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.scheduleSequence -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.scheduleSequence</strong>:</dt>
+            <dd>
+              <t>No equivalent element currently exists in iCalendar and iTIP, and interoperable scheduling with JSCalendar and the iCalendar PARTICIPANT component requires further work by IETF. This property may later be redefined for common use.</t>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.scheduleUpdated -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.scheduleUpdated</strong>:</dt>
+            <dd>
+              <t>No equivalent element currently exists in iCalendar and iTIP, and interoperable scheduling with JSCalendar and the iCalendar PARTICIPANT component requires further work by IETF. This property may later be redefined for common use.</t>
               <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
             </dd>
           </dl>
