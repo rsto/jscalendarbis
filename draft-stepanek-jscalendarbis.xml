@@ -904,8 +904,7 @@ signed-duration = ["+" / "-"] duration
             <dd>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.1" sectionFormat="parens">ATTENDEE property</xref> or <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular participant, even across different calendaring objects.</dd>
             <dt>kind: <tt>String</tt> (optional)</dt>
             <dd>
-              <t>This is what kind of entity this participant is, if known.</t>
-              <t>This <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>). Any value the client or server doesn't understand should be treated the same as if this property is omitted.</t>
+              <t>This is what kind of entity this participant is, if known. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>). Any value the client or server doesn't understand should be treated the same as if this property is omitted.</t>
               <dl newline="false">
                 <dt><tt>individual</tt>:</dt>
                 <dd>a single person</dd>
@@ -917,10 +916,9 @@ signed-duration = ["+" / "-"] duration
                 <dd>a non-human resource other than a location, such as a projector</dd>
               </dl>
             </dd>
-            <dt>roles: <tt>String[Boolean]</tt> (mandatory)</dt>
+            <dt>roles: <tt>String[Boolean]</tt> (optional)</dt>
             <dd>
-              <t>This is a set of roles that this participant fulfills.</t>
-              <t>At least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+              <t>This is a set of roles that this participant fulfills. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. At least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
               <dl newline="false">
                 <dt><tt>owner</tt>:</dt>
                 <dd>The participant is an owner of the object. This signifies they have permission to make changes to it that affect the other participants. Nonowner participants may only change properties that affect only themselves (for example, setting their own alerts or changing their RSVP status).</dd>
@@ -941,7 +939,7 @@ signed-duration = ["+" / "-"] duration
             <dd>This is the language tag, as defined in <xref target="RFC5646"/> , that best describes the participant's preferred language, if known.</dd>
             <dt>participationStatus: <tt>String</tt> (optional, default: <tt>needs-action</tt> )</dt>
             <dd>
-              <t>This is the participation status, if any, of this participant.</t>
+              <t>This is the participation status, if any, of this participant. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set.</t>
               <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
               <dl newline="false">
                 <dt><tt>needs-action</tt>:</dt>
@@ -957,23 +955,23 @@ signed-duration = ["+" / "-"] duration
               </dl>
             </dd>
             <dt>expectReply: <tt>Boolean</tt> (optional, default: false)</dt>
-            <dd>If true, the organizer is expecting the participant to notify them of their participation status.</dd>
+            <dd>If true, the organizer is expecting the participant to notify them of their participation status. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set.</dd>
             <dt>sentBy: <tt>String</tt> (optional)</dt>
             <dd>
-              <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. This SHOULD only be set if the email address is different to that in the mailto URI of this participant's <tt>calendarAddress</tt> property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</t>
+              <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. This <bcp14>SHOULD</bcp14> only be set if the email address is different to that in the mailto URI of this participant's <tt>calendarAddress</tt> property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</t>
             </dd>
             <dt>invitedBy: <tt>Id</tt> (optional)</dt>
-            <dd>This is the id of the participant who added this participant to the event/task, if known.</dd>
+            <dd>This is the id of the participant who added this participant to the event/task, if known. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set.</dd>
             <dt>delegatedTo: <tt>Id[Boolean]</tt> (optional)</dt>
-            <dd>This is set of participant ids that this participant has delegated their participation to. Each key in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegates, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
+            <dd>This is set of participant ids that this participant has delegated their participation to. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegates, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>delegatedFrom: <tt>Id[Boolean]</tt> (optional)</dt>
-            <dd>This is a set of participant ids that this participant is acting as a delegate for. Each key in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegators, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
+            <dd>This is a set of participant ids that this participant is acting as a delegate for. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegators, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>memberOf: <tt>Id[Boolean]</tt> (optional)</dt>
-            <dd>This is a set of group participants that were invited to this calendar object, which caused this participant to be invited due to their membership in the group(s). Each key in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no groups, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
+            <dd>This is a set of group participants that were invited to this calendar object, which caused this participant to be invited due to their membership in the group(s). If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no groups, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>links: <tt>Id[Link]</tt> (optional)</dt>
             <dd>This is a map of link ids to Link objects, representing external resources associated with this participant, for example, a vCard or image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>progress: <tt>String</tt> (optional; only allowed for participants of a Task)</dt>
-            <dd>This represents the progress of the participant for this task. It <bcp14>MUST NOT</bcp14> be set if the <tt>participationStatus</tt> of this participant is any value other than <tt>accepted</tt>. See <xref target="prop-progress"/> for allowed values and semantics.</dd>
+            <dd>This represents the progress of the participant for this task. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. It <bcp14>MUST NOT</bcp14> be set if the <tt>participationStatus</tt> of this participant is any value other than <tt>accepted</tt>. See <xref target="prop-progress"/> for allowed values and semantics.</dd>
             <dt>percentComplete: <tt>UnsignedInt</tt> (optional; only allowed for participants of a Task)</dt>
             <dd>This represents the percent completion of the participant for this task. The property value <bcp14>MUST</bcp14> be a positive integer between 0 and 100.</dd>
           </dl>
@@ -1845,13 +1843,31 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
           </dd>
         </dl>
-        <!-- Participant.role -->
+        <!-- misc Participant -->
         <dl newline="true" spacing="normal">
-          <dt><strong>Participant.role</strong>:</dt>
+          <dt><strong>Participant.delegatedFrom</strong>,
+            <strong>Participant.delegatedTo</strong>,
+            <strong>Participant.expectReply</strong>,
+            <strong>Participant.invitedBy</strong>,
+            <strong>Participant.kind</strong>,
+            <strong>Participant.memberOf</strong>,
+            <strong>Participant.participationStatus</strong>,
+            <strong>Participant.progress</strong>,
+            <strong>Participant.sentBy</strong>:
+          </dt>
+          <dd>
+            <t>The original definitions were incompatible with iCalendar: they did not require the (now reserved) sendTo property to be set, but their equivalent iCalendar parameters require an ATTENDEE property. They now require the calendarAddress property to be set.</t>
+            <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.roles -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.roles</strong>:</dt>
           <dd>
             <t>The original definition was incompatible with iCalendar:</t>
             <ul>
-              <li>It did not cover the "REQ-PARTICIPANT" value of the <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>. It now defines the "required" role and precendence of roles got redefined to best reflect the single-valued ROLE parameter.</li>
+              <li>It did not cover the "REQ-PARTICIPANT" value of the <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>. It now defines the new "required" role and the precendence of roles got redefined to best reflect the single-valued ROLE parameter.</li>
+              <li>It was mandatory for a Participant, but the (now reserved) sendTo property was not. This was incompatible with iCalendar, which required an ATTENDEE property to set the ROLE parameter. It now is optional, but requires the calendarAddress property to be set.</li>
               <li>It defined a "contact" role, but this role later got redefined as an enumerated value of the <xref target="RFC9073" section="6.2" sectionFormat="parens">PARTICIPANT-TYPE property</xref>. It now removed this role and leaves defining participant types to a future JSCalendar extension.</li>
             </ul>
             <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
