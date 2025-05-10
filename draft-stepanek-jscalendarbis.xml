@@ -1088,7 +1088,7 @@ signed-duration = ["+" / "-"] duration
         <section anchor="prop-endTimeZone">
           <name>endTimeZone</name>
           <t>Type: <tt>TimeZoneId</tt> (optional)</t>
-          <t>This identifies the time zone in which this event ends, for cases where the start and time zones of the event differ (e.g., a transcontinental flight). If this property is not set, then the event starts and ends in the same time zone. This property <bcp14>MUST NOT</bcp14> be set if the <tt>timeZone</tt> property value is null or not set at all.</t>
+          <t>This identifies the time zone in which this event ends, for cases where the start and time zones of the event differ (e.g., a transcontinental flight). If this property is not set, then the event starts and ends in the same time zone. This property <bcp14>MUST NOT</bcp14> be set if the <tt>timeZone</tt> property value is null or not set.</t>
         </section>
         <section anchor="prop-status-jsevent">
           <name>status</name>
