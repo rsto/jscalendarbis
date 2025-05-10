@@ -958,8 +958,6 @@ signed-duration = ["+" / "-"] duration
             <dd>
               <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. This <bcp14>SHOULD</bcp14> only be set if the email address is different to that in the mailto URI of this participant's <tt>calendarAddress</tt> property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</t>
             </dd>
-            <dt>invitedBy: <tt>Id</tt> (optional)</dt>
-            <dd>This is the id of the participant who added this participant to the event/task, if known. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set.</dd>
             <dt>delegatedTo: <tt>Id[Boolean]</tt> (optional)</dt>
             <dd>This is set of participant ids that this participant has delegated their participation to. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be the id of a participant. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegates, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>delegatedFrom: <tt>Id[Boolean]</tt> (optional)</dt>
@@ -1792,6 +1790,14 @@ signed-duration = ["+" / "-"] duration
             <dd>
               <t>This mainly is applicable in scheduling over CalDAV. Interoperable scheduling with JSCalendar and the iCalendar PARTICIPANT component requires further work by IETF.</t>
               <t>See <xref target="RFC8984" section="4.4.7" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.invitedBy -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.invitedBy</strong>:</dt>
+            <dd>
+              <t>This requires further work by IETF. Specifically, the iTIP definitions of the <xref target="RFC5546" section="3.2.3" sectionFormat="parens">REPLY method</xref> and how to forward invitation requests (<xref target="RFC5546" section="4.2.8"/>) must be updated.</t>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
             </dd>
           </dl>
           <!-- Participant.scheduleAgent -->
