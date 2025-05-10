@@ -976,16 +976,6 @@ signed-duration = ["+" / "-"] duration
             <dd>This represents the percent completion of the participant for this task. The property value <bcp14>MUST</bcp14> be a positive integer between 0 and 100.</dd>
           </dl>
         </section>
-        <section anchor="prop-requestStatus">
-          <name>requestStatus</name>
-          <t>Type: <tt>String</tt> (optional)</t>
-          <t>A request status as returned from processing the most recent scheduling request for this JSCalendar object. The allowed values are defined by the ABNF definitions of <tt>statcode</tt>, <tt>statdesc</tt> and <tt>extdata</tt> in <xref target="RFC5545" section="3.8.8.3"/> and the following ABNF <xref target="RFC5234"/> :</t>
-          <sourcecode name="" type="abnf">
-reqstatus = statcode ";" statdesc [";" extdata]
-</sourcecode>
-          <t>Servers <bcp14>MUST</bcp14> only add or change this property when they performe a scheduling action. Clients <bcp14>SHOULD NOT</bcp14> change or remove this property if it was provided by the server. Clients <bcp14>MAY</bcp14> add, change, or remove the property when the client is handling the scheduling.</t>
-          <t>This property <bcp14>MUST</bcp14> only be included in scheduling messages according to the rules defined for the REQUEST-STATUS iCalendar property in <xref target="RFC5546"/>.</t>
-        </section>
       </section>
       <section anchor="alerts-properties">
         <name>Alerts Properties</name>
@@ -1788,8 +1778,16 @@ reqstatus = statcode ";" statdesc [";" extdata]
           </dl>
         </section>
         <section toc="exclude">
-          <name>Scheduling Extensions for CalDAV</name>
-          <t>The following common use properties became reserved for a future JSCalendar extension of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref>:</t>
+          <name>Scheduling Extensions for CalDAV and iTIP</name>
+          <t>The following common use properties became reserved for future JSCalendar extension of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref> and <xref target="RFC5546">iTIP</xref>:</t>
+          <!-- requestStatus -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>requestStatus</strong>:</dt>
+            <dd>
+              <t>This mainly is applicable in scheduling over CalDAV. Interoperable scheduling with JSCalendar and the iCalendar PARTICIPANT component requires further work by IETF.</t>
+              <t>See <xref target="RFC8984" section="4.4.7" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
           <!-- Participant.scheduleAgent -->
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.scheduleAgent</strong>:</dt>
