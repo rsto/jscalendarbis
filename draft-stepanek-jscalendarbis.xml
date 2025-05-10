@@ -1110,12 +1110,12 @@ signed-duration = ["+" / "-"] duration
         <section anchor="prop-due">
           <name>due</name>
           <t>Type: <tt>LocalDateTime</tt> (optional)</t>
-          <t>This is the date/time the task is due in the task's time zone.</t>
+          <t>This is the date/time the task is due in the task's time zone. If the <tt>timeZone</tt> property is set, then at least one of the <tt>due</tt> and <tt>start</tt> properties <bcp14>MUST</bcp14> be set</t>
         </section>
         <section anchor="prop-start-jstask">
           <name>start</name>
           <t>Type: <tt>LocalDateTime</tt> (optional)</t>
-          <t>This the date/time the task should start in the task's time zone.</t>
+          <t>This the date/time the task should start in the task's time zone. If the <tt>timeZone</tt> property is set, then at least one of the <tt>due</tt> and <tt>start</tt> properties <bcp14>MUST</bcp14> be set</t>
         </section>
         <section anchor="prop-estimatedDuration">
           <name>estimatedDuration</name>
@@ -1877,6 +1877,14 @@ signed-duration = ["+" / "-"] duration
           <dd>
             <t>The original definition specified the empty relation to represent an unspecified relationship. It now defines the empty relation to default to "parent", unless overridden, for compatibility with the <xref target="RFC5545" section="3.8.4.5" sectionFormat="parens">RELATED-TO property</xref>.</t>
             <t>See <xref target="type-Relation" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Task.{due|start} -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Task.{due|start}</strong>:</dt>
+          <dd>
+            <t>The original definition defined these as optional, but this is incompatible with iCalendar: if the Task object's timeZone property is set, then it requires the <xref target="RFC5545" section="3.8.2.3" sectionFormat="parens">DUE property</xref> or <xref target="RFC5545" section="3.8.2.4" sectionFormat="parens">DTSTART property</xref> be set in the VTODO component. It now requires at least one of the "due" or "start" properties be set, if the "timeZone" property is set.</t>
+            <t>See <xref target="jstask-props" sectionFormat="of"/>.</t>
           </dd>
         </dl>
       </section>
