@@ -1779,7 +1779,7 @@ signed-duration = ["+" / "-"] duration
         </section>
         <section toc="exclude">
           <name>Scheduling Extensions for CalDAV and iTIP</name>
-          <t>The following common use properties became reserved for future JSCalendar extension of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref> and <xref target="RFC5546">iTIP</xref>:</t>
+          <t>The following common use properties became reserved for future JSCalendar extensions of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref> and <xref target="RFC5546">iTIP</xref>:</t>
           <!-- requestStatus -->
           <dl newline="true" spacing="normal">
             <dt><strong>requestStatus</strong>:</dt>
