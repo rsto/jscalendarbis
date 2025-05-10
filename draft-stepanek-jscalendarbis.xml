@@ -1714,18 +1714,6 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
           </dd>
         </dl>
-        <!-- Participant.participationComment -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.participationComment</strong>:</dt>
-          <dd>
-            <t>This became obsolete for the following reasons:</t>
-            <ul>
-              <li>It is incompatible with the iCalendar <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>, which may contain multiple COMMENT components.</li>
-              <li>The property is meant to be used in scheduling, but updating iTIP scheduling for JSCalendar and the PARTICIPANT component requires further work by IETF.</li>
-            </ul>
-            <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
-          </dd>
-        </dl>
         <!-- Participant.progressUpdated, Task.progressUpated -->
         <dl newline="true" spacing="normal">
           <dt><strong>{Participant|Task}.progressUpdated</strong>:</dt>
@@ -1766,6 +1754,14 @@ reqstatus = statcode ";" statdesc [";" extdata]
             <dd>
               <t>No equivalent element exists in iCalendar and no consensus for default alarms in CalDAV and iCalendar was found at IETF as part of <xref target="RFC9074"/>.</t>
               <t>See <xref target="RFC8984" section="4.4.1" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.participationComment -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.participationComment</strong>:</dt>
+            <dd>
+              <t>No equivalent element currently exists in iCalendar and iTIP, and interoperable scheduling with JSCalendar and the iCalendar PARTICIPANT component requires further work by IETF. This property may later be redefined for common use.</t>
+              <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
             </dd>
           </dl>
           <!-- Participant.sendTo -->
