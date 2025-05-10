@@ -935,8 +935,6 @@ signed-duration = ["+" / "-"] duration
               </dl>
               <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "required", "optional", "informational" and "chair" be present; if more than one are given, they take precendence as follows: "required" over "chair", either of them over "optional", all of them over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
             </dd>
-            <dt>language: <tt>String</tt> (optional)</dt>
-            <dd>This is the language tag, as defined in <xref target="RFC5646"/> , that best describes the participant's preferred language, if known.</dd>
             <dt>participationStatus: <tt>String</tt> (optional, default: <tt>needs-action</tt> )</dt>
             <dd>
               <t>This is the participation status, if any, of this participant. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set.</t>
@@ -1700,6 +1698,14 @@ signed-duration = ["+" / "-"] duration
               <li>It now states: "Multiple participants may partake in the event."</li>
             </ul>
             <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.language -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.language</strong>:</dt>
+          <dd>
+            <t>No equivalent element exists in iCalendar and its current single-valued definition is likely to conflict with any related future extension of the <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>.</t>
+            <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
           </dd>
         </dl>
         <!-- Participant.progressUpdated, Task.progressUpated -->
