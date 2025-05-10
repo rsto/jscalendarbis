@@ -1728,7 +1728,7 @@ signed-duration = ["+" / "-"] duration
           <dl newline="true" spacing="normal">
             <dt><strong>replyTo</strong>:</dt>
             <dd>
-              <t>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by IETF. The newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</t>
+              <t>No equivalent elements exists in iCalendar. The newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</t>
               <t>See <xref target="RFC8984" section="4.4.4" sectionFormat="of"/>.</t>
             </dd>
           </dl>
@@ -1736,7 +1736,7 @@ signed-duration = ["+" / "-"] duration
           <dl newline="true" spacing="normal">
             <dt><strong>sentBy</strong>:</dt>
             <dd>
-              <t>No equivalent element exists in iCalendar and the semantics of this property indicate it to be used in context of a mail client. In contrast, the Participant.sentBy property does <em>not</em> become reserved: it is equivalent to the iCalendar <xref target="RFC5545" section="3.2.18" sectionFormat="parens">SENT-BY</xref> parameter.</t>
+              <t>No equivalent element exists in iCalendar and this property mainly is relevant in context of a combined calendaring and mail service. Note that the Participant.sentBy property does <em>not</em> become reserved: it is equivalent to the iCalendar <xref target="RFC5545" section="3.2.18" sectionFormat="parens">SENT-BY</xref> parameter.</t>
               <t>See <xref target="RFC8984" section="4.4.5" sectionFormat="of"/>.</t>
             </dd>
           </dl>
@@ -1752,7 +1752,7 @@ signed-duration = ["+" / "-"] duration
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.participationComment</strong>:</dt>
             <dd>
-              <t>No equivalent element currently exists in iCalendar and iTIP, and interoperable scheduling with JSCalendar and the iCalendar PARTICIPANT component requires further work by IETF. This property may later be redefined for common use.</t>
+              <t>This requires future work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component or JSCalendar. This property may later be redefined for common use.</t>
               <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
             </dd>
           </dl>
@@ -1760,7 +1760,7 @@ signed-duration = ["+" / "-"] duration
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.sendTo</strong>:</dt>
             <dd>
-              <t>No equivalent elements exists in iCalendar and updating current CalDAV and iTIP scheduling standards requires further work by IETF. The newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
+              <t>No equivalent elements exists in iCalendar. The newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
               <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
             </dd>
           </dl>
@@ -1768,7 +1768,7 @@ signed-duration = ["+" / "-"] duration
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.scheduleSequence</strong>:</dt>
             <dd>
-              <t>No equivalent element currently exists in iCalendar and iTIP, and interoperable scheduling with JSCalendar and the iCalendar PARTICIPANT component requires further work by IETF. This property may later be redefined for common use.</t>
+              <t>This requires future work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component and JSCalendar. This property may later be redefined for common use.</t>
               <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
             </dd>
           </dl>
@@ -1776,7 +1776,7 @@ signed-duration = ["+" / "-"] duration
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.scheduleUpdated</strong>:</dt>
             <dd>
-              <t>No equivalent element currently exists in iCalendar and iTIP, and interoperable scheduling with JSCalendar and the iCalendar PARTICIPANT component requires further work by IETF. This property may later be redefined for common use.</t>
+              <t>This requires future work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component and JSCalendar. This property may later be redefined for common use.</t>
               <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
             </dd>
           </dl>
@@ -1788,7 +1788,7 @@ signed-duration = ["+" / "-"] duration
           <dl newline="true" spacing="normal">
             <dt><strong>requestStatus</strong>:</dt>
             <dd>
-              <t>This mainly is applicable in scheduling over CalDAV. Interoperable scheduling with JSCalendar and the iCalendar PARTICIPANT component requires further work by IETF.</t>
+              <t>This mainly is applicable in scheduling over CalDAV.</t>
               <t>See <xref target="RFC8984" section="4.4.7" sectionFormat="of"/>.</t>
             </dd>
           </dl>
