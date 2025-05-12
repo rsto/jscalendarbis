@@ -1002,7 +1002,7 @@ signed-duration = ["+" / "-"] duration
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Alert</tt>, if set.</dd>
-            <dt>trigger: <tt>OffsetTrigger|AbsoluteTrigger|UnknownTrigger</tt> (mandatory)</dt>
+            <dt>trigger: <tt>OffsetTrigger|AbsoluteTrigger|UnknownTrigger</tt> (mandatory, defaultType: <tt>OffsetTrigger</tt>)</dt>
             <dd>
               <t>This defines when to trigger the alert. New types may be defined in future documents.</t>
               <t>An <tt>OffsetTrigger</tt> object has the following properties:</t>
@@ -1894,6 +1894,14 @@ signed-duration = ["+" / "-"] duration
           <dt><strong>Alert.relatedTo</strong>:</dt>
           <dd>
             <t>The original definition instructed to set the "parent" relation on a snooze alert. It now instructs to set the newly defined "snooze" relation, for compatibility with the VALARM "SNOOZE" relationship type (<xref target="RFC9074" section="7" sectionFormat="of"/>.</t>
+            <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Alert.trigger -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Alert.trigger</strong>:</dt>
+          <dd>
+            <t>JSCalendar now supports default types for properties of type <tt>A|B</tt>. The default type of this property now is <tt>OffsetTrigger</tt>.</t>
             <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
           </dd>
         </dl>
