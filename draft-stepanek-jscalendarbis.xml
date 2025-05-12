@@ -416,6 +416,8 @@ signed-duration = ["+" / "-"] duration
             <dd>This is the human-readable name of the location.</dd>
             <dt>description: <tt>String</tt> (optional)</dt>
             <dd>This is the human-readable, plain-text instructions for accessing this location. This may be an address, set of directions, door access code, etc.</dd>
+            <dt>descriptionContentType: <tt>String</tt> (optional)</dt>
+            <dd>This describes the media type of the contents of the <tt>description</tt> property. Its requirements are specified in <xref target="prop-descriptionContentType"/>. If this property is set, then the description property <bcp14>MUST</bcp14> be set.</dd>
             <dt>locationTypes: <tt>String[Boolean]</tt> (optional)</dt>
             <dd>This is a set of one or more location types that describe this location. All types <bcp14>MUST</bcp14> be from the "Location Types Registry" <xref target="LOCATIONTYPES"/> , as defined in <xref target="RFC4589"/> . The set is represented as a map, with the keys being the location types. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
             <dt>coordinates: <tt>String</tt> (optional)</dt>
@@ -441,6 +443,8 @@ signed-duration = ["+" / "-"] duration
             <dd>This is the human-readable name of the virtual location.</dd>
             <dt>description: <tt>String</tt> (optional)</dt>
             <dd>These are human-readable plain-text instructions for accessing this virtual location. This may be a conference access code, etc.</dd>
+            <dt>descriptionContentType: <tt>String</tt> (optional)</dt>
+            <dd>This describes the media type of the contents of the <tt>description</tt> property. Its requirements are specified in <xref target="prop-descriptionContentType"/>. If this property is set, then the description property <bcp14>MUST</bcp14> be set.</dd>
             <dt>uri: <tt>String</tt> (mandatory)</dt>
             <dd>
               <t>This is a URI<xref target="RFC3986"/> that represents how to connect to this virtual location.</t>
@@ -1954,12 +1958,28 @@ signed-duration = ["+" / "-"] duration
             <t>See <xref target="prop-endTimeZone" sectionFormat="of"/>.</t>
           </dd>
         </dl>
+        <!-- Location.descriptionContentType -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Location.descriptionContentType</strong>:</dt>
+          <dd>
+            <t>This is for compatibility with the iCalendar <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref> of the VLOCATION component.</t>
+            <t>See <xref target="prop-locations" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
         <!-- Participant.calendarAddress -->
         <dl newline="true" spacing="normal">
           <dt><strong>Participant.calendarAddress</strong>:</dt>
           <dd>
             <t>This replaces the reserved Participant.sendTo property.</t>
             <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- VirtualLocation.descriptionContentType -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>VirtualLocation.descriptionContentType</strong>:</dt>
+          <dd>
+            <t>This is for consistency with the definition of the Location object type. The newly defined VCONFERENCE component will be allowed to contain the <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref>.</t>
+            <t>See <xref target="prop-virtualLocations" sectionFormat="of"/>.</t>
           </dd>
         </dl>
       </section>
