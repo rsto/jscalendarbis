@@ -1270,7 +1270,6 @@ signed-duration = ["+" / "-"] duration
   "start": "1900-04-01T00:00:00",
   "duration": "P1D",
   "recurrenceRule": {
-    "@type": "RecurrenceRule",
     "frequency": "yearly"
   }
 }
@@ -1291,25 +1290,22 @@ signed-duration = ["+" / "-"] duration
       </section>
       <section anchor="example-zoned-event-endtz">
         <name>Event with End Time Zone</name>
-        <t>This example illustrates the use of end time zones by use of an international flight. The flight starts on April 1, 2020 at 9 am in Berlin local time. The duration of the flight is scheduled at 10 hours 30 minutes. The time at the flight's destination is in the same time zone as Tokyo. Calendar clients could use the end time zone to display the arrival time in Tokyo local time and highlight the time zone difference of the flight. The location names can serve as input for navigation systems.</t>
+        <t>This example illustrates the use of end time zones by use of an international flight. The flight starts on April 1, 2020 at 9 am in Berlin local time. The duration of the flight is scheduled at 10 hours 30 minutes. The time at the flight's destination is in the same time zone as Tokyo. Calendar clients could use the end time zone to display the arrival time in Tokyo local time and highlight the time zone difference of the flight. The location names can serve as input for navigation systems. The mainLocationId property indicates the start location.</t>
         <sourcecode name="" type="json">
 {
   "...": "",
   "title": "Flight XY51 to Tokyo",
   "start": "2020-04-01T09:00:00",
   "timeZone": "Europe/Berlin",
+  "endTimeZone": "Asia/Tokyo",
   "duration": "PT10H30M",
+  "mainLocationId": "1",
   "locations": {
     "1": {
-      "@type": "Location",
-      "rel": "start",
       "name": "Frankfurt Airport (FRA)"
     },
     "2": {
-      "@type": "Location",
-      "rel": "end",
-      "name": "Narita International Airport (NRT)",
-      "timeZone": "Asia/Tokyo"
+      "name": "Narita International Airport (NRT)"
     }
   }
 }
@@ -1325,7 +1321,6 @@ signed-duration = ["+" / "-"] duration
   "start": "2020-01-01T07:00:00",
   "duration": "PT30M",
   "recurrenceRule": {
-    "@type": "RecurrenceRule",
     "frequency": "daily"
   }
 }
@@ -1345,7 +1340,6 @@ signed-duration = ["+" / "-"] duration
   "duration": "PT3H",
   "locations": {
     "c0503d30-8c50-4372-87b5-7657e8e0fedd": {
-      "@type": "Location",
       "name": "The Music Bowl",
       "description": "Music Bowl, Central Park, New York",
       "coordinates": "geo:40.7829,-73.9654"
@@ -1353,7 +1347,6 @@ signed-duration = ["+" / "-"] duration
   },
   "virtualLocations": {
     "vloc1": {
-      "@type": "VirtualLocation",
       "name": "Free live Stream from Music Bowl",
       "uri": "https://stream.example.com/the_band_2020"
     }
@@ -1381,13 +1374,11 @@ signed-duration = ["+" / "-"] duration
   "duration": "PT1H30M",
   "locations": {
     "mlab": {
-      "@type": "Location",
       "title": "Math lab room 1",
       "description": "Math Lab I, Department of Mathematics"
     }
   },
   "recurrenceRule": {
-    "@type": "RecurrenceRule",
     "frequency": "weekly",
     "until": "2020-06-24T09:00:00"
   },
@@ -1404,7 +1395,6 @@ signed-duration = ["+" / "-"] duration
       "duration": "PT2H",
       "locations": {
         "auditorium": {
-          "@type": "Location",
           "title": "Big Auditorium",
           "description": "Big Auditorium, Other Road"
         }
@@ -1426,20 +1416,17 @@ signed-duration = ["+" / "-"] duration
   "duration": "PT1H",
   "virtualLocations": {
     "0": {
-      "@type": "VirtualLocation",
       "name": "ChatMe meeting room",
       "uri": "https://chatme.example.com?id=1234567&amp;pw=a8a24627b63d"
     }
   },
   "recurrenceRule": {
-    "@type": "RecurrenceRule",
     "frequency": "weekly"
   },
   "organizerCalendarAddress":
     "mailto:f245f875-7f63-4a5e-a2c8@schedule.example.com",
   "participants": {
     "dG9tQGZvb2Jhci5xlLmNvbQ": {
-      "@type": "Participant",
       "name": "Tom Tool",
       "email": "tom@foobar.example.com",
       "calendarAddress": "mailto:tom@calendar.example.com",
@@ -1449,9 +1436,7 @@ signed-duration = ["+" / "-"] duration
       }
     },
     "em9lQGZvb2GFtcGxlLmNvbQ": {
-      "@type": "Participant",
       "name": "Zoe Zelda",
-      "email": "zoe@foobar.example.com",
       "calendarAddress": mailto:zoe@foobar.example.com",
       "participationStatus": "accepted",
       "roles": {
