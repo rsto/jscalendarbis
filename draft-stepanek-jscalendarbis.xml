@@ -1724,12 +1724,48 @@ signed-duration = ["+" / "-"] duration
         <section toc="exclude">
           <name>JMAP for Calendars</name>
           <t>The following common use properties became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
+          <!-- useDefaultAlerts -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>useDefaultAlerts</strong>:</dt>
+            <dd>
+              <t>No equivalent element exists in iCalendar and no consensus for default alarms in CalDAV and iCalendar was found at IETF as part of <xref target="RFC9074"/>.</t>
+              <t>See <xref target="RFC8984" section="4.4.1" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.scheduleSequence -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.scheduleSequence</strong>:</dt>
+            <dd>
+              <t>This requires further work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component and JSCalendar. This property may later be redefined for common use.</t>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.scheduleUpdated -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.scheduleUpdated</strong>:</dt>
+            <dd>
+              <t>This requires further work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component and JSCalendar. This property may later be redefined for common use.</t>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+        </section>
+        <section toc="exclude">
+          <name>Scheduling Extensions for CalDAV and iTIP</name>
+          <t>The following common use properties became reserved for future JSCalendar extensions of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref> and <xref target="RFC5546">iTIP</xref>:</t>
           <!-- replyTo -->
           <dl newline="true" spacing="normal">
             <dt><strong>replyTo</strong>:</dt>
             <dd>
-              <t>No equivalent elements exists in iCalendar. The newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</t>
+              <t>This requires further work by IETF. For compatibility with iCalendar, the newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</t>
               <t>See <xref target="RFC8984" section="4.4.4" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- requestStatus -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>requestStatus</strong>:</dt>
+            <dd>
+              <t>This mainly is applicable in scheduling over CalDAV.</t>
+              <t>See <xref target="RFC8984" section="4.4.7" sectionFormat="of"/>.</t>
             </dd>
           </dl>
           <!-- sentBy -->
@@ -1740,64 +1776,20 @@ signed-duration = ["+" / "-"] duration
               <t>See <xref target="RFC8984" section="4.4.5" sectionFormat="of"/>.</t>
             </dd>
           </dl>
-          <!-- useDefaultAlerts -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>useDefaultAlerts</strong>:</dt>
-            <dd>
-              <t>No equivalent element exists in iCalendar and no consensus for default alarms in CalDAV and iCalendar was found at IETF as part of <xref target="RFC9074"/>.</t>
-              <t>See <xref target="RFC8984" section="4.4.1" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.participationComment -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.participationComment</strong>:</dt>
-            <dd>
-              <t>This requires future work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component or JSCalendar. This property may later be redefined for common use.</t>
-              <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.sendTo -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.sendTo</strong>:</dt>
-            <dd>
-              <t>No equivalent elements exists in iCalendar. The newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
-              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.scheduleSequence -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.scheduleSequence</strong>:</dt>
-            <dd>
-              <t>This requires future work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component and JSCalendar. This property may later be redefined for common use.</t>
-              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.scheduleUpdated -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.scheduleUpdated</strong>:</dt>
-            <dd>
-              <t>This requires future work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component and JSCalendar. This property may later be redefined for common use.</t>
-              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-        </section>
-        <section toc="exclude">
-          <name>Scheduling Extensions for CalDAV and iTIP</name>
-          <t>The following common use properties became reserved for future JSCalendar extensions of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref> and <xref target="RFC5546">iTIP</xref>:</t>
-          <!-- requestStatus -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>requestStatus</strong>:</dt>
-            <dd>
-              <t>This mainly is applicable in scheduling over CalDAV.</t>
-              <t>See <xref target="RFC8984" section="4.4.7" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
           <!-- Participant.invitedBy -->
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.invitedBy</strong>:</dt>
             <dd>
               <t>This requires further work by IETF. Specifically, the iTIP definitions of the <xref target="RFC5546" section="3.2.3" sectionFormat="parens">REPLY method</xref> and how to forward invitation requests (<xref target="RFC5546" section="4.2.8"/>) must be updated.</t>
               <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.participationComment -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.participationComment</strong>:</dt>
+            <dd>
+              <t>This requires further work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component or JSCalendar. This property may later be redefined for common use.</t>
+              <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
             </dd>
           </dl>
           <!-- Participant.scheduleAgent -->
@@ -1821,6 +1813,14 @@ signed-duration = ["+" / "-"] duration
             <dt><strong>Participant.scheduleStatus</strong>:</dt>
             <dd>
               <t>This only is applicable in scheduling over CalDAV.</t>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.sendTo -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.sendTo</strong>:</dt>
+            <dd>
+              <t>This requires further work by IETF. For compatibility with iCalendar, the newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
               <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
             </dd>
           </dl>
