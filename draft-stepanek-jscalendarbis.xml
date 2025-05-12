@@ -167,11 +167,11 @@
         </section>
         <section anchor="type-Int">
           <name>Int</name>
-          <t>Where <tt>Int</tt> is given as a data type, it means an integer in the range -2 <sup>53</sup> +1 &lt;= value &lt;= 2 <sup>53</sup> -1, the safe range for integers stored in a floating-point double, represented as a JSON <tt>Number</tt>.</t>
+          <t>Where <tt>Int</tt> is given as a data type, it means an integer in the range -2<sup>53</sup>+1 &lt;= value &lt;= 2<sup>53</sup>-1, the safe range for integers stored in a floating-point double, represented as a JSON <tt>Number</tt>.</t>
         </section>
         <section anchor="type-UnsignedInt">
           <name>UnsignedInt</name>
-          <t>Where <tt>UnsignedInt</tt> is given as a data type, it means an integer in the range 0 &lt;= value &lt;= 2 <sup>53</sup> -1, represented as a JSON <tt>Number</tt>.</t>
+          <t>Where <tt>UnsignedInt</tt> is given as a data type, it means an integer in the range 0 &lt;= value &lt;= 2<sup>53</sup>-1, represented as a JSON <tt>Number</tt>.</t>
         </section>
         <section anchor="type-UTCDateTime">
           <name>UTCDateTime</name>
@@ -187,7 +187,7 @@
         </section>
         <section anchor="type-Duration">
           <name>Duration</name>
-          <t>Where Duration is given as a type, it means a length of time represented by a subset of the ISO 8601 duration format, as specified by the following ABNF <xref target="RFC5234"/> :</t>
+          <t>Where Duration is given as a type, it means a length of time represented by a subset of the ISO 8601 duration format, as specified by the following ABNF <xref target="RFC5234"/>:</t>
           <sourcecode name="" type="abnf">
     dur-secfrac = "." 1*DIGIT
     dur-second  = 1*DIGIT [dur-secfrac] "S"
@@ -217,7 +217,7 @@
             <li>Subtract any week or day components of the duration from the date.</li>
             <li>If the resulting time does not exist on the date due to a discontinuity in the time zone, use the semantics in <xref target="type-LocalDateTime"/> to convert to UTC and back to get a valid LocalDateTime.</li>
           </ol>
-          <t>These semantics match the iCalendar DURATION value type ( <xref target="RFC5545" sectionFormat="comma" section="3.3.6"/>).</t>
+          <t>These semantics match the iCalendar DURATION value type (<xref target="RFC5545" sectionFormat="comma" section="3.3.6"/>).</t>
         </section>
         <section anchor="type-SignedDuration">
           <name>SignedDuration</name>
@@ -288,7 +288,7 @@ signed-duration = ["+" / "-"] duration
             <dt>href: <tt>String</tt> (mandatory)</dt>
             <dd>
               <t>This is a URI<xref target="RFC3986"/> from which the resource may be fetched.</t>
-              <t>This <bcp14>MAY</bcp14> be a <tt>data:</tt> URL <xref target="RFC2397"/> , but it is recommended that the file be hosted on a server to avoid embedding arbitrarily large data in JSCalendar object instances.</t>
+              <t>This <bcp14>MAY</bcp14> be a <tt>data:</tt> URL <xref target="RFC2397"/>, but it is recommended that the file be hosted on a server to avoid embedding arbitrarily large data in JSCalendar object instances.</t>
             </dd>
             <dt>contentType: <tt>String</tt> (optional)</dt>
             <dd>This is the media type <xref target="RFC6838"/> of the resource, if known.</dd>
@@ -452,7 +452,7 @@ signed-duration = ["+" / "-"] duration
             <dt>descriptionContentType: <tt>String</tt> (optional)</dt>
             <dd>This describes the media type of the contents of the <tt>description</tt> property. Its requirements are specified in <xref target="prop-descriptionContentType"/>. If this property is set, then the description property <bcp14>MUST</bcp14> be set.</dd>
             <dt>locationTypes: <tt>String[Boolean]</tt> (optional)</dt>
-            <dd>This is a set of one or more location types that describe this location. All types <bcp14>MUST</bcp14> be from the "Location Types Registry" <xref target="LOCATIONTYPES"/> , as defined in <xref target="RFC4589"/> . The set is represented as a map, with the keys being the location types. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
+            <dd>This is a set of one or more location types that describe this location. All types <bcp14>MUST</bcp14> be from the "Location Types Registry" <xref target="LOCATIONTYPES"/>, as defined in <xref target="RFC4589"/> . The set is represented as a map, with the keys being the location types. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
             <dt>coordinates: <tt>String</tt> (optional)</dt>
             <dd>This is a <tt>geo:</tt> URI <xref target="RFC5870"/> for the location.</dd>
             <dt>links: <tt>Id[Link]</tt> (optional)</dt>
@@ -481,7 +481,7 @@ signed-duration = ["+" / "-"] duration
             <dt>uri: <tt>String</tt> (mandatory)</dt>
             <dd>
               <t>This is a URI<xref target="RFC3986"/> that represents how to connect to this virtual location.</t>
-              <t>This may be a telephone number (represented using the <tt>tel:</tt> scheme, e.g., <tt>tel:+1-555-555-5555</tt> ) for a teleconference, a web address for online chat, or any custom URI.</t>
+              <t>This may be a telephone number (represented using the <tt>tel:</tt> scheme, e.g., <tt>tel:+1-555-555-5555</tt>) for a teleconference, a web address for online chat, or any custom URI.</t>
             </dd>
             <dt>features: <tt>String[Boolean]</tt> (optional)</dt>
             <dd>
@@ -567,7 +567,7 @@ signed-duration = ["+" / "-"] duration
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>RecurrenceRule</tt>, if set.</dd>
             <dt>frequency: <tt>String</tt> (mandatory)</dt>
             <dd>
-              <t>This is the time span covered by each iteration of this recurrence rule (see<xref target="recurrence-semantics"/> for full semantics). This <bcp14>MUST</bcp14> be one of the following values:</t>
+              <t>This is the time span covered by each iteration of this recurrence rule (see <xref target="recurrence-semantics"/> for full semantics). This <bcp14>MUST</bcp14> be one of the following values:</t>
               <ul>
                 <li>
                   <tt>yearly</tt>
@@ -601,7 +601,7 @@ signed-duration = ["+" / "-"] duration
             <dt>rscale: <tt>String</tt> (optional, default: "gregorian")</dt>
             <dd>
               <t>This is the calendar system in which this recurrence rule operates, in lowercase. This <bcp14>MUST</bcp14> be either a CLDR-registered calendar system name <xref target="CLDR"/> or a vendor-specific value (see <xref target="custom-properties"/>).</t>
-              <t>This is the RSCALE part from iCalendar<xref target="RFC7529">RSCALE</xref> , converted to lowercase.</t>
+              <t>This is the RSCALE part from iCalendar <xref target="RFC7529">RSCALE</xref>, converted to lowercase.</t>
             </dd>
             <dt>skip: <tt>String</tt> (optional, default: "omit")</dt>
             <dd>
@@ -617,7 +617,7 @@ signed-duration = ["+" / "-"] duration
                   <tt>forward</tt>
                 </li>
               </ul>
-              <t>This is the SKIP part from iCalendar<xref target="RFC7529">RSCALE</xref> , converted to lowercase.</t>
+              <t>This is the SKIP part from iCalendar <xref target="RFC7529">RSCALE</xref>, converted to lowercase.</t>
             </dd>
             <dt>firstDayOfWeek: <tt>String</tt> (optional, default: "mo")</dt>
             <dd>
@@ -672,7 +672,7 @@ signed-duration = ["+" / "-"] duration
             </dd>
             <dt>byMonth: <tt>String[]</tt> (optional)</dt>
             <dd>
-              <t>These are the months in which to repeat. Each entry is a string representation of a number, starting from "1" for the first month in the calendar (e.g., "1" means January with the Gregorian calendar), with an optional "L" suffix (see<xref target="RFC7529"/>) for leap months (this <bcp14>MUST</bcp14> be uppercase, e.g., "3L"). The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
+              <t>These are the months in which to repeat. Each entry is a string representation of a number, starting from "1" for the first month in the calendar (e.g., "1" means January with the Gregorian calendar), with an optional "L" suffix (see <xref target="RFC7529"/>) for leap months (this <bcp14>MUST</bcp14> be uppercase, e.g., "3L"). The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYMONTH part from iCalendar.</t>
             </dd>
             <dt>byYearDay: <tt>Int[]</tt> (optional)</dt>
