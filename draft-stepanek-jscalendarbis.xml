@@ -97,26 +97,64 @@
         <t>The underlying format used for this specification is JSON. Consequently, the terms "object" and "array" as well as the four primitive types (strings, numbers, booleans, and null) are to be interpreted as described in <xref target="RFC8259" section="1"/>.</t>
         <t>Some examples in this document contain "partial" JSON documents used for illustrative purposes. In these examples, an ellipsis "..." is used to indicate a portion of the document that has been removed for compactness.</t>
       </section>
-      <section anchor="type-signatures">
-        <name>Type Signatures</name>
-        <t>Type signatures are given for all JSON values in this document. The following conventions are used:</t>
-        <dl newline="false">
-          <dt><tt>*</tt>:</dt>
-          <dd>The type is undefined (the value could be any type, although permitted values may be constrained by the context of this value).</dd>
-          <dt><tt>String</tt>:</dt>
-          <dd>This is the JSON string type.</dd>
-          <dt><tt>Number</tt>:</dt>
-          <dd>This is the JSON number type.</dd>
-          <dt><tt>Boolean</tt>:</dt>
-          <dd>This is the JSON boolean type.</dd>
-          <dt><tt>A[B]</tt>:</dt>
-          <dd>The keys are all of type <tt>A</tt> and the values are all of type <tt>B</tt> for a JSON object.</dd>
-          <dt><tt>A[]</tt>:</dt>
-          <dd>There is an array of values of type <tt>A</tt></dd>
-          <dt><tt>A|B</tt>:</dt>
-          <dd>The value is either of type <tt>A</tt> or of type <tt>B</tt>.</dd>
-        </dl>
-        <t>Other types may also be given; their representations are defined elsewhere in this document.</t>
+      <section anchor="type-and-prop-notation">
+        <name>Type and Property Notation</name>
+        <t>This section defines the notation for JSCalendar properties and types.</t>
+        <section anchor="type-signatures">
+          <name>Type Signatures</name>
+          <t>Type signatures are given for all JSON values in this document. The following conventions are used:</t>
+          <dl newline="false">
+            <dt><tt>*</tt>:</dt>
+            <dd>The type is undefined (the value could be any type, although permitted values may be constrained by the context of this value).</dd>
+            <dt><tt>String</tt>:</dt>
+            <dd>This is the JSON string type.</dd>
+            <dt><tt>Number</tt>:</dt>
+            <dd>This is the JSON number type.</dd>
+            <dt><tt>Boolean</tt>:</dt>
+            <dd>This is the JSON boolean type.</dd>
+            <dt><tt>A</tt>:</dt>
+            <dd>The value is of type <tt>A</tt>.</dd>
+            <dt><tt>A[B]</tt>:</dt>
+            <dd>The keys are all of type <tt>A</tt> and the values are all of type <tt>B</tt> for a JSON object.</dd>
+            <dt><tt>A[]</tt>:</dt>
+            <dd>There is an array of values of type <tt>A</tt></dd>
+            <dt><tt>A|B</tt>:</dt>
+            <dd>The value is either of type <tt>A</tt> or of type <tt>B</tt>.</dd>
+          </dl>
+          <t>Other types may also be given; their representations are defined elsewhere in this document.</t>
+        </section>
+        <section anchor="property-attributes" numbered="true" toc="default">
+          <name>Property Attributes</name>
+          <t>Object properties may also have a set of attributes defined along with the type signature. These have the following meanings:</t>
+          <dl spacing="normal">
+            <dt><tt>mandatory</tt>:</dt>
+            <dd>The property <bcp14>MUST</bcp14> be set for an instance of this object to be valid.</dd>
+            <dt><tt>optional</tt>:</dt>
+            <dd>The property can, but need not, be set for an instance of this object to be valid.</dd>
+            <dt><tt>default</tt>:</dt>
+            <dd>This is followed by a JSON value. That value will be used for this property if it is omitted.</dd>
+            <dt><tt>defaultType</tt>:</dt>
+            <dd>This is followed by the name of a JSCalendar object type. A property value of JSCalendar object type is expected to be of this named type, in case it omits the @type property.</dd>
+          </dl>
+        </section>
+        <section anchor="prop-type" numbered="true" toc="default">
+          <name>The @type Property</name>
+          <t>Every JSCalendar object has the following JSON object member:</t>
+          <dl spacing="normal">
+            <dt>
+              <strong>@type: String</strong>
+            </dt>
+            <dd>This is the JSCalendar type of a JSON object. It <bcp14>MUST</bcp14> match the type name of the JSCalendar object of which the JSON object is an instance of.</dd>
+          </dl>
+          <t>The purpose of the @type property is to help implementations identify which JSCalendar object type a given JSON object represents. Implementations <bcp14>MUST</bcp14> validate that JSON objects with this property conform to the specification of the JSCalendar object type of that name.</t>
+          <t>In many cases, the @type property value is implied by where the object occurs in JSCalendar data. Assuming that both <tt>A</tt> and <tt>B</tt> are JSCalendar object types:</t>
+          <ul>
+            <li>An object that is set as the value for a property with type signature <tt>A</tt> <bcp14>MAY</bcp14> have the @type property set. If the @type property is not set, then its value is implied to be <tt>A</tt>.</li>
+            <li>An object that is set as the value for a property with type signature <tt>A|B (defaultType: A)</tt> <bcp14>MAY</bcp14> have the @type property set if it is an instance of <tt>A</tt>. It <bcp14>MUST</bcp14> have the @type property set if it is an instance of <tt>B</tt>. If instead the <tt>defaultType</tt> attribute is not defined, then the @type property <bcp14>MUST</bcp14> also be set for <tt>A</tt>.</li>
+            <li>An object that is not the value of a property, such as the topmost object in JSON data (directly or as a member of an array), <bcp14>MUST</bcp14> have the @type property set.</li>
+          </ul>
+          <t>An object definition <bcp14>MAY</bcp14> require the @type property to be setregardless of the above definitions,  e.g. this document requires the @type property to be set for the Event, Task and Group object types.</t>
+        </section>
       </section>
       <section anchor="data-types">
         <name>Data Types</name>
@@ -223,7 +261,7 @@ signed-duration = ["+" / "-"] duration
           <t>A Relation object defines the relation to other objects, using a possibly empty set of relation types. The object that defines this relation is the linking object, while the other object is the linked object. A Relation object has the following properties:</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Relation</tt>.</dd>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Relation</tt>, if set.</dd>
             <dt>relation: <tt>String[Boolean]</tt> (optional, default: empty Object)</dt>
             <dd>
               <t>This describes how the linked object is related to the linking object. The relation is defined as a set of relation types. Keys in the set <bcp14>MUST</bcp14> be one of the following values, specified in the property definition where the Relation object is used, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
@@ -246,7 +284,7 @@ signed-duration = ["+" / "-"] duration
           <t>A Link object represents an external resource associated with the linking object. It has the following properties:</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Link</tt>.</dd>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Link</tt>, if set.</dd>
             <dt>href: <tt>String</tt> (mandatory)</dt>
             <dd>
               <t>This is a URI<xref target="RFC3986"/> from which the resource may be fetched.</t>
@@ -334,11 +372,6 @@ signed-duration = ["+" / "-"] duration
       <t>This section describes the properties that are common to the various JSCalendar object types. Specific JSCalendar object types may only support a subset of these properties. The object type definitions in <xref target="jscalendar-object-props"/> describe the set of supported properties per type.</t>
       <section anchor="metadata-properties">
         <name>Metadata Properties</name>
-        <section anchor="prop-type">
-          <name>@type</name>
-          <t>Type: <tt>String</tt> (mandatory)</t>
-          <t>This specifies the type that this object represents. The allowed value differs by object type and is defined in Sections <xref target="jsevent" format="counter"/>, <xref target="jstask" format="counter"/>, and <xref target="jsgroup" format="counter"/>.</t>
-        </section>
         <section anchor="prop-uid">
           <name>uid</name>
           <t>Type: <tt>String</tt> (mandatory)</t>
@@ -411,7 +444,7 @@ signed-duration = ["+" / "-"] duration
           <t>A Location object has the following properties. It <bcp14>MUST</bcp14> have at least one property other than the <tt>@type</tt> property.</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Location</tt>.</dd>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Location</tt>, if set.</dd>
             <dt>name: <tt>String</tt> (optional)</dt>
             <dd>This is the human-readable name of the location.</dd>
             <dt>description: <tt>String</tt> (optional)</dt>
@@ -438,7 +471,7 @@ signed-duration = ["+" / "-"] duration
           <t>A VirtualLocation object has the following properties.</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>VirtualLocation</tt>.</dd>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>VirtualLocation</tt>, if set.</dd>
             <dt>name: <tt>String</tt> (optional, default: empty String)</dt>
             <dd>This is the human-readable name of the virtual location.</dd>
             <dt>description: <tt>String</tt> (optional)</dt>
@@ -531,7 +564,7 @@ signed-duration = ["+" / "-"] duration
           <t>A RecurrenceRule object is a JSON object mapping of a RECUR value type in iCalendar <xref target="RFC5545"/> <xref target="RFC7529"/> and has the same semantics. It has the following properties:</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>RecurrenceRule</tt>.</dd>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>RecurrenceRule</tt>, if set.</dd>
             <dt>frequency: <tt>String</tt> (mandatory)</dt>
             <dd>
               <t>This is the time span covered by each iteration of this recurrence rule (see<xref target="recurrence-semantics"/> for full semantics). This <bcp14>MUST</bcp14> be one of the following values:</t>
@@ -619,7 +652,7 @@ signed-duration = ["+" / "-"] duration
               <t>These are days of the week on which to repeat. An <tt>NDay</tt> object has the following properties:</t>
               <dl newline="true">
                 <dt>@type: <tt>String</tt> (mandatory)</dt>
-                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>NDay</tt>.</dd>
+                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>NDay</tt>, if set.</dd>
                 <dt>day: <tt>String</tt> (mandatory)</dt>
                 <dd>
                   <t>This is a day of the week on which to repeat; the allowed values are the same as for the <tt>firstDayOfWeek</tt> recurrenceRule property.</t>
@@ -879,7 +912,7 @@ signed-duration = ["+" / "-"] duration
           <t>A Participant object has the following properties:</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Participant</tt>.</dd>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Participant</tt>, if set.</dd>
             <dt>name: <tt>String</tt> (optional)</dt>
             <dd>This is the display name of the participant (e.g., "Joe Bloggs").</dd>
             <dt>email: <tt>String</tt> (optional)</dt>
@@ -968,14 +1001,14 @@ signed-duration = ["+" / "-"] duration
           <t>An Alert object has the following properties:</t>
           <dl newline="true">
             <dt>@type: <tt>String</tt> (mandatory)</dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Alert</tt>.</dd>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Alert</tt>, if set.</dd>
             <dt>trigger: <tt>OffsetTrigger|AbsoluteTrigger|UnknownTrigger</tt> (mandatory)</dt>
             <dd>
               <t>This defines when to trigger the alert. New types may be defined in future documents.</t>
               <t>An <tt>OffsetTrigger</tt> object has the following properties:</t>
               <dl newline="true">
                 <dt>@type: <tt>String</tt> (mandatory)</dt>
-                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>OffsetTrigger</tt>.</dd>
+                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>OffsetTrigger</tt>, if set.</dd>
                 <dt>offset: <tt>SignedDuration</tt> (mandatory)</dt>
                 <dd>This defines the offset at which to trigger the alert relative to the time property defined in the <tt>relativeTo</tt> property of the alert. Negative durations signify alerts before the time property; positive durations signify alerts after the time property.</dd>
                 <dt>relativeTo: <tt>String</tt> (optional, default: <tt>start</tt> )</dt>
@@ -1849,6 +1882,13 @@ signed-duration = ["+" / "-"] duration
       <section>
         <name>Updated Properties</name>
         <t>The following property definitions were updated:</t>
+        <!-- @type -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>@type</strong>:</dt>
+          <dd>
+            <t>The original definition required this property be set on every object type. The type and property notation in <xref target="type-and-prop-notation"/> now matches the one in JSContact, and the @type property is optional in the majority of cases.</t>
+          </dd>
+        </dl>
         <!-- Alert.relatedTo -->
         <dl newline="true" spacing="normal">
           <dt><strong>Alert.relatedTo</strong>:</dt>
