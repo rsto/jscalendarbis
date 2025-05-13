@@ -14,10 +14,10 @@
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc iprnotified="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-stepanek-jscalendarbis-00" obsoletes="8984" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendarbis-02" obsoletes="8984" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <front>
     <title abbrev="JSCalendar">JSCalendar: A JSON Representation of Calendar Data</title>
-    <seriesInfo name="Internet-Draft" value="draft-stepanek-jscalendarbis-00"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-calext-jscalendarbis-02"/>
     <author initials="N." surname="Jenkins" fullname="Neil Jenkins">
       <organization showOnFrontPage="true">Fastmail</organization>
       <address>
