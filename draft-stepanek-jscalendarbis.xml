@@ -153,7 +153,7 @@
             <li>An object that is set as the value for a property with type signature <tt>A|B (defaultType: A)</tt> <bcp14>MAY</bcp14> have the @type property set if it is an instance of <tt>A</tt>. It <bcp14>MUST</bcp14> have the @type property set if it is an instance of <tt>B</tt>. If instead the <tt>defaultType</tt> attribute is not defined, then the @type property <bcp14>MUST</bcp14> also be set for <tt>A</tt>.</li>
             <li>An object that is not the value of a property, such as the topmost object in JSON data (directly or as a member of an array), <bcp14>MUST</bcp14> have the @type property set.</li>
           </ul>
-          <t>An object definition <bcp14>MAY</bcp14> require the @type property to be setregardless of the above definitions,  e.g. this document requires the @type property to be set for the Event, Task and Group object types.</t>
+          <t>An object definition <bcp14>MAY</bcp14> require the @type property to be set regardless of the above definitions,  e.g. this document requires the @type property to be set for the Event, Task and Group object types.</t>
         </section>
       </section>
       <section anchor="data-types">
