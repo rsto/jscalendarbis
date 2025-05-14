@@ -460,7 +460,7 @@ signed-duration = ["+" / "-"] duration
         <section anchor="prop-mainLocationId">
           <name>mainLocationId</name>
           <t>Type: <tt>String</tt> (optional)</t>
-          <t>This indicates which of the multiple entries in the <tt>locations</tt> property can be considered the main location for the event or task. A client implementation <bcp14>MAY</bcp14> choose to display this location more prominently. The main location is undefined if this property is not set or if its value does not match the key of any Location object.</t>
+          <t>This indicates which of the multiple entries in the <tt>locations</tt> property can be considered the main location for the event or task. A client implementation <bcp14>MAY</bcp14> choose to display this location more prominently. The main location is undefined if this property is not set or if its value does not match the key of any Location object. If this property is set, then the <tt>name</tt> property of the main Location object <bcp14>MUST</bcp14> be set.</t>
         </section>
         <section anchor="prop-virtualLocations">
           <name>virtualLocations</name>
