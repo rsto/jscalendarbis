@@ -1593,7 +1593,7 @@ signed-duration = ["+" / "-"] duration
             </author>
           </front>
         </reference>
-        <reference anchor="I-D.ietf-jmap-calendars" target="https://datatracker.ietf.org/doc/draft-ietf-jmap-calendars/">
+        <reference anchor="jmap-calendars" target="https://datatracker.ietf.org/doc/draft-ietf-jmap-calendars/">
           <front>
             <title>JMAP for Calendars</title>
             <author fullname="Neil Jenkins" initials="N.M." surname="Jenkins">
@@ -1606,7 +1606,7 @@ signed-duration = ["+" / "-"] duration
           </front>
           <seriesInfo name="Internet-Draft" value="draft-ietf-jmap-calendars"/>
         </reference>
-        <reference anchor="I-D.ietf-calext-ical-tasks" target="https://datatracker.ietf.org/doc/draft-ietf-calext-ical-tasks">
+        <reference anchor="ical-tasks" target="https://datatracker.ietf.org/doc/draft-ietf-calext-ical-tasks">
           <front>
             <title>Task Extensions to iCalendar</title>
             <author fullname="Michael Douglass" initials="M." surname="Douglass">
@@ -1736,7 +1736,7 @@ signed-duration = ["+" / "-"] duration
           <dd>
             <t>This became obsolete for the following reasons:</t>
             <ul>
-              <li>It is incompatible with the newly introduced iCalendar <xref target="I-D.ietf-calext-ical-tasks" section="12.1" sectionFormat="parens">VSTATUS component</xref>, which may occur multiple times in the PARTICIPANT and VTODO components.</li>
+              <li>It is incompatible with the newly introduced iCalendar <xref target="ical-tasks" section="12.1" sectionFormat="parens">VSTATUS component</xref>, which may occur multiple times in the PARTICIPANT and VTODO components.</li>
               <li>The VSTATUS component introduces new semantics to a task's progress and status, which better be defined by a future JSCalendar extension for tasks.</li>
             </ul>
             <t>See <xref target="RFC8984" section="4.4.6"/> and <xref target="RFC8984" section="5.2.6"/>.</t>
@@ -1747,7 +1747,7 @@ signed-duration = ["+" / "-"] duration
         <name>Reserved Properties</name>
         <section toc="exclude">
           <name>JMAP for Calendars</name>
-          <t>The following common use properties became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
+          <t>The following common use properties became reserved for <xref target="jmap-calendars">JMAP for Calendars</xref>:</t>
           <!-- useDefaultAlerts -->
           <dl newline="true" spacing="normal">
             <dt><strong>useDefaultAlerts</strong>:</dt>
