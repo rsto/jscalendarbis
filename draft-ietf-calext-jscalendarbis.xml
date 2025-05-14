@@ -175,22 +175,21 @@
         </section>
         <section anchor="type-UTCDateTime">
           <name>UTCDateTime</name>
-          <t>This is a string in the <tt>date-time</tt> <xref target="RFC3339"/> format, with the further restrictions that any letters <bcp14>MUST</bcp14> be in uppercase, and the time offset <bcp14>MUST</bcp14> be the character <tt>Z</tt>. Fractional second values <bcp14>MUST NOT</bcp14> be included unless non-zero and <bcp14>MUST NOT</bcp14> have trailing zeros, to ensure there is only a single representation for each date-time.</t>
-          <t>For example, <tt>2010-10-10T10:10:10.003Z</tt> is conformant, but <tt>2010-10-10T10:10:10.000Z</tt> is invalid and is correctly encoded as <tt>2010-10-10T10:10:10Z</tt>.</t>
+          <t>This is a string in the <tt>date-time</tt> <xref target="RFC3339"/> format, with the further restrictions that any letters <bcp14>MUST</bcp14> be in uppercase, and the time offset <bcp14>MUST</bcp14> be the character <tt>Z</tt>. Fractional second values <bcp14>MUST NOT</bcp14> be included.</t>
+          <t>For example, <tt>2010-10-10T10:10:10Z</tt> is conformant, but <tt>2010-10-10T10:10:10.0Z</tt> or <tt>2010-10-10T10:10:10.123Z</tt> are invalid.</t>
         </section>
         <section anchor="type-LocalDateTime">
           <name>LocalDateTime</name>
-          <t>This is a date-time string with no time zone/offset information. It is otherwise in the same format as UTCDateTime, including fractional seconds. For example, <tt>2006-01-02T15:04:05</tt> and <tt>2006-01-02T15:04:05.003</tt> are both valid. The time zone to associate with the LocalDateTime comes from the <tt>timeZone</tt> property of the JSCalendar object (see <xref target="prop-timeZone"/>). If no time zone is specified, the LocalDateTime is <tt>floating</tt>. Floating date-times are not tied to any specific time zone. Instead, they occur in each time zone at the given wall-clock time (as opposed to the same instant point in time).</t>
+          <t>This is a date-time string with no time zone/offset information. It is otherwise in the same format as UTCDateTime. For example, <tt>2006-01-02T15:04:05</tt> is valid. The time zone to associate with the LocalDateTime comes from the <tt>timeZone</tt> property of the JSCalendar object (see <xref target="prop-timeZone"/>). If no time zone is specified, the LocalDateTime is "floating". Floating date-times are not tied to any specific time zone. Instead, they occur in each time zone at the given wall-clock time (as opposed to the same instant point in time).</t>
           <t>A time zone may have a period of discontinuity, for example, a change from standard time to daylight savings time. When converting local date-times that fall in the discontinuity to UTC, the offset before the transition <bcp14>MUST</bcp14> be used.</t>
-          <t>For example, in the America/Los_Angeles time zone, the date-time 2020-11-01T01:30:00 occurs twice: before the daylight savings time (DST) transition with a UTC offset of -07:00 and again after the transition with an offset of -08:00. When converting to UTC, we therefore use the offset before the transition (-07:00), so it becomes 2020-11-01T08:30:00Z.</t>
-          <t>Similarly, in the Australia/Melbourne time zone, the date-time 2020-10-04T02:30:00 does not exist; the clocks are moved forward one hour for DST on that day at 02:00. However, such a value may appear during calculations (see duration semantics in <xref target="type-Duration"/>) or due to a change in time zone rules (so it was valid when the event was first created). Again, it is interpreted as though the offset before the transition is in effect (+10:00); therefore, when converted to UTC, we get 2020-10-03T16:30:00Z.</t>
+          <t>For example, in the <tt>America/Los_Angeles</tt> time zone, the date-time <tt>2020-11-01T01:30:00</tt> occurs twice: before the daylight savings time (DST) transition with a UTC offset of -07:00 and again after the transition with an offset of -08:00. When converting to UTC, we therefore use the offset before the transition (-07:00), so it becomes <tt>2020-11-01T08:30:00Z</tt>.</t>
+          <t>Similarly, in the <tt>Australia/Melbourne</tt> time zone, the date-time <tt>2020-10-04T02:30:00</tt> does not exist; the clocks are moved forward one hour for DST on that day at 02:00. However, such a value may appear during calculations (see duration semantics in <xref target="type-Duration"/>) or due to a change in time zone rules (so it was valid when the event was first created). Again, it is interpreted as though the offset before the transition is in effect (+10:00); therefore, when converted to UTC, we get <tt>2020-10-03T16:30:00Z</tt>.</t>
         </section>
         <section anchor="type-Duration">
           <name>Duration</name>
           <t>Where Duration is given as a type, it means a length of time represented by a subset of the ISO 8601 duration format, as specified by the following ABNF <xref target="RFC5234"/>:</t>
           <sourcecode name="" type="abnf">
-    dur-secfrac = "." 1*DIGIT
-    dur-second  = 1*DIGIT [dur-secfrac] "S"
+    dur-second  = 1*DIGIT "S"
     dur-minute  = 1*DIGIT "M" [dur-second]
     dur-hour    = 1*DIGIT "H" [dur-minute]
     dur-time    = "T" (dur-hour / dur-minute / dur-second)
@@ -200,7 +199,6 @@
 
     duration    = "P" (dur-cal [dur-time] / dur-time)
 </sourcecode>
-          <t>In addition, the duration <bcp14>MUST NOT</bcp14> include fractional second values unless the fraction is non-zero. Fractional second values <bcp14>MUST NOT</bcp14> have trailing zeros to ensure there is only a single representation for each duration.</t>
           <t>A duration specifies an abstract number of weeks, days, hours, minutes, and/or seconds. A duration specified using weeks or days does not always correspond to an exact multiple of 24 hours. The number of hours/minutes/seconds may vary if it overlaps a period of discontinuity in the event's time zone, for example, a change from standard time to daylight savings time. Leap seconds <bcp14>MUST NOT</bcp14> be considered when adding or subtracting a duration to/from a LocalDateTime.</t>
           <t>To add a duration to a LocalDateTime:</t>
           <ol>
@@ -2019,6 +2017,17 @@ signed-duration = ["+" / "-"] duration
           <dd>
             <t>This is for consistency with the definition of the Location object type. The newly defined VCONFERENCE component will be allowed to contain the <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref>.</t>
             <t>See <xref target="prop-virtualLocations" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <name>Updated Types</name>
+        <t>The following type definitions were updated:</t>
+        <!-- Duration, LocalDateTime, UTCDateTime -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Duration, LocalDateTime, UTCDateTime</strong>:</dt>
+          <dd>
+            <t>The original definitions supported fractional seconds. This is incompatible with the iCalendar DATE-TIME and DURATION types defined in <xref target="RFC5545" section="3.3.5"/> and <xref target="RFC5545" section="3.3.6"/>.</t>
           </dd>
         </dl>
       </section>
