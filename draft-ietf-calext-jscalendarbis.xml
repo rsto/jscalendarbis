@@ -473,7 +473,7 @@ signed-duration = ["+" / "-"] duration
             <dt>name: <tt>String</tt> (optional, default: empty String)</dt>
             <dd>This is the human-readable name of the virtual location.</dd>
             <dt>description: <tt>String</tt> (optional)</dt>
-            <dd>These are human-readable plain-text instructions for accessing this virtual location. This may be a conference access code, etc.</dd>
+            <dd>These are human-readable instructions for accessing this virtual location. This may be a conference access code, etc.</dd>
             <dt>descriptionContentType: <tt>String</tt> (optional)</dt>
             <dd>This describes the media type of the contents of the <tt>description</tt> property. Its requirements are specified in <xref target="prop-descriptionContentType"/>. If this property is set, then the description property <bcp14>MUST</bcp14> be set.</dd>
             <dt>uri: <tt>String</tt> (mandatory)</dt>
@@ -916,7 +916,9 @@ signed-duration = ["+" / "-"] duration
             <dt>email: <tt>String</tt> (optional)</dt>
             <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</dd>
             <dt>description: <tt>String</tt> (optional)</dt>
-            <dd>This is a plain-text description of this participant. For example, this may include more information about their role in the event or how best to contact them.</dd>
+            <dd>This is a description of this participant. For example, this may include more information about their role in the event or how best to contact them.</dd>
+            <dt>descriptionContentType: <tt>String</tt> (optional)</dt>
+            <dd>This describes the media type of the contents of the <tt>description</tt> property. Its requirements are specified in <xref target="prop-descriptionContentType"/>. If this property is set, then the description property <bcp14>MUST</bcp14> be set.</dd>
             <dt>calendarAddress: <tt>String</tt> (optional)</dt>
             <dd>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.1" sectionFormat="parens">ATTENDEE property</xref> or <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular participant, even across different calendaring objects.</dd>
             <dt>kind: <tt>String</tt> (optional)</dt>
@@ -2009,6 +2011,14 @@ signed-duration = ["+" / "-"] duration
           <dd>
             <t>This replaces the reserved Participant.sendTo property.</t>
             <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.descriptionContentType -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.descriptionContentType</strong>:</dt>
+          <dd>
+            <t>This is for compatibility with the iCalendar <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref> of the PARTICIPANT component.</t>
+            <t>See <xref target="prop-locations" sectionFormat="of"/>.</t>
           </dd>
         </dl>
         <!-- VirtualLocation.descriptionContentType -->
