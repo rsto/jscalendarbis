@@ -1060,22 +1060,6 @@ signed-duration = ["+" / "-"] duration
           </dl>
         </section>
       </section>
-      <section anchor="localized-props">
-        <name>Multilingual Properties</name>
-        <section anchor="prop-localizations">
-          <name>localizations</name>
-          <t>Type: <tt>String[PatchObject]</tt> (optional)</t>
-          <t>A map where each key is a language tag <xref target="RFC5646"/>, and the corresponding value is a set of patches to apply to the calendar object in order to localize it into that locale.</t>
-          <t>See the description of <xref target="type-PatchObject">PatchObject</xref> for the structure of the PatchObject. The patches are applied to the top-level calendar object. In addition, the <tt>locale</tt> property of the patched object is set to the language tag. All pointers for patches <bcp14>MUST</bcp14> end with one of the following suffixes; any patch that does not follow this <bcp14>MUST</bcp14> be ignored unless otherwise specified in a future RFC:</t>
-          <ul>
-            <li>title</li>
-            <li>description</li>
-            <li>name</li>
-          </ul>
-          <t>A patch <bcp14>MUST NOT</bcp14> have the prefix <tt>recurrenceOverrides</tt> ; any localization of the override <bcp14>MUST</bcp14> be a patch to the <tt>localizations</tt> property inside the override instead. For example, a patch to <tt>locations/abcd1234/title</tt> is permissible, but a patch to <tt>uid</tt> or <tt>recurrenceOverrides/2020-01-05T14:00:00/title</tt> is not.</t>
-          <t>Note that this specification does not define how to maintain validity of localized content. For example, a client application changing a JSCalendar object's <tt>title</tt> property might also need to update any localizations of this property. Client implementations <bcp14>SHOULD</bcp14> provide the means to manage localizations, but how to achieve this is specific to the application's workflow and requirements.</t>
-        </section>
-      </section>
       <section anchor="timezone-props">
         <name>Time Zone Properties</name>
         <section anchor="prop-timeZone">
@@ -1327,8 +1311,8 @@ signed-duration = ["+" / "-"] duration
 </sourcecode>
       </section>
       <section anchor="example-multi-location-event">
-        <name>Event with Multiple Locations and Localization</name>
-        <t>This example illustrates an event that happens at both a physical and a virtual location. Fans can see a live concert on premises or online. The event title and descriptions are localized.</t>
+        <name>Event with Physical and Virtual Location</name>
+        <t>This example illustrates an event that happens at both a physical and a virtual location. Fans can see a live concert on premises or online.</t>
         <sourcecode name="" type="json">
 {
   "...": "",
@@ -1349,14 +1333,6 @@ signed-duration = ["+" / "-"] duration
     "vloc1": {
       "name": "Free live Stream from Music Bowl",
       "uri": "https://stream.example.com/the_band_2020"
-    }
-  },
-  "localizations": {
-    "de": {
-      "title": "Live von der Music Bowl: The Band!",
-      "description": "Schau dir das größte Musikereignis an!",
-      "virtualLocations/vloc1/name":
-        "Gratis Live-Stream aus der Music Bowl"
     }
   }
 }
@@ -1848,6 +1824,18 @@ signed-duration = ["+" / "-"] duration
             <dd>
               <t>This requires further work by IETF. For compatibility with iCalendar, the newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
               <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+        </section>
+        <section toc="exclude">
+          <name>Localization Extensions for iCalendar and JSCalendar</name>
+          <t>The following properties became reserved for future JSCalendar and iCalendar extensions for multi-lingual calendar data:</t>
+          <!-- localizations -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>localizations</strong>:</dt>
+            <dd>
+              <t>This requires further work by IETF. The "localizations" property primarily was introduced in JSCalendar for event publishing, but neither the <xref target="RFC9073">Event Publishing extensions for iCalendar</xref> nor other iCalendar extensions define how to localize iCalendar data. This property may later be redefined for common use.</t>
+              <t>See <xref target="RFC8984" section="4.6.1" sectionFormat="of"/>.</t>
             </dd>
           </dl>
         </section>
