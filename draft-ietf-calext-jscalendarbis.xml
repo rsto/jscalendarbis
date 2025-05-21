@@ -1312,7 +1312,7 @@ signed-duration = ["+" / "-"] duration
       </section>
       <section anchor="example-multi-location-event">
         <name>Event with Physical and Virtual Location</name>
-        <t>This example illustrates an event that happens at both a physical and a virtual location. Fans can see a live concert on premises or online.</t>
+        <t>This example illustrates an event that happens at both a physical and a virtual location. Fans can see a live concert on premises or online. In addition to the main event location, the event contains an additional location for a nearby parking garage.</t>
         <sourcecode name="" type="json">
 {
   "...": "",
@@ -1322,11 +1322,19 @@ signed-duration = ["+" / "-"] duration
   "start": "2020-07-04T17:00:00",
   "timeZone": "America/New_York",
   "duration": "PT3H",
+  "mainLocationId": "c0503d30-8c50-4372-87b5-7657e8e0fedd",
   "locations": {
     "c0503d30-8c50-4372-87b5-7657e8e0fedd": {
       "name": "The Music Bowl",
       "description": "Music Bowl, Central Park, New York",
       "coordinates": "geo:40.7829,-73.9654"
+    },
+    "ee42e41e-1046-4489-9760-c0b85f0dc176": {
+      "name": "BAZ Parking, 9 West 57th Street, New York",
+      "coordinates": "geo:40.7637,-73.9748",
+      "locationType": {
+        "parking": true
+      }
     }
   },
   "virtualLocations": {
