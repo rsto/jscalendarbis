@@ -1105,16 +1105,17 @@ signed-duration = ["+" / "-"] duration
       </section>
       <section anchor="jstask-props">
         <name>Task Properties</name>
-        <t>In addition to the common JSCalendar object <xref target="jscalendar-props">properties</xref>, a Task has the following properties:</t>
+        <t>In addition to the common JSCalendar object <xref target="jscalendar-props">properties</xref>, a Task has the following properties.</t>
+        <t>If the <tt>timeZone</tt> property value is not null or the <tt>showWithoutTime</tt> property value is "true", then at least one of the <tt>due</tt> and <tt>start</tt> properties <bcp14>MUST</bcp14> be set.</t>
         <section anchor="prop-due">
           <name>due</name>
           <t>Type: <tt>LocalDateTime</tt> (optional)</t>
-          <t>This is the date/time the task is due in the task's time zone. If the <tt>timeZone</tt> property is set, then at least one of the <tt>due</tt> and <tt>start</tt> properties <bcp14>MUST</bcp14> be set</t>
+          <t>This is the date/time the task is due in the task's time zone.</t>
         </section>
         <section anchor="prop-start-jstask">
           <name>start</name>
           <t>Type: <tt>LocalDateTime</tt> (optional)</t>
-          <t>This the date/time the task should start in the task's time zone. If the <tt>timeZone</tt> property is set, then at least one of the <tt>due</tt> and <tt>start</tt> properties <bcp14>MUST</bcp14> be set</t>
+          <t>This the date/time the task should start in the task's time zone.</t>
         </section>
         <section anchor="prop-estimatedDuration">
           <name>estimatedDuration</name>
