@@ -1115,7 +1115,7 @@ signed-duration = ["+" / "-"] duration
         <section anchor="prop-start-jstask">
           <name>start</name>
           <t>Type: <tt>LocalDateTime</tt> (optional)</t>
-          <t>This the date/time the task should start in the task's time zone.</t>
+          <t>This the date/time the task should start in the task's time zone. This <bcp14>MUST</bcp14> be set if the <tt>recurrenceRule</tt> property is set.</t>
         </section>
         <section anchor="prop-estimatedDuration">
           <name>estimatedDuration</name>
