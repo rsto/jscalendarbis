@@ -1115,7 +1115,7 @@ signed-duration = ["+" / "-"] duration
         <section anchor="prop-start-jstask">
           <name>start</name>
           <t>Type: <tt>LocalDateTime</tt> (optional)</t>
-          <t>This the date/time the task should start in the task's time zone. This <bcp14>MUST</bcp14> be set if the <tt>recurrenceRule</tt> property is set.</t>
+          <t>This the date/time the task should start in the task's time zone. This <bcp14>MUST</bcp14> be set if the <tt>recurrenceRule</tt> or <tt>recurrenceId</tt> properties are set.</t>
         </section>
         <section anchor="prop-estimatedDuration">
           <name>estimatedDuration</name>
@@ -1963,6 +1963,8 @@ signed-duration = ["+" / "-"] duration
           <dt><strong>Task.{due|start}</strong>:</dt>
           <dd>
             <t>The original definition defined these as optional, but this is incompatible with iCalendar: if the Task object's timeZone property is set, then it requires the <xref target="RFC5545" section="3.8.2.3" sectionFormat="parens">DUE property</xref> or <xref target="RFC5545" section="3.8.2.4" sectionFormat="parens">DTSTART property</xref> be set in the VTODO component. It now requires at least one of the "due" or "start" properties be set, if the "timeZone" property is set.</t>
+            <t>The original definition did not require the "start" property be set if the "recurrenceRule" property is set. But this is incompatible with the <xref target="RFC5545" section="3.8.5.3" sectionFormat="parens">RRULE property</xref>, which requires the DTSTART property be set in the VTODO component. The "start" property now is required if the "recurrenceRule" or "recurrenceId" properties are set.</t>
+            <t>The "showWithoutTime" property having value "true" now requires at least one of the "due" or "start" properties be set.</t>
             <t>See <xref target="jstask-props" sectionFormat="of"/>.</t>
           </dd>
         </dl>
