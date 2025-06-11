@@ -258,7 +258,7 @@ signed-duration = ["+" / "-"] duration
           <name>Relation</name>
           <t>A Relation object defines the relation to other objects, using a possibly empty set of relation types. The object that defines this relation is the linking object, while the other object is the linked object. A Relation object has the following properties:</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt> (mandatory)</dt>
+            <dt>@type: <tt>String</tt></dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Relation</tt>, if set.</dd>
             <dt>relation: <tt>String[Boolean]</tt> (optional, default: empty Object)</dt>
             <dd>
@@ -281,7 +281,7 @@ signed-duration = ["+" / "-"] duration
           <name>Link</name>
           <t>A Link object represents an external resource associated with the linking object. It has the following properties:</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt> (mandatory)</dt>
+            <dt>@type: <tt>String</tt></dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Link</tt>, if set.</dd>
             <dt>href: <tt>String</tt> (mandatory)</dt>
             <dd>
@@ -322,19 +322,19 @@ signed-duration = ["+" / "-"] duration
         <name>Event</name>
         <t>Media type: <tt>application/jscalendar+json;type=event</tt></t>
         <t>An Event represents a scheduled amount of time on a calendar, typically a meeting, appointment, reminder, or anniversary. It is required to start at a certain point in time and typically has a non-zero duration. Multiple participants may partake in the event.</t>
-        <t>The <xref target="prop-type">@type</xref> property value <bcp14>MUST</bcp14> be <tt>Event</tt>.</t>
+        <t>The <xref target="prop-type">@type</xref> property is mandatory, it <bcp14>MUST</bcp14> be set to value <tt>Event</tt>.</t>
       </section>
       <section anchor="jstask">
         <name>Task</name>
         <t>Media type: <tt>application/jscalendar+json;type=task</tt></t>
         <t>A Task represents an action item, assignment, to-do item, or work item. It may start and be due at certain points in time, take some estimated time to complete, and recur, none of which is required.</t>
-        <t>The <xref target="prop-type">@type</xref> property value <bcp14>MUST</bcp14> be <tt>Task</tt>.</t>
+        <t>The <xref target="prop-type">@type</xref> property is mandatory, it <bcp14>MUST</bcp14> be set to value <tt>Task</tt>.</t>
       </section>
       <section anchor="jsgroup">
         <name>Group</name>
         <t>Media type: <tt>application/jscalendar+json;type=group</tt></t>
         <t>A Group is a collection of <xref target="jsevent">Event</xref> and/or <xref target="jstask">Task</xref> objects. Typically, objects are grouped by topic (e.g., by keywords) or calendar membership.</t>
-        <t>The <xref target="prop-type">@type</xref> property value <bcp14>MUST</bcp14> be <tt>Group</tt>.</t>
+        <t>The <xref target="prop-type">@type</xref> property is mandatory, it <bcp14>MUST</bcp14> be set to value <tt>Group</tt>.</t>
       </section>
     </section>
     <section anchor="structure-of-jscalendar-objects">
@@ -441,7 +441,7 @@ signed-duration = ["+" / "-"] duration
           <t>This is a map of location ids to Location objects, representing locations associated with the object.</t>
           <t>A Location object has the following properties. It <bcp14>MUST</bcp14> have at least one property other than the <tt>@type</tt> property.</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt> (mandatory)</dt>
+            <dt>@type: <tt>String</tt></dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Location</tt>, if set.</dd>
             <dt>name: <tt>String</tt> (optional)</dt>
             <dd>This is the human-readable name or short description of the location, such as an address.</dd>
@@ -468,7 +468,7 @@ signed-duration = ["+" / "-"] duration
           <t>This is a map of virtual location ids to VirtualLocation objects, representing virtual locations, such as video conferences or chat rooms, associated with the object.</t>
           <t>A VirtualLocation object has the following properties.</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt> (mandatory)</dt>
+            <dt>@type: <tt>String</tt></dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>VirtualLocation</tt>, if set.</dd>
             <dt>name: <tt>String</tt> (optional, default: empty String)</dt>
             <dd>This is the human-readable name or short description of the virtual location, such as an access code.</dd>
@@ -561,7 +561,7 @@ signed-duration = ["+" / "-"] duration
           <t>A Task recurs by applying the recurrence rule to the <tt>start</tt> date-time, if defined; otherwise, it recurs by the <tt>due</tt> date-time, if defined. If the task defines neither a <tt>start</tt> nor <tt>due</tt> date-time, it <bcp14>MUST NOT</bcp14> define a <tt>recurrenceRule</tt> property.</t>
           <t>A RecurrenceRule object is a JSON object mapping of a RECUR value type in iCalendar <xref target="RFC5545"/> <xref target="RFC7529"/> and has the same semantics. It has the following properties:</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt> (mandatory)</dt>
+            <dt>@type: <tt>String</tt></dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>RecurrenceRule</tt>, if set.</dd>
             <dt>frequency: <tt>String</tt> (mandatory)</dt>
             <dd>
@@ -649,7 +649,7 @@ signed-duration = ["+" / "-"] duration
             <dd>
               <t>These are days of the week on which to repeat. An <tt>NDay</tt> object has the following properties:</t>
               <dl newline="true">
-                <dt>@type: <tt>String</tt> (mandatory)</dt>
+                <dt>@type: <tt>String</tt></dt>
                 <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>NDay</tt>, if set.</dd>
                 <dt>day: <tt>String</tt> (mandatory)</dt>
                 <dd>
@@ -909,7 +909,7 @@ signed-duration = ["+" / "-"] duration
           <t>If this property is set and any participant has a <tt>calendarAddress</tt> property set, then the <tt>organizerCalendarAddress</tt> property of this calendar object <bcp14>MUST</bcp14> be set.</t>
           <t>A Participant object has the following properties:</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt> (mandatory)</dt>
+            <dt>@type: <tt>String</tt></dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Participant</tt>, if set.</dd>
             <dt>name: <tt>String</tt> (optional)</dt>
             <dd>This is the display name of the participant (e.g., "Joe Bloggs").</dd>
@@ -1000,14 +1000,14 @@ signed-duration = ["+" / "-"] duration
           <t>This is a map of alert ids to Alert objects, representing alerts/reminders to display or send to the user for this calendar object.</t>
           <t>An Alert object has the following properties:</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt> (mandatory)</dt>
+            <dt>@type: <tt>String</tt></dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Alert</tt>, if set.</dd>
             <dt>trigger: <tt>OffsetTrigger|AbsoluteTrigger|UnknownTrigger</tt> (mandatory, defaultType: <tt>OffsetTrigger</tt>)</dt>
             <dd>
               <t>This defines when to trigger the alert. New types may be defined in future documents.</t>
               <t>An <tt>OffsetTrigger</tt> object has the following properties:</t>
               <dl newline="true">
-                <dt>@type: <tt>String</tt> (mandatory)</dt>
+                <dt>@type: <tt>String</tt></dt>
                 <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>OffsetTrigger</tt>, if set.</dd>
                 <dt>offset: <tt>SignedDuration</tt> (mandatory)</dt>
                 <dd>This defines the offset at which to trigger the alert relative to the time property defined in the <tt>relativeTo</tt> property of the alert. Negative durations signify alerts before the time property; positive durations signify alerts after the time property.</dd>
@@ -1024,7 +1024,7 @@ signed-duration = ["+" / "-"] duration
               </dl>
               <t>An <tt>AbsoluteTrigger</tt> object has the following properties:</t>
               <dl newline="true">
-                <dt>@type: <tt>String</tt> (mandatory)</dt>
+                <dt>@type: <tt>String</tt></dt>
                 <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>AbsoluteTrigger</tt>.</dd>
                 <dt>when: <tt>UTCDateTime</tt> (mandatory)</dt>
                 <dd>This defines a specific UTC date-time when the alert is triggered.</dd>
