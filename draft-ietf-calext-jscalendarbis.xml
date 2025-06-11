@@ -380,8 +380,8 @@ signed-duration = ["+" / "-"] duration
         <section anchor="prop-relatedTo">
           <name>relatedTo</name>
           <t>Type: <tt>String[Relation]</tt> (optional)</t>
-          <t>This relates the object to other JSCalendar objects. This is represented as a map of the UIDs of the related objects to information about the relation.</t>
-          <t>If an object is split to make a "this and future" change to a recurrence, the original object <bcp14>MUST</bcp14> be truncated to end at the previous occurrence before this split, and a new object is created to represent all the occurrences after the split. A <tt>next</tt> relation <bcp14>MUST</bcp14> be set on the original object's <tt>relatedTo</tt> property for the UID of the new object. A <tt>first</tt> relation for the UID of the first object in the series <bcp14>MUST</bcp14> be set on the new object. Clients can then follow these UIDs to get the complete set of objects if the user wishes to modify them all at once.</t>
+          <t>This relates the object to other JSCalendar objects. Each key in the map is the <tt>uid</tt> property value of a related object. The value defines the type of the relation.</t>
+          <t>If an object is split to make a "this and future" change to a recurrence, the original object <bcp14>MUST</bcp14> be truncated to end at the previous occurrence before this split, and a new object is created to represent all the occurrences after the split. A <tt>next</tt> relation <bcp14>MUST</bcp14> be set on the original object's <tt>relatedTo</tt> property, keyed by the uid of the new object. A <tt>first</tt> relation  <bcp14>MUST</bcp14> be set on the new object, keyed by the uid of the first object in the series. Clients can then follow these uid keys to get the complete set of objects if the user wishes to modify them all at once.</t>
         </section>
         <section anchor="prop-prodId">
           <name>prodId</name>
@@ -1039,7 +1039,7 @@ signed-duration = ["+" / "-"] duration
             </dd>
             <dt>relatedTo: <tt>String[Relation]</tt> (optional)</dt>
             <dd>
-              <t>This relates this alert to other alerts in the same JSCalendar object. In addition to the relation values defined in <xref target="type-Relation"/>, the following key is allowed:</t>
+              <t>This relates this alert to other alerts in the same JSCalendar object. Each key in the map is the key of an Alert object in the <tt>alerts</tt> property. The value defines the type of the relation. In addition to the relation values defined in <xref target="type-Relation"/>, the following key is allowed:</t>
               <dl newline="false">
                 <dt><tt>snooze</tt>:</dt>
                 <dd>The linked alert is snoozed by this alert.</dd>
@@ -3092,6 +3092,7 @@ signed-duration = ["+" / "-"] duration
           <dt><strong>Alert.relatedTo</strong>:</dt>
           <dd>
             <t>The original definition instructed to set the "parent" relation on a snooze alert. It now instructs to set the newly defined "snooze" relation, for compatibility with the VALARM "SNOOZE" relationship type (<xref target="RFC9074" section="7" sectionFormat="of"/>.</t>
+            <t>The original definition did not define that the map keys represent keys of Alert objects in the "alerts" property.</t>
             <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
           </dd>
         </dl>
