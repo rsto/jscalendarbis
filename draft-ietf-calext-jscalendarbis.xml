@@ -225,7 +225,7 @@ signed-duration = ["+" / "-"] duration
 </sourcecode>
           <t>A negative sign indicates a point in time at or before the associated time; a positive or no sign indicates a time at or after the associated time.</t>
         </section>
-        <section anchor="type-timeZoneId">
+        <section anchor="type-TimeZoneId">
           <name>TimeZoneId</name>
           <t>Where <tt>TimeZoneId</tt> is given as a data type, it means a <tt>String</tt> that is a time zone name in the IANA Time Zone Database <xref target="TZDB"/>. The zone rules of the respective IANA time zone records apply.</t>
         </section>
@@ -1482,7 +1482,1215 @@ signed-duration = ["+" / "-"] duration
     </section>
     <section anchor="iana-considerations">
       <name>IANA Considerations</name>
-      <t>TBD</t>
+      <section>
+        <name>Changes to the JSCalendar Properties Registry</name>
+        <t>IANA will set the Reference of the registry to this document, rather than obsoleted <xref target="RFC8984"/>.</t>
+        <t>The remainder of this section describes the changes that IANA will apply to the entries in the JSCalendar Properties Registry.</t>
+        <section>
+          <name>Obsoleted Properties</name>
+          <t>IANA will change the Intended Status from "common" to "obsolete" for the following entries in the JSCalendar Properties Registry. For each entry, the Reference/Description column will refer to <xref target="appendix-obsolete-properties"/> of this document.</t>
+          <ul>
+            <li>aliases</li>
+            <li>cid</li>
+            <li>comments</li>
+            <li>daylight</li>
+            <li>excludedRecurrenceRules</li>
+            <li>language</li>
+            <li>locationId</li>
+            <li>names</li>
+            <li>offsetFrom</li>
+            <li>offsetTo</li>
+            <li>progressUpdated</li>
+            <li>recurrenceRules</li>
+            <li>standard</li>
+            <li>timeZones</li>
+            <li>tzId</li>
+            <li>url</li>
+            <li>validUntil</li>
+          </ul>
+        </section>
+        <section>
+          <name>Reserved Properties</name>
+          <t>IANA will change the Intended Status from "common" to "reserved" for the following entries in the JSCalendar Properties Registry. For each entry, the Reference/Description column will refer to <xref target="appendix-reserved-properties"/> of this document.</t>
+          <ul>
+            <li>excluded</li>
+            <li>invitedBy</li>
+            <li>localizations</li>
+            <li>participationComment</li>
+            <li>replyTo</li>
+            <li>requestStatus</li>
+            <li>scheduleAgent</li>
+            <li>scheduleForceSend</li>
+            <li>scheduleSequence</li>
+            <li>scheduleStatus</li>
+            <li>scheduleUpdated</li>
+            <li>sendTo</li>
+            <li>useDefaultAlerts</li>
+          </ul>
+        </section>
+        <section>
+          <name>Removed Properties</name>
+          <t>IANA will remove the entry having Property Name "start" and Property Context "TimeZoneRule".</t>
+        </section>
+        <section>
+          <name>Updated Properties</name>
+          <t>IANA will update the following entries in the JSCalendar Properties Registry. For each entry, the Property Name and its changed fields are listed. Unchanged fields are omitted. Referenced section numbers refer to this document, unless otherwise noted.</t>
+          <!-- @type -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>@type</dd>
+            <dt>Property Context</dt>
+            <dd>Event, Task, Group, AbsoluteTrigger, Alert, Link, Location, NDay, OffsetTrigger, Participant, RecurrenceRule, Relation, VirtualLocation</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-type"/>
+            </dd>
+          </dl>
+          <!-- acknowledged -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>acknowledged</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+          </dl>
+          <!-- action -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>action</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+          </dl>
+          <!-- alerts -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>alerts</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+          </dl>
+          <!-- byDay -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>byDay</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- byHour -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>byHour</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- byMinute -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>byMinute</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- byMonth -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>byMonth</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- byMonthDay -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>byMonthDay</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- bySecond -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>bySecond</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- bySetPosition -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>bySetPosition</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- byWeekNo -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>byWeekNo</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- byYearDay -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>byYearDay</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- calendarAddress -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>calendarAddress</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- categories -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>categories</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-categories"/>
+            </dd>
+          </dl>
+          <!-- color -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>color</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-color"/>
+            </dd>
+          </dl>
+          <!-- contentType -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>contentType</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Link"/>
+            </dd>
+          </dl>
+          <!-- coordinates -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>coordinates</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-locations"/>
+            </dd>
+          </dl>
+          <!-- count -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>count</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- created -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>created</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-created"/>
+            </dd>
+          </dl>
+          <!-- day -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>day</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- delegatedFrom -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>delegatedFrom</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- delegatedTo -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>delegatedTo</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- description -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>description</dd>
+            <dt>Reference/Description</dt>
+            <dd><xref target="prop-description"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/>, <xref target="prop-virtualLocations"/></dd>
+          </dl>
+          <!-- descriptionContentType -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>descriptionContentType</dd>
+            <dt>Property Context</dt>
+            <dd>Event, Task, Location, Participant, VirtualLocation</dd>
+            <dt>Reference/Description</dt>
+            <dd><xref target="prop-description"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/>, <xref target="prop-virtualLocations"/></dd>
+          </dl>
+          <!-- display -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>display</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Link"/>
+            </dd>
+          </dl>
+          <!-- due -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>due</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-due"/>
+            </dd>
+          </dl>
+          <!-- duration -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>duration</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-duration"/>
+            </dd>
+          </dl>
+          <!-- email -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>email</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- entries -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>entries</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-entries"/>
+            </dd>
+          </dl>
+          <!-- estimatedDuration -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>estimatedDuration</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-estimatedDuration"/>
+            </dd>
+          </dl>
+          <!-- expectReply -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>expectReply</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- features -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>features</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-virtualLocations"/>
+            </dd>
+          </dl>
+          <!-- firstDayOfWeek -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>firstDayOfWeek</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- freeBusyStatus -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>freeBusyStatus</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-freeBusyStatus"/>
+            </dd>
+          </dl>
+          <!-- frequency -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>frequency</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- href -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>href</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Link"/>
+            </dd>
+          </dl>
+          <!-- interval -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>interval</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- keywords -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>keywords</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-keywords"/>
+            </dd>
+          </dl>
+          <!-- kind -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>kind</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- links -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>links</dd>
+            <dt>Reference/Description</dt>
+            <dd><xref target="prop-links"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/></dd>
+          </dl>
+          <!-- locale -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>locale</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-locale"/>
+            </dd>
+          </dl>
+          <!-- locationTypes -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>locationTypes</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-locations"/>
+            </dd>
+          </dl>
+          <!-- locations -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>locations</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-locations"/>
+            </dd>
+          </dl>
+          <!-- memberOf -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>memberOf</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- method -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>method</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-method"/>
+            </dd>
+          </dl>
+          <!-- name -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>name</dd>
+            <dt>Reference/Description</dt>
+            <dd><xref target="prop-locations"/>, <xref target="prop-virtualLocations"/>, <xref target="prop-participants"/></dd>
+          </dl>
+          <!-- nthOfPeriod -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>nthOfPeriod</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- offset -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>offset</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+          </dl>
+          <!-- participants -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>participants</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- participationStatus -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>participationStatus</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- percentComplete -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>percentComplete</dd>
+            <dt>Reference/Description</dt>
+            <dd><xref target="prop-percentComplete"/>, <xref target="prop-participants"/></dd>
+          </dl>
+          <!-- priority -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>priority</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-priority"/>
+            </dd>
+          </dl>
+          <!-- privacy -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>privacy</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-privacy"/>
+            </dd>
+          </dl>
+          <!-- prodId -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>prodId</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-prodId"/>
+            </dd>
+          </dl>
+          <!-- progress -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>progress</dd>
+            <dt>Reference/Description</dt>
+            <dd><xref target="prop-progress"/>, <xref target="prop-participants"/></dd>
+          </dl>
+          <!-- recurrenceId -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>recurrenceId</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceId"/>
+            </dd>
+          </dl>
+          <!-- recurrenceIdTimeZone -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>recurrenceIdTimeZone</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceIdTimeZone"/>
+            </dd>
+          </dl>
+          <!-- recurrenceOverrides -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>recurrenceOverrides</dd>
+            <dt>Property Content</dt>
+            <dd>Event, Task</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceOverrides"/>
+            </dd>
+          </dl>
+          <!-- rel -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>rel</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Link"/>
+            </dd>
+          </dl>
+          <!-- relatedTo -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>relatedTo</dd>
+            <dt>Reference/Description</dt>
+            <dd><xref target="prop-relatedTo"/>, <xref target="prop-alerts"/></dd>
+          </dl>
+          <!-- relation -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>relation</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Relation"/>
+            </dd>
+          </dl>
+          <!-- relativeTo -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>relativeTo</dd>
+            <dt>Property Context</dt>
+            <dd>OffsetTrigger</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+          </dl>
+          <!-- roles -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>roles</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- rscale -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>rscale</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- sentBy -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>sentBy</dd>
+            <dt>Property Context</dt>
+            <dd>Participant</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- sequence -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>sequence</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-sequence"/>
+            </dd>
+          </dl>
+          <!-- showWithoutTime -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>showWithoutTime</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-showWithoutTime"/>
+            </dd>
+          </dl>
+          <!-- size -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>size</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Link"/>
+            </dd>
+          </dl>
+          <!-- skip -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>skip</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- source -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>source</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-source"/>
+            </dd>
+          </dl>
+          <!-- start -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>start</dd>
+            <dt>Reference/Description</dt>
+            <dd><xref target="prop-start-jsevent"/>, <xref target="prop-start-jstask"/></dd>
+          </dl>
+          <!-- status -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>status</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-status-jsevent"/>
+            </dd>
+          </dl>
+          <!-- timeZone -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>timeZone</dd>
+            <dt>Property Context</dt>
+            <dd>Event, Task</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-timeZone"/>
+            </dd>
+          </dl>
+          <!-- title -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>title</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-title"/>
+            </dd>
+          </dl>
+          <!-- trigger -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>trigger</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+          </dl>
+          <!-- uid -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>uid</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-uid"/>
+            </dd>
+          </dl>
+          <!-- until -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>until</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- updated -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>updated</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-updated"/>
+            </dd>
+          </dl>
+          <!-- uri -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>uri</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-virtualLocations"/>
+            </dd>
+          </dl>
+          <!-- virtualLocations -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>virtualLocations</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-virtualLocations"/>
+            </dd>
+          </dl>
+          <!-- when -->
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>when</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+          </dl>
+        </section>
+        <section>
+          <name>Added Properties</name>
+          <t>IANA will add the following entries in the JSCalendar Properties Registry. Referenced section numbers refer to this document, unless otherwise noted.</t>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>calendarAddress</dd>
+            <dt>Property Type</dt>
+            <dd>String</dd>
+            <dt>Property Context</dt>
+            <dd>Participant</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Is Per-User</dt>
+            <dd>No</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>endTimeZone</dd>
+            <dt>Property Type</dt>
+            <dd>String</dd>
+            <dt>Property Context</dt>
+            <dd>Event</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-endTimeZone"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Is Per-User</dt>
+            <dd>No</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>mainLocationId</dd>
+            <dt>Property Type</dt>
+            <dd>String</dd>
+            <dt>Property Context</dt>
+            <dd>Event, Task</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-mainLocationId"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Is Per-User</dt>
+            <dd>No</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>organizerCalendarAddress</dd>
+            <dt>Property Type</dt>
+            <dd>String</dd>
+            <dt>Property Context</dt>
+            <dd>Event, Task</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-organizerCalendarAddress"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Is Per-User</dt>
+            <dd>No</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>recurrenceRule</dd>
+            <dt>Property Type</dt>
+            <dd>RecurrenceRule</dd>
+            <dt>Property Context</dt>
+            <dd>Event, Task</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Is Per-User</dt>
+            <dd>No</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>relativeTo</dd>
+            <dt>Property Context</dt>
+            <dd>Location</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="appendix-obsolete-properties"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>obsolete</dd>
+            <dt>Is Per-User</dt>
+            <dd>No</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>sentBy</dd>
+            <dt>Property Type</dt>
+            <dd>Not applicable</dd>
+            <dt>Property Context</dt>
+            <dd>Event, Task</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="appendix-reserved-properties"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>reserved</dd>
+            <dt>Is Per-User</dt>
+            <dd>No</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>timeZone</dd>
+            <dt>Property Context</dt>
+            <dd>Location</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="appendix-obsolete-properties"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>obsolete</dd>
+            <dt>Is Per-User</dt>
+            <dd>No</dd>
+          </dl>
+        </section>
+      </section>
+      <section>
+        <name>Changes to the JSCalendar Types Registry</name>
+        <t>IANA will set the Reference of the registry to this document, rather than obsoleted <xref target="RFC8984"/>.</t>
+        <t>The remainder of this section describes the changes that IANA will apply to the entries in the JSCalendar Types Registry.</t>
+        <section>
+          <name>Obsoleted Types</name>
+          <t>IANA will change the Intended Status from "common" to "obsolete" for the following entries in the JSCalendar Types Registry. For each entry, the Reference/Description column will refer to <xref target="appendix-obsolete-types"/> of this document.</t>
+          <ul>
+            <li>TimeZone</li>
+            <li>TimeZoneRule</li>
+          </ul>
+        </section>
+        <section>
+          <name>Updated Types</name>
+          <t>IANA will update the following entries in the JSCalendar Type Registry. For each entry, the Type Name and its changed fields are listed. Unchanged fields are omitted. Referenced section numbers refer to this document, unless otherwise noted.</t>
+          <!-- Alert -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Alert</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+          </dl>
+          <!-- Boolean -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Boolean</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-signatures"/>
+            </dd>
+          </dl>
+          <!-- Duration -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Duration</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Duration"/>
+            </dd>
+          </dl>
+          <!-- Id -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Id</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Id"/>
+            </dd>
+          </dl>
+          <!-- Int -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Int</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Int"/>
+            </dd>
+          </dl>
+          <!-- LocalDateTime -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>LocalDateTime</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-LocalDateTime"/>
+            </dd>
+          </dl>
+          <!-- Link -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Link</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Link"/>
+            </dd>
+          </dl>
+          <!-- Location -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Location</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-locations"/>
+            </dd>
+          </dl>
+          <!-- NDay -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>NDay</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- Number -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Number</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-signatures"/>
+            </dd>
+          </dl>
+          <!-- Participant -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Participant</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+          </dl>
+          <!-- PatchObject -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>PatchObject</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-PatchObject"/>
+            </dd>
+          </dl>
+          <!-- RecurrenceRule -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>RecurrenceRule</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-recurrenceRule"/>
+            </dd>
+          </dl>
+          <!-- Relation -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Relation</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-Relation"/>
+            </dd>
+          </dl>
+          <!-- SignedDuration -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>SignedDuration</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-SignedDuration"/>
+            </dd>
+          </dl>
+          <!-- String -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>String</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-signatures"/>
+            </dd>
+          </dl>
+          <!-- TimeZoneId -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>TimeZoneId</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-TimeZoneId"/>
+            </dd>
+          </dl>
+          <!-- UnsignedInt -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>UnsignedInt</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-UnsignedInt"/>
+            </dd>
+          </dl>
+          <!-- UTCDateTime -->
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>UTCDateTime</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="type-UTCDateTime"/>
+            </dd>
+          </dl>
+        </section>
+      </section>
+      <section>
+        <name>Changes to the JSCalendar Enum Values Registry</name>
+        <section>
+          <name>Updated References</name>
+          <t>IANA will set the Reference of the registry and its subregistries to a reference to this document. It will set the Reference column of the property names to a reference to this document.</t>
+          <t>IANA will set the Reference columns of the Enum Values subregistries as follows:</t>
+          <table>
+            <thead>
+              <tr>
+                <th>Registry Name</th>
+                <th>Reference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>JSCalendar Enum Values for action (Context: Alert)</td>
+                <td>
+                  <xref target="prop-alerts"/>
+                </td>
+              </tr>
+              <tr>
+                <td>JSCalendar Enum Values for display (Context: Link)</td>
+                <td>
+                  <xref target="type-Link"/>
+                </td>
+              </tr>
+              <tr>
+                <td>JSCalendar Enum Values for features (Context: VirtualLocation)</td>
+                <td>
+                  <xref target="prop-virtualLocations"/>
+                </td>
+              </tr>
+              <tr>
+                <td>JSCalendar Enum Values for freeBusyStatus (Context: Event, Task)</td>
+                <td>
+                  <xref target="prop-freeBusyStatus"/>
+                </td>
+              </tr>
+              <tr>
+                <td>JSCalendar Enum Values for kind (Context: Participant)</td>
+                <td>
+                  <xref target="prop-participants"/>
+                </td>
+              </tr>
+              <tr>
+                <td>JSCalendar Enum Values for participationStatus (Context: Participant)</td>
+                <td>
+                  <xref target="prop-participants"/>
+                </td>
+              </tr>
+              <tr>
+                <td>JSCalendar Enum Values for privacy (Context: Event, Task)</td>
+                <td>
+                  <xref target="prop-privacy"/>
+                </td>
+              </tr>
+              <tr>
+                <td>JSCalendar Enum Values for progress (Context: Task, Participant)</td>
+                <td>
+                  <xref target="prop-progress"/>
+                </td>
+              </tr>
+              <tr>
+                <td>JSCalendar Enum Values for roles (Context: Participant)</td>
+                <td>
+                  <xref target="prop-participants"/>
+                </td>
+              </tr>
+              <tr>
+                <td>JSCalendar Enum Values for status (Context: Event)</td>
+                <td>
+                  <xref target="prop-status-jsevent"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section>
+          <name>Removed Registries</name>
+          <t>IANA will remove the subregistry "JSCalendar Enum Values for scheduleAgent (Context: Participant)".</t>
+        </section>
+        <section>
+          <name>Updated Registries</name>
+          <section>
+            <name>JSCalendar Enum Values for relativeTo (Context: OffsetTrigger, Location)</name>
+            <t>IANA will rename the subregistry to "JSCalendar Enum Values for relativeTo (Context: OffsetTrigger)". It will set the Reference column of the enum values to a reference to <xref target="prop-alerts"/> of this document.</t>
+          </section>
+          <section>
+            <name>JSCalendar Enum Values for relation (Context: Relation)</name>
+            <t>IANA will set the Reference column of the enum values to a reference to <xref target="type-Relation"/> of this document.</t>
+            <t>It will add the following Enum Value entry:</t>
+            <dl spacing="compact">
+              <dt>Enum Value</dt>
+              <dd>snooze</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="prop-alerts"/>
+              </dd>
+              <dt>Change Controller</dt>
+              <dd>IETF</dd>
+            </dl>
+          </section>
+        </section>
+      </section>
     </section>
   </middle>
   <back>
@@ -1629,7 +2837,7 @@ signed-duration = ["+" / "-"] duration
           </li>
         </ul>
       </section>
-      <section>
+      <section anchor="appendix-obsolete-properties">
         <name>Obsolete Properties</name>
         <t>The following properties became obsolete:</t>
         <!-- excludedRecurrenceRules -->
@@ -1729,8 +2937,16 @@ signed-duration = ["+" / "-"] duration
             <t>See <xref target="RFC8984" section="4.4.6"/> and <xref target="RFC8984" section="5.2.6"/>.</t>
           </dd>
         </dl>
+        <!-- TimeZone.*, TimeZoneRule.* -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>{TimeZone|TimeZoneRule}.*</strong>:</dt>
+          <dd>
+            <t>All properties defined solely for the TimeZone and TimeZoneRule object types became obsolete, because the "timeZones" property became obsolete.</t>
+            <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
       </section>
-      <section>
+      <section anchor="appendix-reserved-properties">
         <name>Reserved Properties</name>
         <section toc="exclude">
           <name>JMAP for Calendars</name>
@@ -1779,9 +2995,9 @@ signed-duration = ["+" / "-"] duration
               <t>See <xref target="RFC8984" section="4.4.7" sectionFormat="of"/>.</t>
             </dd>
           </dl>
-          <!-- sentBy -->
+          <!-- {Event|Task}.sentBy -->
           <dl newline="true" spacing="normal">
-            <dt><strong>sentBy</strong>:</dt>
+            <dt><strong>{Event|Task}.sentBy</strong>:</dt>
             <dd>
               <t>No equivalent element exists in iCalendar and this property mainly is relevant in context of a combined calendaring and mail service. Note that the Participant.sentBy property does <em>not</em> become reserved: it is equivalent to the iCalendar <xref target="RFC5545" section="3.2.18" sectionFormat="parens">SENT-BY</xref> parameter.</t>
               <t>See <xref target="RFC8984" section="4.4.5" sectionFormat="of"/>.</t>
@@ -1861,7 +3077,7 @@ signed-duration = ["+" / "-"] duration
           </dl>
         </section>
       </section>
-      <section>
+      <section anchor="appendix-updated-properties">
         <name>Updated Properties</name>
         <t>The following property definitions were updated:</t>
         <!-- @type -->
@@ -1969,7 +3185,7 @@ signed-duration = ["+" / "-"] duration
           </dd>
         </dl>
       </section>
-      <section>
+      <section anchor="appendix-new-properties">
         <name>New Properties</name>
         <t>The following new properties were defined:</t>
         <!-- mainLocationId -->
@@ -2037,7 +3253,19 @@ signed-duration = ["+" / "-"] duration
           </dd>
         </dl>
       </section>
-      <section>
+      <section anchor="appendix-obsolete-types">
+        <name>Obsolete Types</name>
+        <t>The following type definitions became obsolete:</t>
+        <!-- TimeZone, TimeZoneRule -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>TimeZone, TimeZoneRule</strong>:</dt>
+          <dd>
+            <t>The "timeZones" property became obsolete.</t>
+            <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+      </section>
+      <section anchor="appendix-updated-types">
         <name>Updated Types</name>
         <t>The following type definitions were updated:</t>
         <!-- Duration, LocalDateTime, UTCDateTime -->
