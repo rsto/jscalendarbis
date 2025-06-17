@@ -986,7 +986,7 @@ signed-duration = ["+" / "-"] duration
             <dt>links: <tt>Id[Link]</tt> (optional)</dt>
             <dd>This is a map of link ids to Link objects, representing external resources associated with this participant, for example, a vCard or image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>progress: <tt>String</tt> (optional; only allowed for participants of a Task)</dt>
-            <dd>This represents the progress of the participant for this task. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. It <bcp14>MUST NOT</bcp14> be set if the <tt>participationStatus</tt> of this participant is any value other than <tt>accepted</tt>. See <xref target="prop-progress"/> for allowed values and semantics.</dd>
+            <dd>This represents the progress of the participant for this task. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and the <tt>participationStatus</tt> of this participant <bcp14>MUST</bcp14> be <tt>accepted</tt>. See <xref target="prop-progress"/> for allowed values and semantics.</dd>
             <dt>percentComplete: <tt>UnsignedInt</tt> (optional; only allowed for participants of a Task)</dt>
             <dd>This represents the percent completion of the participant for this task. The property value <bcp14>MUST</bcp14> be a positive integer between 0 and 100.</dd>
           </dl>
