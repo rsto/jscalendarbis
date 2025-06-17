@@ -952,7 +952,7 @@ signed-duration = ["+" / "-"] duration
                 <dt><tt>required</tt>:</dt>
                 <dd>The participant is required to be present at the event.</dd>
               </dl>
-              <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "required", "optional", "informational" and "chair" be present; if more than one are given, they take precendence as follows: "required" over "chair", either of them over "optional", all of them over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
+              <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "required", "optional", "informational" and "chair" be present; if more than one are given, they take precendence as follows: "chair" over "required", either of them over "optional", all of them over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
             </dd>
             <dt>participationStatus: <tt>String</tt> (optional, default: <tt>needs-action</tt> )</dt>
             <dd>
@@ -3160,7 +3160,8 @@ signed-duration = ["+" / "-"] duration
           <dd>
             <t>The original definition was incompatible with iCalendar:</t>
             <ul>
-              <li>It did not cover the "REQ-PARTICIPANT" value of the <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>. It now defines the new "required" role and the precendence of roles got redefined to best reflect the single-valued ROLE parameter.</li>
+              <li>It did not cover the "REQ-PARTICIPANT" value of the <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>. It now defines the new "required" role.</li>
+              <li>The "roles" property is multi-valued but the ROLE parameter is single-valued and only allowed to be set once on an ATTENDEE. For compatibility, a precendence of Participant roles got defined for converting roles to iCalendar.</li>
               <li>It was mandatory for a Participant, but the (now reserved) sendTo property was not. This was incompatible with iCalendar, which required an ATTENDEE property to set the ROLE parameter. It now is optional, but requires the calendarAddress property to be set.</li>
               <li>It defined a "contact" role, but this role later got redefined as an enumerated value of the <xref target="RFC9073" section="6.2" sectionFormat="parens">PARTICIPANT-TYPE property</xref>. It now removed this role and leaves defining participant types to a future JSCalendar extension.</li>
             </ul>
