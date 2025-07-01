@@ -403,8 +403,7 @@ signed-duration = ["+" / "-"] duration
         <section anchor="prop-sequence">
           <name>sequence</name>
           <t>Type: <tt>UnsignedInt</tt> (optional, default: 0)</t>
-          <t>Initially zero, this <bcp14>MUST</bcp14> be incremented by one every time a change is made to the object, except if the change only modifies the <tt>participants</tt> property (see <xref target="prop-participants"/>).</t>
-          <t>This is used as part of the iCalendar Transport-independent Interoperability Protocol (iTIP) <xref target="RFC5546"/> to know which version of the object a scheduling message relates to.</t>
+          <t>This property indicates the revision of the calendar object. For scheduled calendar objects, its value must be incremented according to the rules of the scheduling protocol, e.g. <xref target="jmap-calendars"/> or <xref target="RFC5546"/>.</t>
         </section>
         <section anchor="prop-method">
           <name>method</name>
