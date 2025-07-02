@@ -444,10 +444,6 @@ signed-duration = ["+" / "-"] duration
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Location</tt>, if set.</dd>
             <dt>name: <tt>String</tt> (optional)</dt>
             <dd>This is the human-readable name or short description of the location, such as an address.</dd>
-            <dt>description: <tt>String</tt> (optional)</dt>
-            <dd>This is a long-form description of this location. This may be a set of directions, a door access code, etc.</dd>
-            <dt>descriptionContentType: <tt>String</tt> (optional)</dt>
-            <dd>This describes the media type of the contents of the <tt>description</tt> property. Its requirements are specified in <xref target="prop-descriptionContentType"/>. If this property is set, then the description property <bcp14>MUST</bcp14> be set.</dd>
             <dt>locationTypes: <tt>String[Boolean]</tt> (optional)</dt>
             <dd>This is a set of one or more location types that describe this location. All types <bcp14>MUST</bcp14> be from the "Location Types Registry" <xref target="LOCATIONTYPES"/>, as defined in <xref target="RFC4589"/> . The set is represented as a map, with the keys being the location types. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
             <dt>coordinates: <tt>String</tt> (optional)</dt>
@@ -471,10 +467,6 @@ signed-duration = ["+" / "-"] duration
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>VirtualLocation</tt>, if set.</dd>
             <dt>name: <tt>String</tt> (optional, default: empty String)</dt>
             <dd>This is the human-readable name or short description of the virtual location, such as an access code.</dd>
-            <dt>description: <tt>String</tt> (optional)</dt>
-            <dd>This a long-form description of this virtual location. These may be instructions how to download a software client, etc.</dd>
-            <dt>descriptionContentType: <tt>String</tt> (optional)</dt>
-            <dd>This describes the media type of the contents of the <tt>description</tt> property. Its requirements are specified in <xref target="prop-descriptionContentType"/>. If this property is set, then the description property <bcp14>MUST</bcp14> be set.</dd>
             <dt>uri: <tt>String</tt> (mandatory)</dt>
             <dd>
               <t>This is a URI<xref target="RFC3986"/> that represents how to connect to this virtual location.</t>
@@ -1747,17 +1739,19 @@ signed-duration = ["+" / "-"] duration
           <dl spacing="compact">
             <dt>Property Name</dt>
             <dd>description</dd>
+            <dt>Property Context</dt>
+            <dd>Event, Task, Participant</dd>
             <dt>Reference/Description</dt>
-            <dd><xref target="prop-description"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/>, <xref target="prop-virtualLocations"/></dd>
+            <dd><xref target="prop-description"/>, <xref target="prop-participants"/></dd>
           </dl>
           <!-- descriptionContentType -->
           <dl spacing="compact">
             <dt>Property Name</dt>
             <dd>descriptionContentType</dd>
             <dt>Property Context</dt>
-            <dd>Event, Task, Location, Participant, VirtualLocation</dd>
+            <dd>Event, Task, Participant</dd>
             <dt>Reference/Description</dt>
-            <dd><xref target="prop-description"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/>, <xref target="prop-virtualLocations"/></dd>
+            <dd><xref target="prop-description"/>, <xref target="prop-participants"/></dd>
           </dl>
           <!-- display -->
           <dl spacing="compact">
@@ -2285,6 +2279,22 @@ signed-duration = ["+" / "-"] duration
             </dd>
             <dt>Intended Usage</dt>
             <dd>common</dd>
+            <dt>Is Per-User</dt>
+            <dd>No</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>description</dd>
+            <dt>Property Type</dt>
+            <dd>Not applicable</dd>
+            <dt>Property Context</dt>
+            <dd>Location, VirtualLocation</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="appendix-reserved-properties"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>reserved</dd>
             <dt>Is Per-User</dt>
             <dd>No</dd>
           </dl>
@@ -3064,6 +3074,18 @@ signed-duration = ["+" / "-"] duration
           </dl>
         </section>
         <section toc="exclude">
+          <name>Reserved for Future RFCs</name>
+          <t>The following properties became reserved for some future JSCalendar extension RFCs:</t>
+          <!-- Location.description, VirtualLocation.description -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Location.description, VirtualLocation.description</strong>:</dt>
+            <dd>
+              <t>This requires further work by IETF. The VirtualLocation "description" property does not convert to any parameter of the CONFERENCE property. It would require to define a new parameter or to introduce a new component to augment the CONFERENCE property with a DESCRIPTION or STYLED-DESCRIPTION property. For consistency, the Location "description" property became reserved, too.</t>
+              <t>See <xref target="RFC8984" section="4.2.5" sectionFormat="of"/> and <xref target="RFC8984" section="4.2.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+        </section>
+        <section toc="exclude">
           <name>Reserved for Internal Use</name>
           <t>The following properties became reserved for internal use by JSCalendar:</t>
           <!-- excluded -->
@@ -3117,14 +3139,6 @@ signed-duration = ["+" / "-"] duration
           <dd>
             <t>The original definition restricted the value of this property to registered link types. It now also allows extension relation types for compatibility with the <xref target="RFC9253" section="6.1" sectionFormat="parens">LINKREL parameter</xref>.</t>
             <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Location.name, Location.description, VirtualLocation.name, VirtualLocation.description -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Location.name, Location.description, VirtualLocation.name, VirtualLocation.description</strong>:</dt>
-          <dd>
-            <t>The original definitions instructed to put addresses or access codes in the "description" property. But this is more likely to be done in iCalendar in the LOCATION property, or the SUMMARY property in a VLOCATION component, or the LABEL parameter in of a CONFERENCE property, all of which relate to the "name" property in a Location or VirtualLocation. The new definition now instructs to put short descriptive text in the "name" property and long-form descriptions in the "description" property.</t>
-            <t>See <xref target="prop-locations" sectionFormat="of"/> and <xref target="prop-virtualLocations" sectionFormat="of"/>.</t>
           </dd>
         </dl>
         <!-- misc Participant -->
