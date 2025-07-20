@@ -931,7 +931,7 @@ signed-duration = ["+" / "-"] duration
               <t>This is a set of roles that this participant fulfills. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. At least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
               <dl newline="false">
                 <dt><tt>owner</tt>:</dt>
-                <dd>The participant is an owner of the object. This signifies they have permission to make changes to it that affect the other participants. Nonowner participants may only change properties that affect only themselves (for example, setting their own alerts or changing their RSVP status).</dd>
+                <dd>The participant is an owner of the object. This signifies they have permission to make changes to it that affect the other participants. Non-owner participants may only change properties that affect only themselves (for example, setting their own alerts or changing their RSVP status).</dd>
                 <dt><tt>attendee</tt>:</dt>
                 <dd>The participant is expected to be present at the event.</dd>
                 <dt><tt>optional</tt>:</dt>
@@ -943,7 +943,7 @@ signed-duration = ["+" / "-"] duration
                 <dt><tt>required</tt>:</dt>
                 <dd>The participant is required to be present at the event.</dd>
               </dl>
-              <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "required", "optional", "informational" and "chair" be present; if more than one are given, they take precendence as follows: "chair" over "required", either of them over "optional", all of them over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
+              <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "required", "optional", "informational" and "chair" be present; if more than one are given, they take precedence as follows: "chair" over "required", either of them over "optional", all of them over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
             </dd>
             <dt>participationStatus: <tt>String</tt> (optional, default: <tt>needs-action</tt> )</dt>
             <dd>
