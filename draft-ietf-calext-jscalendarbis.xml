@@ -14,10 +14,10 @@
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc iprnotified="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendarbis-06" obsoletes="8984" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendarbis-07" obsoletes="8984" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <front>
     <title abbrev="JSCalendar">JSCalendar: A JSON Representation of Calendar Data</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-calext-jscalendarbis-06"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-calext-jscalendarbis-07"/>
     <author initials="N." surname="Jenkins" fullname="Neil Jenkins">
       <organization showOnFrontPage="true">Fastmail</organization>
       <address>
@@ -49,7 +49,7 @@
         <uri>https://www.fastmail.com</uri>
       </address>
     </author>
-    <date day="20" month="7" year="2025"/>
+    <date day="28" month="8" year="2025"/>
     <area>Applications</area>
     <workgroup>Calendaring extensions</workgroup>
     <keyword>JSON</keyword>
