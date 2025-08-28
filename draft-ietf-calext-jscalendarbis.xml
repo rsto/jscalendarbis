@@ -273,7 +273,7 @@ signed-duration = ["+" / "-"] duration
                 <dt><tt>parent</tt>:</dt>
                 <dd>The linking object is a subpart of the linked object.</dd>
               </dl>
-              <t>The value for each key in the map <bcp14>MUST</bcp14> be true.  The empty Object value represents a "parent" relation, unless otherwise specified for the object type.</t>
+              <t>The value for each key in the map <bcp14>MUST</bcp14> be true.  The empty Object value represents a "parent" relation, unless defined differently for a specific property.</t>
             </dd>
           </dl>
         </section>
