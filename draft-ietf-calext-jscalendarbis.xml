@@ -2422,7 +2422,7 @@ signed-duration = ["+" / "-"] duration
         </section>
         <section>
           <name>Updated Types</name>
-          <t>IANA will update the following entries in the JSCalendar Type Registry. For each entry, the Type Name and its changed fields are listed. Unchanged fields are omitted. Referenced section numbers refer to this document, unless otherwise noted.</t>
+          <t>IANA will update the following entries in the JSCalendar Types Registry. For each entry, the Type Name and its changed fields are listed. Unchanged fields are omitted. Referenced section numbers refer to this document, unless otherwise noted.</t>
           <!-- Alert -->
           <dl spacing="compact">
             <dt>Type Name</dt>
@@ -2593,6 +2593,46 @@ signed-duration = ["+" / "-"] duration
             <dd>
               <xref target="type-UTCDateTime"/>
             </dd>
+          </dl>
+        </section>
+        <section>
+          <name>Added Types</name>
+          <t>IANA will add the following entries in the JSCalendar Types Registry. Referenced section numbers refer to this document, unless otherwise noted.</t>
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Event</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="jsevent"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Group</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="jsgroup"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Type Name</dt>
+            <dd>Task</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="jstask"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
           </dl>
         </section>
       </section>
