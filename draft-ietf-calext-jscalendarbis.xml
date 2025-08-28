@@ -307,7 +307,7 @@ signed-duration = ["+" / "-"] duration
                 <dt><tt>thumbnail</tt>:</dt>
                 <dd>a smaller variant of <tt>fullsize</tt> to be used when space for the image is constrained</dd>
               </dl>
-              <t>The value for each key in the map <bcp14>MUST</bcp14> be true.  If this property is set, then the <tt>rel</tt> property <bcp14>MUST</bcp14> be set to <tt>icon</tt>.</t>
+              <t>The value for each key in the map <bcp14>MUST</bcp14> be true.</t>
             </dd>
             <dt>title: <tt>String</tt> (optional)</dt>
             <dd>This is a human-readable, plain-text description of the resource.</dd>
@@ -3130,6 +3130,7 @@ signed-duration = ["+" / "-"] duration
           <dt><strong>Link.display</strong>:</dt>
           <dd>
             <t>The original definition only allowed one purpose to be set, which is incompatible with the multi-valued iCalendar <xref target="RFC7986" section="6.1" sectionFormat="parens">DISPLAY parameter</xref>. It now supports setting multiple purposes.</t>
+            <t>Setting this property does not anymore require the "rel" property of the Link object be set to "icon".</t>
             <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
           </dd>
         </dl>
