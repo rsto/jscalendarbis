@@ -2718,7 +2718,7 @@ signed-duration = ["+" / "-"] duration
           <t>IANA will remove the sub-registry "JSCalendar Enum Values for scheduleAgent (Context: Participant)".</t>
         </section>
         <section>
-          <name>Updated Registries</name>
+          <name>Updated Sub-Registry Names</name>
           <section>
             <name>JSCalendar Enum Values for relativeTo (Context: OffsetTrigger, Location)</name>
             <t>IANA will rename the sub-registry to "JSCalendar Enum Values for relativeTo (Context: OffsetTrigger)". It will set the Reference column of the enum values to a reference to <xref target="prop-alerts"/> of this document.</t>
