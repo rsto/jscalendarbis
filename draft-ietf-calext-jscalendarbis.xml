@@ -977,7 +977,17 @@ signed-duration = ["+" / "-"] duration
             <dt>links: <tt>Id[Link]</tt> (optional)</dt>
             <dd>This is a map of link ids to Link objects, representing external resources associated with this participant, for example, a vCard or image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>progress: <tt>String</tt> (optional; only allowed for participants of a Task)</dt>
-            <dd>This represents the progress of the participant for this task. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and the <tt>participationStatus</tt> of this participant <bcp14>MUST</bcp14> be <tt>accepted</tt>. See <xref target="prop-progress"/> for allowed values and semantics.</dd>
+            <dd>
+              <t>This represents the progress of the participant for this task. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and the <tt>participationStatus</tt> of this participant <bcp14>MUST</bcp14> be <tt>accepted</tt>. The property value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+              <dl newline="false">
+                <dt><tt>in-process</tt>:</dt>
+                <dd>The participant is in process of contributing to the task.</dd>
+                <dt><tt>completed</tt>:</dt>
+                <dd>The participant successfully completed contributing to the task.</dd>
+                <dt><tt>failed</tt>:</dt>
+                <dd>The participant could not complete their contribution to the task.</dd>
+              </dl>
+            </dd>
             <dt>percentComplete: <tt>UnsignedInt</tt> (optional; only allowed for participants of a Task)</dt>
             <dd>This represents the percent completion of the participant for this task. The property value <bcp14>MUST</bcp14> be a positive integer between 0 and 100.</dd>
           </dl>
@@ -2783,12 +2793,6 @@ signed-duration = ["+" / "-"] duration
                 </td>
               </tr>
               <tr>
-                <td>JSCalendar Enum Values for progress (Context: Task, Participant)</td>
-                <td>
-                  <xref target="prop-progress"/>
-                </td>
-              </tr>
-              <tr>
                 <td>JSCalendar Enum Values for roles (Context: Participant)</td>
                 <td>
                   <xref target="prop-participants"/>
@@ -2808,7 +2812,11 @@ signed-duration = ["+" / "-"] duration
           <t>IANA will remove the sub-registry "JSCalendar Enum Values for scheduleAgent (Context: Participant)".</t>
         </section>
         <section>
-          <name>Updated Sub-Registry Names</name>
+          <name>Updated Registries</name>
+          <section>
+            <name>JSCalendar Enum Values for progress (Context: Task, Participant)</name>
+            <t>IANA will rename the sub-registry to "JSCalendar Enum Values for progress (Context: Task)". It will set the Reference column of the enum values to a reference to <xref target="prop-progress"/> of this document.</t>
+          </section>
           <section>
             <name>JSCalendar Enum Values for relativeTo (Context: OffsetTrigger, Location)</name>
             <t>IANA will rename the sub-registry to "JSCalendar Enum Values for relativeTo (Context: OffsetTrigger)". It will set the Reference column of the enum values to a reference to <xref target="prop-alerts"/> of this document.</t>
@@ -2826,6 +2834,53 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Change Controller</dt>
               <dd>IETF</dd>
+            </dl>
+          </section>
+        </section>
+        <section>
+          <name>Added Registries</name>
+          <t>IANA will add the following sub-registries to the "JSCalendar Enum Values" registry.</t>
+          <section>
+            <name>JSCalendar Enum Values for progress (Context: Participant)</name>
+            <dl spacing="compact" newline="false" indent="20">
+              <dt>Property Name:</dt>
+              <dd>progress</dd>
+              <dt>Context:</dt>
+              <dd>Participant</dd>
+              <dt>Change Controller:</dt>
+              <dd>IETF</dd>
+              <dt>Initial Contents:</dt>
+              <dd>
+                <table anchor="tab-iana-enum-progress-participant" align="left">
+                  <name>JSCalendar Enum Values for progress (Context: Participant)</name>
+                  <thead>
+                    <tr>
+                      <th align="left">Enum Value</th>
+                      <th align="left">Reference or Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td align="left">in-process</td>
+                      <td align="left">
+                        <xref target="prop-participants" format="default"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left">completed</td>
+                      <td align="left">
+                        <xref target="prop-participants" format="default"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left">failed</td>
+                      <td align="left">
+                        <xref target="prop-participants" format="default"/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </dd>
             </dl>
           </section>
         </section>
@@ -3295,6 +3350,14 @@ signed-duration = ["+" / "-"] duration
           </dt>
           <dd>
             <t>The original definitions were incompatible with iCalendar: they did not require the (now reserved) sendTo property to be set, but their equivalent iCalendar parameters require an ATTENDEE property. They now require the calendarAddress property to be set.</t>
+            <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- Participant.progress -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>Participant.progress</strong>:</dt>
+          <dd>
+            <t>The original definition was incompatible with iCalendar. It allowed the progress value to be "cancelled", but this is not a supported PARTSTAT parameter value of an ATTENDEE property in a VTODO component. The new definition only supports the progress property values "in-process", "completed" and "failed".</t>
             <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
           </dd>
         </dl>
