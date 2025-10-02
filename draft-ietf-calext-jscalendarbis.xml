@@ -1380,6 +1380,60 @@ signed-duration = ["+" / "-"] duration
 }
 </sourcecode>
       </section>
+      <section anchor="example-this-and-future">
+        <name>Making a "This and Future" Change</name>
+        <t>Sometimes, you may want to make a change to a recurring event that applies from a specific instance onwards. This cannot be represented as a single JSCalendar object. Instead, you must duplicate the event, modifying the recurrence rule of the original so it finishes before the split point, and the duplicate so it starts at the split point. A "next" and "first" relation must be set on the new objects respectively, as per <xref target="prop-relatedTo" />.</t>
+        <t>This example shows two JSCalendar objects, representing an event that used to happen at 2pm on a Tuesday in Room 101, but moved in March to 3pm on a Wednesday in Room 202.</t>
+        <sourcecode name="" type="json">
+{
+  "...": "",
+  "uid": "715ed4c5-3cf5-427f-927c-db40cdd63894",
+  "relatedTo": {
+    "32859916-af7a-4599-82ed-32a4315b4fe7": {
+      "relation": {
+        "next": true
+      }
+    }
+  },
+  "title": "Departmental meeting",
+  "start": "2025-01-07T14:00:00",
+  "timeZone": "Australia/Melbourne",
+  "duration": "PT1H",
+  "locations": {
+    "room": {
+      "name": "Room 101"
+    }
+  },
+  "recurrenceRule": {
+    "frequency": "weekly",
+    "until": "2025-02-25T14:00:00"
+  }
+}
+{
+  "...": "",
+  "uid": "32859916-af7a-4599-82ed-32a4315b4fe7",
+  "relatedTo": {
+    "715ed4c5-3cf5-427f-927c-db40cdd63894": : {
+      "relation": {
+        "first": true
+      }
+    }
+  },
+  "title": "Departmental meeting",
+  "start": "2025-03-05T15:00:00",
+  "timeZone": "Australia/Melbourne",
+  "duration": "PT1H",
+  "locations": {
+    "room": {
+      "name": "Room 202"
+    }
+  },
+  "recurrenceRule": {
+    "frequency": "weekly"
+  }
+}
+</sourcecode>
+      </section>
       <section anchor="example-recurring-participants">
         <name>Recurring Event with Participants</name>
         <t>This example illustrates scheduled events. A team meeting occurs every week since January 8, 2020 at 9 am Johannesburg time. The event owner also chairs the event. Participants meet in a virtual meeting room. An attendee has accepted the invitation, but, on March 4, 2020, he is unavailable and declined participation for this occurrence.</t>
