@@ -1324,7 +1324,7 @@ signed-duration = ["+" / "-"] duration
     "ee42e41e-1046-4489-9760-c0b85f0dc176": {
       "name": "BAZ Parking, 9 West 57th Street, New York",
       "coordinates": "geo:40.7637,-73.9748",
-      "locationType": {
+      "locationTypes": {
         "parking": true
       }
     }
@@ -1350,7 +1350,7 @@ signed-duration = ["+" / "-"] duration
   "duration": "PT1H30M",
   "locations": {
     "mlab": {
-      "title": "Math lab room 1",
+      "name": "Math lab room 1",
       "description": "Math Lab I, Department of Mathematics"
     }
   },
@@ -1371,7 +1371,7 @@ signed-duration = ["+" / "-"] duration
       "duration": "PT2H",
       "locations": {
         "auditorium": {
-          "title": "Big Auditorium",
+          "name": "Big Auditorium",
           "description": "Big Auditorium, Other Road"
         }
       }
@@ -1413,7 +1413,7 @@ signed-duration = ["+" / "-"] duration
     },
     "em9lQGZvb2GFtcGxlLmNvbQ": {
       "name": "Zoe Zelda",
-      "calendarAddress": mailto:zoe@foobar.example.com",
+      "calendarAddress": "mailto:zoe@foobar.example.com",
       "participationStatus": "accepted",
       "roles": {
         "owner": true,
