@@ -932,10 +932,8 @@ signed-duration = ["+" / "-"] duration
               <dl newline="false">
                 <dt><tt>owner</tt>:</dt>
                 <dd>The participant is an owner of the object. This signifies they have permission to make changes to it that affect the other participants. Non-owner participants may only change properties that affect only themselves (for example, setting their own alerts or changing their RSVP status).</dd>
-                <dt><tt>attendee</tt>:</dt>
-                <dd>The participant is expected to be present at the event.</dd>
                 <dt><tt>optional</tt>:</dt>
-                <dd>The participant's involvement with the event is optional. This is expected to be primarily combined with the "attendee" role.</dd>
+                <dd>The participant's involvement with the event is optional.</dd>
                 <dt><tt>informational</tt>:</dt>
                 <dd>The participant is copied for informational reasons and is not expected to attend.</dd>
                 <dt><tt>chair</tt>:</dt>
@@ -1446,7 +1444,7 @@ signed-duration = ["+" / "-"] duration
       </section>
       <section anchor="example-recurring-participants">
         <name>Recurring Event with Participants</name>
-        <t>This example illustrates scheduled events. A team meeting occurs every week since January 8, 2020 at 9 am Johannesburg time. The event owner also chairs the event. Participants meet in a virtual meeting room. An attendee has accepted the invitation, but, on March 4, 2020, he is unavailable and declined participation for this occurrence.</t>
+        <t>This example illustrates scheduled events. A team meeting occurs every week since January 8, 2020 at 9 am Johannesburg time. The event owner also chairs the event. Participants meet in a virtual meeting room. A participant has accepted the invitation, but, on March 4, 2020, they are unavailable and declined participation for this occurrence.</t>
         <sourcecode name="" type="json">
 {
   "...": "",
@@ -1471,9 +1469,6 @@ signed-duration = ["+" / "-"] duration
       "email": "tom@foobar.example.com",
       "calendarAddress": "mailto:tom@calendar.example.com",
       "participationStatus": "accepted",
-      "roles": {
-        "attendee": true
-      }
     },
     "em9lQGZvb2GFtcGxlLmNvbQ": {
       "name": "Zoe Zelda",
@@ -1481,7 +1476,6 @@ signed-duration = ["+" / "-"] duration
       "participationStatus": "accepted",
       "roles": {
         "owner": true,
-        "attendee": true,
         "chair": true
       }
     }
@@ -2930,7 +2924,7 @@ signed-duration = ["+" / "-"] duration
           <name>Changes to the JSCalendar Enum Values Registry contents</name>
           <section>
             <name>Updated References</name>
-            <t>This document adds the "Intended Use" column to the <xref target="iana-enum-registry-value-template">registry template</xref>. IANA will set the value for each existing entry to "common".</t>
+            <t>This document adds the "Intended Use" column to the <xref target="iana-enum-registry-value-template">registry template</xref>. IANA will set the value for each existing entry to "common", except for the special case of the "attendee" roles enum described in <xref target="iana-enum-registry-updated-contents-enum-roles"/>.</t>
             <t>IANA will set the Reference of the registry and its sub-registries to a reference to this document. It will set the Reference column of the property names to a reference to this document.</t>
             <t>IANA will set the Reference columns of the Enum Values sub-registries as follows:</t>
             <table>
@@ -3027,6 +3021,10 @@ signed-duration = ["+" / "-"] duration
                 <dt>Change Controller</dt>
                 <dd>IETF</dd>
               </dl>
+            </section>
+            <section anchor="iana-enum-registry-updated-contents-enum-roles">
+              <name>JSCalendar Enum Values for roles (Context: Context: Participant)</name>
+              <t>IANA will set "Intended Use" column of the "attendee" value to "obsolete".</t>
             </section>
           </section>
           <section>
@@ -3565,6 +3563,7 @@ signed-duration = ["+" / "-"] duration
               <li>The "roles" property is multi-valued but the ROLE parameter is single-valued and only allowed to be set once on an ATTENDEE. For compatibility, a precendence of Participant roles got defined for converting roles to iCalendar.</li>
               <li>It was mandatory for a Participant, but the (now reserved) sendTo property was not. This was incompatible with iCalendar, which required an ATTENDEE property to set the ROLE parameter. It now is optional, but requires the calendarAddress property to be set.</li>
               <li>It defined a "contact" role, but this role later got redefined as an enumerated value of the <xref target="RFC9073" section="6.2" sectionFormat="parens">PARTICIPANT-TYPE property</xref>. It now removed this role and leaves defining participant types to a future JSCalendar extension.</li>
+              <li>The "attendee" role got removed. There is no equivalent ROLE value in iCalendar and any Participant with a calendarAddress by definition is an ATTENDEE in iCalendar.</li>
             </ul>
             <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
           </dd>
