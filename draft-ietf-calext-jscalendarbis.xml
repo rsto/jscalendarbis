@@ -14,10 +14,10 @@
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc iprnotified="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendarbis-09" obsoletes="8984" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendarbis-10" obsoletes="8984" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <front>
     <title abbrev="JSCalendar">JSCalendar: A JSON Representation of Calendar Data</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-calext-jscalendarbis-09"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-calext-jscalendarbis-10"/>
     <author initials="N." surname="Jenkins" fullname="Neil Jenkins">
       <organization showOnFrontPage="true">Fastmail</organization>
       <address>
@@ -49,7 +49,7 @@
         <uri>https://www.fastmail.com</uri>
       </address>
     </author>
-    <date day="2" month="10" year="2025"/>
+    <date day="16" month="October" year="2025"/>
     <area>Applications</area>
     <workgroup>Calendaring extensions</workgroup>
     <keyword>JSON</keyword>
@@ -3183,7 +3183,7 @@ signed-duration = ["+" / "-"] duration
             <author fullname="Michael Douglass" initials="M." surname="Douglass">
               <organization>Spherical Cow Group</organization>
             </author>
-            <date day="22" month="July" year="2024"/>
+            <date day="8" month="October" year="2025"/>
           </front>
           <seriesInfo name="Internet-Draft" value="draft-ietf-jmap-calendars"/>
         </reference>
@@ -3196,7 +3196,7 @@ signed-duration = ["+" / "-"] duration
             <author fullname="Adrian Apthorp" initials="A." surname="Apthorp">
               <organization>DHL Express</organization>
             </author>
-            <date day="30" month="July" year="2024"/>
+            <date day="7" month="July" year="2025"/>
           </front>
           <seriesInfo name="Internet-Draft" value="draft-ietf-calext-ical-tasks"/>
         </reference>
