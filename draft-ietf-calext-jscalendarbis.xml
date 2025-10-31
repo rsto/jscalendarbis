@@ -1567,7 +1567,7 @@ signed-duration = ["+" / "-"] duration
           <dt>Interoperability considerations:</dt>
           <dd>While JSCalendar is designed to avoid ambiguities as much as possible, when converting objects from other calendar formats to/from JSCalendar, it is possible that differing representations for the same logical data or ambiguities in interpretation might arise. The semantic equivalence of two JSCalendar objects may be determined differently by different applications, for example, where URL values differ in case between the two objects.</dd>
           <dt>Published specification:</dt>
-          <dd>RFC 8984</dd>
+          <dd>draft-ietf-calext-jscalendarbis</dd>
           <dt>Applications that use this media type:</dt>
           <dd>Applications that currently make use of the text/calendar and application/calendar+json media types can use this as an alternative. Similarly, applications that use the application/json media type to transfer calendaring data can use this to further specify the content.</dd>
           <dt>Fragment identifier considerations:</dt>
