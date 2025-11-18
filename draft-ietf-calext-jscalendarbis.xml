@@ -928,7 +928,7 @@ signed-duration = ["+" / "-"] duration
             </dd>
             <dt>roles: <tt>String[Boolean]</tt> (optional)</dt>
             <dd>
-              <t>This is a set of roles that this participant fulfills. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. At least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+              <t>This is a set of roles that this participant fulfills. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and at least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
               <dl newline="false">
                 <dt><tt>owner</tt>:</dt>
                 <dd>The participant is an owner of the calendar object. This signifies they can make changes that affect all participants (for example, rescheduling the calendar object, adding and removing participants and roles). The presence of this role only is indicative, its semantics are subject to the calendaring exchange protocol being used. See <xref target="jmap-calendars"/> for an example for making use of this role.</dd>
