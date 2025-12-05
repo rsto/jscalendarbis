@@ -522,7 +522,7 @@ signed-duration = ["+" / "-"] duration
         <section anchor="prop-color">
           <name>color</name>
           <t>Type: <tt>String</tt> (optional)</t>
-          <t>This is a color clients <bcp14>MAY</bcp14> use when displaying this calendar object. The value is a color name taken from the set of names defined in Section 4.3 of CSS Color Module Level 3 <xref target="COLORS"/> or an RGB value in hexadecimal notation, as defined in Section 4.2.1 of CSS Color Module Level 3.</t>
+          <t>This is a color clients <bcp14>MAY</bcp14> use when displaying this calendar object. The value is a color name taken from the set of names defined in <xref target="CSS3" section="4.3" relative="#svg-color"/> or an RGB value in six-digit hexadecimal notation, as defined in <xref target="CSS3" section="4.2.1" relative="#rgb-color"/>. Values are case-insensitive.</t>
         </section>
       </section>
       <section anchor="recurrence-props">
@@ -3090,7 +3090,7 @@ signed-duration = ["+" / "-"] duration
             <date/>
           </front>
         </reference>
-        <reference anchor="COLORS" target="https://www.w3.org/TR/css-color-3/" quoteTitle="true" derivedAnchor="COLORS">
+        <reference anchor="CSS3" target="https://www.w3.org/TR/css-color-3/" quoteTitle="true" derivedAnchor="CSS3">
           <front>
             <title>CSS Color Module Level 3</title>
             <author initials="T" surname="Çelik" fullname="Tantek Çelik">
@@ -3102,7 +3102,7 @@ signed-duration = ["+" / "-"] duration
             <author initials="L" surname="Baron" fullname="L. David Baron">
               <organization showOnFrontPage="true"/>
             </author>
-            <date month="June" year="2018"/>
+            <date month="January" year="2022"/>
           </front>
           <refcontent>W3C Recommendation</refcontent>
         </reference>
@@ -3500,6 +3500,14 @@ signed-duration = ["+" / "-"] duration
           <dd>
             <t>JSCalendar now supports default types for properties of type <tt>A|B</tt>. The default type of this property now is <tt>OffsetTrigger</tt>.</t>
             <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- {Event|Task|Group}.color -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>{Event|Task|Group}.color</strong>:</dt>
+          <dd>
+            <t>The original definition allowed hexadecimal RGB values, which CSS3 specifies to be either in three-digit or six-digit form. The updated definition only allows them in six-digit form to match the proposed update of the iCalendar COLOR property. It also explicitly defines that values are case-insensitive.</t>
+            <t>See <xref target="prop-color" sectionFormat="of"/>.</t>
           </dd>
         </dl>
         <!-- Link.display -->
