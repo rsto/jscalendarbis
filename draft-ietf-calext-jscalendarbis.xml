@@ -1692,6 +1692,7 @@ signed-duration = ["+" / "-"] duration
               <li>progressUpdated</li>
               <li>recurrenceRules</li>
               <li>standard</li>
+              <li>start (where Property Context is "TimeZoneRule")</li>
               <li>timeZones</li>
               <li>tzId</li>
               <li>url</li>
@@ -1716,10 +1717,6 @@ signed-duration = ["+" / "-"] duration
               <li>sendTo</li>
               <li>useDefaultAlerts</li>
             </ul>
-          </section>
-          <section>
-            <name>Removed Properties</name>
-            <t>IANA will remove the entry having Property Name "start" and Property Context "TimeZoneRule".</t>
           </section>
           <section>
             <name>Updated Properties</name>
