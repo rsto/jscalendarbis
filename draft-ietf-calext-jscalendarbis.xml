@@ -59,7 +59,7 @@
     <keyword>date</keyword>
     <keyword>time</keyword>
     <abstract>
-      <t>This specification defines a data model and JSON representation of calendar data that can be used for storage and data exchange in a calendaring and scheduling environment. It aims to be an alternative and, over time, successor to the widely deployed iCalendar data format. It also aims to be unambiguous, extendable, and simple to process. In contrast to the jCal format, which is also based on JSON, JSCalendar is not a direct mapping from iCalendar but defines the data model independently and expands semantics where appropriate.</t>
+      <t>This specification defines a data model and JSON representation of calendar data that can be used for storage and data exchange in a calendaring and scheduling environment. It aims to be an alternative and, over time, successor to the widely deployed iCalendar data format. It also aims to be unambiguous, extendable, and simple to process. In contrast to the jCal format, which is also based on JSON, JSCalendar is not a direct mapping from iCalendar but defines the data model independently and expands semantics where appropriate. This document obsoletes RFC 8984.</t>
     </abstract>
     <note removeInRFC="true">
       <t>Differences from RFC 8984 are documented in <xref target="differences-from-rfc8984"/>.</t>
@@ -68,7 +68,7 @@
   <middle>
     <section anchor="introduction">
       <name>Introduction</name>
-      <t>This document defines a data model for calendar event and task objects, or groups of such objects, in electronic calendar applications and systems. The format aims to be unambiguous, extendable, and simple to process.</t>
+      <t>This document defines a data model for calendar event and task objects, or groups of such objects, in electronic calendar applications and systems. The format aims to be unambiguous, extendable, and simple to process. It obsoletes the data model originally defined in <xref target="RFC8984"/> to improve interoperability with systems that also make use of <xref target="RFC5545">iCalendar</xref>. Differences from <xref target="RFC8984"/> are documented in <xref target="differences-from-rfc8984"/>.</t>
       <t>The key design considerations for this data model are as follows:</t>
       <ul>
         <li>The attributes of the calendar entry represented must be described as simple key-value pairs. Simple events are simple to represent; complex events can be modeled accurately.</li>
