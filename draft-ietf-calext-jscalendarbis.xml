@@ -1633,7 +1633,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dd>IETF</dd>
         </dl>
       </section>
-      <section anchor="iana-property-registry-policy">
+      <section anchor="iana-registry-policy">
         <name>Registry Policy and Change Procedures</name>
         <t>Registry assignments that introduce <xref target="versioning">backwards-incompatible</xref> changes require the JSCalendar major version to change; other changes only require a change to the minor version. The registry policy for assignments that require the JSCalendar major version to change is Standards Action (<xref target="RFC8126" sectionFormat="comma" section="4.9"/>). The registry policy for other assignments is Specification Required (<xref target="RFC8126" sectionFormat="comma" section="4.6"/>).</t>
         <t>The designated expert (DE) decides if a major or minor version change is required and assigns the new version to the <xref target="iana-version-registry">"JSCalendar Version" registry</xref>. Version numbers increment by one, and a major version change resets the minor version to zero. An assignment may apply multiple changes and to more than one registry at once, in which case a single version change is sufficient. If the registry policy is Specification Required, then the DE may decide that it is enough to document the new assignment in the Description item of the respective registry.</t>
@@ -1672,7 +1672,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <name>"JSCalendar Version" Registry</name>
         <t>IANA will add the "JSCalendar Version" registry to the "JSCalendar" registry group. The purpose of this new registry is to define the allowed value range of JSCalendar major and minor version numbers.</t>
         <t>The registry entries sort numerically in ascending order by the "Major Version" column, entries with equal "Major Version" sort numerically in ascending order by the "Minor Version" column.</t>
-        <t>The registry process is outlined in <xref target="iana-property-registry-policy" format="default"/>.
+        <t>The registry process is defined in <xref target="iana-registry-policy" format="default"/>.
         </t>
         <section anchor="iana-version-registry-template" numbered="true" toc="default">
           <name>"JSCalendar Version" Registry Template</name>
@@ -3283,7 +3283,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       <section anchor="iana-type-registry" numbered="true" toc="default">
         <name>"JSCalendar Types" Registry</name>
         <t>IANA has created the "JSCalendar Types" registry to avoid name collisions and provide a complete reference for all data types used for JSCalendar property values. IANA will set the Reference of the registry to this document, rather than obsoleted <xref target="RFC8984"/>.</t>
-        <t>The registration process is the same as for the "JSCalendar Properties" registry, as defined in <xref target="iana-property-registry-policy" format="default"/>.</t>
+        <t>The registry policy is defined in <xref target="iana-registry-policy" format="default"/>.</t>
         <section anchor="iana-type-registry-template" numbered="true" toc="default">
           <name>"JSCalendar Types" Registry Template</name>
           <dl newline="false">
@@ -3641,7 +3641,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       <section anchor="iana-enum-registry" numbered="true" toc="default">
         <name>"JSCalendar Enum Values" Registry</name>
         <t>IANA has created the "JSCalendar Enum Values" registry to allow interoperable extension of semantics for properties with enumerable values. Each such property has a subregistry of allowed values. IANA will set the Reference of the registry to this document, rather than obsoleted <xref target="RFC8984"/>.</t>
-        <t>The registration process for a new enum value or adding a new enumerable property is the same as for the "JSCalendar Properties" registry, as defined in <xref target="iana-property-registry-policy" format="default"/>.</t>
+        <t>The registry policy is defined in <xref target="iana-registry-policy" format="default"/>.</t>
         <section anchor="iana-enum-registry-registry-template" numbered="true" toc="default">
           <name>"JSCalendar Enum Values" Registry Property Template</name>
           <t>This template is for adding a subregistry for a new enumerable property to the "JSCalendar Enum" registry. To add or amend enumerated values for a new or existing subregistry use the template in <xref target="iana-enum-registry-value-template"/>.</t>
