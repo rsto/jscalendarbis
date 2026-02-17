@@ -314,6 +314,30 @@ signed-duration = ["+" / "-"] duration
           </dl>
         </section>
       </section>
+      <section anchor="versioning">
+        <name>Versioning</name>
+        <t>A JSCalendar <xref target="jsgroup">Group</xref>, <xref target="jsevent">Event</xref> and <xref target="jstask">Task</xref> indicate which JSCalendar version its IANA-registered properties and values are based on. The version is indicated both in the <xref target="prop-version">version</xref> property of a JSCalendar object and in the <xref target="iana-mime-type">version</xref> parameter of the JSCalendar media type. All IANA-registered elements indicate the version at which they were introduced or obsoleted.</t>
+        <t>A JSCalendar version consists of a major and minor version.</t>
+        <t>Differing major version values indicate substantial differences in JSCalendar semantics and format. Implementations <bcp14>MUST</bcp14> be prepared for property definitions and other JSCalendar elements that differ in a backwards-incompatible manner.
+        </t>
+        <t>Differing minor version values indicate additions that enrich JSCalendar data but do not introduce backwards-incompatible changes. Typically, these are new property enum values or properties with a narrow semantic scope. A new minor version <bcp14>MUST NOT</bcp14> require implementations to change their processing of JSCalendar data. Changing the major version number resets the minor version number to zero.
+        </t>
+        <section anchor="version-format-and-reqs">
+          <name>Version Format and Requirements</name>
+          <t>A version value starts with the numeric major version, followed by the FULL STOP character (U+002E), followed by the numeric minor version. Later versions are numerically higher than former versions, with the major version being more significant than the minor version. A version value is produced by the following ABNF:
+          </t>
+          <figure>
+            <name>The ABNF for JSCalendar Version Values</name>
+            <sourcecode name="" type="abnf"><![CDATA[
+jsversion = 1*DIGIT "." 1*DIGIT
+]]></sourcecode>
+          </figure>
+        </section>
+        <section anchor="current-version">
+          <name>Current Version</name>
+          <t>This specification registers JSCalendar version values "1.0" and "2.0" in the JSCalendar Version registry. Version "2.0" applies for JSCalendar data that conforms with the specifications in this document. Version "1.0" applies for JSCalendar data that conforms with the now obsolete specifications of <xref target="RFC8984"/>.</t>
+        </section>
+      </section>
     </section>
     <section anchor="jscalendar-objects">
       <name>JSCalendar Objects</name>
@@ -376,6 +400,13 @@ signed-duration = ["+" / "-"] duration
           <t>This is a globally unique identifier used to associate objects representing the same event, task, group, or other object across different systems, calendars, and views. For recurring events and tasks, the UID is associated with the base object and therefore is the same for all occurrences; the combination of the UID with a <tt>recurrenceId</tt> identifies a particular instance.</t>
           <t>The generator of the identifier <bcp14>MUST</bcp14> guarantee that the identifier is unique. <xref target="RFC9562"/> describes a range of established algorithms to generate universally unique identifiers (UUIDs). UUID version 4, described in <xref target="RFC9562" section="4.4"/>, is <bcp14>RECOMMENDED</bcp14>.</t>
           <t>For compatibility with  UIDs <xref target="RFC5545"/>, implementations <bcp14>MUST</bcp14> be able to receive and persist values of at least 255 octets for this property, but they <bcp14>MUST NOT</bcp14> truncate values in the middle of a UTF-8 multi-octet sequence.</t>
+        </section>
+        <section anchor="prop-version">
+          <name>version</name>
+          <t>Type: <tt>String</tt></t>
+          <t>The JSCalendar version of this object. The value <bcp14>MUST</bcp14> be one of the IANA-registered JSCalendar Version values for the version property.</t>
+          <t>For version "2.0" or higher, a Group object <bcp14>MUST</bcp14> set the "version" property, but the Event or Task objects that are values in its "entries" property <bcp14>MUST NOT</bcp14> set the "version" property. In contrast, an Event or Task object that is represented without an enclosing Group object <bcp14>MUST</bcp14> set the "version" property, unless specified otherwise. This is to prevent conflicting version values to occur in JSCalendar data.</t>
+          <t>For version "1.0", the "version" property is optional. If it is set, the same rules as described for version "2.0" apply.</t>
         </section>
         <section anchor="prop-relatedTo">
           <name>relatedTo</name>
@@ -1195,6 +1226,7 @@ signed-duration = ["+" / "-"] duration
         <sourcecode name="" type="json">
 {
   "@type": "Event",
+  "version": "2.0",
   "uid": "a8df6573-0474-496d-8496-033ad45d7fea",
   "updated": "2020-01-02T18:23:04Z",
   "title": "Some event",
@@ -1210,6 +1242,7 @@ signed-duration = ["+" / "-"] duration
         <sourcecode name="" type="json">
 {
   "@type": "Task",
+  "version": "2.0",
   "uid": "2a358cee-6489-4f14-a57f-c104db4dc2f2",
   "updated": "2020-01-09T14:32:01Z",
   "title": "Do something"
@@ -1222,6 +1255,7 @@ signed-duration = ["+" / "-"] duration
         <sourcecode name="" type="json">
 {
   "@type": "Group",
+  "version": "2.0",
   "uid": "bf0ac22b-4989-4caf-9ebd-54301b4ee51a",
   "updated": "2020-01-15T18:00:00Z",
   "title": "A simple group",
@@ -1559,7 +1593,11 @@ signed-duration = ["+" / "-"] duration
           once.</t>
           </dd>
           <dt>Optional parameters:</dt>
-          <dd>none</dd>
+          <dd>
+            <t>version</t>
+            <t>This parameter conveys the version of the JSCalendar data in the body part. It <bcp14>MUST NOT</bcp14> occur more than once. If this parameter is set, then the values of all JSCalendar <xref target="iana-property-registry-version">version </xref> properties in the body part <bcp14>MUST</bcp14> match the parameter value.
+            </t>
+          </dd>
           <dt>Encoding considerations:</dt>
           <dd>This is the same as the encoding considerations of application/json, as specified in <xref target="RFC8259" sectionFormat="of" section="11"/>.</dd>
           <dt>Security considerations:</dt>
@@ -1595,64 +1633,94 @@ signed-duration = ["+" / "-"] duration
           <dd>IETF</dd>
         </dl>
       </section>
+      <section anchor="iana-property-registry-policy">
+        <name>Registry Policy and Change Procedures</name>
+        <t>Registry assignments that introduce <xref target="versioning">backwards-incompatible</xref> changes require the JSCalendar major version to change; other changes only require a change to the minor version. The registry policy for assignments that require the JSCalendar major version to change is Standards Action (<xref target="RFC8126" sectionFormat="comma" section="4.9"/>). The registry policy for other assignments is Specification Required (<xref target="RFC8126" sectionFormat="comma" section="4.6"/>).</t>
+        <t>The designated expert (DE) decides if a major or minor version change is required and assigns the new version to the <xref target="iana-version-registry">"JSCalendar Version" registry</xref>. Version numbers increment by one, and a major version change resets the minor version to zero. An assignment may apply multiple changes and to more than one registry at once, in which case a single version change is sufficient. If the registry policy is Specification Required, then the DE may decide that it is enough to document the new assignment in the Description item of the respective registry.</t>
+        <t>A registration <bcp14>MUST</bcp14> have an intended usage of "common", "reserved", or "obsolete".</t>
+        <ul>
+          <li>A "common" usage denotes an item with shared semantics and syntax across systems. Up-to-date systems <bcp14>MUST</bcp14> expect such items to occur in JSCalendar data.</li>
+          <li>A "reserved" usage reserves an item in the registry without assigning semantics to avoid name collisions with future extensions or protocol use. Implementations <bcp14>MUST NOT</bcp14> expect or add items with such names outside the protocols or extensions that use them; otherwise, any such JSCalendar data is invalid.</li>
+          <li>An "obsolete" usage denotes an item that is no longer expected to be added by up-to-date systems. A new assignment has probably been defined, covering the obsolete item's semantics. Implementations <bcp14>MUST </bcp14> expect such items to occur in JSCalendar data up to the "Until Version" registry field, inclusively. They <bcp14>MUST NOT</bcp14> add such items for any version after which the item got obsolete; otherwise, any such JSCalendar data is invalid.</li>
+        </ul>
+        <t>The intended usage of registry items may change between versions, but the DE must carefully consider the impact on existing implementations and standards before doing so.</t>
+        <t>The registration procedure is not a formal standards process but rather an administrative procedure intended to allow community comments and to check whether it is coherent without excessive time delay. It is designed to encourage vendors to document and register new items they add for use cases not covered by the original specification, leading to increased interoperability.</t>
+        <section anchor="iana-registry-preliminary-community-review" numbered="true" toc="default">
+          <name>Preliminary Community Review</name>
+          <t>Notice of a potential new registration <bcp14>MUST</bcp14> be sent to the Calext WG mailing list &lt;calsify@ietf.org&gt; for review. This mailing list is appropriate for soliciting community feedback on a proposed registry assignment.</t>
+          <t>The intent of the public posting to this list is to solicit comments and feedback on the choice of the item name or value, the unambiguity of its description, and a review of any interoperability or security considerations. The submitter may submit a revised registration proposal or abandon the registration completely at any time.</t>
+        </section>
+        <section anchor="iana-registry-submit-request-to-iana" numbered="true" toc="default">
+          <name>Submit Request to IANA</name>
+          <t>Registration requests can be sent to IANA &lt;iana@iana.org&gt;.</t>
+        </section>
+        <section anchor="iana-registry-designated-expert-review" numbered="true" toc="default">
+          <name>Designated Expert Review</name>
+          <t>The primary concern of the DE is preventing name collisions and encouraging the submitter to document security and privacy considerations.</t>
+          <t>A new type name, property name, or enumerated value <bcp14>MUST NOT</bcp14> differ only in case from an already-registered name or value.</t>
+          <t>For a common-use registration, the DE is expected to confirm that suitable documentation is available to ensure interoperability. The DE should also verify that the new assignment does not conflict with work that is active or already published within the IETF.</t>
+          <t>The DE will either approve or deny the registration request and publish a notice of the decision to the Calext WG mailing list or its successor, as well as inform IANA. A denial notice must be justified by an explanation, and in the cases where it is possible, concrete suggestions on how the request can be modified to become acceptable should be provided.</t>
+        </section>
+        <section anchor="iana-registry-change-procedures" numbered="true" toc="default">
+          <name>Change Procedures</name>
+          <t>Once a JSCalendar registry group item has been published by IANA, the Change Controller may request a change to its definition. The same procedure that would be appropriate for the original registration request is used to process a change request.</t>
+          <t>JSCalendar registrations do not get deleted; instead, items that are no longer believed appropriate for use are declared obsolete by a change to their "Intended Usage" field; such items will be clearly marked in the IANA registry.</t>
+          <t>Significant changes to a JSCalendar registry item's definition should be requested only when there are serious omissions or errors in the published specification, as such changes may cause interoperability issues. When review is required, a change request may be denied if it renders entities that were valid under the previous definition invalid under the new definition.</t>
+        </section>
+      </section>
+      <section anchor="iana-version-registry" numbered="true" toc="default">
+        <name>"JSCalendar Version" Registry</name>
+        <t>IANA will add the "JSCalendar Version" registry to the "JSCalendar" registry group. The purpose of this new registry is to define the allowed value range of JSCalendar major and minor version numbers.</t>
+        <t>The registry entries sort numerically in ascending order by the "Major Version" column, entries with equal "Major Version" sort numerically in ascending order by the "Minor Version" column.</t>
+        <t>The registry process is outlined in <xref target="iana-property-registry-policy" format="default"/>.
+        </t>
+        <section anchor="iana-version-registry-template" numbered="true" toc="default">
+          <name>"JSCalendar Version" Registry Template</name>
+          <dl newline="false">
+            <dt>Major Version:</dt>
+            <dd>The numeric value of a JSCalendar major version number. It <bcp14>MUST</bcp14> be a positive integer.
+            </dd>
+            <dt>Highest Minor Version:</dt>
+            <dd>The maximum numeric value of a JSCalendar minor version for the given major version. It <bcp14>MUST </bcp14> be zero or a positive integer. All numbers less than or equal to this value are valid minor version values for the given major version.
+            </dd>
+          </dl>
+        </section>
+        <section anchor="iana-version-registry-contents" numbered="true" toc="default">
+          <name>Initial Contents of the JSCalendar Version Registry</name>
+          <t>The following table lists the initial valid major and minor version number ranges.</t>
+          <table anchor="tab-iana-version-registry" align="center">
+            <name>JSCalendar Version Registry</name>
+            <thead>
+              <tr>
+                <th align="left">Major Version</th>
+                <th align="left">Highest Minor Version</th>
+                <th align="left">Reference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left">1</td>
+                <td align="left">0</td>
+                <td align="left">
+                  <xref target="RFC8984"/>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <td align="left">2</td>
+                <td align="left">0</td>
+                <td align="left">draft-ietf-calext-jscalendarbis</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
       <section anchor="iana-property-registry" numbered="true" toc="default">
         <name>"JSCalendar Properties" Registry</name>
         <t>IANA has created the "JSCalendar Properties" registry to allow interoperability of extensions to JSCalendar objects. IANA will set the Reference of the registry to this document, rather than obsoleted <xref target="RFC8984"/>.</t>
-        <section anchor="iana-property-registry-policy">
-          <name>Registry Policy and Change Procedures</name>
-          <t><em>Note for IANA</em>:  This section leaves the original definition of <xref target="RFC8984"/> unchanged.</t>
-          <t>This registry follows the Expert Review process (<xref target="RFC8126" sectionFormat="comma" section="4.5"/>). If the "Intended Usage" field is <tt>common</tt>, sufficient documentation is required to enable interoperability. Preliminary community review for this registry is optional but strongly encouraged.</t>
-          <t>A registration can have an intended usage of <tt>common</tt>, <tt>reserved</tt>, or <tt>obsolete</tt>. IANA will list registrations with a common usage designation prominently and separately from those with other intended usage values.</t>
-          <t>A <tt>reserved</tt> registration reserves a property name without assigning semantics to avoid name collisions with future extensions or protocol use.</t>
-          <t>An <tt>obsolete</tt> registration denotes a property that is no longer expected to be added by up-to-date systems. A new property has probably been defined covering the obsolete property's semantics.</t>
-          <t>The JSCalendar property registration procedure is not a formal standards process but rather an administrative procedure intended to allow community comment and check it is coherent without excessive time delay. It is designed to encourage vendors to document and register new properties they add for use cases not covered by the original specification, leading to increased interoperability.</t>
-          <section anchor="iana-property-registry-preliminary-community-review" numbered="true" toc="default">
-            <name>Preliminary Community Review</name>
-            <t>Notice of a potential new registration <bcp14>SHOULD</bcp14> be sent to the Calext mailing list
-      &lt;calsify@ietf.org&gt; for review. This mailing list is appropriate to solicit community feedback
-        on a proposed new property.</t>
-            <t>Property registrations must be marked with their intended use: "common", "reserved", or
-      "obsolete".</t>
-            <t>The intent of the public posting to this list is to solicit comments and feedback on the choice of
-      the property name, the unambiguity of the specification document, and a review of any
-        interoperability or security considerations. The submitter may submit a revised registration proposal
-          or abandon the registration completely at any time.</t>
-          </section>
-          <section anchor="iana-property-registry-submit-request-to-iana" numbered="true" toc="default">
-            <name>Submit Request to IANA</name>
-            <t>Registration requests can be sent to &lt;iana@iana.org&gt;.</t>
-          </section>
-          <section anchor="iana-property-registry-designated-expert-review" numbered="true" toc="default">
-            <name>Designated Expert Review</name>
-            <t>The primary concern of the designated expert (DE) is preventing name collisions and encouraging
-      the submitter to document security and privacy considerations. For a common-use registration, the DE
-        is expected to confirm that suitable documentation, as described in <xref target="RFC8126" sectionFormat="of" section="4.6"/>, is available to ensure interoperability. That documentation will
-          usually be in an RFC, but simple definitions are likely to use a web/wiki page, and if a sentence or
-      two is deemed sufficient, it could be described in the registry itself. The DE should also verify that
-        the property name does not conflict with work that is active or already published within the IETF. A
-          published specification is not required for reserved or obsolete registrations.</t>
-            <t>The DE will either approve or deny the registration request and publish a notice of the decision
-      to the Calext WG mailing list or its successor, as well as inform IANA. A denial notice must be
-        justified by an explanation, and, in the cases where it is possible, concrete suggestions on how the
-          request can be modified so as to become acceptable should be provided.</t>
-          </section>
-          <section anchor="iana-property-registry-change-procedures" numbered="true" toc="default">
-            <name>Change Procedures</name>
-            <t>Once a JSCalendar property has been published by IANA, the change controller may request a
-      change to its definition. The same procedure that would be appropriate for the original registration
-        request is used to process a change request.</t>
-            <t>JSCalendar property registrations may not be deleted; properties that are no longer believed appropriate for use can be declared obsolete by a change to their "intended usage" field; such properties will be clearly marked in the IANA registry.</t>
-            <t>Significant changes to a JSCalendar property's definition should be requested only when there are
-      serious omissions or errors in the published specification, as such changes may cause
-        interoperability issues. When review is required, a change request may be denied if it renders
-          entities that were valid under the previous definition invalid under the new definition.</t>
-            <t>The owner of a JSCalendar property may pass responsibility to another person or agency by
-      informing IANA; this can be done without discussion or review.</t>
-          </section>
-        </section>
         <section anchor="iana-property-registry-template" numbered="true" toc="default">
           <name>"JSCalendar Properties" Registry Template</name>
-          <t><em>Note for IANA</em>:  This section leaves the original definition of <xref target="RFC8984"/> unchanged.</t>
           <dl newline="false">
             <dt>Property Name:</dt>
             <dd>This is the name of the property. The property name <bcp14>MUST NOT</bcp14> already be
@@ -1669,54 +1737,460 @@ signed-duration = ["+" / "-"] duration
             <dd>This is a brief description or RFC number and section reference where the property is specified (omitted for "reserved" property names).</dd>
             <dt>Intended Usage:</dt>
             <dd>This may be "common", "reserved", or "obsolete".</dd>
+            <dt>Since Version:</dt>
+            <dd>The JSCalendar version on which the property definition is based. The version <bcp14>MUST</bcp14> be one of the allowed values of the version property in the "JSCalendar Version" registry (see <xref target="tab-iana-version-registry"/>).</dd>
+            <dt>Until Version:</dt>
+            <dd>The JSCalendar version after which the property was obsoleted; therefore, it <bcp14>MUST NOT</bcp14> be used in later versions. The Until Version value either <bcp14>MUST NOT</bcp14> be set or <bcp14>MUST </bcp14> be one of the allowed values of the version property in the "JSCalendar Version" registry (see <xref target="tab-iana-version-registry"/>).</dd>
             <dt>Change Controller:</dt>
             <dd>This is who may request a change to this entry's definition (<tt>IETF</tt> for RFCs from the IETF stream).</dd>
           </dl>
         </section>
         <section anchor="iana-property-registry-updated-contents">
-          <name>Changes to the JSCalendar Properties Registry contents</name>
+          <name>Changes to the "JSCalendar Properties" Registry</name>
           <section>
             <name>Obsoleted Properties</name>
-            <t>IANA will change the Intended Status from "common" to "obsolete" for the following entries in the JSCalendar Properties Registry. For each entry, the Reference/Description column will refer to <xref target="appendix-obsolete-properties"/> of this document.</t>
-            <ul>
-              <li>aliases</li>
-              <li>cid</li>
-              <li>comments</li>
-              <li>daylight</li>
-              <li>excludedRecurrenceRules</li>
-              <li>language</li>
-              <li>locationId</li>
-              <li>names</li>
-              <li>offsetFrom</li>
-              <li>offsetTo</li>
-              <li>progressUpdated</li>
-              <li>recurrenceRules</li>
-              <li>standard</li>
-              <li>start (where Property Context is "TimeZoneRule")</li>
-              <li>timeZones</li>
-              <li>tzId</li>
-              <li>url</li>
-              <li>validUntil</li>
-            </ul>
+            <t>IANA will change the Intended Usage from "common" to "obsolete" for the following entries in the JSCalendar Properties Registry. For each entry, the Property Name and its changed fields are listed.</t>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>aliases</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>cid</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>comments</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>daylight</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>excludedRecurrenceRules</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>language</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>locationId</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>names</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>offsetFrom</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>offsetTo</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>progressUpdated</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>recurrenceRules</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>standard</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>timeZones</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>tzId</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>url</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>validUntil</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <t>The following change only applies for the property entry where the Property Name is "start" and the Property Context is "TimeZoneRule":</t>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>start</dd>
+              <dt>Property Context</dt>
+              <dd>TimeZoneRule</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
           </section>
           <section>
             <name>Reserved Properties</name>
-            <t>IANA will change the Intended Status from "common" to "reserved" for the following entries in the JSCalendar Properties Registry. For each entry, the Reference/Description column will refer to <xref target="appendix-reserved-properties"/> of this document.</t>
-            <ul>
-              <li>excluded</li>
-              <li>invitedBy</li>
-              <li>localizations</li>
-              <li>participationComment</li>
-              <li>replyTo</li>
-              <li>requestStatus</li>
-              <li>scheduleAgent</li>
-              <li>scheduleForceSend</li>
-              <li>scheduleSequence</li>
-              <li>scheduleStatus</li>
-              <li>scheduleUpdated</li>
-              <li>sendTo</li>
-              <li>useDefaultAlerts</li>
-            </ul>
+            <t>IANA will change the Intended Usage from "common" to "reserved" for the following entries in the JSCalendar Properties Registry. For each entry, the Property Name and its changed fields are listed.</t>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>excluded</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>invitedBy</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>localizations</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>participationComment</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>replyTo</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>requestStatus</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>scheduleAgent</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>scheduleForceSend</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>scheduleSequence</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>scheduleStatus</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>scheduleUpdated</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>sendTo</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>useDefaultAlerts</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
           </section>
           <section>
             <name>Updated Properties</name>
@@ -1731,6 +2205,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-type"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- acknowledged -->
             <dl spacing="compact">
@@ -1740,6 +2216,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-alerts"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- action -->
             <dl spacing="compact">
@@ -1749,6 +2227,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-alerts"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- alerts -->
             <dl spacing="compact">
@@ -1758,6 +2238,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-alerts"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- byDay -->
             <dl spacing="compact">
@@ -1767,6 +2249,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- byHour -->
             <dl spacing="compact">
@@ -1776,6 +2260,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- byMinute -->
             <dl spacing="compact">
@@ -1785,6 +2271,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- byMonth -->
             <dl spacing="compact">
@@ -1794,6 +2282,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- byMonthDay -->
             <dl spacing="compact">
@@ -1803,6 +2293,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- bySecond -->
             <dl spacing="compact">
@@ -1812,6 +2304,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- bySetPosition -->
             <dl spacing="compact">
@@ -1821,6 +2315,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- byWeekNo -->
             <dl spacing="compact">
@@ -1830,6 +2326,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- byYearDay -->
             <dl spacing="compact">
@@ -1839,6 +2337,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- calendarAddress -->
             <dl spacing="compact">
@@ -1848,6 +2348,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- categories -->
             <dl spacing="compact">
@@ -1857,6 +2359,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-categories"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- color -->
             <dl spacing="compact">
@@ -1866,6 +2370,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-color"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- contentType -->
             <dl spacing="compact">
@@ -1875,6 +2381,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Link"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- coordinates -->
             <dl spacing="compact">
@@ -1884,6 +2392,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-locations"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- count -->
             <dl spacing="compact">
@@ -1893,6 +2403,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- created -->
             <dl spacing="compact">
@@ -1902,6 +2414,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-created"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- day -->
             <dl spacing="compact">
@@ -1911,6 +2425,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- delegatedFrom -->
             <dl spacing="compact">
@@ -1920,6 +2436,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- delegatedTo -->
             <dl spacing="compact">
@@ -1929,6 +2447,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- description -->
             <dl spacing="compact">
@@ -1938,6 +2458,8 @@ signed-duration = ["+" / "-"] duration
               <dd>Event, Task, Participant</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-description"/>, <xref target="prop-participants"/></dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- descriptionContentType -->
             <dl spacing="compact">
@@ -1947,6 +2469,8 @@ signed-duration = ["+" / "-"] duration
               <dd>Event, Task, Participant</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-description"/>, <xref target="prop-participants"/></dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- display -->
             <dl spacing="compact">
@@ -1956,6 +2480,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Link"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- due -->
             <dl spacing="compact">
@@ -1965,6 +2491,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-due"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- duration -->
             <dl spacing="compact">
@@ -1974,6 +2502,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-duration"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- email -->
             <dl spacing="compact">
@@ -1983,6 +2513,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- entries -->
             <dl spacing="compact">
@@ -1992,6 +2524,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-entries"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- estimatedDuration -->
             <dl spacing="compact">
@@ -2001,6 +2535,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-estimatedDuration"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- expectReply -->
             <dl spacing="compact">
@@ -2010,6 +2546,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- features -->
             <dl spacing="compact">
@@ -2019,6 +2557,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-virtualLocations"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- firstDayOfWeek -->
             <dl spacing="compact">
@@ -2028,6 +2568,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- freeBusyStatus -->
             <dl spacing="compact">
@@ -2037,6 +2579,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-freeBusyStatus"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- frequency -->
             <dl spacing="compact">
@@ -2046,6 +2590,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- href -->
             <dl spacing="compact">
@@ -2055,6 +2601,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Link"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- interval -->
             <dl spacing="compact">
@@ -2064,6 +2612,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- keywords -->
             <dl spacing="compact">
@@ -2073,6 +2623,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-keywords"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- kind -->
             <dl spacing="compact">
@@ -2082,6 +2634,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- links -->
             <dl spacing="compact">
@@ -2089,6 +2643,8 @@ signed-duration = ["+" / "-"] duration
               <dd>links</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-links"/>, <xref target="prop-locations"/>, <xref target="prop-participants"/></dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- locale -->
             <dl spacing="compact">
@@ -2098,6 +2654,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-locale"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- locationTypes -->
             <dl spacing="compact">
@@ -2107,6 +2665,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-locations"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- locations -->
             <dl spacing="compact">
@@ -2116,6 +2676,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-locations"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- memberOf -->
             <dl spacing="compact">
@@ -2125,6 +2687,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- method -->
             <dl spacing="compact">
@@ -2134,6 +2698,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-method"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- name -->
             <dl spacing="compact">
@@ -2141,6 +2707,8 @@ signed-duration = ["+" / "-"] duration
               <dd>name</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-locations"/>, <xref target="prop-virtualLocations"/>, <xref target="prop-participants"/></dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- nthOfPeriod -->
             <dl spacing="compact">
@@ -2150,6 +2718,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- offset -->
             <dl spacing="compact">
@@ -2159,6 +2729,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-alerts"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- participants -->
             <dl spacing="compact">
@@ -2168,6 +2740,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- participationStatus -->
             <dl spacing="compact">
@@ -2177,6 +2751,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- percentComplete -->
             <dl spacing="compact">
@@ -2184,6 +2760,8 @@ signed-duration = ["+" / "-"] duration
               <dd>percentComplete</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-percentComplete"/>, <xref target="prop-participants"/></dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- priority -->
             <dl spacing="compact">
@@ -2193,6 +2771,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-priority"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- privacy -->
             <dl spacing="compact">
@@ -2202,6 +2782,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-privacy"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- prodId -->
             <dl spacing="compact">
@@ -2211,6 +2793,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-prodId"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- progress -->
             <dl spacing="compact">
@@ -2218,6 +2802,8 @@ signed-duration = ["+" / "-"] duration
               <dd>progress</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-progress"/>, <xref target="prop-participants"/></dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- recurrenceId -->
             <dl spacing="compact">
@@ -2227,6 +2813,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceId"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- recurrenceIdTimeZone -->
             <dl spacing="compact">
@@ -2236,6 +2824,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceIdTimeZone"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- recurrenceOverrides -->
             <dl spacing="compact">
@@ -2247,6 +2837,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceOverrides"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- rel -->
             <dl spacing="compact">
@@ -2256,6 +2848,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Link"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- relatedTo -->
             <dl spacing="compact">
@@ -2263,6 +2857,8 @@ signed-duration = ["+" / "-"] duration
               <dd>relatedTo</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-relatedTo"/>, <xref target="prop-alerts"/></dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- relation -->
             <dl spacing="compact">
@@ -2272,6 +2868,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Relation"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- relativeTo -->
             <dl spacing="compact">
@@ -2283,6 +2881,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-alerts"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- roles -->
             <dl spacing="compact">
@@ -2292,6 +2892,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- rscale -->
             <dl spacing="compact">
@@ -2301,6 +2903,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- sentBy -->
             <dl spacing="compact">
@@ -2312,6 +2916,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- sequence -->
             <dl spacing="compact">
@@ -2321,6 +2927,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-sequence"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- showWithoutTime -->
             <dl spacing="compact">
@@ -2330,6 +2938,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-showWithoutTime"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- size -->
             <dl spacing="compact">
@@ -2339,6 +2949,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Link"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- skip -->
             <dl spacing="compact">
@@ -2348,6 +2960,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- source -->
             <dl spacing="compact">
@@ -2357,13 +2971,19 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-source"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- start -->
             <dl spacing="compact">
               <dt>Property Name</dt>
               <dd>start</dd>
+              <dt>Property Context</dt>
+              <dd>Event,Task</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-start-jsevent"/>, <xref target="prop-start-jstask"/></dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- status -->
             <dl spacing="compact">
@@ -2373,6 +2993,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-status-jsevent"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- timeZone -->
             <dl spacing="compact">
@@ -2384,6 +3006,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-timeZone"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- title -->
             <dl spacing="compact">
@@ -2393,6 +3017,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-title"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- trigger -->
             <dl spacing="compact">
@@ -2402,6 +3028,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-alerts"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- uid -->
             <dl spacing="compact">
@@ -2411,6 +3039,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-uid"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- until -->
             <dl spacing="compact">
@@ -2420,6 +3050,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- updated -->
             <dl spacing="compact">
@@ -2429,6 +3061,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-updated"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- uri -->
             <dl spacing="compact">
@@ -2438,6 +3072,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-virtualLocations"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- virtualLocations -->
             <dl spacing="compact">
@@ -2447,6 +3083,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-virtualLocations"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- when -->
             <dl spacing="compact">
@@ -2456,6 +3094,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-alerts"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
           </section>
           <section>
@@ -2474,6 +3114,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -2490,6 +3132,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -2506,6 +3150,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -2522,6 +3168,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -2538,6 +3186,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -2554,6 +3204,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -2568,6 +3220,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -2584,6 +3238,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -2598,6 +3254,26 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>No</dd>
+            </dl>
+            <dl spacing="compact" anchor="iana-property-registry-version">
+              <dt>Property Name</dt>
+              <dd>version</dd>
+              <dt>Property Type</dt>
+              <dd>String</dd>
+              <dt>Property Context</dt>
+              <dd>Group, Event, Task</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="prop-version"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -2610,27 +3286,54 @@ signed-duration = ["+" / "-"] duration
         <t>The registration process is the same as for the "JSCalendar Properties" registry, as defined in <xref target="iana-property-registry-policy" format="default"/>.</t>
         <section anchor="iana-type-registry-template" numbered="true" toc="default">
           <name>"JSCalendar Types" Registry Template</name>
-          <t><em>Note for IANA</em>:  This section leaves the original definition of <xref target="RFC8984"/> unchanged.</t>
           <dl newline="false">
             <dt>Type Name:</dt>
             <dd>This is the name of the type.</dd>
             <dt>Reference or Description:</dt>
             <dd>This is a brief description or RFC number and section reference where the Type is specified (may be omitted for "reserved" type names).</dd>
-            <dt>Intended Use:</dt>
+            <dt>Intended Usage:</dt>
             <dd>This may be "common", "reserved", or "obsolete".</dd>
+            <dt>Since Version:</dt>
+            <dd>The JSCalendar version on which the type definition is based. The version <bcp14>MUST</bcp14> be one of the allowed values of the version type in the "JSCalendar Version" registry (see <xref target="tab-iana-version-registry"/>).</dd>
+            <dt>Until Version:</dt>
+            <dd>The JSCalendar version after which the type was obsoleted; therefore, it <bcp14>MUST NOT</bcp14> be used in later versions. The Until Version value either <bcp14>MUST NOT</bcp14> be set or <bcp14>MUST </bcp14> be one of the allowed values of the version type in the "JSCalendar Version" registry (see <xref target="tab-iana-version-registry"/>).</dd>
             <dt>Change Controller:</dt>
             <dd>This is who may request a change to this entry's definition (<tt>IETF</tt> for RFCs from the IETF stream)</dd>
           </dl>
         </section>
         <section anchor="iana-type-registry-updated-contents">
-          <name>Changes to the JSCalendar Types Registry contents</name>
+          <name>Changes to the "JSCalendar Types" Registry</name>
           <section>
             <name>Obsoleted Types</name>
-            <t>IANA will change the Intended Status from "common" to "obsolete" for the following entries in the JSCalendar Types Registry. For each entry, the Reference/Description column will refer to <xref target="appendix-obsolete-types"/> of this document.</t>
-            <ul>
-              <li>TimeZone</li>
-              <li>TimeZoneRule</li>
-            </ul>
+            <t>IANA will change the Intended Usage from "common" to "obsolete" for the following entries in the JSCalendar Types Registry.  For each entry, the Type Name and its changed fields are listed.</t>
+            <dl spacing="compact">
+              <dt>Type Name</dt>
+              <dd>TimeZone</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-types"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Type Name</dt>
+              <dd>TimeZoneRule</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-types"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
           </section>
           <section>
             <name>Updated Types</name>
@@ -2643,6 +3346,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-alerts"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- Boolean -->
             <dl spacing="compact">
@@ -2652,6 +3357,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-signatures"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- Duration -->
             <dl spacing="compact">
@@ -2661,6 +3368,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Duration"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- Id -->
             <dl spacing="compact">
@@ -2670,6 +3379,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Id"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- Int -->
             <dl spacing="compact">
@@ -2679,6 +3390,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Int"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- LocalDateTime -->
             <dl spacing="compact">
@@ -2688,6 +3401,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-LocalDateTime"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- Link -->
             <dl spacing="compact">
@@ -2697,6 +3412,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Link"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- Location -->
             <dl spacing="compact">
@@ -2706,6 +3423,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-locations"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- NDay -->
             <dl spacing="compact">
@@ -2715,6 +3434,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- Number -->
             <dl spacing="compact">
@@ -2724,6 +3445,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-signatures"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- Participant -->
             <dl spacing="compact">
@@ -2733,6 +3456,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-participants"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- PatchObject -->
             <dl spacing="compact">
@@ -2742,6 +3467,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-PatchObject"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- RecurrenceRule -->
             <dl spacing="compact">
@@ -2751,6 +3478,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="prop-recurrenceRule"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- Relation -->
             <dl spacing="compact">
@@ -2760,6 +3489,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-Relation"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- SignedDuration -->
             <dl spacing="compact">
@@ -2769,6 +3500,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-SignedDuration"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- String -->
             <dl spacing="compact">
@@ -2778,6 +3511,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-signatures"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- TimeZoneId -->
             <dl spacing="compact">
@@ -2787,6 +3522,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-TimeZoneId"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- UnsignedInt -->
             <dl spacing="compact">
@@ -2796,6 +3533,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-UnsignedInt"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
             <!-- UTCDateTime -->
             <dl spacing="compact">
@@ -2805,6 +3544,8 @@ signed-duration = ["+" / "-"] duration
               <dd>
                 <xref target="type-UTCDateTime"/>
               </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
             </dl>
           </section>
           <section>
@@ -2819,6 +3560,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
               <dt>Change Controller</dt>
               <dd>IETF</dd>
             </dl>
@@ -2831,6 +3574,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
               <dt>Change Controller</dt>
               <dd>IETF</dd>
             </dl>
@@ -2843,6 +3588,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
               <dt>Change Controller</dt>
               <dd>IETF</dd>
             </dl>
@@ -2855,6 +3602,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
               <dt>Change Controller</dt>
               <dd>IETF</dd>
             </dl>
@@ -2867,6 +3616,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
               <dt>Change Controller</dt>
               <dd>IETF</dd>
             </dl>
@@ -2879,6 +3630,8 @@ signed-duration = ["+" / "-"] duration
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
               <dt>Change Controller</dt>
               <dd>IETF</dd>
             </dl>
@@ -2891,8 +3644,7 @@ signed-duration = ["+" / "-"] duration
         <t>The registration process for a new enum value or adding a new enumerable property is the same as for the "JSCalendar Properties" registry, as defined in <xref target="iana-property-registry-policy" format="default"/>.</t>
         <section anchor="iana-enum-registry-registry-template" numbered="true" toc="default">
           <name>"JSCalendar Enum Values" Registry Property Template</name>
-          <t><em>Note for IANA</em>:  This section leaves the original definition of <xref target="RFC8984"/> unchanged.</t>
-          <t>This template is for adding a subregistry for a new enumerable property to the "JSCalendar Enum" registry.</t>
+          <t>This template is for adding a subregistry for a new enumerable property to the "JSCalendar Enum" registry. To add or amend enumerated values for a new or existing subregistry use the template in <xref target="iana-enum-registry-value-template"/>.</t>
           <dl newline="false">
             <dt>Property Name:</dt>
             <dd>These are the name(s) of the property or properties where these values may be used. This <bcp14>MUST</bcp14> be registered in the "JSCalendar Properties" registry.</dd>
@@ -2906,171 +3658,343 @@ signed-duration = ["+" / "-"] duration
         </section>
         <section anchor="iana-enum-registry-value-template" numbered="true" toc="default">
           <name>"JSCalendar Enum Values" Registry Value Template</name>
-          <t><em>Note for IANA</em>:  This section adds the "Intended Use" column to the template.</t>
           <t>This template is for adding a new enum value to a subregistry in the JSCalendar Enum registry.</t>
           <dl newline="false">
             <dt>Enum Value:</dt>
             <dd>This is the verbatim value of the enum.</dd>
             <dt>Reference or Description:</dt>
             <dd>This is a brief description or RFC number and section reference for the semantics of this value.</dd>
-            <dt>Intended Use:</dt>
+            <dt>Intended Usage:</dt>
             <dd>This may be "common", "reserved", or "obsolete".</dd>
+            <dt>Since Version:</dt>
+            <dd>The JSCalendar version on which the enum value definition is based. The version <bcp14>MUST</bcp14> be one of the allowed values of the version type in the "JSCalendar Version" registry (see <xref target="tab-iana-version-registry"/>).</dd>
+            <dt>Until Version:</dt>
+            <dd>The JSCalendar version after which the enum value was obsoleted; therefore, it <bcp14>MUST NOT</bcp14> be used in later versions. The Until Version value either <bcp14>MUST NOT</bcp14> be set or <bcp14>MUST </bcp14> be one of the allowed values of the version type in the "JSCalendar Version" registry (see <xref target="tab-iana-version-registry"/>).</dd>
           </dl>
         </section>
         <section anchor="iana-enum-registry-updated-contents">
-          <name>Changes to the JSCalendar Enum Values Registry contents</name>
-          <section>
-            <name>Updated References</name>
-            <t>This document adds the "Intended Use" column to the <xref target="iana-enum-registry-value-template">registry template</xref>. IANA will set the value for each existing entry to "common", except for the special case of the "attendee" roles enum described in <xref target="iana-enum-registry-updated-contents-enum-roles"/>.</t>
-            <t>IANA will set the Reference of the registry and its sub-registries to a reference to this document. It will set the Reference column of the property names to a reference to this document.</t>
-            <t>IANA will set the Reference columns of the Enum Values sub-registries as follows:</t>
-            <table>
-              <name>Updates references of the "JSCalendar Enum Values" registry"</name>
-              <thead>
-                <tr>
-                  <th>Registry Name</th>
-                  <th>Reference</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>JSCalendar Enum Values for action (Context: Alert)</td>
-                  <td>
-                    <xref target="prop-alerts"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td>JSCalendar Enum Values for display (Context: Link)</td>
-                  <td>
-                    <xref target="type-Link"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td>JSCalendar Enum Values for features (Context: VirtualLocation)</td>
-                  <td>
-                    <xref target="prop-virtualLocations"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td>JSCalendar Enum Values for freeBusyStatus (Context: Event, Task)</td>
-                  <td>
-                    <xref target="prop-freeBusyStatus"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td>JSCalendar Enum Values for kind (Context: Participant)</td>
-                  <td>
-                    <xref target="prop-participants"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td>JSCalendar Enum Values for participationStatus (Context: Participant)</td>
-                  <td>
-                    <xref target="prop-participants"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td>JSCalendar Enum Values for privacy (Context: Event, Task)</td>
-                  <td>
-                    <xref target="prop-privacy"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td>JSCalendar Enum Values for roles (Context: Participant)</td>
-                  <td>
-                    <xref target="prop-participants"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td>JSCalendar Enum Values for status (Context: Event)</td>
-                  <td>
-                    <xref target="prop-status-jsevent"/>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-          <section>
-            <name>Removed Registries</name>
-            <t>IANA will remove the sub-registry "JSCalendar Enum Values for scheduleAgent (Context: Participant)".</t>
-          </section>
-          <section>
-            <name>Updated Registries</name>
-            <section>
-              <name>JSCalendar Enum Values for progress (Context: Task, Participant)</name>
-              <t>IANA will rename the sub-registry to "JSCalendar Enum Values for progress (Context: Task)". It will set the Reference column of the enum values to a reference to <xref target="prop-progress"/> of this document.</t>
-            </section>
-            <section>
-              <name>JSCalendar Enum Values for relativeTo (Context: OffsetTrigger, Location)</name>
-              <t>IANA will rename the sub-registry to "JSCalendar Enum Values for relativeTo (Context: OffsetTrigger)". It will set the Reference column of the enum values to a reference to <xref target="prop-alerts"/> of this document.</t>
-            </section>
-            <section>
-              <name>JSCalendar Enum Values for relation (Context: Relation)</name>
-              <t>IANA will set the Reference column of the enum values to a reference to <xref target="type-Relation"/> of this document.</t>
-              <t>It will add the following Enum Value entry:</t>
-              <dl spacing="compact">
-                <dt>Enum Value</dt>
-                <dd>snooze</dd>
-                <dt>Reference/Description</dt>
-                <dd>
-                  <xref target="prop-alerts"/>
-                </dd>
-                <dt>Change Controller</dt>
-                <dd>IETF</dd>
-              </dl>
-            </section>
-            <section anchor="iana-enum-registry-updated-contents-enum-roles">
-              <name>JSCalendar Enum Values for roles (Context: Context: Participant)</name>
-              <t>IANA will set "Intended Use" column of the "attendee" value to "obsolete".</t>
-            </section>
-          </section>
-          <section>
-            <name>Added Registries</name>
-            <t>IANA will add the following sub-registries to the "JSCalendar Enum Values" registry.</t>
-            <section>
-              <name>JSCalendar Enum Values for progress (Context: Participant)</name>
-              <dl spacing="compact" newline="false" indent="20">
-                <dt>Property Name:</dt>
-                <dd>progress</dd>
-                <dt>Context:</dt>
-                <dd>Participant</dd>
-                <dt>Change Controller:</dt>
-                <dd>IETF</dd>
-                <dt>Initial Contents:</dt>
-                <dd>
-                  <table anchor="tab-iana-enum-progress-participant" align="left">
-                    <name>JSCalendar Enum Values for progress (Context: Participant)</name>
-                    <thead>
-                      <tr>
-                        <th align="left">Enum Value</th>
-                        <th align="left">Reference or Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td align="left">in-process</td>
-                        <td align="left">
-                          <xref target="prop-participants" format="default"/>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td align="left">completed</td>
-                        <td align="left">
-                          <xref target="prop-participants" format="default"/>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td align="left">failed</td>
-                        <td align="left">
-                          <xref target="prop-participants" format="default"/>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </dd>
-              </dl>
-            </section>
-          </section>
+          <name>Changes to the "JSCalendar Enum Values" Registry</name>
+          <t>IANA will update the following entries. For each entry, the Property Name and its changed fields are listed. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>progress</dd>
+            <dt>Context</dt>
+            <dd>Task</dd>
+            <dt>Reference</dt>
+            <dd>draft-ietf-calext-jscalendarbis</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>relativeTo</dd>
+            <dt>Context</dt>
+            <dd>OffsetTrigger</dd>
+            <dt>Reference</dt>
+            <dd>draft-ietf-calext-jscalendarbis</dd>
+          </dl>
+          <t>For every other existing entry, IANA will replace the contents of the "Reference" column with a reference to this document.</t>
+        </section>
+        <section anchor="iana-enum-registry-progress-participant">
+          <name>Additions to the "JSCalendar Enum Values" Registry</name>
+          <t>IANA will add the following entry to the "JSCalendar Enum Values" registry entry:</t>
+          <dl spacing="compact">
+            <dt>Property Name</dt>
+            <dd>progress</dd>
+            <dt>Context</dt>
+            <dd>Participant</dd>
+            <dt>Reference</dt>
+            <dd>draft-ietf-calext-jscalendarbis</dd>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
+          </dl>
+          <t>IANA will add the following enumerated values in the newly created subregistry:</t>
+          <dl spacing="compact">
+            <dt>Enum Value</dt>
+            <dd>in-process</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>2.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Enum Value</dt>
+            <dd>completed</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>2.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Enum Value</dt>
+            <dd>failed</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>2.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-action-changes">
+          <name>Changes to the "JSCalendar Enum Values for action (Context: Alert)" Registry</name>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-display-changes">
+          <name>Changes to the "JSCalendar Enum Values for display (Context: Link)" Registry</name>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="type-Link"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-features-changes">
+          <name>Changes to the "JSCalendar Enum Values for features (Context: VirtualLocation)" Registry</name>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="prop-virtualLocations"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-freeBusyStatus-changes">
+          <name>Changes to the "JSCalendar Enum Values for freeBusyStatus (Context: Event, Task)" Registry</name>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="prop-freeBusyStatus"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-kind-changes">
+          <name>Changes to the "JSCalendar Enum Values for kind (Context: Participant)" Registry</name>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-participationStatus-changes">
+          <name>Changes to the "JSCalendar Enum Values for participationStatus (Context: Participant)" Registry</name>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-privacy-changes">
+          <name>Changes to the "JSCalendar Enum Values for privacy (Context: Event, Task)" Registry</name>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="prop-privacy"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-progress-changes">
+          <name>Changes to the "JSCalendar Enum Values for progress (Context: Task, Participant)" Registry</name>
+          <t>IANA will rename the sub-registry to "JSCalendar Enum Values for progress (Context: Task)".</t>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="prop-progress"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-relation-changes">
+          <name>Changes to the "JSCalendar Enum Values for relation (Context: Relation)" Registry</name>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="type-Relation"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+          <t>IANA will add the following entry:</t>
+          <dl spacing="compact">
+            <dt>Enum Value</dt>
+            <dd>snooze</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>2.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-relativeTo-changes">
+          <name>Changes to the "JSCalendar Enum Values for relativeTo (Context: OffsetTrigger, Location)" Registry</name>
+          <t>IANA will rename the sub-registry to "JSCalendar Enum Values for relativeTo (Context: OffsetTrigger)".</t>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="prop-alerts"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-roles-changes">
+          <name>Changes to the "JSCalendar Enum Values for roles (Context: Participant)" Registry</name>
+          <t>For the entry with enum value "attendee", IANA will set the following fields:</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="appendix-updated-properties"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>obsolete</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd>1.0</dd>
+          </dl>
+          <t>For every other existing entry, IANA will set the following fields:</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-scheduleAgent-changes">
+          <name>Changes to the "JSCalendar Enum Values for scheduleAgent (Context: Participant)" Registry</name>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="appendix-reserved-properties"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>reserved</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd>1.0</dd>
+          </dl>
+        </section>
+        <section anchor="iana-enum-value-status-changes">
+          <name>Changes to the "JSCalendar Enum Values for status (Context: Event)" Registry</name>
+          <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="prop-status-jsevent"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+          </dl>
         </section>
       </section>
     </section>
@@ -3200,6 +4124,7 @@ signed-duration = ["+" / "-"] duration
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7265.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7986.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8607.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9553.xml"/>
       </references>
     </references>
     <section anchor="differences-from-rfc8984">
@@ -3618,6 +4543,14 @@ signed-duration = ["+" / "-"] duration
           <dd>
             <t>This replaces the obsoleted recurrenceRules property.</t>
             <t>See <xref target="prop-recurrenceRule" sectionFormat="of"/>.</t>
+          </dd>
+        </dl>
+        <!-- version -->
+        <dl newline="true" spacing="normal">
+          <dt><strong>version</strong>:</dt>
+          <dd>
+            <t>This adds <xref target="versioning">versioning</xref> to JSCalendar, as defined for <xref target="RFC9553">JSContact</xref>.</t>
+            <t>See <xref target="prop-version" sectionFormat="of"/>.</t>
           </dd>
         </dl>
         <!-- Event.endTimeZone -->
