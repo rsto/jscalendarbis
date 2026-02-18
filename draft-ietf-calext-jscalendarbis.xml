@@ -203,29 +203,29 @@
         <t>In addition to the standard JSON data types, the following data types are used in this specification:</t>
         <section anchor="type-Id">
           <name>Id</name>
-          <t>Where <tt>Id</tt> is given as a data type, it means a <tt>String</tt> of at least 1 and a maximum of 255 octets in size, and it <bcp14>MUST</bcp14> only contain characters from the "URL and Filename Safe" base64url alphabet, as defined in <xref target="RFC4648" section="5"/>, excluding the pad character (<tt>=</tt>). This means the allowed characters are the ASCII alphanumeric characters (<tt>A-Za-z0-9</tt>), hyphen (<tt>-</tt>), and underscore (<tt>_</tt>).</t>
+          <t>Where "Id" is given as a data type, it means a String of at least 1 and a maximum of 255 octets in size, and it <bcp14>MUST</bcp14> only contain characters from the "URL and Filename Safe" base64url alphabet, as defined in <xref target="RFC4648" section="5"/>, excluding the pad character ("="). This means the allowed characters are the ASCII alphanumeric characters ("A-Za-z0-9"), hyphen ("-"), and underscore ("_").</t>
           <t>In many places in JSCalendar, a JSON map is used where the map keys are of type Id and the map values are all the same type of object. This construction represents an unordered set of objects, with the added advantage that each entry has a name (the corresponding map key). This allows for more concise patching of objects, and, when applicable, for the objects in question to be referenced from other objects within the JSCalendar object.</t>
           <t>Unless otherwise specified for a particular property, there are no uniqueness constraints on an Id value (other than, of course, the requirement that you cannot have two values with the same key within a single JSON map). For example, two Event objects might use the same Ids in their respective <tt>links</tt> properties or, within the same Event object, the same Id could appear in the <tt>participants</tt> and <tt>alerts</tt> properties. These situations do not imply any semantic connections among the objects.</t>
         </section>
         <section anchor="type-Int">
           <name>Int</name>
-          <t>Where <tt>Int</tt> is given as a data type, it means an integer in the range -2<sup>53</sup>+1 &lt;= value &lt;= 2<sup>53</sup>-1, the safe range for integers stored in a floating-point double, represented as a JSON <tt>Number</tt>.</t>
+          <t>Where "Int" is given as a data type, it means an integer in the range -2<sup>53</sup>+1 &lt;= value &lt;= 2<sup>53</sup>-1, the safe range for integers stored in a floating-point double, represented as a JSON Number.</t>
         </section>
         <section anchor="type-UnsignedInt">
           <name>UnsignedInt</name>
-          <t>Where <tt>UnsignedInt</tt> is given as a data type, it means an integer in the range 0 &lt;= value &lt;= 2<sup>53</sup>-1, represented as a JSON <tt>Number</tt>.</t>
+          <t>Where "UnsignedInt" is given as a data type, it means an integer in the range 0 &lt;= value &lt;= 2<sup>53</sup>-1, represented as a JSON Number.</t>
         </section>
         <section anchor="type-UTCDateTime">
           <name>UTCDateTime</name>
-          <t>This is a string in the <tt>date-time</tt> <xref target="RFC3339"/> format, with the further restrictions that any letters <bcp14>MUST</bcp14> be in uppercase, and the time offset <bcp14>MUST</bcp14> be the character <tt>Z</tt>. Fractional second values <bcp14>MUST NOT</bcp14> be included.</t>
-          <t>For example, <tt>2010-10-10T10:10:10Z</tt> is conformant, but <tt>2010-10-10T10:10:10.0Z</tt> or <tt>2010-10-10T10:10:10.123Z</tt> are invalid.</t>
+          <t>This is a String in the "date-time" format <xref target="RFC3339"/>, with the further restrictions that any letters <bcp14>MUST</bcp14> be in uppercase, and the time offset <bcp14>MUST</bcp14> be the character "Z". Fractional second values <bcp14>MUST NOT</bcp14> be included.</t>
+          <t>For example, "2010-10-10T10:10:10Z" is conformant, but "2010-10-10T10:10:10.0Z" or "2010-10-10T10:10:10.123Z" are invalid.</t>
         </section>
         <section anchor="type-LocalDateTime">
           <name>LocalDateTime</name>
-          <t>This is a date-time string with no time zone/offset information. It is otherwise in the same format as UTCDateTime. For example, <tt>2006-01-02T15:04:05</tt> is valid. The time zone to associate with the LocalDateTime comes from the <tt>timeZone</tt> property of the JSCalendar object (see <xref target="prop-timeZone"/>). If no time zone is specified, the LocalDateTime is "floating". Floating date-times are not tied to any specific time zone. Instead, they occur in each time zone at the given wall-clock time (as opposed to the same instant point in time).</t>
+	  <t>This is a date-time String with no time zone/offset information. It is otherwise in the same format as UTCDateTime. For example, "2006-01-02T15:04:05" is valid. The time zone to associate with the LocalDateTime comes from the <tt>timeZone</tt> property of the JSCalendar object (see <xref target="prop-timeZone"/>). If no time zone is specified, the LocalDateTime is <em>floating</em>. Floating date-times are not tied to any specific time zone. Instead, they occur in each time zone at the given wall-clock time (as opposed to the same instant point in time).</t>
           <t>A time zone may have a period of discontinuity, for example, a change from standard time to daylight savings time. When converting local date-times that fall in the discontinuity to UTC, the offset before the transition <bcp14>MUST</bcp14> be used.</t>
-          <t>For example, in the <tt>America/Los_Angeles</tt> time zone, the date-time <tt>2020-11-01T01:30:00</tt> occurs twice: before the daylight savings time (DST) transition with a UTC offset of -07:00 and again after the transition with an offset of -08:00. When converting to UTC, we therefore use the offset before the transition (-07:00), so it becomes <tt>2020-11-01T08:30:00Z</tt>.</t>
-          <t>Similarly, in the <tt>Australia/Melbourne</tt> time zone, the date-time <tt>2020-10-04T02:30:00</tt> does not exist; the clocks are moved forward one hour for DST on that day at 02:00. However, such a value may appear during calculations (see duration semantics in <xref target="type-Duration"/>) or due to a change in time zone rules (so it was valid when the event was first created). Again, it is interpreted as though the offset before the transition is in effect (+10:00); therefore, when converted to UTC, we get <tt>2020-10-03T16:30:00Z</tt>.</t>
+          <t>For example, in the "America/Los_Angeles" time zone, the date-time "2020-11-01T01:30:00" occurs twice: before the daylight savings time (DST) transition with a UTC offset of -07:00 and again after the transition with an offset of -08:00. When converting to UTC, we therefore use the offset before the transition (-07:00), so it becomes "2020-11-01T08:30:00Z".</t>
+          <t>Similarly, in the "Australia/Melbourne" time zone, the date-time "2020-10-04T02:30:00" does not exist; the clocks are moved forward one hour for DST on that day at 02:00. However, such a value may appear during calculations (see duration semantics in <xref target="type-Duration"/>) or due to a change in time zone rules (so it was valid when the event was first created). Again, it is interpreted as though the offset before the transition is in effect (+10:00); therefore, when converted to UTC, we get "2020-10-03T16:30:00Z".</t>
         </section>
         <section anchor="type-Duration">
           <name>Duration</name>
@@ -269,7 +269,7 @@ signed-duration = ["+" / "-"] duration
         </section>
         <section anchor="type-TimeZoneId">
           <name>TimeZoneId</name>
-          <t>Where <tt>TimeZoneId</tt> is given as a data type, it means a <tt>String</tt> that is a time zone name in the IANA Time Zone Database <xref target="TZDB"/>. The zone rules of the respective IANA time zone records apply.</t>
+          <t>Where "TimeZoneId" is given as a data type, it means a String that is a time zone name in the IANA Time Zone Database <xref target="TZDB"/>. The zone rules of the respective IANA time zone records apply.</t>
         </section>
         <section anchor="type-PatchObject">
           <name>PatchObject</name>
@@ -294,9 +294,9 @@ signed-duration = ["+" / "-"] duration
           <name>Relation</name>
           <t>A Relation object defines the relation to other objects, using a possibly empty set of relation types. The object that defines this relation is the linking object, while the other object is the linked object. A Relation object has the following properties:</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt></dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Relation</tt>, if set.</dd>
-            <dt>relation: <tt>String[Boolean]</tt> (optional, default: empty Object)</dt>
+            <dt>@type: String.</dt>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "Relation", if set.</dd>
+            <dt>relation: String[Boolean] (optional; default: empty Object).</dt>
             <dd>
               <t>This describes how the linked object is related to the linking object. The relation is defined as a set of relation types. Keys in the set <bcp14>MUST</bcp14> be one of the following values, specified in the property definition where the Relation object is used, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
@@ -317,20 +317,20 @@ signed-duration = ["+" / "-"] duration
           <name>Link</name>
           <t>A Link object represents an external resource associated with the linking object. It has the following properties:</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt></dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Link</tt>, if set.</dd>
-            <dt>href: <tt>String</tt> (mandatory)</dt>
+            <dt>@type: String.</dt>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "Link", if set.</dd>
+            <dt>href: String (mandatory).</dt>
             <dd>
               <t>This is a URI<xref target="RFC3986"/> from which the resource may be fetched.</t>
               <t>This <bcp14>MAY</bcp14> be a <tt>data:</tt> URL <xref target="RFC2397"/>, but it is recommended that the file be hosted on a server to avoid embedding arbitrarily large data in JSCalendar object instances.</t>
             </dd>
-            <dt>contentType: <tt>String</tt> (optional)</dt>
+            <dt>contentType: String (optional).</dt>
             <dd>This is the media type <xref target="RFC6838"/> of the resource, if known.</dd>
-            <dt>size: <tt>UnsignedInt</tt> (optional)</dt>
+            <dt>size: UnsignedInt (optional).</dt>
             <dd>This is the size, in octets, of the resource when fully decoded (i.e., the number of octets in the file the user would download), if known. Note that this is an informational estimate, and implementations must be prepared to handle the actual size being quite different when the resource is fetched.</dd>
-            <dt>rel: <tt>String</tt> (optional)</dt>
+            <dt>rel: String (optional).</dt>
             <dd>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a link relation type as defined in <xref target="RFC8288" section="2.1" sectionFormat="of"/> .</dd>
-            <dt>display: <tt>String[Boolean]</tt> (optional)</dt>
+            <dt>display: String[Boolean] (optional).</dt>
             <dd>
               <t>This is a set of intended purposes of a link to an image. The keys <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
@@ -345,7 +345,7 @@ signed-duration = ["+" / "-"] duration
               </dl>
               <t>The value for each key in the map <bcp14>MUST</bcp14> be true.</t>
             </dd>
-            <dt>title: <tt>String</tt> (optional)</dt>
+            <dt>title: String (optional).</dt>
             <dd>This is a human-readable, plain-text description of the resource.</dd>
           </dl>
         </section>
@@ -495,120 +495,180 @@ jsversion = 1*DIGIT "." 1*DIGIT
       </section>
     </section>
     <section anchor="jscalendar-props">
-      <name>Common JSCalendar Properties</name>
+      <name>Common Properties</name>
       <t>This section describes the properties that are common to the various JSCalendar object types. Specific JSCalendar object types may only support a subset of these properties. The object type definitions in <xref target="jscalendar-object-props"/> describe the set of supported properties per type.</t>
       <section anchor="metadata-properties">
         <name>Metadata Properties</name>
         <section anchor="prop-uid">
           <name>uid</name>
-          <t>Type: <tt>String</tt> (mandatory)</t>
-          <t>This is a globally unique identifier used to associate objects representing the same event, task, group, or other object across different systems, calendars, and views. For recurring events and tasks, the UID is associated with the base object and therefore is the same for all occurrences; the combination of the UID with a <tt>recurrenceId</tt> identifies a particular instance.</t>
-          <t>The generator of the identifier <bcp14>MUST</bcp14> guarantee that the identifier is unique. <xref target="RFC9562"/> describes a range of established algorithms to generate universally unique identifiers (UUIDs). UUID version 4, described in <xref target="RFC9562" section="4.4"/>, is <bcp14>RECOMMENDED</bcp14>.</t>
-          <t>For compatibility with  UIDs <xref target="RFC5545"/>, implementations <bcp14>MUST</bcp14> be able to receive and persist values of at least 255 octets for this property, but they <bcp14>MUST NOT</bcp14> truncate values in the middle of a UTF-8 multi-octet sequence.</t>
+          <dl spacing="normal">
+            <dt>uid: String (mandatory).</dt>
+            <dd>
+              <t>This is a globally unique identifier used to associate objects representing the same event, task, group, or other object across different systems, calendars, and views. For recurring events and tasks, the UID is associated with the base object and therefore is the same for all occurrences; the combination of the UID with a <tt>recurrenceId</tt> identifies a particular instance.</t>
+              <t>The generator of the identifier <bcp14>MUST</bcp14> guarantee that the identifier is unique. <xref target="RFC9562"/> describes a range of established algorithms to generate universally unique identifiers (UUIDs). UUID version 4, described in <xref target="RFC9562" section="4.4"/>, is <bcp14>RECOMMENDED</bcp14>.</t>
+              <t>For compatibility with  UIDs <xref target="RFC5545"/>, implementations <bcp14>MUST</bcp14> be able to receive and persist values of at least 255 octets for this property, but they <bcp14>MUST NOT</bcp14> truncate values in the middle of a UTF-8 multi-octet sequence.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-version">
           <name>version</name>
-          <t>Type: <tt>String</tt></t>
-          <t>The JSCalendar version of this object. The value <bcp14>MUST</bcp14> be one of the IANA-registered JSCalendar Version values for the version property.</t>
-          <t>For version "2.0" or higher, a Group object <bcp14>MUST</bcp14> set the "version" property, but the Event or Task objects that are values in its "entries" property <bcp14>MUST NOT</bcp14> set the "version" property. In contrast, an Event or Task object that is represented without an enclosing Group object <bcp14>MUST</bcp14> set the "version" property, unless specified otherwise. This is to prevent conflicting version values to occur in JSCalendar data.</t>
-          <t>For version "1.0", the "version" property is optional. If it is set, the same rules as described for version "2.0" apply.</t>
+          <dl spacing="normal">
+            <dt>version: String.</dt>
+            <dd>
+              <t>The JSCalendar version of this object. The value <bcp14>MUST</bcp14> be one of the IANA-registered JSCalendar Version values for the version property.</t>
+              <t>For version "2.0" or higher, a Group object <bcp14>MUST</bcp14> set the "version" property, but the Event or Task objects that are values in its "entries" property <bcp14>MUST NOT</bcp14> set the "version" property. In contrast, an Event or Task object that is represented without an enclosing Group object <bcp14>MUST</bcp14> set the "version" property, unless specified otherwise. This is to prevent conflicting version values to occur in JSCalendar data.</t>
+              <t>For version "1.0", the "version" property is optional. If it is set, the same rules as described for version "2.0" apply.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-relatedTo">
           <name>relatedTo</name>
-          <t>Type: <tt>String[Relation]</tt> (optional)</t>
-          <t>This relates the object to other JSCalendar objects. Each key in the map is the <tt>uid</tt> property value of a related object. The value defines the type of the relation.</t>
-          <t>If an object is split to make a "this and future" change to a recurrence, the original object <bcp14>MUST</bcp14> be truncated to end at the previous occurrence before this split, and a new object is created to represent all the occurrences after the split. A <tt>next</tt> relation <bcp14>MUST</bcp14> be set on the original object's <tt>relatedTo</tt> property, keyed by the uid of the new object. A <tt>first</tt> relation  <bcp14>MUST</bcp14> be set on the new object, keyed by the uid of the first object in the series. Clients can then follow these uid keys to get the complete set of objects if the user wishes to modify them all at once.</t>
+          <dl spacing="normal">
+            <dt>relatedTo: String[Relation] (optional).</dt>
+            <dd>
+              <t>This relates the object to other JSCalendar objects. Each key in the map is the <tt>uid</tt> property value of a related object. The value defines the type of the relation.</t>
+              <t>If an object is split to make a "this and future" change to a recurrence, the original object <bcp14>MUST</bcp14> be truncated to end at the previous occurrence before this split, and a new object is created to represent all the occurrences after the split. A <tt>next</tt> relation <bcp14>MUST</bcp14> be set on the original object's <tt>relatedTo</tt> property, keyed by the uid of the new object. A <tt>first</tt> relation  <bcp14>MUST</bcp14> be set on the new object, keyed by the uid of the first object in the series. Clients can then follow these uid keys to get the complete set of objects if the user wishes to modify them all at once.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-prodId">
           <name>prodId</name>
-          <t>Type: <tt>String</tt> (optional)</t>
-          <t>This is the identifier for the product that last updated the JSCalendar object. This should be set whenever the data in the object is modified (i.e., whenever the <tt>updated</tt> property is set).</t>
-          <t>The vendor of the implementation <bcp14>MUST</bcp14> ensure that this is a globally unique identifier, using some technique such as a Formal Public Identifier (FPI) value, as defined in <xref target="ISO.9070.1991"/>.</t>
-          <t>This property <bcp14>SHOULD NOT</bcp14> be used to alter the interpretation of a JSCalendar object beyond the semantics specified in this document. For example, it is not to be used to further the understanding of nonstandard properties, a practice that is known to cause long-term interoperability problems.</t>
+          <dl spacing="normal">
+            <dt>prodId: String (optional).</dt>
+            <dd>
+              <t>This is the identifier for the product that last updated the JSCalendar object. This should be set whenever the data in the object is modified (i.e., whenever the <tt>updated</tt> property is set).</t>
+              <t>The vendor of the implementation <bcp14>MUST</bcp14> ensure that this is a globally unique identifier, using some technique such as a Formal Public Identifier (FPI) value, as defined in <xref target="ISO.9070.1991"/>.</t>
+              <t>This property <bcp14>SHOULD NOT</bcp14> be used to alter the interpretation of a JSCalendar object beyond the semantics specified in this document. For example, it is not to be used to further the understanding of nonstandard properties, a practice that is known to cause long-term interoperability problems.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-created">
           <name>created</name>
-          <t>Type: <tt>UTCDateTime</tt> (optional)</t>
-          <t>This is the date and time this object was initially created.</t>
+          <dl spacing="normal">
+            <dt>created: UTCDateTime (optional).</dt>
+            <dd>
+              <t>This is the date and time this object was initially created.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-updated">
           <name>updated</name>
-          <t>Type: <tt>UTCDateTime</tt> (mandatory)</t>
-          <t>This is the date and time the data in this object was last modified (or its creation date/time if not modified since).</t>
+          <dl spacing="normal">
+            <dt>updated: UTCDateTime (mandatory).</dt>
+            <dd>
+              <t>This is the date and time the data in this object was last modified (or its creation date/time if not modified since).</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-sequence">
           <name>sequence</name>
-          <t>Type: <tt>UnsignedInt</tt> (optional, default: 0)</t>
-          <t>This property indicates the revision of the calendar object. For scheduled calendar objects, its value must be incremented according to the rules of the scheduling protocol, e.g. <xref target="jmap-calendars"/> or <xref target="RFC5546"/>.</t>
+          <dl spacing="normal">
+            <dt>sequence: UnsignedInt (optional; default: 0).</dt>
+            <dd>
+              <t>This property indicates the revision of the calendar object. For scheduled calendar objects, its value must be incremented according to the rules of the scheduling protocol, e.g. <xref target="jmap-calendars"/> or <xref target="RFC5546"/>.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-method">
           <name>method</name>
-          <t>Type: <tt>String</tt> (optional)</t>
-          <t>This is the iTIP <xref target="RFC5546"/> method, in lowercase. This <bcp14>MUST</bcp14> only be present if the JSCalendar object represents an iTIP scheduling message.</t>
+          <dl spacing="normal">
+            <dt>method: String (optional).</dt>
+            <dd>
+              <t>This is the iTIP <xref target="RFC5546"/> method, in lowercase. This <bcp14>MUST</bcp14> only be present if the JSCalendar object represents an iTIP scheduling message.</t>
+            </dd>
+          </dl>
         </section>
       </section>
       <section anchor="whatwhere-properties">
         <name>What and Where Properties</name>
         <section anchor="prop-title">
           <name>title</name>
-          <t>Type: <tt>String</tt> (optional, default: empty String)</t>
-          <t>This is a short summary of the object.</t>
+          <dl spacing="normal">
+            <dt>title: String (optional; default: empty String).</dt>
+            <dd>
+              <t>This is a short summary of the object.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-description">
           <name>description</name>
-          <t>Type: <tt>String</tt> (optional, default: empty String)</t>
-          <t>This is a longer-form text description of the object. The content is formatted according to the <tt>descriptionContentType</tt> property.</t>
+          <dl spacing="normal">
+            <dt>description: String (optional; default: empty String).</dt>
+            <dd>
+              <t>This is a longer-form text description of the object. The content is formatted according to the <tt>descriptionContentType</tt> property.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-descriptionContentType">
           <name>descriptionContentType</name>
-          <t>Type: <tt>String</tt> (optional, default: <tt>text/plain</tt>)</t>
-          <t>This describes the media type <xref target="RFC6838"/> of the contents of the <tt>description</tt> property. Media types <bcp14>MUST</bcp14> be subtypes of type <tt>text</tt> and <bcp14>SHOULD</bcp14> be <tt>text/plain</tt> or <tt>text/html</tt> <xref target="MEDIATYPES"/>. They <bcp14>MAY</bcp14> include parameters, and the <tt>charset</tt> parameter value <bcp14>MUST</bcp14> be <tt>utf-8</tt>, if specified.</t>
+          <dl spacing="normal">
+            <dt>descriptionContentType: String (optional; default: <tt>text/plain</tt>).</dt>
+            <dd>
+              <t>This describes the media type <xref target="RFC6838"/> of the contents of the <tt>description</tt> property. Media types <bcp14>MUST</bcp14> be subtypes of type <tt>text</tt> and <bcp14>SHOULD</bcp14> be <tt>text/plain</tt> or <tt>text/html</tt> <xref target="MEDIATYPES"/>. They <bcp14>MAY</bcp14> include parameters, and the <tt>charset</tt> parameter value <bcp14>MUST</bcp14> be <tt>utf-8</tt>, if specified.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-showWithoutTime">
           <name>showWithoutTime</name>
-          <t>Type: <tt>Boolean</tt> (optional, default: false)</t>
-          <t>This indicates that the time is not important to display to the user when rendering this calendar object. An example of this is an event that conceptually occurs all day or across multiple days, such as "New Year's Day" or "Italy Vacation". While the time component is important for free-busy calculations and checking for scheduling clashes, calendars may choose to omit displaying it and/or display the object separately to other objects to enhance the user's view of their schedule.</t>
-          <t>Such events are also commonly known as "all-day" events.</t>
+          <dl spacing="normal">
+            <dt>showWithoutTime: Boolean (optional; default: "false").</dt>
+            <dd>
+              <t>This indicates that the time is not important to display to the user when rendering this calendar object. An example of this is an event that conceptually occurs all day or across multiple days, such as "New Year's Day" or "Italy Vacation". While the time component is important for free-busy calculations and checking for scheduling clashes, calendars may choose to omit displaying it and/or display the object separately to other objects to enhance the user's view of their schedule.</t>
+              <t>Such events are also commonly known as "all-day" events.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-locations">
           <name>locations</name>
-          <t>Type: <tt>Id[Location]</tt> (optional)</t>
-          <t>This is a map of location ids to Location objects, representing locations associated with the object.</t>
+          <dl spacing="normal">
+            <dt>locations: Id[Location] (optional).</dt>
+            <dd>
+              <t>This is a map of location ids to Location objects, representing locations associated with the object.</t>
+            </dd>
+          </dl>
           <t>A Location object has the following properties. It <bcp14>MUST</bcp14> have at least one property other than the <tt>@type</tt> property.</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt></dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Location</tt>, if set.</dd>
-            <dt>name: <tt>String</tt> (optional)</dt>
+            <dt>@type: String.</dt>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "Location", if set.</dd>
+            <dt>name: String (optional).</dt>
             <dd>This is the human-readable name or short description of the location, such as an address.</dd>
-            <dt>locationTypes: <tt>String[Boolean]</tt> (optional)</dt>
+            <dt>locationTypes: String[Boolean] (optional).</dt>
             <dd>This is a set of one or more location types that describe this location. All types <bcp14>MUST</bcp14> be from the "Location Types Registry" <xref target="LOCATIONTYPES"/>, as defined in <xref target="RFC4589"/> . The set is represented as a map, with the keys being the location types. The value for each key in the map <bcp14>MUST</bcp14> be true.</dd>
-            <dt>coordinates: <tt>String</tt> (optional)</dt>
+            <dt>coordinates: String (optional).</dt>
             <dd>This is a <tt>geo:</tt> URI <xref target="RFC5870"/> for the location.</dd>
-            <dt>links: <tt>Id[Link]</tt> (optional)</dt>
+            <dt>links: Id[Link] (optional).</dt>
             <dd>This is a map of link ids to Link objects, representing external resources associated with this location, for example, an image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
           </dl>
         </section>
         <section anchor="prop-mainLocationId">
           <name>mainLocationId</name>
-          <t>Type: <tt>String</tt> (optional)</t>
-          <t>This indicates which of the multiple entries in the <tt>locations</tt> property can be considered the main location for the event or task. A client implementation <bcp14>MAY</bcp14> choose to display this location more prominently. The main location is undefined if this property is not set. If this property is set, then its value <bcp14>MUST</bcp14> match a key in the <tt>locations</tt> property and the <tt>name</tt> property of that main Location object <bcp14>MUST</bcp14> be set.</t>
+          <dl spacing="normal">
+            <dt>mainLocationId: String (optional).</dt>
+            <dd>
+              <t>This indicates which of the multiple entries in the <tt>locations</tt> property can be considered the main location for the event or task. A client implementation <bcp14>MAY</bcp14> choose to display this location more prominently. The main location is undefined if this property is not set. If this property is set, then its value <bcp14>MUST</bcp14> match a key in the <tt>locations</tt> property and the <tt>name</tt> property of that main Location object <bcp14>MUST</bcp14> be set.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-virtualLocations">
           <name>virtualLocations</name>
-          <t>Type: <tt>Id[VirtualLocation]</tt> (optional)</t>
-          <t>This is a map of virtual location ids to VirtualLocation objects, representing virtual locations, such as video conferences or chat rooms, associated with the object.</t>
+          <dl spacing="normal">
+            <dt>virtualLocations: Id[VirtualLocation] (optional).</dt>
+            <dd>
+              <t>This is a map of virtual location ids to VirtualLocation objects, representing virtual locations, such as video conferences or chat rooms, associated with the object.</t>
+            </dd>
+          </dl>
           <t>A VirtualLocation object has the following properties.</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt></dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>VirtualLocation</tt>, if set.</dd>
-            <dt>name: <tt>String</tt> (optional, default: empty String)</dt>
+            <dt>@type: String.</dt>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "VirtualLocation", if set.</dd>
+            <dt>name: String (optional; default: empty String).</dt>
             <dd>This is the human-readable name or short description of the virtual location, such as an access code.</dd>
-            <dt>uri: <tt>String</tt> (mandatory)</dt>
+            <dt>uri: String (mandatory).</dt>
             <dd>
               <t>This is a URI<xref target="RFC3986"/> that represents how to connect to this virtual location.</t>
               <t>This may be a telephone number (represented using the <tt>tel:</tt> scheme, e.g., <tt>tel:+1-555-555-5555</tt>) for a teleconference, a web address for online chat, or any custom URI.</t>
             </dd>
-            <dt>features: <tt>String[Boolean]</tt> (optional)</dt>
+            <dt>features: String[Boolean] (optional).</dt>
             <dd>
               <t>A set of features supported by this virtual location. The set is represented as a map, with the keys being the feature. The value for each key in the map <bcp14>MUST</bcp14> be true.</t>
               <t>The feature <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>). Any value the client or server doesn't understand should be treated the same as if this feature is omitted.</t>
@@ -633,32 +693,52 @@ jsversion = 1*DIGIT "." 1*DIGIT
         </section>
         <section anchor="prop-links">
           <name>links</name>
-          <t>Type: <tt>Id[Link]</tt> (optional)</t>
-          <t>This is a map of link ids to Link objects, representing external resources associated with the object.</t>
-          <t>Links with a rel of <tt>enclosure</tt> <bcp14>MUST</bcp14> be considered by the client to be attachments for download.</t>
-          <t>Links with a rel of <tt>describedby</tt> <bcp14>MUST</bcp14> be considered by the client to be alternative representations of the description.</t>
-          <t>Links with a rel of <tt>icon</tt> <bcp14>MUST</bcp14> be considered by the client to be images that it may use when presenting the calendar data to a user. The <tt>display</tt> property may be set to indicate the purpose of this image.</t>
+          <dl spacing="normal">
+            <dt>links: Id[Link] (optional).</dt>
+            <dd>
+              <t>This is a map of link ids to Link objects, representing external resources associated with the object.</t>
+              <t>Links with a rel of <tt>enclosure</tt> <bcp14>MUST</bcp14> be considered by the client to be attachments for download.</t>
+              <t>Links with a rel of <tt>describedby</tt> <bcp14>MUST</bcp14> be considered by the client to be alternative representations of the description.</t>
+              <t>Links with a rel of <tt>icon</tt> <bcp14>MUST</bcp14> be considered by the client to be images that it may use when presenting the calendar data to a user. The <tt>display</tt> property may be set to indicate the purpose of this image.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-locale">
           <name>locale</name>
-          <t>Type: <tt>String</tt> (optional)</t>
-          <t>This is the language tag, as defined in <xref target="RFC5646"/>, that best describes the locale used for the text in the calendar object, if known.</t>
+          <dl spacing="normal">
+            <dt>locale: String (optional).</dt>
+            <dd>
+              <t>This is the language tag, as defined in <xref target="RFC5646"/>, that best describes the locale used for the text in the calendar object, if known.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-keywords">
           <name>keywords</name>
-          <t>Type: <tt>String[Boolean]</tt> (optional)</t>
-          <t>This is a set of keywords or tags that relate to the object. The set is represented as a map, with the keys being the keywords. The value for each key in the map <bcp14>MUST</bcp14> be true.</t>
+          <dl spacing="normal">
+            <dt>keywords: String[Boolean] (optional).</dt>
+            <dd>
+              <t>This is a set of keywords or tags that relate to the object. The set is represented as a map, with the keys being the keywords. The value for each key in the map <bcp14>MUST</bcp14> be true.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-categories">
           <name>categories</name>
-          <t>Type: <tt>String[Boolean]</tt> (optional)</t>
-          <t>This is a set of categories that relate to the calendar object. The set is represented as a map, with the keys being the categories specified as URIs. The value for each key in the map <bcp14>MUST</bcp14> be true.</t>
-          <t>In contrast to keywords, categories are typically structured. For example, a vendor owning the domain <tt>example.com</tt> might define the categories <tt>http://example.com/categories/sports/american-football</tt> and <tt>http://example.com/categories/music/r-b</tt>.</t>
+          <dl spacing="normal">
+            <dt>categories: String[Boolean] (optional).</dt>
+            <dd>
+              <t>This is a set of categories that relate to the calendar object. The set is represented as a map, with the keys being the categories specified as URIs. The value for each key in the map <bcp14>MUST</bcp14> be true.</t>
+              <t>In contrast to keywords, categories are typically structured. For example, a vendor owning the domain <tt>example.com</tt> might define the categories <tt>http://example.com/categories/sports/american-football</tt> and <tt>http://example.com/categories/music/r-b</tt>.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-color">
           <name>color</name>
-          <t>Type: <tt>String</tt> (optional)</t>
-          <t>This is a color clients <bcp14>MAY</bcp14> use when displaying this calendar object. The value is a color name taken from the set of names defined in <xref target="CSS3" section="4.3" relative="#svg-color"/> or an RGB value in six-digit hexadecimal notation, as defined in <xref target="CSS3" section="4.2.1" relative="#rgb-color"/>. Values are case-insensitive.</t>
+          <dl spacing="normal">
+            <dt>color: String (optional).</dt>
+            <dd>
+              <t>This is a color clients <bcp14>MAY</bcp14> use when displaying this calendar object. The value is a color name taken from the set of names defined in <xref target="CSS3" section="4.3" relative="#svg-color"/> or an RGB value in six-digit hexadecimal notation, as defined in <xref target="CSS3" section="4.2.1" relative="#rgb-color"/>. Values are case-insensitive.</t>
+            </dd>
+          </dl>
         </section>
       </section>
       <section anchor="recurrence-props">
@@ -671,26 +751,38 @@ jsversion = 1*DIGIT "." 1*DIGIT
         </ol>
         <section anchor="prop-recurrenceId">
           <name>recurrenceId</name>
-          <t>Type: <tt>LocalDateTime</tt> (optional)</t>
-          <t>If present, this JSCalendar object represents one occurrence of a recurring JSCalendar object. If present, the <tt>recurrenceRule</tt> and <tt>recurrenceOverrides</tt> properties <bcp14>MUST NOT</bcp14> be present.</t>
-          <t>The value is a date-time either produced by the <tt>recurrenceRule</tt> of the base event or added as a key to the <tt>recurrenceOverrides</tt> property of the base event.</t>
+          <dl spacing="normal">
+            <dt>recurrenceId: LocalDateTime (optional).</dt>
+            <dd>
+              <t>If present, this JSCalendar object represents one occurrence of a recurring JSCalendar object. If present, the <tt>recurrenceRule</tt> and <tt>recurrenceOverrides</tt> properties <bcp14>MUST NOT</bcp14> be present.</t>
+              <t>The value is a date-time either produced by the <tt>recurrenceRule</tt> of the base event or added as a key to the <tt>recurrenceOverrides</tt> property of the base event.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-recurrenceIdTimeZone">
           <name>recurrenceIdTimeZone</name>
-          <t>Type: <tt>TimeZoneId|null</tt> (optional, default: null)</t>
-          <t>Identifies the time zone of the main JSCalendar object, of which this JSCalendar object is a recurrence instance. It <bcp14>MUST NOT</bcp14> be set if the <tt>recurrenceId</tt> property is not set.</t>
+          <dl spacing="normal">
+            <dt>recurrenceIdTimeZone: TimeZoneId|null (optional; default: null).</dt>
+            <dd>
+              <t>Identifies the time zone of the main JSCalendar object, of which this JSCalendar object is a recurrence instance. It <bcp14>MUST NOT</bcp14> be set if the <tt>recurrenceId</tt> property is not set.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-recurrenceRule">
           <name>recurrenceRule</name>
-          <t>Type: <tt>RecurrenceRule</tt> (optional)</t>
-          <t>This a recurrence rule (a repeating pattern) for recurring calendar objects.</t>
-          <t>An Event recurs by applying the recurrence rule to the <tt>start</tt> date-time.</t>
-          <t>A Task recurs by applying the recurrence rule to the <tt>start</tt> date-time, if defined; otherwise, it recurs by the <tt>due</tt> date-time, if defined. If the task defines neither a <tt>start</tt> nor <tt>due</tt> date-time, it <bcp14>MUST NOT</bcp14> define a <tt>recurrenceRule</tt> property.</t>
+          <dl spacing="normal">
+            <dt>recurrenceRule: RecurrenceRule (optional).</dt>
+            <dd>
+              <t>This a recurrence rule (a repeating pattern) for recurring calendar objects.</t>
+              <t>An Event recurs by applying the recurrence rule to the <tt>start</tt> date-time.</t>
+              <t>A Task recurs by applying the recurrence rule to the <tt>start</tt> date-time, if defined; otherwise, it recurs by the <tt>due</tt> date-time, if defined. If the task defines neither a <tt>start</tt> nor <tt>due</tt> date-time, it <bcp14>MUST NOT</bcp14> define a <tt>recurrenceRule</tt> property.</t>
+            </dd>
+          </dl>
           <t>A RecurrenceRule object is a JSON object mapping of a RECUR value type in iCalendar <xref target="RFC5545"/> <xref target="RFC7529"/> and has the same semantics. It has the following properties:</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt></dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>RecurrenceRule</tt>, if set.</dd>
-            <dt>frequency: <tt>String</tt> (mandatory)</dt>
+            <dt>@type: String.</dt>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "RecurrenceRule", if set.</dd>
+            <dt>frequency: String (mandatory).</dt>
             <dd>
               <t>This is the time span covered by each iteration of this recurrence rule (see <xref target="recurrence-semantics"/> for full semantics). This <bcp14>MUST</bcp14> be one of the following values:</t>
               <ul>
@@ -718,17 +810,17 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </ul>
               <t>This is the FREQ part from iCalendar, converted to lowercase.</t>
             </dd>
-            <dt>interval: <tt>UnsignedInt</tt> (optional, default: 1)</dt>
+            <dt>interval: UnsignedInt (optional; default: 1).</dt>
             <dd>
               <t>This is the interval of iteration periods at which the recurrence repeats. If included, it <bcp14>MUST</bcp14> be an integer &gt;= 1.</t>
               <t>This is the INTERVAL part from iCalendar.</t>
             </dd>
-            <dt>rscale: <tt>String</tt> (optional, default: "gregorian")</dt>
+            <dt>rscale: String (optional; default: "gregorian").</dt>
             <dd>
               <t>This is the calendar system in which this recurrence rule operates, in lowercase. This <bcp14>MUST</bcp14> be either a CLDR-registered calendar system name <xref target="CLDR"/> or a vendor-specific value (see <xref target="vendor-specific-extensions"/>).</t>
               <t>This is the RSCALE part from iCalendar <xref target="RFC7529">RSCALE</xref>, converted to lowercase.</t>
             </dd>
-            <dt>skip: <tt>String</tt> (optional, default: "omit")</dt>
+            <dt>skip: String (optional; default: "omit").</dt>
             <dd>
               <t>This is the behavior to use when the expansion of the recurrence produces invalid dates. This property only has an effect if the frequency is "yearly" or "monthly". It <bcp14>MUST</bcp14> be one of the following values:</t>
               <ul>
@@ -744,7 +836,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </ul>
               <t>This is the SKIP part from iCalendar <xref target="RFC7529">RSCALE</xref>, converted to lowercase.</t>
             </dd>
-            <dt>firstDayOfWeek: <tt>String</tt> (optional, default: "mo")</dt>
+            <dt>firstDayOfWeek: String (optional; default: "mo").</dt>
             <dd>
               <t>This is the day on which the week is considered to start, represented as a lowercase, abbreviated, and two-letter English day of the week. If included, it <bcp14>MUST</bcp14> be one of the following values:</t>
               <ul>
@@ -772,66 +864,66 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </ul>
               <t>This is the WKST part from iCalendar.</t>
             </dd>
-            <dt>byDay: <tt>NDay[]</tt> (optional)</dt>
+            <dt>byDay: NDay[] (optional).</dt>
             <dd>
               <t>These are days of the week on which to repeat. An <tt>NDay</tt> object has the following properties:</t>
               <dl newline="true">
-                <dt>@type: <tt>String</tt></dt>
-                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>NDay</tt>, if set.</dd>
-                <dt>day: <tt>String</tt> (mandatory)</dt>
+                <dt>@type: String.</dt>
+                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "NDay", if set.</dd>
+                <dt>day: String (mandatory).</dt>
                 <dd>
                   <t>This is a day of the week on which to repeat; the allowed values are the same as for the <tt>firstDayOfWeek</tt> recurrenceRule property.</t>
                   <t>This is the day of the week of the BYDAY part in iCalendar, converted to lowercase.</t>
                 </dd>
-                <dt>nthOfPeriod: <tt>Int</tt> (optional)</dt>
+                <dt>nthOfPeriod: Int (optional).</dt>
                 <dd>
                   <t>If present, rather than representing every occurrence of the weekday defined in the <tt>day</tt> property, it represents only a specific instance within the recurrence period. The value can be positive or negative but <bcp14>MUST NOT</bcp14> be zero. A negative integer means the nth-last occurrence within that period (i.e., -1 is the last occurrence, -2 the one before that, etc.).</t>
                   <t>This is the ordinal part of the BYDAY value in iCalendar (e.g., 1 or -3).</t>
                 </dd>
               </dl>
             </dd>
-            <dt>byMonthDay: <tt>Int[]</tt> (optional)</dt>
+            <dt>byMonthDay: Int[] (optional).</dt>
             <dd>
               <t>These are the days of the month on which to repeat. Valid values are between 1 and the maximum number of days any month may have in the calendar given by the <tt>rscale</tt> property and the negative values of these numbers. For example, in the Gregorian calendar, valid values are 1 to 31 and -31 to -1. Negative values offset from the end of the month. The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYMONTHDAY part in iCalendar.</t>
             </dd>
-            <dt>byMonth: <tt>String[]</tt> (optional)</dt>
+            <dt>byMonth: String[] (optional).</dt>
             <dd>
               <t>These are the months in which to repeat. Each entry is a string representation of a number, starting from "1" for the first month in the calendar (e.g., "1" means January with the Gregorian calendar), with an optional "L" suffix (see <xref target="RFC7529"/>) for leap months (this <bcp14>MUST</bcp14> be uppercase, e.g., "3L"). The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYMONTH part from iCalendar.</t>
             </dd>
-            <dt>byYearDay: <tt>Int[]</tt> (optional)</dt>
+            <dt>byYearDay: Int[] (optional).</dt>
             <dd>
               <t>These are the days of the year on which to repeat. Valid values are between 1 and the maximum number of days any year may have in the calendar given by the <tt>rscale</tt> property and the negative values of these numbers. For example, in the Gregorian calendar, valid values are 1 to 366 and -366 to -1. Negative values offset from the end of the year. The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYYEARDAY part from iCalendar.</t>
             </dd>
-            <dt>byWeekNo: <tt>Int[]</tt> (optional)</dt>
+            <dt>byWeekNo: Int[] (optional).</dt>
             <dd>
               <t>These are the weeks of the year in which to repeat. Valid values are between 1 and the maximum number of weeks any year may have in the calendar given by the <tt>rscale</tt> property and the negative values of these numbers. For example, in the Gregorian calendar, valid values are 1 to 53 and -53 to -1. The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYWEEKNO part from iCalendar.</t>
             </dd>
-            <dt>byHour: <tt>UnsignedInt[]</tt> (optional)</dt>
+            <dt>byHour: <tt>UnsignedInt[]</tt> (optional).</dt>
             <dd>
               <t>These are the hours of the day in which to repeat. Valid values are 0 to 23. The array <bcp14>MUST</bcp14> have at least one entry if included. This is the BYHOUR part from iCalendar.</t>
             </dd>
-            <dt>byMinute: <tt>UnsignedInt[]</tt> (optional)</dt>
+            <dt>byMinute: <tt>UnsignedInt[]</tt> (optional).</dt>
             <dd>
               <t>These are the minutes of the hour in which to repeat. Valid values are 0 to 59. The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYMINUTE part from iCalendar.</t>
             </dd>
-            <dt>bySecond: <tt>UnsignedInt[]</tt> (optional)</dt>
+            <dt>bySecond: <tt>UnsignedInt[]</tt> (optional).</dt>
             <dd>
               <t>These are the seconds of the minute in which to repeat. Valid values are 0 to 60. The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYSECOND part from iCalendar.</t>
             </dd>
-            <dt>bySetPosition: <tt>Int[]</tt> (optional)</dt>
+            <dt>bySetPosition: Int[] (optional).</dt>
             <dd>These are the occurrences within the recurrence interval to include in the final results. Negative values offset from the end of the list of occurrences. The array <bcp14>MUST</bcp14> have at least one entry if included. This is the BYSETPOS part from iCalendar.</dd>
-            <dt>count: <tt>UnsignedInt</tt> (optional)</dt>
+            <dt>count: UnsignedInt (optional).</dt>
             <dd>
               <t>These are the number of occurrences at which to range-bound the recurrence. This <bcp14>MUST NOT</bcp14> be included if an <tt>until</tt> property is specified.</t>
               <t>This is the COUNT part from iCalendar.</t>
             </dd>
-            <dt>until: <tt>LocalDateTime</tt> (optional)</dt>
+            <dt>until: LocalDateTime (optional).</dt>
             <dd>
               <t>These are the date-time at which to finish recurring. The last occurrence is on or before this date-time. This <bcp14>MUST NOT</bcp14> be included if a <tt>count</tt> property is specified. Note that if not specified otherwise for a specific JSCalendar object, this date is to be interpreted in the time zone specified in the JSCalendar object's <tt>timeZone</tt> property.</t>
               <t>This is the UNTIL part from iCalendar.</t>
@@ -947,108 +1039,132 @@ jsversion = 1*DIGIT "." 1*DIGIT
         </section>
         <section anchor="prop-recurrenceOverrides">
           <name>recurrenceOverrides</name>
-          <t>Type: <tt>LocalDateTime[PatchObject]</tt> (optional)</t>
-          <t>Maps recurrence ids (the date-time produced by the recurrence rule) to the overridden properties of the recurrence instance.</t>
-          <t>If the recurrence id does not match a date-time from the recurrence rule (or no rule is specified), it is to be treated as an additional occurrence (like an RDATE from iCalendar). The patch object may often be empty in this case.</t>
-          <t>If the occurrence generated by the recurrence id shall be omitted from the final set of recurrences (like an EXDATE from iCalendar), then the patch object <bcp14>MUST</bcp14> be a JSON object with a single member. The member name <bcp14>MUST</bcp14> be "excluded", the member value <bcp14>MUST</bcp14> be true. The JSON object <bcp14>MUST NOT</bcp14> contain any other members.</t>
-          <t>By default, an occurrence inherits all properties from the main object except the start (or due) date-time, which is shifted to match the recurrence id LocalDateTime. However, individual properties of the occurrence can be modified by a patch or multiple patches. It is valid to patch the <tt>start</tt> property value, and this patch takes precedence over the value generated from the recurrence id. Both the recurrence id as well as the patched <tt>start</tt> date-time may occur before the original JSCalendar object's <tt>start</tt> or <tt>due</tt> date.</t>
-          <t>A pointer in the PatchObject <bcp14>MUST</bcp14> be ignored if it starts with one of the following prefixes:</t>
-          <ul>
-            <li>@type</li>
-            <li>method</li>
-            <li>organizerCalendarAddress</li>
-            <li>participants/*/calendarAddress</li>
-            <li>privacy</li>
-            <li>prodId</li>
-            <li>recurrenceId</li>
-            <li>recurrenceIdTimeZone</li>
-            <li>recurrenceOverrides</li>
-            <li>recurrenceRule</li>
-            <li>relatedTo</li>
-            <li>uid</li>
-          </ul>
+          <dl spacing="normal">
+            <dt>recurrenceOverrides: LocalDateTime[PatchObject] (optional).</dt>
+            <dd>
+              <t>This maps recurrence ids (the date-time produced by the recurrence rule) to the overridden properties of the recurrence instance.</t>
+              <t>If the recurrence id does not match a date-time from the recurrence rule (or no rule is specified), it is to be treated as an additional occurrence (like an RDATE from iCalendar). The patch object may often be empty in this case.</t>
+              <t>If the occurrence generated by the recurrence id shall be omitted from the final set of recurrences (like an EXDATE from iCalendar), then the patch object <bcp14>MUST</bcp14> be a JSON object with a single member. The member name <bcp14>MUST</bcp14> be "excluded", the member value <bcp14>MUST</bcp14> be true. The JSON object <bcp14>MUST NOT</bcp14> contain any other members.</t>
+              <t>By default, an occurrence inherits all properties from the main object except the start (or due) date-time, which is shifted to match the recurrence id LocalDateTime. However, individual properties of the occurrence can be modified by a patch or multiple patches. It is valid to patch the <tt>start</tt> property value, and this patch takes precedence over the value generated from the recurrence id. Both the recurrence id as well as the patched <tt>start</tt> date-time may occur before the original JSCalendar object's <tt>start</tt> or <tt>due</tt> date.</t>
+              <t>A pointer in the PatchObject <bcp14>MUST</bcp14> be ignored if it starts with one of the following prefixes:</t>
+              <ul>
+                <li>@type</li>
+                <li>method</li>
+                <li>organizerCalendarAddress</li>
+                <li>participants/*/calendarAddress</li>
+                <li>privacy</li>
+                <li>prodId</li>
+                <li>recurrenceId</li>
+                <li>recurrenceIdTimeZone</li>
+                <li>recurrenceOverrides</li>
+                <li>recurrenceRule</li>
+                <li>relatedTo</li>
+                <li>uid</li>
+              </ul>
+            </dd>
+          </dl>
         </section>
       </section>
       <section anchor="sharing-scheduling-properties">
         <name>Sharing and Scheduling Properties</name>
         <section anchor="prop-priority">
           <name>priority</name>
-          <t>Type: <tt>Int</tt> (optional, default: 0)</t>
-          <t>This specifies a priority for the calendar object. This may be used as part of scheduling systems to help resolve conflicts for a time period.</t>
-          <t>The priority is specified as an integer in the range 0 to 9. A value of 0 specifies an undefined priority, for which the treatment will vary by situation. A value of 1 is the highest priority. A value of 2 is the second highest priority. Subsequent numbers specify a decreasing ordinal priority. A value of 9 is the lowest priority. Other integer values are reserved for future use.</t>
+          <dl spacing="normal">
+            <dt>priority: Int (optional; default: 0).</dt>
+            <dd>
+              <t>This specifies a priority for the calendar object. This may be used as part of scheduling systems to help resolve conflicts for a time period.</t>
+              <t>The priority is specified as an integer in the range 0 to 9. A value of 0 specifies an undefined priority, for which the treatment will vary by situation. A value of 1 is the highest priority. A value of 2 is the second highest priority. Subsequent numbers specify a decreasing ordinal priority. A value of 9 is the lowest priority. Other integer values are reserved for future use.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-freeBusyStatus">
           <name>freeBusyStatus</name>
-          <t>Type: <tt>String</tt> (optional, default: <tt>busy</tt>)</t>
-          <t>This specifies how this calendar object should be treated when calculating free-busy state. This <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
-          <dl newline="false">
-            <dt><tt>free</tt>:</dt>
-            <dd>The object should be ignored when calculating whether the user is busy.</dd>
-            <dt><tt>busy</tt>:</dt>
-            <dd>The object should be included when calculating whether the user is busy.</dd>
+          <dl spacing="normal">
+            <dt>freeBusyStatus: String (optional; default: "busy").</dt>
+            <dd>
+              <t>This specifies how this calendar object should be treated when calculating free-busy state. This <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
+              <dl newline="false">
+                <dt><tt>free</tt>:</dt>
+                <dd>The object should be ignored when calculating whether the user is busy.</dd>
+                <dt><tt>busy</tt>:</dt>
+                <dd>The object should be included when calculating whether the user is busy.</dd>
+              </dl>
+            </dd>
           </dl>
         </section>
         <section anchor="prop-privacy">
           <name>privacy</name>
-          <t>Type: <tt>String</tt> (optional, default: <tt>public</tt>)</t>
-          <t>Calendar objects are normally collected together and may be shared with other users. The privacy property allows the object owner to indicate that it should not be shared or should only have the time information shared but the details withheld. Enforcement of the restrictions indicated by this property is up to the API via which this object is accessed.</t>
-          <t>This property <bcp14>MUST NOT</bcp14> affect the information sent to scheduled participants; it is only interpreted by protocols that share the calendar objects belonging to one user with other users.</t>
-          <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>). Any value the client or server doesn't understand should be preserved but treated as equivalent to <tt>private</tt>.</t>
-          <dl newline="false">
-            <dt><tt>public</tt>:</dt>
-            <dd>The full details of the object are visible to those whom the object's calendar is shared with.</dd>
-            <dt><tt>private</tt>:</dt>
+          <dl spacing="normal">
+            <dt>privacy: String (optional; default: "public").</dt>
             <dd>
-              <t>The details of the object are hidden; only the basic time and metadata are shared. The following properties <bcp14>MAY</bcp14> be shared; any other properties <bcp14>MUST NOT</bcp14> be shared:</t>
-              <ul>
-                <li>@type</li>
-                <li>created</li>
-                <li>due</li>
-                <li>duration</li>
-                <li>estimatedDuration</li>
-                <li>freeBusyStatus</li>
-                <li>privacy</li>
-                <li>recurrenceId</li>
-                <li>recurrenceIdTimeZone</li>
-                <li>recurrenceOverrides (Only patches that apply to another permissible property are allowed to be shared.)</li>
-                <li>recurrenceRule</li>
-                <li>sequence</li>
-                <li>showWithoutTime</li>
-                <li>start</li>
-                <li>timeZone</li>
-                <li>uid</li>
-                <li>updated</li>
-              </ul>
+              <t>Calendar objects are normally collected together and may be shared with other users. The privacy property allows the object owner to indicate that it should not be shared or should only have the time information shared but the details withheld. Enforcement of the restrictions indicated by this property is up to the API via which this object is accessed.</t>
+              <t>This property <bcp14>MUST NOT</bcp14> affect the information sent to scheduled participants; it is only interpreted by protocols that share the calendar objects belonging to one user with other users.</t>
+              <t>The value of the privacy property <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>). Any value the client or server doesn't understand should be preserved but treated as equivalent to <tt>private</tt>.</t>
+              <dl newline="false">
+                <dt><tt>public</tt>:</dt>
+                <dd>The full details of the object are visible to those whom the object's calendar is shared with.</dd>
+                <dt><tt>private</tt>:</dt>
+                <dd>
+                  <t>The details of the object are hidden; only the basic time and metadata are shared. The following properties <bcp14>MAY</bcp14> be shared; any other properties <bcp14>MUST NOT</bcp14> be shared:</t>
+                  <ul>
+                    <li>@type</li>
+                    <li>created</li>
+                    <li>due</li>
+                    <li>duration</li>
+                    <li>estimatedDuration</li>
+                    <li>freeBusyStatus</li>
+                    <li>privacy</li>
+                    <li>recurrenceId</li>
+                    <li>recurrenceIdTimeZone</li>
+                    <li>recurrenceOverrides (Only patches that apply to another permissible property are allowed to be shared.)</li>
+                    <li>recurrenceRule</li>
+                    <li>sequence</li>
+                    <li>showWithoutTime</li>
+                    <li>start</li>
+                    <li>timeZone</li>
+                    <li>uid</li>
+                    <li>updated</li>
+                  </ul>
+                </dd>
+                <dt><tt>secret</tt>:</dt>
+                <dd>The object is hidden completely (as though it did not exist) when the calendar this object is in is shared.</dd>
+              </dl>
             </dd>
-            <dt><tt>secret</tt>:</dt>
-            <dd>The object is hidden completely (as though it did not exist) when the calendar this object is in is shared.</dd>
           </dl>
         </section>
         <section anchor="prop-organizerCalendarAddress">
           <name>organizerCalendarAddress</name>
-          <t>Type: <tt>String</tt> (optional)</t>
-          <t>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular organizer, even across different calendaring objects.</t>
+          <dl spacing="normal">
+            <dt>organizerCalendarAddress: String (optional).</dt>
+            <dd>
+              <t>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular organizer, even across different calendaring objects.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-participants">
           <name>participants</name>
-          <t>Type: <tt>Id[Participant]</tt> (optional)</t>
-          <t>This is a map of participant ids to participants, describing their participation in the calendar object.</t>
-          <t>If this property is set and any participant has a <tt>calendarAddress</tt> property set, then the <tt>organizerCalendarAddress</tt> property of this calendar object <bcp14>MUST</bcp14> be set.</t>
+          <dl spacing="normal">
+            <dt>participants: Id[Participant] (optional).</dt>
+            <dd>
+              <t>This is a map of participant ids to participants, describing their participation in the calendar object.</t>
+              <t>If this property is set and any participant has a <tt>calendarAddress</tt> property set, then the <tt>organizerCalendarAddress</tt> property of this calendar object <bcp14>MUST</bcp14> be set.</t>
+            </dd>
+          </dl>
           <t>A Participant object has the following properties:</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt></dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Participant</tt>, if set.</dd>
-            <dt>name: <tt>String</tt> (optional)</dt>
+            <dt>@type: String.</dt>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "Participant", if set.</dd>
+            <dt>name: String (optional).</dt>
             <dd>This is the display name of the participant (e.g., "Joe Bloggs").</dd>
-            <dt>email: <tt>String</tt> (optional)</dt>
+            <dt>email: String (optional).</dt>
             <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</dd>
-            <dt>description: <tt>String</tt> (optional)</dt>
+            <dt>description: String (optional).</dt>
             <dd>This is a description of this participant. For example, this may include more information about their role in the event or how best to contact them.</dd>
-            <dt>descriptionContentType: <tt>String</tt> (optional)</dt>
+            <dt>descriptionContentType: String (optional).</dt>
             <dd>This describes the media type of the contents of the <tt>description</tt> property. Its requirements are specified in <xref target="prop-descriptionContentType"/>. If this property is set, then the description property <bcp14>MUST</bcp14> be set.</dd>
-            <dt>calendarAddress: <tt>String</tt> (optional)</dt>
+            <dt>calendarAddress: String (optional).</dt>
             <dd>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.1" sectionFormat="parens">ATTENDEE property</xref> or <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular participant, even across different calendaring objects.</dd>
-            <dt>kind: <tt>String</tt> (optional)</dt>
+            <dt>kind: String (optional).</dt>
             <dd>
               <t>This is what kind of entity this participant is, if known. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>). Any value the client or server doesn't understand should be treated the same as if this property is omitted.</t>
               <dl newline="false">
@@ -1062,7 +1178,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <dd>a non-human resource other than a location, such as a projector</dd>
               </dl>
             </dd>
-            <dt>roles: <tt>String[Boolean]</tt> (optional)</dt>
+            <dt>roles: String[Boolean] (optional).</dt>
             <dd>
               <t>This is a set of roles that this participant fulfills. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and at least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
@@ -1079,7 +1195,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </dl>
               <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "required", "optional", "informational" and "chair" be present; if more than one are given, they take precedence as follows: "chair" over "required", either of them over "optional", all of them over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
             </dd>
-            <dt>participationStatus: <tt>String</tt> (optional, default: <tt>needs-action</tt> )</dt>
+            <dt>participationStatus: String (optional; default: "needs-action").</dt>
             <dd>
               <t>This is the participation status, if any, of this participant. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set.</t>
               <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
@@ -1096,23 +1212,23 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <dd>The invited participant has delegated their attendance to another participant, as specified in the <tt>delegatedTo</tt> property.</dd>
               </dl>
             </dd>
-            <dt>expectReply: <tt>Boolean</tt> (optional, default: false)</dt>
+            <dt>expectReply: <tt>Boolean</tt> (optional; default: "false").</dt>
             <dd>If true, the organizer is expecting the participant to notify them of their participation status. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set.</dd>
-            <dt>sentBy: <tt>String</tt> (optional)</dt>
+            <dt>sentBy: String (optional).</dt>
             <dd>
               <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. This <bcp14>SHOULD</bcp14> only be set if the email address is different to that in the mailto URI of this participant's <tt>calendarAddress</tt> property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/> .</t>
             </dd>
-            <dt>delegatedTo: <tt>String[Boolean]</tt> (optional)</dt>
+            <dt>delegatedTo: String[Boolean] (optional).</dt>
             <dd>This is the set of participants that this participant has delegated their participation to. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be a URI according to the definition of the calendarAddress property. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegates, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
-            <dt>delegatedFrom: <tt>String[Boolean]</tt> (optional)</dt>
+            <dt>delegatedFrom: String[Boolean] (optional).</dt>
             <dd>This is a set of participants that this participant is acting as a delegate for. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be a URI according to the definition of the calendarAddress property. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegators, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
-            <dt>memberOf: <tt>Id[Boolean]</tt> (optional)</dt>
+            <dt>memberOf: Id[Boolean] (optional).</dt>
             <dd>This is a set of group participants that were invited to this calendar object, which caused this participant to be invited due to their membership in the group(s). If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be a URI according to the definition of the calendarAddress property. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no groups, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
-            <dt>links: <tt>Id[Link]</tt> (optional)</dt>
+            <dt>links: Id[Link] (optional).</dt>
             <dd>This is a map of link ids to Link objects, representing external resources associated with this participant, for example, an image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
-            <dt>progress: <tt>String</tt> (optional; only allowed for participants of a Task)</dt>
+            <dt>progress: String (optional)</dt>
             <dd>
-              <t>This represents the progress of the participant for this task. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and the <tt>participationStatus</tt> of this participant <bcp14>MUST</bcp14> be <tt>accepted</tt>. The property value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
+              <t>This property only is defined for Participant objects within a Task object, it otherwise <bcp14>MUST NOT</bcp14> be set. It represents the progress of the participant for this task. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and the <tt>participationStatus</tt> of this participant <bcp14>MUST</bcp14> be <tt>accepted</tt>. The property value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
                 <dt><tt>in-process</tt>:</dt>
                 <dd>The participant is in process of contributing to the task.</dd>
@@ -1122,7 +1238,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <dd>The participant could not complete their contribution to the task.</dd>
               </dl>
             </dd>
-            <dt>percentComplete: <tt>UnsignedInt</tt> (optional; only allowed for participants of a Task)</dt>
+            <dt>percentComplete: UnsignedInt (optional; only allowed for participants of a Task).</dt>
             <dd>This represents the percent completion of the participant for this task. The property value <bcp14>MUST</bcp14> be a positive integer between 0 and 100.</dd>
           </dl>
         </section>
@@ -1131,22 +1247,26 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <name>Alerts Properties</name>
         <section anchor="prop-alerts">
           <name>alerts</name>
-          <t>Type: <tt>Id[Alert]</tt> (optional)</t>
-          <t>This is a map of alert ids to Alert objects, representing alerts/reminders to display or send to the user for this calendar object.</t>
+          <dl spacing="normal">
+            <dt>alerts: Id[Alert] (optional).</dt>
+            <dd>
+              <t>This is a map of alert ids to Alert objects, representing alerts/reminders to display or send to the user for this calendar object.</t>
+            </dd>
+          </dl>
           <t>An Alert object has the following properties:</t>
           <dl newline="true">
-            <dt>@type: <tt>String</tt></dt>
-            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Alert</tt>, if set.</dd>
-            <dt>trigger: <tt>OffsetTrigger|AbsoluteTrigger|UnknownTrigger</tt> (mandatory, defaultType: <tt>OffsetTrigger</tt>)</dt>
+            <dt>@type: String.</dt>
+            <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "Alert", if set.</dd>
+            <dt>trigger: OffsetTrigger|AbsoluteTrigger|UnknownTrigger (mandatory; defaultType: OffsetTrigger).</dt>
             <dd>
               <t>This defines when to trigger the alert. New types may be defined in future documents.</t>
               <t>An <tt>OffsetTrigger</tt> object has the following properties:</t>
               <dl newline="true">
-                <dt>@type: <tt>String</tt></dt>
-                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>OffsetTrigger</tt>, if set.</dd>
-                <dt>offset: <tt>SignedDuration</tt> (mandatory)</dt>
+                <dt>@type: String.</dt>
+                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "OffsetTrigger", if set.</dd>
+                <dt>offset: SignedDuration (mandatory).</dt>
                 <dd>This defines the offset at which to trigger the alert relative to the time property defined in the <tt>relativeTo</tt> property of the alert. Negative durations signify alerts before the time property; positive durations signify alerts after the time property.</dd>
-                <dt>relativeTo: <tt>String</tt> (optional, default: <tt>start</tt> )</dt>
+                <dt>relativeTo: String (optional; default: "start" ).</dt>
                 <dd>
                   <t>This specifies the time property that the alert offset is relative to. The value <bcp14>MUST</bcp14> be one of the following:</t>
                   <dl newline="false">
@@ -1159,20 +1279,20 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </dl>
               <t>An <tt>AbsoluteTrigger</tt> object has the following properties:</t>
               <dl newline="true">
-                <dt>@type: <tt>String</tt></dt>
-                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>AbsoluteTrigger</tt>.</dd>
-                <dt>when: <tt>UTCDateTime</tt> (mandatory)</dt>
+                <dt>@type: String.</dt>
+                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "AbsoluteTrigger".</dd>
+                <dt>when: UTCDateTime (mandatory).</dt>
                 <dd>This defines a specific UTC date-time when the alert is triggered.</dd>
               </dl>
               <t>An <tt>UnknownTrigger</tt> object is an object that contains an <tt>@type</tt> property whose value is not recognized (i.e., not <tt>OffsetTrigger</tt> or <tt>AbsoluteTrigger</tt> ) plus zero or more other properties. This is for compatibility with client extensions and future specifications. Implementations <bcp14>SHOULD NOT</bcp14> trigger for trigger types they do not understand but <bcp14>MUST</bcp14> preserve them.</t>
             </dd>
-            <dt>acknowledged: <tt>UTCDateTime</tt> (optional)</dt>
+            <dt>acknowledged: UTCDateTime (optional).</dt>
             <dd>
               <t>This records when an alert was last acknowledged. This is set when the user has dismissed the alert; other clients that sync this property <bcp14>SHOULD</bcp14> automatically dismiss or suppress duplicate alerts (alerts with the same alert id that triggered on or before this date-time).</t>
               <t>For a recurring calendar object, setting the <tt>acknowledged</tt> property <bcp14>MUST NOT</bcp14> add a new override to the <tt>recurrenceOverrides</tt> property. If the alert is not already overridden, the <tt>acknowledged</tt> property <bcp14>MUST</bcp14> be set on the alert in the base event/task.</t>
               <t>Certain kinds of alert action may not provide feedback as to when the user sees them, for example, email-based alerts. For those kinds of alerts, this property <bcp14>MUST</bcp14> be set immediately when the alert is triggered and the action is successfully carried out.</t>
             </dd>
-            <dt>relatedTo: <tt>String[Relation]</tt> (optional)</dt>
+            <dt>relatedTo: String[Relation] (optional).</dt>
             <dd>
               <t>This relates this alert to other alerts in the same JSCalendar object. Each key in the map is the key of an Alert object in the <tt>alerts</tt> property. The value defines the type of the relation. In addition to the relation values defined in <xref target="type-Relation"/>, the following key is allowed:</t>
               <dl newline="false">
@@ -1181,7 +1301,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </dl>
               <t>If the user wishes to snooze an alert, the application <bcp14>MUST</bcp14> create an alert to trigger after snoozing. This new snooze alert <bcp14>MUST</bcp14> set a "snooze" relation to the identifier of the original alert.</t>
             </dd>
-            <dt>action: <tt>String</tt> (optional, default: <tt>display</tt> )</dt>
+            <dt>action: String (optional; default: "display" ).</dt>
             <dd>
               <t>This describes how to alert the user.</t>
               <t>The value <bcp14>MUST</bcp14> be at most one of the following values, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
@@ -1199,8 +1319,12 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <name>Time Zone Properties</name>
         <section anchor="prop-timeZone">
           <name>timeZone</name>
-          <t>Type: <tt>TimeZoneId|null</tt> (optional, default: null)</t>
-          <t>This identifies the time zone the object is scheduled in or is null for floating time. If omitted, this <bcp14>MUST</bcp14> be presumed to be null (i.e., floating time).</t>
+          <dl spacing="normal">
+            <dt>timeZone: TimeZoneId|null (optional; default: null).</dt>
+            <dd>
+              <t>This identifies the time zone the object is scheduled in or is null for floating time. If omitted, this <bcp14>MUST</bcp14> be presumed to be null (i.e., floating time).</t>
+            </dd>
+          </dl>
         </section>
       </section>
     </section>
@@ -1211,30 +1335,46 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <t>In addition to the common JSCalendar object <xref target="jscalendar-props">properties</xref>, an Event has the following properties:</t>
         <section anchor="prop-start-jsevent">
           <name>start</name>
-          <t>Type: <tt>LocalDateTime</tt> (mandatory)</t>
-          <t>This is the date/time the event starts in the event's time zone (as specified in the <tt>timeZone</tt> property, see <xref target="prop-timeZone"/>).</t>
+          <dl spacing="normal">
+            <dt>start: LocalDateTime (mandatory).</dt>
+            <dd>
+              <t>This is the date/time the event starts in the event's time zone (as specified in the <tt>timeZone</tt> property, see <xref target="prop-timeZone"/>).</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-duration">
           <name>duration</name>
-          <t>Type: <tt>Duration</tt> (optional, default: <tt>PT0S</tt>)</t>
-          <t>This is the zero or positive duration of the event in the event's start time zone. The end time of an event can be found by adding the duration to the event's start time.</t>
+          <dl spacing="normal">
+            <dt>duration: Duration (optional; default: "PT0S").</dt>
+            <dd>
+              <t>This is the zero or positive duration of the event in the event's start time zone. The end time of an event can be found by adding the duration to the event's start time.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-endTimeZone">
           <name>endTimeZone</name>
-          <t>Type: <tt>TimeZoneId</tt> (optional)</t>
-          <t>This identifies the time zone in which this event ends, for cases where the start and time zones of the event differ (e.g., a transcontinental flight). If this property is not set, then the event starts and ends in the same time zone. This property <bcp14>MUST NOT</bcp14> be set if the <tt>timeZone</tt> property value is null or not set.</t>
+          <dl spacing="normal">
+            <dt>endTimeZone: TimeZoneId (optional).</dt>
+            <dd>
+              <t>This identifies the time zone in which this event ends, for cases where the start and time zones of the event differ (e.g., a transcontinental flight). If this property is not set, then the event starts and ends in the same time zone. This property <bcp14>MUST NOT</bcp14> be set if the <tt>timeZone</tt> property value is null or not set.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-status-jsevent">
           <name>status</name>
-          <t>Type: <tt>String</tt> (optional, default: <tt>confirmed</tt>)</t>
-          <t>This is the scheduling status ( <xref target="sharing-scheduling-properties"/>) of an Event. If set, it <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
-          <dl newline="false">
-            <dt><tt>confirmed</tt>:</dt>
-            <dd>indicates the event is definitely happening</dd>
-            <dt><tt>cancelled</tt>:</dt>
-            <dd>indicates the event has been cancelled</dd>
-            <dt><tt>tentative</tt>:</dt>
-            <dd>indicates the event may happen</dd>
+          <dl spacing="normal">
+            <dt>status: String (optional; default: "confirmed").</dt>
+            <dd>
+              <t>This is the scheduling status ( <xref target="sharing-scheduling-properties"/>) of an Event. If set, it <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
+              <dl newline="false">
+                <dt><tt>confirmed</tt>:</dt>
+                <dd>indicates the event is definitely happening</dd>
+                <dt><tt>cancelled</tt>:</dt>
+                <dd>indicates the event has been cancelled</dd>
+                <dt><tt>tentative</tt>:</dt>
+                <dd>indicates the event may happen</dd>
+              </dl>
+            </dd>
           </dl>
         </section>
       </section>
@@ -1244,50 +1384,70 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <t>If the <tt>timeZone</tt> property value is not null or the <tt>showWithoutTime</tt> property value is "true", then at least one of the <tt>due</tt> and <tt>start</tt> properties <bcp14>MUST</bcp14> be set.</t>
         <section anchor="prop-due">
           <name>due</name>
-          <t>Type: <tt>LocalDateTime</tt> (optional)</t>
-          <t>This is the date/time the task is due in the task's time zone.</t>
+          <dl spacing="normal">
+            <dt>due: LocalDateTime (optional).</dt>
+            <dd>
+              <t>This is the date/time the task is due in the task's time zone.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-start-jstask">
           <name>start</name>
-          <t>Type: <tt>LocalDateTime</tt> (optional)</t>
-          <t>This the date/time the task should start in the task's time zone. This <bcp14>MUST</bcp14> be set if the <tt>recurrenceRule</tt> or <tt>recurrenceId</tt> properties are set.</t>
+          <dl spacing="normal">
+            <dt>start: LocalDateTime (optional).</dt>
+            <dd>
+              <t>This the date/time the task should start in the task's time zone. This <bcp14>MUST</bcp14> be set if the <tt>recurrenceRule</tt> or <tt>recurrenceId</tt> properties are set.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-estimatedDuration">
           <name>estimatedDuration</name>
-          <t>Type: <tt>Duration</tt> (optional)</t>
-          <t>This specifies the estimated positive duration of time the task takes to complete.</t>
+          <dl spacing="normal">
+            <dt>estimatedDuration: Duration (optional).</dt>
+            <dd>
+              <t>This specifies the estimated positive duration of time the task takes to complete.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-percentComplete">
           <name>percentComplete</name>
-          <t>Type: <tt>UnsignedInt</tt> (optional)</t>
-          <t>This represents the percent completion of the task overall. The property value <bcp14>MUST</bcp14> be a positive integer between 0 and 100.</t>
+          <dl spacing="normal">
+            <dt>percentComplete: UnsignedInt (optional).</dt>
+            <dd>
+              <t>This represents the percent completion of the task overall. The property value <bcp14>MUST</bcp14> be a positive integer between 0 and 100.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-progress">
           <name>progress</name>
-          <t>Type: <tt>String</tt> (optional)</t>
-          <t>This defines the progress of this task. If omitted, the default progress ( <xref target="sharing-scheduling-properties"/>) of a Task is defined as follows (in order of evaluation):</t>
-          <dl newline="false">
-            <dt><tt>completed</tt>:</dt>
-            <dd>if the <tt>progress</tt> property value of all participants is <tt>completed</tt></dd>
-            <dt><tt>failed</tt>:</dt>
-            <dd>if at least one <tt>progress</tt> property value of a participant is <tt>failed</tt></dd>
-            <dt><tt>in-process</tt>:</dt>
-            <dd>if at least one <tt>progress</tt> property value of a participant is <tt>in-process</tt></dd>
-            <dt><tt>needs-action</tt>:</dt>
-            <dd>if none of the other criteria match</dd>
-          </dl>
-          <t>If set, it <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
-          <dl newline="false">
-            <dt><tt>needs-action</tt>:</dt>
-            <dd>indicates the task needs action</dd>
-            <dt><tt>in-process</tt>:</dt>
-            <dd>indicates the task is in process</dd>
-            <dt><tt>completed</tt>:</dt>
-            <dd>indicates the task is completed</dd>
-            <dt><tt>failed</tt>:</dt>
-            <dd>indicates the task failed</dd>
-            <dt><tt>cancelled</tt>:</dt>
-            <dd>indicates the task was cancelled</dd>
+          <dl spacing="normal">
+            <dt>progress: String (optional).</dt>
+            <dd>
+              <t>This defines the progress of this task. If omitted, the default progress ( <xref target="sharing-scheduling-properties"/>) of a Task is defined as follows (in order of evaluation):</t>
+              <dl newline="false">
+                <dt><tt>completed</tt>:</dt>
+                <dd>if the <tt>progress</tt> property value of all participants is <tt>completed</tt></dd>
+                <dt><tt>failed</tt>:</dt>
+                <dd>if at least one <tt>progress</tt> property value of a participant is <tt>failed</tt></dd>
+                <dt><tt>in-process</tt>:</dt>
+                <dd>if at least one <tt>progress</tt> property value of a participant is <tt>in-process</tt></dd>
+                <dt><tt>needs-action</tt>:</dt>
+                <dd>if none of the other criteria match</dd>
+              </dl>
+              <t>If set, it <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
+              <dl newline="false">
+                <dt><tt>needs-action</tt>:</dt>
+                <dd>indicates the task needs action</dd>
+                <dt><tt>in-process</tt>:</dt>
+                <dd>indicates the task is in process</dd>
+                <dt><tt>completed</tt>:</dt>
+                <dd>indicates the task is completed</dd>
+                <dt><tt>failed</tt>:</dt>
+                <dd>indicates the task failed</dd>
+                <dt><tt>cancelled</tt>:</dt>
+                <dd>indicates the task was cancelled</dd>
+              </dl>
+            </dd>
           </dl>
         </section>
       </section>
@@ -1312,13 +1472,21 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <t>In addition, the following Group-specific properties are supported:</t>
         <section anchor="prop-entries">
           <name>entries</name>
-          <t>Type: <tt>(Task|Event)[]</tt> (mandatory)</t>
-          <t>This is a collection of group members. Implementations <bcp14>MUST</bcp14> ignore entries of unknown type.</t>
+          <dl spacing="normal">
+            <dt>entries: (Task|Event)[] (mandatory).</dt>
+            <dd>
+              <t>This is a collection of group members. Implementations <bcp14>MUST</bcp14> ignore entries of unknown type.</t>
+            </dd>
+          </dl>
         </section>
         <section anchor="prop-source">
           <name>source</name>
-          <t>Type: <tt>String</tt> (optional)</t>
-          <t>This is the source from which updated versions of this group may be retrieved. The value <bcp14>MUST</bcp14> be a URI.</t>
+          <dl spacing="normal">
+            <dt>source: String (optional).</dt>
+            <dd>
+              <t>This is the source from which updated versions of this group may be retrieved. The value <bcp14>MUST</bcp14> be a URI.</t>
+            </dd>
+          </dl>
         </section>
       </section>
     </section>
