@@ -59,7 +59,7 @@
     <keyword>date</keyword>
     <keyword>time</keyword>
     <abstract>
-      <t>This specification defines version "2.0" of JSCalendar, a data model and JSON representation of calendar data that can be used for storage and data exchange in a calendaring and scheduling environment. This document obsoletes RFC 8984, also referred to as version "1.0" in this document. The newly defined version "2.0" aims to improve interoperability with existing iCalendar-based systems.</t>
+      <t>This specification defines version "2.0" of JSCalendar, a data model and JSON representation of calendar data that can be used for storage and data exchange in a calendaring and scheduling environment. This document obsoletes RFC 8984, also referred to as version "1.0" in this document. The newly defined version "2.0" aims to improve interoperability with existing iCalendar-based systems. It also aligns its definitions with JSContact, such as the IANA registry policy, validation requirements, and versioning scheme.</t>
     </abstract>
     <note removeInRFC="true">
       <t>Differences from RFC 8984 are documented in <xref target="differences-from-rfc8984"/>.</t>
@@ -68,7 +68,7 @@
   <middle>
     <section anchor="introduction">
       <name>Introduction</name>
-      <t>This document defines a data model for calendar event and task objects, or groups of such objects, in electronic calendar applications and systems. The format aims to be unambiguous, extendable, and simple to process. It obsoletes the data model originally defined in <xref target="RFC8984"/> to improve interoperability with systems that also make use of <xref target="RFC5545">iCalendar</xref>. Differences from <xref target="RFC8984"/> are documented in <xref target="differences-from-rfc8984"/>.</t>
+      <t>This document defines a data model for calendar event and task objects, or groups of such objects, in electronic calendar applications and systems. The format aims to be unambiguous, extendable, and simple to process.</t>
       <t>The key design considerations for this data model are as follows:</t>
       <ul>
         <li>The attributes of the calendar entry represented must be described as simple key-value pairs. Simple events are simple to represent; complex events can be modeled accurately.</li>
@@ -79,7 +79,7 @@
       </ul>
       <t>The representation of this data model is defined in the Internet JSON (I-JSON) format <xref target="RFC7493"/>, which is a strict subset of the JSON data interchange format <xref target="RFC8259"/>. Using JSON is mostly a pragmatic choice: its widespread use makes JSCalendar easier to adopt and the ready availability of production-ready JSON implementations eliminates a whole category of parser-related interoperability issues, which iCalendar has often suffered from.</t>
       <section anchor="relation-to-icalendar">
-        <name>Motivation and Relation to iCalendar and jCal</name>
+        <name>Relation to iCalendar and jCal</name>
         <t>The iCalendar data format <xref target="RFC5545"/>, a widely deployed interchange format for calendaring and scheduling data, has served calendaring vendors for a long time but contains some ambiguities and pitfalls that cannot be overcome without backward-incompatible changes.</t>
         <t>Sources of implementation errors include the following:</t>
         <ul>
@@ -91,73 +91,115 @@
         <t>In recent years, many new products and services have appeared that wish to use a JSON representation of calendar data within their APIs. The JSON format for iCalendar data, <xref target="RFC7265">jCal</xref>, is a direct mapping between iCalendar and JSON. In its effort to represent full iCalendar semantics, it inherits all the same pitfalls and uses a complicated JSON structure.</t>
         <t>As a consequence, since the standardization of jCal, the majority of implementations and service providers either kept using iCalendar or came up with their own proprietary JSON representations, which are incompatible with each other and often suffer from common pitfalls, such as storing event start times in UTC (which become incorrect if the time zone's rules change in the future). JSCalendar meets the demand for JSON-formatted calendar data that is free of such known problems and provides a standard representation as an alternative to the proprietary formats.</t>
       </section>
+      <section>
+        <name>Relation to obsolete RFC 8984</name>
+        <t>This document obsoletes the data model originally defined in <xref target="RFC8984"/>. The goal of this new document is to improve interoperability with systems that also make use of <xref target="RFC5545">iCalendar</xref>. It obsoletes elements which semantically conflict with related iCalendar elements. It reserves elements which require further work by IETF. Further differences from <xref target="RFC8984"/> are documented in <xref target="differences-from-rfc8984"/>.</t>
+        <t>This document also aligns general definitions of JSCalendar with <xref target="RFC9553">JSContact</xref>: It defines the same notation for specifying data types (<xref target="data-type-notations"/>), redefines the PatchObject type to allow patching existing array entries (<xref target="type-PatchObject"/>) and provides the same guidance on how to process URIs and internationalized text (<xref target="type-PatchObject"/>). Also, it defines the same validation scheme (<xref target="type-PatchObject"/>), the same versioning scheme (<xref target="versioning"/>), and the same IANA registry policy and change procedures (<xref target="iana-registry-policy"/>).</t>
+      </section>
       <section anchor="notational-conventions">
         <name>Notational Conventions</name>
         <t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>NOT RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.</t>
         <t>The underlying format used for this specification is JSON. Consequently, the terms "object" and "array" as well as the four primitive types (strings, numbers, booleans, and null) are to be interpreted as described in <xref target="RFC8259" section="1"/>.</t>
         <t>Some examples in this document contain "partial" JSON documents used for illustrative purposes. In these examples, an ellipsis "..." is used to indicate a portion of the document that has been removed for compactness.</t>
       </section>
-      <section anchor="type-and-prop-notation">
-        <name>Type and Property Notation</name>
-        <t>This section defines the notation for JSCalendar properties and types.</t>
-        <section anchor="type-signatures">
+      <section anchor="data-type-notations">
+        <name>Data Type Notations</name>
+        <t>This section introduces the notations and terminology used to define data types in JSCalendar.</t>
+        <t>The underlying format for JSCalendar is JSON, so its data types also build on JSON values. The terms "object"
+          and "array" as well as the four primitive types ("strings", "numbers", "booleans", and "null") are to be
+          interpreted as described in <xref target="RFC8259" section="1"/>. All JSCalendar data <bcp14>MUST</bcp14> be
+          valid according to the constraints given in <xref target="RFC7493">I-JSON</xref>. Unless otherwise noted, all
+          member names in JSON objects and all string values are case-sensitive. Within the context of JSON objects, the
+          term "key" is synonymous with "member name" as defined in <xref target="RFC8259" section="1"/>.
+        </t>
+        <section anchor="objects-and-properties" numbered="true" toc="default">
+          <name>Objects and Properties</name>
+          <t>JSCalendar defines data types for calendar information such as calendar events and todo list items. This information typically consists of multiple related elements; for example, a datetime and a duration value together define the timespan of a calendar event. These related elements are organized in JSCalendar objects. A JSCalendar object is a JSON object that has the following:
+          </t>
+          <ol>
+            <li>A unique type name registered in the IANA  <xref target="iana-type-registry">"JSCalendar Types" registry</xref>.
+            </li>
+            <li>One or more object members for which the name and allowed value types are specified. Such members are called "properties".
+            </li>
+            <li>One property named @type with a string value that matches the type name of the JSCalendar object. In general, this property does not need to be set explicitly as outlined in <xref target="prop-type"/>.
+            </li>
+          </ol>
+          <t>The following sections specify how to define JSCalendar object types. Sections <xref target="validating-jscalendar" format="counter"/> and <xref target="vendor-specific-extensions" format="counter"/> then define the exact requirements for property names.
+          </t>
+          <t>The next paragraph illustrates how a JSCalendar object is defined.  The names "Foo" and "baz" are only for demonstration and have no meaning outside the example.</t>
+          <ul empty="true" anchor="example-foo-object">
+            <li>
+              <t>A Foo object has the following properties:</t>
+              <dl spacing="normal">
+                <dt>@type: String.</dt>
+                <dd>The JSCalendar type of the object. The value <bcp14>MUST</bcp14> be "Foo", if set.</dd>
+                <dt>baz: Number (mandatory).</dt>
+                <dd>The baz level of the contact. The value <bcp14>MUST</bcp14> be an integer greater than 0 and less than 10.</dd>
+              </dl>
+            </li>
+          </ul>
+          <t>The above paragraph illustrates the following:</t>
+          <ul>
+            <li>It defines a JSCalendar object type named "Foo" having two properties, named "@type" and "baz".</li>
+            <li>The @type property adheres to the rules outlined in <xref target="prop-type"/>. Because of this, it is neither defined to be mandatory nor optional, as this depends on how the Foo object type is used.</li>
+            <li>The baz property value <bcp14>MUST</bcp14> be valid according to the definition of the Number type. </li>
+            <li>The property has one attribute, "mandatory", which specifies that the property <bcp14>MUST</bcp14> be present for a value of the Foo object type to be valid.</li>
+            <li>The free-text description of the baz property describes the semantics and further restrictions for its values.</li>
+          </ul>
+        </section>
+        <section anchor="type-signatures" numbered="true" toc="default">
           <name>Type Signatures</name>
-          <t>Type signatures are given for all JSON values in this document. The following conventions are used:</t>
-          <dl newline="false">
-            <dt><tt>*</tt>:</dt>
+          <t>Type signatures are given for all JSON values and JSCalendar definitions in this document. The following conventions are used:</t>
+          <dl spacing="normal">
+            <dt>String:</dt>
+            <dd>The JSON string type.</dd>
+            <dt>Number:</dt>
+            <dd>The JSON number type.</dd>
+            <dt>Boolean:</dt>
+            <dd>The JSON boolean type.</dd>
+            <dt>A[B]:</dt>
+            <dd>A JSON object where all keys are of type A and all values are of type B.</dd>
+            <dt>A[]:</dt>
+            <dd>A JSON array of values of type A.</dd>
+            <dt>A|B:</dt>
+            <dd>The value is either of type A or of type B.</dd>
+            <dt>*:</dt>
             <dd>The type is undefined (the value could be any type, although permitted values may be constrained by the context of this value).</dd>
-            <dt><tt>String</tt>:</dt>
-            <dd>This is the JSON string type.</dd>
-            <dt><tt>Number</tt>:</dt>
-            <dd>This is the JSON number type.</dd>
-            <dt><tt>Boolean</tt>:</dt>
-            <dd>This is the JSON boolean type.</dd>
-            <dt><tt>A</tt>:</dt>
-            <dd>The value is of type <tt>A</tt>.</dd>
-            <dt><tt>A[B]</tt>:</dt>
-            <dd>The keys are all of type <tt>A</tt> and the values are all of type <tt>B</tt> for a JSON object.</dd>
-            <dt><tt>A[]</tt>:</dt>
-            <dd>There is an array of values of type <tt>A</tt></dd>
-            <dt><tt>A|B</tt>:</dt>
-            <dd>The value is either of type <tt>A</tt> or of type <tt>B</tt>.</dd>
           </dl>
-          <t>Other types may also be given; their representations are defined elsewhere in this document.</t>
+          <t><xref target="common-data-types"/> defines common data types, including signed or unsigned integers and dates. </t>
         </section>
         <section anchor="property-attributes" numbered="true" toc="default">
           <name>Property Attributes</name>
           <t>Object properties may also have a set of attributes defined along with the type signature. These have the following meanings:</t>
           <dl spacing="normal">
-            <dt><tt>mandatory</tt>:</dt>
+            <dt>mandatory:</dt>
             <dd>The property <bcp14>MUST</bcp14> be set for an instance of this object to be valid.</dd>
-            <dt><tt>optional</tt>:</dt>
+            <dt>optional:</dt>
             <dd>The property can, but need not, be set for an instance of this object to be valid.</dd>
-            <dt><tt>default</tt>:</dt>
+            <dt>default:</dt>
             <dd>This is followed by a JSON value. That value will be used for this property if it is omitted.</dd>
-            <dt><tt>defaultType</tt>:</dt>
+            <dt>defaultType:</dt>
             <dd>This is followed by the name of a JSCalendar object type. A property value of JSCalendar object type is expected to be of this named type, in case it omits the @type property.</dd>
           </dl>
         </section>
         <section anchor="prop-type" numbered="true" toc="default">
           <name>The @type Property</name>
-          <t>Every JSCalendar object has the following JSON object member:</t>
           <dl spacing="normal">
-            <dt>
-              <strong>@type: String</strong>
-            </dt>
-            <dd>This is the JSCalendar type of a JSON object. It <bcp14>MUST</bcp14> match the type name of the JSCalendar object of which the JSON object is an instance of.</dd>
+            <dt>@type: String.</dt>
+            <dd>The JSCalendar type of a JSON object. It <bcp14>MUST</bcp14> match the type name of the JSCalendar object of which the JSON object is an instance of.</dd>
           </dl>
           <t>The purpose of the @type property is to help implementations identify which JSCalendar object type a given JSON object represents. Implementations <bcp14>MUST</bcp14> validate that JSON objects with this property conform to the specification of the JSCalendar object type of that name.</t>
-          <t>In many cases, the @type property value is implied by where the object occurs in JSCalendar data. Assuming that both <tt>A</tt> and <tt>B</tt> are JSCalendar object types:</t>
+          <t>In many cases, the @type property value is implied by where its object occurs in JSCalendar data. Assuming that both A and B are JSCalendar object types:
+          </t>
           <ul>
-            <li>An object that is set as the value for a property with type signature <tt>A</tt> <bcp14>MAY</bcp14> have the @type property set. If the @type property is not set, then its value is implied to be <tt>A</tt>.</li>
-            <li>An object that is set as the value for a property with type signature <tt>A|B (defaultType: A)</tt> <bcp14>MAY</bcp14> have the @type property set if it is an instance of <tt>A</tt>. It <bcp14>MUST</bcp14> have the @type property set if it is an instance of <tt>B</tt>. If instead the <tt>defaultType</tt> attribute is not defined, then the @type property <bcp14>MUST</bcp14> also be set for <tt>A</tt>.</li>
+            <li>An object that is set as the value for a property with type signature "A" <bcp14>MAY</bcp14> have the @type property set. If the @type property is not set, then its value is implied to be A by the property definition.</li>
+            <li>An object that is set as the value for a property with type signature "A|B (defaultType: A)" <bcp14>MAY</bcp14> have the @type property set if it is an instance of A. It <bcp14>MUST</bcp14> have the @type property set if it is an instance of B. If, instead, the defaultType attribute is not defined, then the @type property <bcp14>MUST</bcp14> also be set for A.</li>
             <li>An object that is not the value of a property, such as the topmost object in JSON data (directly or as a member of an array), <bcp14>MUST</bcp14> have the @type property set.</li>
           </ul>
-          <t>An object definition <bcp14>MAY</bcp14> require the @type property to be set regardless of the above definitions,  e.g. this document requires the @type property to be set for the Event, Task and Group object types.</t>
         </section>
       </section>
-      <section anchor="data-types">
-        <name>Data Types</name>
+      <section anchor="common-data-types">
+        <name>Common Data Types</name>
         <t>In addition to the standard JSON data types, the following data types are used in this specification:</t>
         <section anchor="type-Id">
           <name>Id</name>
@@ -231,27 +273,21 @@ signed-duration = ["+" / "-"] duration
         </section>
         <section anchor="type-PatchObject">
           <name>PatchObject</name>
-          <t>A PatchObject is of type <tt>String[*]</tt> and represents an unordered set of patches on a JSON object. Each key is a path represented in a subset of the JSON Pointer format <xref target="RFC6901"/>. The paths have an implicit leading <tt>/</tt>, so each key is prefixed with <tt>/</tt> before applying the JSON Pointer evaluation algorithm.</t>
-          <t>A patch within a PatchObject is only valid if all of the following conditions apply:</t>
+          <t>A PatchObject is of type "String[*]" and represents an unordered set of patches on a JSON object. Each key is a path represented in a subset of the JSON Pointer format <xref target="RFC6901"/>. The paths have an implicit leading "/", so each key is prefixed with "/" before applying the JSON Pointer evaluation algorithm.</t>
+          <t>A patch within a PatchObject is only valid if all the following conditions apply:</t>
           <ol>
-            <li>The pointer <bcp14>MUST NOT</bcp14> reference inside an array (i.e., you <bcp14>MUST NOT</bcp14> insert/delete from an array; the array <bcp14>MUST</bcp14> be replaced in its entirety
-		        instead).</li>
-            <li>All parts prior to the last (i.e., the value after the final slash) <bcp14>MUST</bcp14> already
-	        exist on the object being patched.</li>
-            <li>There <bcp14>MUST NOT</bcp14> be two patches in the PatchObject where the pointer of one is the
-	        prefix of the pointer of the other, e.g., <tt>alerts/1/offset</tt> and <tt>alerts</tt>.</li>
-            <li>The value for the patch <bcp14>MUST</bcp14> be valid for the property being set (of the correct
-	        type and obeying any other applicable restrictions), or, if null, the property <bcp14>MUST</bcp14> be
-		    optional.</li>
+            <li>The pointer <bcp14>MAY</bcp14> reference inside an array, but if the last reference token in the pointer is an array index, then the patch value <bcp14>MUST NOT</bcp14> be null. The pointer <bcp14>MUST NOT</bcp14> use "-" as an array index in any of its reference tokens (i.e., you <bcp14>MUST NOT</bcp14> insert/delete from an array, but you <bcp14>MAY</bcp14> replace the contents of its existing members. To add or remove members, one needs to replace the complete array value).</li>
+            <li>All reference tokens prior to the last (i.e., the value after the final slash) <bcp14>MUST</bcp14> already exist as values in the object being patched. If the last reference token is an array index, then a member at this index <bcp14>MUST</bcp14> already exist in the referenced array.</li>
+            <li>There <bcp14>MUST NOT</bcp14> be two patches in the PatchObject where the pointer of one is the prefix of the pointer of the other, e.g., "alerts/1/offset" and "alerts".</li>
+            <li>The value for the patch <bcp14>MUST</bcp14> be valid for the property being set (of the correct type and obeying any other applicable restrictions), or if null, the property <bcp14>MUST</bcp14> be optional.</li>
           </ol>
           <t>The value associated with each pointer determines how to apply that patch:</t>
           <ul>
-            <li>If null, remove the property from the patched object. If the key is not present in the parent, this a no-op.</li>
-            <li>If non-null, set the value given as the value for this property
-            (this may be a replacement or addition to the object being patched).</li>
+            <li>If null, remove the property from the patched object. If the key is not present in the parent, this is a no-op.</li>
+            <li>If non-null, set the value given as the value for this property (this may be a replacement or addition to the object being patched).</li>
           </ul>
-          <t>A PatchObject does not define its own <tt>@type</tt> property (see <xref target="prop-type"/>). An <tt>@type</tt> property in a patch <bcp14>MUST</bcp14> be handled as any other patched property value.</t>
-          <t>Implementations <bcp14>MUST</bcp14> reject a PatchObject in its entirety if any of its patches are invalid.  Implementations <bcp14>MUST NOT</bcp14> apply partial patches.</t>
+          <t>A PatchObject does not define its own <xref target="prop-type">@type</xref> property. Instead, the @type property in a patch <bcp14>MUST</bcp14> be handled as any other patched property value.</t>
+          <t>Implementations <bcp14>MUST</bcp14> reject a PatchObject in its entirety if any of its patches are invalid. Implementations <bcp14>MUST NOT</bcp14> apply partial patches.</t>
           <t>The PatchObject format is used to significantly reduce file size and duplicated content when specifying variations to a common object, such as with recurring events or when translating the data into multiple languages. It can also better preserve semantic intent if only the properties that should differ between the two objects are patched. For example, if one person is not going to a particular instance of a regularly scheduled event, in iCalendar, you would have to duplicate the entire event in the override. In JSCalendar, this is a small patch to show the difference. As only this property is patched, if the location of the event is changed, the occurrence will automatically still inherit this.</t>
         </section>
         <section anchor="type-Relation">
@@ -262,7 +298,7 @@ signed-duration = ["+" / "-"] duration
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be <tt>Relation</tt>, if set.</dd>
             <dt>relation: <tt>String[Boolean]</tt> (optional, default: empty Object)</dt>
             <dd>
-              <t>This describes how the linked object is related to the linking object. The relation is defined as a set of relation types. Keys in the set <bcp14>MUST</bcp14> be one of the following values, specified in the property definition where the Relation object is used, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+              <t>This describes how the linked object is related to the linking object. The relation is defined as a set of relation types. Keys in the set <bcp14>MUST</bcp14> be one of the following values, specified in the property definition where the Relation object is used, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
                 <dt><tt>first</tt>:</dt>
                 <dd>The linked object is the first in a series the linking object is part of.</dd>
@@ -296,7 +332,7 @@ signed-duration = ["+" / "-"] duration
             <dd>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a link relation type as defined in <xref target="RFC8288" section="2.1" sectionFormat="of"/> .</dd>
             <dt>display: <tt>String[Boolean]</tt> (optional)</dt>
             <dd>
-              <t>This is a set of intended purposes of a link to an image. The keys <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+              <t>This is a set of intended purposes of a link to an image. The keys <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
                 <dt><tt>badge</tt>:</dt>
                 <dd>an image meant to be displayed alongside the title of the object</dd>
@@ -312,6 +348,103 @@ signed-duration = ["+" / "-"] duration
             <dt>title: <tt>String</tt> (optional)</dt>
             <dd>This is a human-readable, plain-text description of the resource.</dd>
           </dl>
+        </section>
+      </section>
+      <section anchor="internationalization">
+        <name>Internationalization</name>
+        <t>JSCalendar aims to be used for international calendaring data. Notably, text values such as event titles or locations are likely to cover a wide range of languages and cultures. This section describes internationalization for free-form text values as well as Uniform Resource Identifiers (URIs).</t>
+        <section>
+          <name>Free-Form Text</name>
+          <t>Properties having free-form text values <bcp14>MAY</bcp14> contain any valid sequence of Unicode characters encoded as a JSON string. Such values can contain unidirectional left-to-right and right-to-left text, as well as bidirectional text using Unicode Directional Formatting Characters as described in Section 2 of <xref target="UBiDi"/>. Implementations setting bidirectional text <bcp14>MUST</bcp14> make sure that each property value complies with the requirements of the Unicode Bidirectional Algorithm. Implementations <bcp14>MUST NOT</bcp14> assume that text values of adjacent properties are processed or displayed as a combined string; for example, the values of an event title and description may or may not be rendered together.</t>
+        </section>
+        <section>
+          <name>URIs</name>
+          <t>Several properties require their string value to be a URI as defined in <xref target="RFC3986"/>. Implementations <bcp14>MUST</bcp14> make sure to use proper percent-encoding for URIs that cannot be represented using unreserved URI characters. <xref target="RFC3987" section="3.1"/> defines how to convert Internationalized Resource Identifiers to URIs. JSCalendar makes no recommendation on how to display URIs, but the WHATWG URL Living Standard (see "Internationalization and special characters" (Section 4.8.3) of <xref target="WHATWG-URL"/>) provides guidance for URLs found in the context of a web browser.</t>
+        </section>
+      </section>
+      <section anchor="validating-jscalendar">
+        <name>Validating JSCalendar</name>
+        <t>This specification distinguishes between three kinds of properties regarding validation: IANA-registered properties and unknown properties, which are defined in this section, and vendor-specific properties, which are defined in <xref target="vendor-specific-properties"/>. A JSCalendar object is invalid if any of its properties are invalid.</t>
+        <t>This document defines whether each property is mandatory or optional. A mandatory property <bcp14>MUST</bcp14> be present for a JSCalendar object to be valid. An optional property does not need to be present. The values of both required and optional properties <bcp14>MUST</bcp14> adhere to the data type and definition of that property.
+        </t>
+        <section anchor="case-sensitivity">
+          <name>Case-Sensitivity</name>
+          <t>All property names, object type names, and enumerated values are case-sensitive, unless explicitly stated otherwise in their definitions. Implementations <bcp14>MUST</bcp14> handle a JSCalendar object as invalid if a type name, property name, or enumerated value only differs in case from one defined for any JSCalendar version known to that implementation. This applies regardless of what JSCalendar version the object defines in its <xref target="prop-version">version</xref> property. <xref target="unknown-properties"/> defines how to handle unknown properties.</t>
+        </section>
+        <section anchor="iana-registered-properties" numbered="true" toc="default">
+          <name>IANA-Registered Properties</name>
+          <t>An IANA-registered property is any property that has been registered according to the IANA property registry rules as outlined in <xref target="iana-considerations"/>. All properties defined in this specification, including their object value types and enumerated values, are registered at IANA.</t>
+          <t>
+            Implementations <bcp14>MUST</bcp14> validate IANA-registered properties in JSCalendar data, unless they are unknown to the implementation (<xref target="unknown-properties"/>). They <bcp14>MUST</bcp14> reject invalid IANA-registered properties. A property is invalid if its name matches the name of an IANA-registered property but the value violates its definition according to the JSCalendar specification version defined in the <xref target="prop-version">version</xref> property.</t>
+          <t>IANA-registered property names <bcp14>MUST NOT</bcp14> contain ASCII control characters (U+0000 to U+001F, U+007F), the COLON (U+003A), or the QUOTATION MARK (U+0022). They <bcp14>MUST</bcp14> only contain ASCII alphanumeric characters that match the ALPHA and DIGIT rules defined in <xref target="RFC5234" section="B.1"/> or the COMMERCIAL AT (U+0040) character. IANA-registered property names <bcp14>MUST</bcp14> be notated in lower camel case.</t>
+        </section>
+        <section anchor="reserved-properties">
+          <name>Reserved Properties</name>
+          <t>IANA-registered properties can be reserved (<xref target="iana-registry-policy"/>).  Implementations <bcp14>MUST NOT</bcp14> set properties having a reserved name in JSCalendar objects for which this property is reserved, or all objects if the property context in the registry is "not applicable". Reserved properties have no type and their type signature is "not applicable".  Any JSCalendar object including a property which is reserved in context of this object <bcp14>MUST</bcp14> be considered invalid.</t>
+          <t>This document reserves one property:</t>
+          <section anchor="prop-extra" numbered="true" toc="default">
+            <name>extra</name>
+            <dl spacing="normal">
+              <dt>extra: not applicable.</dt>
+              <dd>The reserved property "extra" provides implementors with a property name that is certain to never occur as a property in any JSCalendar object. Implementations might want to map unknown or vendor-specific properties to a variable with this name, but this is implementation-specific.</dd>
+            </dl>
+          </section>
+        </section>
+        <section anchor="unknown-properties" numbered="true" toc="default">
+          <name>Unknown Properties</name>
+          <t>Implementations may encounter JSCalendar data where a property name is unknown to that implementation but the name adheres to the syntactic restrictions of IANA-registered property names. Implementations <bcp14>MUST</bcp14> make sure that such a name does not violate the case-sensitivity rules defined in <xref target="case-sensitivity"/>. If the property name is valid, then implementations <bcp14>MUST NOT</bcp14> treat such properties as invalid. Instead, they <bcp14>MUST</bcp14> preserve them in the JSCalendar object.</t>
+          <t>Implementations that create or update JSCalendar data <bcp14>MUST</bcp14> only set IANA-registered properties or vendor-specific properties. Preserving properties that are unknown to the implementation is to allow applications and services to interoperate without data loss, even if not all of them implement the same set of JSCalendar extensions.</t>
+        </section>
+        <section anchor="enumerated-values" numbered="true" toc="default">
+          <name>Enumerated Values</name>
+          <t>Several properties in this document restrict their allowed values to a list of String values. These values are case-sensitive. If not noted otherwise for a specific property, the initial list of values for such properties is registered at IANA in the <xref target="iana-enum-registry">"JSCalendar Enum Values" registry</xref>. Implementations <bcp14>MUST</bcp14> only set IANA-registered or <xref target="vendor-specific-values">vendor-specific </xref> values for such properties.</t>
+        </section>
+      </section>
+      <section anchor="vendor-specific-extensions">
+        <name>Vendor-Specific Extensions</name>
+        <t>Vendors may extend properties and values for experimentation or to store contacts data that is only useful for a single service or application. Such extensions are not meant for interoperation. If, instead, interoperation is desired, vendors are strongly encouraged to define and register new properties, types, and values at IANA as defined in <xref target="iana-considerations"/>. <xref target="iana-registered-properties"/> defines the naming conventions for IANA-registered elements.</t>
+        <section anchor="vendor-specific-properties" numbered="true" toc="default">
+          <name>Vendor-Specific Properties</name>
+          <t>Vendor-specific property names <bcp14>MUST</bcp14> start with a vendor-specific prefix followed by a name, as produced by the "v-extension" ABNF below. The prefix and name together form the property name. The vendor-specific prefix <bcp14>MUST</bcp14> be a domain name under control of the service or application that sets the property, but it need not resolve in the Domain Name System <xref target="RFC1034"/> <xref target="RFC1035"/>. The prefix "ietf.org" and its subdomain names are reserved for IETF specifications. The name <bcp14>MUST NOT</bcp14> contain the TILDE (U+007E) and SOLIDUS (U+002F) characters, as these require special escaping when encoding a JSON Pointer <xref target="RFC6901"/> for that property.</t>
+          <t>Vendor-specific properties <bcp14>MAY</bcp14> be set in any JSCalendar object. Implementations <bcp14>MUST</bcp14> preserve vendor-specific properties in JSCalendar data, irrespective if they know their use. They <bcp14>MUST NOT</bcp14> reject the property value as invalid, unless they are in control of the vendor-specific property as outlined in the above paragraph.</t>
+          <t>The ABNF rule "v-extension" formally defines valid vendor-specific property names. Note that the vendor prefix allows for more values than Internationalized Domain Names (IDNs)<xref target="RFC8499"/>; therefore, JSCalendar implementations can simply validate property names without implementing the full set of rules that apply to domain names.</t>
+          <figure anchor="vendor-property-abnf">
+            <name>ABNF Rules for Vendor-Specific Property Names</name>
+            <sourcecode name="" type="abnf"><![CDATA[
+v-extension = v-prefix ":" v-name
+
+v-prefix = v-label *("." v-label)
+
+v-label = alnum-int / alnum-int *(alnum-int / "-") alnum-int
+
+alnum-int = ALPHA / DIGIT / NON-ASCII
+  ; see RFC 6350, Section 3.3
+
+v-name = 1*(WSP / "!" / %x23-2e / %x30-7d / NON-ASCII)
+  ; any characters except CTLs, DQUOTE, SOLIDUS, and TILDE
+]]></sourcecode>
+          </figure>
+          <t>The value of vendor-specific properties can be any valid JSON value, and naming restrictions do not apply to such values. Specifically, if the property value is a JSON object, then the keys of such objects need not be named as vendor-specific properties, as illustrated in <xref target="vendor-property-example"/>:</t>
+          <figure anchor="vendor-property-example">
+            <name>Examples of Vendor-Specific Properties</name>
+            <sourcecode type=""><![CDATA[
+"example.com:foo": "bar",
+"example.com:foo2": {
+  "bar": "baz"
+}
+]]></sourcecode>
+          </figure>
+        </section>
+        <section anchor="vendor-specific-values" numbered="true" toc="default">
+          <name>Vendor-Specific Values</name>
+          <t>Some JSCalendar IANA-registered properties allow their values to be vendor-specific. One such example is a Participant object's <xref target="prop-participants">"kind"</xref> property, which enumerates its standard values but also allows for arbitrary vendor-specific values. Such vendor-specific values <bcp14>MUST</bcp14> be valid "v-extension" values as defined in <xref target="vendor-specific-properties"/>. The example in <xref target="vendor-value-example"/> illustrates this:</t>
+          <figure anchor="vendor-value-example">
+            <name>Example of a Vendor-Specific Value</name>
+            <sourcecode><![CDATA[
+"kind": "example.com:baz"
+]]></sourcecode>
+          </figure>
+          <t>Vendors are strongly encouraged to specify a new standard value once a vendor-specific one turns out to also be useful for other systems.</t>
         </section>
       </section>
       <section anchor="versioning">
@@ -359,34 +492,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <t>Media type: <tt>application/jscalendar+json;type=group</tt></t>
         <t>A Group is a collection of <xref target="jsevent">Event</xref> and/or <xref target="jstask">Task</xref> objects. Typically, objects are grouped by topic (e.g., by keywords) or calendar membership.</t>
         <t>The <xref target="prop-type">@type</xref> property is mandatory, it <bcp14>MUST</bcp14> be set to value <tt>Group</tt>.</t>
-      </section>
-    </section>
-    <section anchor="structure-of-jscalendar-objects">
-      <name>Structure of JSCalendar Objects</name>
-      <t>A JSCalendar object is a JSON object <xref target="RFC8259"/>, which <bcp14>MUST</bcp14> be valid I-JSON (a stricter subset of JSON) <xref target="RFC7493"/>. Property names and values are case sensitive.</t>
-      <t>The object has a collection of properties, as specified in the following sections. Properties are specified as being either mandatory or optional. Optional properties may have a default value if explicitly specified in the property definition.</t>
-      <section anchor="objecttype">
-        <name>Object Type</name>
-        <t>JSCalendar objects <bcp14>MUST</bcp14> name their type in the <tt>@type</tt> property if not explicitly specified otherwise for the respective object type. A notable exception to this rule is the <xref target="type-PatchObject">PatchObject</xref>.</t>
-      </section>
-      <section anchor="normalization">
-        <name>Normalization and Equivalence</name>
-        <t>JSCalendar aims to provide unambiguous definitions for value types and properties but does not define a general normalization or equivalence method for JSCalendar objects and types. This is because the notion of equivalence might range from byte-level equivalence to semantic equivalence, depending on the respective use case. Normalization of JSCalendar objects is hindered because of the following reasons:</t>
-        <ul>
-          <li>Custom JSCalendar properties may contain arbitrary JSON values, including arrays. However,
-	    equivalence of arrays might or might not depend on the order of elements, depending on the respective
-	      property definition.</li>
-          <li>Several JSCalendar property values are defined as URIs and media types, but normalization of
-	    these types is inherently protocol and scheme specific, depending on the use case of the equivalence
-	      definition (see <xref target="RFC3986" section="6"/>).</li>
-        </ul>
-        <t>Considering this, the definition of equivalence and normalization is left to client and server implementations and to be negotiated by a calendar exchange protocol or defined elsewhere.</t>
-      </section>
-      <section anchor="custom-properties">
-        <name>Vendor-Specific Property Extensions, Values, and Types</name>
-        <t>Vendors <bcp14>MAY</bcp14> add additional properties to the calendar object to support their custom features. To avoid conflict, the names of these properties <bcp14>MUST</bcp14> be prefixed by a domain name controlled by the vendor followed by a colon, e.g., <tt>example.com:customprop</tt>. If the value is a new JSCalendar object, it either <bcp14>MUST</bcp14> include an <tt>@type</tt> property, or it <bcp14>MUST</bcp14> explicitly be specified to not require a type designator. The type name <bcp14>MUST</bcp14> be prefixed with a domain name controlled by the vendor.</t>
-        <t>Some JSCalendar properties allow vendor-specific value extensions. Such vendor-specific values <bcp14>MUST</bcp14> be prefixed by a domain name controlled by the vendor followed by a colon, e.g., <tt>example.com:customrel</tt>.</t>
-        <t>Vendors are strongly encouraged to register any new property values or extensions that are useful to other systems as well, rather than use a vendor-specific prefix.</t>
       </section>
     </section>
     <section anchor="jscalendar-props">
@@ -506,7 +611,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>features: <tt>String[Boolean]</tt> (optional)</dt>
             <dd>
               <t>A set of features supported by this virtual location. The set is represented as a map, with the keys being the feature. The value for each key in the map <bcp14>MUST</bcp14> be true.</t>
-              <t>The feature <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>). Any value the client or server doesn't understand should be treated the same as if this feature is omitted.</t>
+              <t>The feature <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>). Any value the client or server doesn't understand should be treated the same as if this feature is omitted.</t>
               <dl newline="false">
                 <dt>audio:</dt>
                 <dd>Audio conferencing</dd>
@@ -620,7 +725,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             </dd>
             <dt>rscale: <tt>String</tt> (optional, default: "gregorian")</dt>
             <dd>
-              <t>This is the calendar system in which this recurrence rule operates, in lowercase. This <bcp14>MUST</bcp14> be either a CLDR-registered calendar system name <xref target="CLDR"/> or a vendor-specific value (see <xref target="custom-properties"/>).</t>
+              <t>This is the calendar system in which this recurrence rule operates, in lowercase. This <bcp14>MUST</bcp14> be either a CLDR-registered calendar system name <xref target="CLDR"/> or a vendor-specific value (see <xref target="vendor-specific-extensions"/>).</t>
               <t>This is the RSCALE part from iCalendar <xref target="RFC7529">RSCALE</xref>, converted to lowercase.</t>
             </dd>
             <dt>skip: <tt>String</tt> (optional, default: "omit")</dt>
@@ -875,7 +980,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-freeBusyStatus">
           <name>freeBusyStatus</name>
           <t>Type: <tt>String</tt> (optional, default: <tt>busy</tt>)</t>
-          <t>This specifies how this calendar object should be treated when calculating free-busy state. This <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+          <t>This specifies how this calendar object should be treated when calculating free-busy state. This <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
           <dl newline="false">
             <dt><tt>free</tt>:</dt>
             <dd>The object should be ignored when calculating whether the user is busy.</dd>
@@ -888,7 +993,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <t>Type: <tt>String</tt> (optional, default: <tt>public</tt>)</t>
           <t>Calendar objects are normally collected together and may be shared with other users. The privacy property allows the object owner to indicate that it should not be shared or should only have the time information shared but the details withheld. Enforcement of the restrictions indicated by this property is up to the API via which this object is accessed.</t>
           <t>This property <bcp14>MUST NOT</bcp14> affect the information sent to scheduled participants; it is only interpreted by protocols that share the calendar objects belonging to one user with other users.</t>
-          <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>). Any value the client or server doesn't understand should be preserved but treated as equivalent to <tt>private</tt>.</t>
+          <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>). Any value the client or server doesn't understand should be preserved but treated as equivalent to <tt>private</tt>.</t>
           <dl newline="false">
             <dt><tt>public</tt>:</dt>
             <dd>The full details of the object are visible to those whom the object's calendar is shared with.</dd>
@@ -945,7 +1050,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.1" sectionFormat="parens">ATTENDEE property</xref> or <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular participant, even across different calendaring objects.</dd>
             <dt>kind: <tt>String</tt> (optional)</dt>
             <dd>
-              <t>This is what kind of entity this participant is, if known. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>). Any value the client or server doesn't understand should be treated the same as if this property is omitted.</t>
+              <t>This is what kind of entity this participant is, if known. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>). Any value the client or server doesn't understand should be treated the same as if this property is omitted.</t>
               <dl newline="false">
                 <dt><tt>individual</tt>:</dt>
                 <dd>a single person</dd>
@@ -959,7 +1064,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             </dd>
             <dt>roles: <tt>String[Boolean]</tt> (optional)</dt>
             <dd>
-              <t>This is a set of roles that this participant fulfills. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and at least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+              <t>This is a set of roles that this participant fulfills. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and at least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
                 <dt><tt>owner</tt>:</dt>
                 <dd>The participant is an owner of the calendar object. This signifies they can make changes that affect all participants (for example, rescheduling the calendar object, adding and removing participants and roles). The presence of this role only is indicative, its semantics are subject to the calendaring exchange protocol being used. See <xref target="jmap-calendars"/> for an example for making use of this role.</dd>
@@ -977,7 +1082,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>participationStatus: <tt>String</tt> (optional, default: <tt>needs-action</tt> )</dt>
             <dd>
               <t>This is the participation status, if any, of this participant. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set.</t>
-              <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+              <t>The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
                 <dt><tt>needs-action</tt>:</dt>
                 <dd>No status has yet been set by the participant.</dd>
@@ -1007,7 +1112,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>This is a map of link ids to Link objects, representing external resources associated with this participant, for example, an image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>progress: <tt>String</tt> (optional; only allowed for participants of a Task)</dt>
             <dd>
-              <t>This represents the progress of the participant for this task. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and the <tt>participationStatus</tt> of this participant <bcp14>MUST</bcp14> be <tt>accepted</tt>. The property value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+              <t>This represents the progress of the participant for this task. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and the <tt>participationStatus</tt> of this participant <bcp14>MUST</bcp14> be <tt>accepted</tt>. The property value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
                 <dt><tt>in-process</tt>:</dt>
                 <dd>The participant is in process of contributing to the task.</dd>
@@ -1079,7 +1184,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>action: <tt>String</tt> (optional, default: <tt>display</tt> )</dt>
             <dd>
               <t>This describes how to alert the user.</t>
-              <t>The value <bcp14>MUST</bcp14> be at most one of the following values, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+              <t>The value <bcp14>MUST</bcp14> be at most one of the following values, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
                 <dt><tt>display</tt>:</dt>
                 <dd>The alert should be displayed as appropriate for the current device and user context.</dd>
@@ -1122,7 +1227,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-status-jsevent">
           <name>status</name>
           <t>Type: <tt>String</tt> (optional, default: <tt>confirmed</tt>)</t>
-          <t>This is the scheduling status ( <xref target="sharing-scheduling-properties"/>) of an Event. If set, it <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+          <t>This is the scheduling status ( <xref target="sharing-scheduling-properties"/>) of an Event. If set, it <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
           <dl newline="false">
             <dt><tt>confirmed</tt>:</dt>
             <dd>indicates the event is definitely happening</dd>
@@ -1171,7 +1276,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt><tt>needs-action</tt>:</dt>
             <dd>if none of the other criteria match</dd>
           </dl>
-          <t>If set, it <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
+          <t>If set, it <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
           <dl newline="false">
             <dt><tt>needs-action</tt>:</dt>
             <dd>indicates the task needs action</dd>
@@ -4036,6 +4141,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <date/>
           </front>
         </reference>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1034.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1035.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2397.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2445.xml"/>
@@ -4120,9 +4227,32 @@ jsversion = 1*DIGIT "." 1*DIGIT
           </front>
           <seriesInfo name="Internet-Draft" value="draft-ietf-calext-ical-tasks"/>
         </reference>
+        <reference anchor="UBiDi" target="https://www.unicode.org/reports/tr9/">
+          <front>
+            <title>Unicode Standard Annex #9: Unicode Bidirectional Algorithm</title>
+            <author>
+              <organization>The Unicode Consortium</organization>
+            </author>
+            <date month="August" year="2023"/>
+          </front>
+          <seriesInfo name="Unicode" value="15.1.0"/>
+          <refcontent>Revision 48</refcontent>
+        </reference>
+        <reference anchor="WHATWG-URL" target="https://url.spec.whatwg.org">
+          <front>
+            <title>URL Living Standard</title>
+            <author>
+              <organization>WHATWG
+              </organization>
+            </author>
+            <date month="January" year="2024"/>
+          </front>
+        </reference>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3987.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6376.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7265.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7986.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8499.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8607.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9553.xml"/>
       </references>
@@ -4407,7 +4537,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl newline="true" spacing="normal">
             <dt><strong>@type</strong>:</dt>
             <dd>
-              <t>The original definition required this property be set on every object type. The type and property notation in <xref target="type-and-prop-notation"/> now matches the one in JSContact, and the @type property is optional in the majority of cases.</t>
+              <t>The original definition required this property be set on every object type. The type and property notation in <xref target="data-type-notations"/> now matches the one in JSContact, and the @type property is optional in the majority of cases.</t>
             </dd>
           </dl>
           <!-- Alert.relatedTo -->
@@ -4624,13 +4754,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
             </dd>
           </dl>
         </section>
-      </section>
-      <section>
-        <name>Other Changes</name>
-	<t>This document aligns JSCalendar with <xref target="RFC9553">JSContact</xref>:</t>
-	<ul>
-	  <li><xref target="versioning"/> defines how to version JSCalendar data.</li>
-	</ul>
       </section>
     </section>
     <section anchor="acknowledgments" numbered="false">
