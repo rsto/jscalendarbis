@@ -480,7 +480,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>coordinates: <tt>String</tt> (optional)</dt>
             <dd>This is a <tt>geo:</tt> URI <xref target="RFC5870"/> for the location.</dd>
             <dt>links: <tt>Id[Link]</tt> (optional)</dt>
-            <dd>This is a map of link ids to Link objects, representing external resources associated with this location, for example, a vCard or image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
+            <dd>This is a map of link ids to Link objects, representing external resources associated with this location, for example, an image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
           </dl>
         </section>
         <section anchor="prop-mainLocationId">
@@ -1004,7 +1004,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>memberOf: <tt>Id[Boolean]</tt> (optional)</dt>
             <dd>This is a set of group participants that were invited to this calendar object, which caused this participant to be invited due to their membership in the group(s). If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be a URI according to the definition of the calendarAddress property. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no groups, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>links: <tt>Id[Link]</tt> (optional)</dt>
-            <dd>This is a map of link ids to Link objects, representing external resources associated with this participant, for example, a vCard or image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
+            <dd>This is a map of link ids to Link objects, representing external resources associated with this participant, for example, an image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>progress: <tt>String</tt> (optional; only allowed for participants of a Task)</dt>
             <dd>
               <t>This represents the progress of the participant for this task. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set and the <tt>participationStatus</tt> of this participant <bcp14>MUST</bcp14> be <tt>accepted</tt>. The property value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="custom-properties"/>):</t>
