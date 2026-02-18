@@ -4145,477 +4145,492 @@ jsversion = 1*DIGIT "." 1*DIGIT
           </li>
         </ul>
       </section>
-      <section anchor="appendix-obsolete-properties">
-        <name>Obsolete Properties</name>
-        <t>The following properties became obsolete:</t>
-        <!-- excludedRecurrenceRules -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>excludedRecurrenceRules</strong>:</dt>
-          <dd>
-            <t>This is incompatible with iCalendar, which deprecated the <xref target="RFC2445" section="4.8.5.2" sectionFormat="parens">EXRULE property</xref> in <xref target="RFC5545"/>.</t>
-            <t>See <xref target="RFC8984" section="4.3.4" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- recurrenceRules -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>recurrenceRules</strong>:</dt>
-          <dd>
-            <t>This is incompatible with the following definitions of the iCalendar <xref target="RFC5545" section="3.8.5.3" sectionFormat="parens">RRULE property</xref>:</t>
-            <ul>
-              <li>The RRULE property <bcp14>SHOULD NOT</bcp14> be specified more than once.</li>
-              <li>The recurrence set generated with multiple RRULE properties is undefined.</li>
-            </ul>
-            <t>The newly defined single-valued <xref target="prop-recurrenceRule">recurrenceRule property</xref> replaces it.</t>
-            <t>See <xref target="RFC8984" section="4.3.3" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- timeZones -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>timeZones</strong>:</dt>
-          <dd>
-            <t>This property was obsoleted for the following reasons:</t>
-            <ul>
-              <li>Custom time zones in calendaring data increase implementation complexity, introduce inefficiencies and are error-prone, as described for CalDAV and iCalendar in <xref target="RFC7809"/>.</li>
-              <li>In practice, the only non-IANA time zone identifiers are Microsoft time zone names. These can be converted to IANA time zones, e.g. using the <eref target="https://icu.unicode.org/">International Components for Unicode</eref> software library.</li>
-              <li>The property contradicts the stated goal of JSCalendar to avoid ambiguities and pitfalls of iCalendar, defined in <xref target="RFC8984" section="1.1" sectionFormat="of"/>.</li>
-            </ul>
-            <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Link.cid -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Link.cid</strong>:</dt>
-          <dd>
-            <t>This property was obsoleted for the following reasons:</t>
-            <ul>
-              <li>It only is relevant for rich-text descriptions, but the related iCalendar <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref> does not support referring to attached media. </li>
-              <li>It only is applicable for Link objects having a "data:" URI as href property value. But even the definition of the Link object recommends not to use "data:" URIs as values in the href property.</li>
-              <li>A Link with "data:" URI converts to an iCalendar <xref target="RFC5545" section="3.3.1" sectionFormat="parens">BINARY value</xref>. But these are marginally supported by CalDAV clients, which tend to prefer using WebDAV managed attachments <xref target="RFC8607"/>.</li>
-            </ul>
-            <t>See <xref target="RFC8984" section="1.4.11" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Location.relativeTo, Location.timeZone -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Location.{relativeTo|timeZone}</strong>:</dt>
-          <dd>
-            <t>These got replaced with the newly defined <xref target="prop-endTimeZone">Event.endTimeZone property</xref>:</t>
-            <ul>
-              <li>They were meant to be equivalent to the iCalendar <xref target="RFC5545" section="3.8.2.2" sectionFormat="parens">DTEND property</xref>. But the semantics were undefined if multiple Location objects had "relativeTo=end" and the "timeZone" property set.</li>
-              <li>Their semantics were undefined for Task objects.</li>
-              <li>They were incompatible with the iCalendar <xref target="RFC9073" section="7.2" sectionFormat="parens">VLOCATION component</xref>, which neither defines how to set a time zone identifier or how the VLOCATION relates to start and end.</li>
-            </ul>
-            <t>See <xref target="RFC8984" section="4.2.5" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.locationId -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.locationId</strong>:</dt>
-          <dd>
-            <t>This is incompatible with the iCalendar <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>:</t>
-            <ul>
-              <li>The PARTICIPANT component may contain multiple VLOCATION components and LOCATION properties.</li>
-              <li>The PARTICIPANT component does not support referring to other VLOCATION components or LOCATION properties</li>
-            </ul>
-            <t>The description of the Event object type in <xref target="jsevent"/> reflects this:</t>
-            <ul>
-              <li>It stated: "Multiple participants may partake in the event at multiple locations."</li>
-              <li>It now states: "Multiple participants may partake in the event."</li>
-            </ul>
-            <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.language -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.language</strong>:</dt>
-          <dd>
-            <t>No equivalent element exists in iCalendar and its current single-valued definition is likely to conflict with any related future extension of the <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>.</t>
-            <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.progressUpdated, Task.progressUpated -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>{Participant|Task}.progressUpdated</strong>:</dt>
-          <dd>
-            <t>This became obsolete for the following reasons:</t>
-            <ul>
-              <li>It is incompatible with the newly introduced iCalendar <xref target="ical-tasks" section="12.1" sectionFormat="parens">VSTATUS component</xref>, which may occur multiple times in the PARTICIPANT and VTODO components.</li>
-              <li>The VSTATUS component introduces new semantics to a task's progress and status, which better be defined by a future JSCalendar extension for tasks.</li>
-            </ul>
-            <t>See <xref target="RFC8984" section="4.4.6"/> and <xref target="RFC8984" section="5.2.6"/>.</t>
-          </dd>
-        </dl>
-        <!-- TimeZone.*, TimeZoneRule.* -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>{TimeZone|TimeZoneRule}.*</strong>:</dt>
-          <dd>
-            <t>All properties defined solely for the TimeZone and TimeZoneRule object types became obsolete, because the "timeZones" property became obsolete.</t>
-            <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-      </section>
-      <section anchor="appendix-reserved-properties">
-        <name>Reserved Properties</name>
-        <section toc="exclude">
-          <name>JMAP for Calendars</name>
-          <t>The following common use properties became reserved for <xref target="jmap-calendars">JMAP for Calendars</xref>:</t>
-          <!-- useDefaultAlerts -->
+      <section>
+        <name>Changed Property Definitions</name>
+        <t>This section summarizes the differences from the JSCalendar property definitions of <xref target="RFC8984"/>.</t>
+        <section anchor="appendix-obsolete-properties">
+          <name>Obsoleted Properties</name>
+          <t>The following properties became obsolete:</t>
+          <!-- excludedRecurrenceRules -->
           <dl newline="true" spacing="normal">
-            <dt><strong>useDefaultAlerts</strong>:</dt>
+            <dt><strong>excludedRecurrenceRules</strong>:</dt>
             <dd>
-              <t>No equivalent element exists in iCalendar and no consensus for default alarms in CalDAV and iCalendar was found at IETF as part of <xref target="RFC9074"/>.</t>
-              <t>See <xref target="RFC8984" section="4.4.1" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.scheduleSequence -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.scheduleSequence</strong>:</dt>
-            <dd>
-              <t>This requires further work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component and JSCalendar. This property may later be redefined for common use.</t>
-              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.scheduleUpdated -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.scheduleUpdated</strong>:</dt>
-            <dd>
-              <t>This requires further work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component and JSCalendar. This property may later be redefined for common use.</t>
-              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-        </section>
-        <section toc="exclude">
-          <name>Scheduling Extensions for CalDAV and iTIP</name>
-          <t>The following common use properties became reserved for future JSCalendar extensions of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref> and <xref target="RFC5546">iTIP</xref>:</t>
-          <!-- replyTo -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>replyTo</strong>:</dt>
-            <dd>
-              <t>This requires further work by IETF. For compatibility with iCalendar, the newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</t>
-              <t>See <xref target="RFC8984" section="4.4.4" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- requestStatus -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>requestStatus</strong>:</dt>
-            <dd>
-              <t>This mainly is applicable in scheduling over CalDAV.</t>
-              <t>See <xref target="RFC8984" section="4.4.7" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- {Event|Task}.sentBy -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task}.sentBy</strong>:</dt>
-            <dd>
-              <t>No equivalent element exists in iCalendar and this property mainly is relevant in context of a combined calendaring and mail service. Note that the Participant.sentBy property does <em>not</em> become reserved: it is equivalent to the iCalendar <xref target="RFC5545" section="3.2.18" sectionFormat="parens">SENT-BY</xref> parameter.</t>
-              <t>See <xref target="RFC8984" section="4.4.5" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.invitedBy -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.invitedBy</strong>:</dt>
-            <dd>
-              <t>This requires further work by IETF. Specifically, the iTIP definitions of the <xref target="RFC5546" section="3.2.3" sectionFormat="parens">REPLY method</xref> and how to forward invitation requests (<xref target="RFC5546" section="4.2.8"/>) must be updated.</t>
-              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.participationComment -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.participationComment</strong>:</dt>
-            <dd>
-              <t>This requires further work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component or JSCalendar. This property may later be redefined for common use.</t>
-              <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.scheduleAgent -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.scheduleAgent</strong>:</dt>
-            <dd>
-              <t>This only is applicable in scheduling over CalDAV.</t>
-              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.scheduleForceSend -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.scheduleForceSend</strong>:</dt>
-            <dd>
-              <t>This only is applicable in scheduling over CalDAV.</t>
-              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.scheduleStatus -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.scheduleStatus</strong>:</dt>
-            <dd>
-              <t>This only is applicable in scheduling over CalDAV.</t>
-              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.sendTo -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.sendTo</strong>:</dt>
-            <dd>
-              <t>This requires further work by IETF. For compatibility with iCalendar, the newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
-              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-        </section>
-        <section toc="exclude">
-          <name>Localization Extensions for iCalendar and JSCalendar</name>
-          <t>The following properties became reserved for future JSCalendar and iCalendar extensions for multi-lingual calendar data:</t>
-          <!-- localizations -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>localizations</strong>:</dt>
-            <dd>
-              <t>This requires further work by IETF. The "localizations" property primarily was introduced in JSCalendar for event publishing, but neither the <xref target="RFC9073">Event Publishing extensions for iCalendar</xref> nor other iCalendar extensions define how to localize iCalendar data. This property may later be redefined for common use.</t>
-              <t>See <xref target="RFC8984" section="4.6.1" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-        </section>
-        <section toc="exclude">
-          <name>Reserved for Future RFCs</name>
-          <t>The following properties became reserved for some future JSCalendar extension RFCs:</t>
-          <!-- Location.description, VirtualLocation.description -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Location.description, VirtualLocation.description</strong>:</dt>
-            <dd>
-              <t>This requires further work by IETF. The VirtualLocation "description" property does not convert to any parameter of the CONFERENCE property. It would require to define a new parameter or to introduce a new component to augment the CONFERENCE property with a DESCRIPTION or STYLED-DESCRIPTION property. For consistency, the Location "description" property became reserved, too.</t>
-              <t>See <xref target="RFC8984" section="4.2.5" sectionFormat="of"/> and <xref target="RFC8984" section="4.2.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-        </section>
-        <section toc="exclude">
-          <name>Reserved for Internal Use</name>
-          <t>The following properties became reserved for internal use by JSCalendar:</t>
-          <!-- excluded -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>excluded</strong>:</dt>
-            <dd>
-              <t>This property name already was defined for internal use only in the recurrenceOverrides property, but registering it for common use had made it appear as being a regular property. Making this a reserved property is to help clarify its purpose. <xref target="prop-recurrenceOverrides"/> has been updated accordingly.</t>
+              <t>This is incompatible with iCalendar, which deprecated the <xref target="RFC2445" section="4.8.5.2" sectionFormat="parens">EXRULE property</xref> in <xref target="RFC5545"/>.</t>
               <t>See <xref target="RFC8984" section="4.3.4" sectionFormat="of"/>.</t>
             </dd>
           </dl>
+          <!-- recurrenceRules -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>recurrenceRules</strong>:</dt>
+            <dd>
+              <t>This is incompatible with the following definitions of the iCalendar <xref target="RFC5545" section="3.8.5.3" sectionFormat="parens">RRULE property</xref>:</t>
+              <ul>
+                <li>The RRULE property <bcp14>SHOULD NOT</bcp14> be specified more than once.</li>
+                <li>The recurrence set generated with multiple RRULE properties is undefined.</li>
+              </ul>
+              <t>The newly defined single-valued <xref target="prop-recurrenceRule">recurrenceRule property</xref> replaces it.</t>
+              <t>See <xref target="RFC8984" section="4.3.3" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- timeZones -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>timeZones</strong>:</dt>
+            <dd>
+              <t>This property was obsoleted for the following reasons:</t>
+              <ul>
+                <li>Custom time zones in calendaring data increase implementation complexity, introduce inefficiencies and are error-prone, as described for CalDAV and iCalendar in <xref target="RFC7809"/>.</li>
+                <li>In practice, the only non-IANA time zone identifiers are Microsoft time zone names. These can be converted to IANA time zones, e.g. using the <eref target="https://icu.unicode.org/">International Components for Unicode</eref> software library.</li>
+                <li>The property contradicts the stated goal of JSCalendar to avoid ambiguities and pitfalls of iCalendar, defined in <xref target="RFC8984" section="1.1" sectionFormat="of"/>.</li>
+              </ul>
+              <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Link.cid -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Link.cid</strong>:</dt>
+            <dd>
+              <t>This property was obsoleted for the following reasons:</t>
+              <ul>
+                <li>It only is relevant for rich-text descriptions, but the related iCalendar <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref> does not support referring to attached media. </li>
+                <li>It only is applicable for Link objects having a "data:" URI as href property value. But even the definition of the Link object recommends not to use "data:" URIs as values in the href property.</li>
+                <li>A Link with "data:" URI converts to an iCalendar <xref target="RFC5545" section="3.3.1" sectionFormat="parens">BINARY value</xref>. But these are marginally supported by CalDAV clients, which tend to prefer using WebDAV managed attachments <xref target="RFC8607"/>.</li>
+              </ul>
+              <t>See <xref target="RFC8984" section="1.4.11" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Location.relativeTo, Location.timeZone -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Location.{relativeTo|timeZone}</strong>:</dt>
+            <dd>
+              <t>These got replaced with the newly defined <xref target="prop-endTimeZone">Event.endTimeZone property</xref>:</t>
+              <ul>
+                <li>They were meant to be equivalent to the iCalendar <xref target="RFC5545" section="3.8.2.2" sectionFormat="parens">DTEND property</xref>. But the semantics were undefined if multiple Location objects had "relativeTo=end" and the "timeZone" property set.</li>
+                <li>Their semantics were undefined for Task objects.</li>
+                <li>They were incompatible with the iCalendar <xref target="RFC9073" section="7.2" sectionFormat="parens">VLOCATION component</xref>, which neither defines how to set a time zone identifier or how the VLOCATION relates to start and end.</li>
+              </ul>
+              <t>See <xref target="RFC8984" section="4.2.5" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.locationId -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.locationId</strong>:</dt>
+            <dd>
+              <t>This is incompatible with the iCalendar <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>:</t>
+              <ul>
+                <li>The PARTICIPANT component may contain multiple VLOCATION components and LOCATION properties.</li>
+                <li>The PARTICIPANT component does not support referring to other VLOCATION components or LOCATION properties</li>
+              </ul>
+              <t>The description of the Event object type in <xref target="jsevent"/> reflects this:</t>
+              <ul>
+                <li>It stated: "Multiple participants may partake in the event at multiple locations."</li>
+                <li>It now states: "Multiple participants may partake in the event."</li>
+              </ul>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.language -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.language</strong>:</dt>
+            <dd>
+              <t>No equivalent element exists in iCalendar and its current single-valued definition is likely to conflict with any related future extension of the <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>.</t>
+              <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.progressUpdated, Task.progressUpated -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{Participant|Task}.progressUpdated</strong>:</dt>
+            <dd>
+              <t>This became obsolete for the following reasons:</t>
+              <ul>
+                <li>It is incompatible with the newly introduced iCalendar <xref target="ical-tasks" section="12.1" sectionFormat="parens">VSTATUS component</xref>, which may occur multiple times in the PARTICIPANT and VTODO components.</li>
+                <li>The VSTATUS component introduces new semantics to a task's progress and status, which better be defined by a future JSCalendar extension for tasks.</li>
+              </ul>
+              <t>See <xref target="RFC8984" section="4.4.6"/> and <xref target="RFC8984" section="5.2.6"/>.</t>
+            </dd>
+          </dl>
+          <!-- TimeZone.*, TimeZoneRule.* -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{TimeZone|TimeZoneRule}.*</strong>:</dt>
+            <dd>
+              <t>All properties defined solely for the TimeZone and TimeZoneRule object types became obsolete, because the "timeZones" property became obsolete.</t>
+              <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
         </section>
-      </section>
-      <section anchor="appendix-updated-properties">
-        <name>Updated Properties</name>
-        <t>The following property definitions were updated:</t>
-        <!-- @type -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>@type</strong>:</dt>
-          <dd>
-            <t>The original definition required this property be set on every object type. The type and property notation in <xref target="type-and-prop-notation"/> now matches the one in JSContact, and the @type property is optional in the majority of cases.</t>
-          </dd>
-        </dl>
-        <!-- Alert.relatedTo -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Alert.relatedTo</strong>:</dt>
-          <dd>
-            <t>The original definition instructed to set the "parent" relation on a snooze alert. It now instructs to set the newly defined "snooze" relation, for compatibility with the VALARM "SNOOZE" relationship type (<xref target="RFC9074" section="7" sectionFormat="of"/>.</t>
-            <t>The original definition did not define that the map keys represent keys of Alert objects in the "alerts" property.</t>
-            <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Alert.trigger -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Alert.trigger</strong>:</dt>
-          <dd>
-            <t>JSCalendar now supports default types for properties of type <tt>A|B</tt>. The default type of this property now is <tt>OffsetTrigger</tt>.</t>
-            <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- {Event|Task|Group}.color -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>{Event|Task|Group}.color</strong>:</dt>
-          <dd>
-            <t>The original definition allowed hexadecimal RGB values, which CSS3 specifies to be either in three-digit or six-digit form. The updated definition only allows them in six-digit form to match the proposed update of the iCalendar COLOR property. It also explicitly defines that values are case-insensitive.</t>
-            <t>See <xref target="prop-color" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Link.display -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Link.display</strong>:</dt>
-          <dd>
-            <t>The original definition only allowed one purpose to be set, which is incompatible with the multi-valued iCalendar <xref target="RFC7986" section="6.1" sectionFormat="parens">DISPLAY parameter</xref>. It now supports setting multiple purposes.</t>
-            <t>Setting this property does not anymore require the "rel" property of the Link object be set to "icon".</t>
-            <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Link.rel -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Link.rel</strong>:</dt>
-          <dd>
-            <t>The original definition restricted the value of this property to registered link types. It now also allows extension relation types for compatibility with the <xref target="RFC9253" section="6.1" sectionFormat="parens">LINKREL parameter</xref>.</t>
-            <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- misc Participant -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.delegatedFrom</strong>,
+        <section anchor="appendix-reserved-properties">
+          <name>Reserved Properties</name>
+          <section toc="exclude">
+            <name>JMAP for Calendars</name>
+            <t>The following common use properties became reserved for <xref target="jmap-calendars">JMAP for Calendars</xref>:</t>
+            <!-- useDefaultAlerts -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>useDefaultAlerts</strong>:</dt>
+              <dd>
+                <t>No equivalent element exists in iCalendar and no consensus for default alarms in CalDAV and iCalendar was found at IETF as part of <xref target="RFC9074"/>.</t>
+                <t>See <xref target="RFC8984" section="4.4.1" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- Participant.scheduleSequence -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Participant.scheduleSequence</strong>:</dt>
+              <dd>
+                <t>This requires further work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component and JSCalendar. This property may later be redefined for common use.</t>
+                <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- Participant.scheduleUpdated -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Participant.scheduleUpdated</strong>:</dt>
+              <dd>
+                <t>This requires further work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component and JSCalendar. This property may later be redefined for common use.</t>
+                <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+          </section>
+          <section toc="exclude">
+            <name>Scheduling Extensions for CalDAV and iTIP</name>
+            <t>The following common use properties became reserved for future JSCalendar extensions of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref> and <xref target="RFC5546">iTIP</xref>:</t>
+            <!-- replyTo -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>replyTo</strong>:</dt>
+              <dd>
+                <t>This requires further work by IETF. For compatibility with iCalendar, the newly introduced <xref target="prop-organizerCalendarAddress">organizerCalendarAddress property</xref> replaces it.</t>
+                <t>See <xref target="RFC8984" section="4.4.4" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- requestStatus -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>requestStatus</strong>:</dt>
+              <dd>
+                <t>This mainly is applicable in scheduling over CalDAV.</t>
+                <t>See <xref target="RFC8984" section="4.4.7" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- {Event|Task}.sentBy -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>{Event|Task}.sentBy</strong>:</dt>
+              <dd>
+                <t>No equivalent element exists in iCalendar and this property mainly is relevant in context of a combined calendaring and mail service. Note that the Participant.sentBy property does <em>not</em> become reserved: it is equivalent to the iCalendar <xref target="RFC5545" section="3.2.18" sectionFormat="parens">SENT-BY</xref> parameter.</t>
+                <t>See <xref target="RFC8984" section="4.4.5" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- Participant.invitedBy -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Participant.invitedBy</strong>:</dt>
+              <dd>
+                <t>This requires further work by IETF. Specifically, the iTIP definitions of the <xref target="RFC5546" section="3.2.3" sectionFormat="parens">REPLY method</xref> and how to forward invitation requests (<xref target="RFC5546" section="4.2.8"/>) must be updated.</t>
+                <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- Participant.participationComment -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Participant.participationComment</strong>:</dt>
+              <dd>
+                <t>This requires further work by IETF to update <xref target="RFC5546">iTIP</xref> with the PARTICIPANT component or JSCalendar. This property may later be redefined for common use.</t>
+                <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
+              </dd>
+            </dl>
+            <!-- Participant.scheduleAgent -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Participant.scheduleAgent</strong>:</dt>
+              <dd>
+                <t>This only is applicable in scheduling over CalDAV.</t>
+                <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- Participant.scheduleForceSend -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Participant.scheduleForceSend</strong>:</dt>
+              <dd>
+                <t>This only is applicable in scheduling over CalDAV.</t>
+                <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- Participant.scheduleStatus -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Participant.scheduleStatus</strong>:</dt>
+              <dd>
+                <t>This only is applicable in scheduling over CalDAV.</t>
+                <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- Participant.sendTo -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Participant.sendTo</strong>:</dt>
+              <dd>
+                <t>This requires further work by IETF. For compatibility with iCalendar, the newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
+                <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+          </section>
+          <section toc="exclude">
+            <name>Localization Extensions for iCalendar and JSCalendar</name>
+            <t>The following properties became reserved for future JSCalendar and iCalendar extensions for multi-lingual calendar data:</t>
+            <!-- localizations -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>localizations</strong>:</dt>
+              <dd>
+                <t>This requires further work by IETF. The "localizations" property primarily was introduced in JSCalendar for event publishing, but neither the <xref target="RFC9073">Event Publishing extensions for iCalendar</xref> nor other iCalendar extensions define how to localize iCalendar data. This property may later be redefined for common use.</t>
+                <t>See <xref target="RFC8984" section="4.6.1" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+          </section>
+          <section toc="exclude">
+            <name>Reserved for Future RFCs</name>
+            <t>The following properties became reserved for some future JSCalendar extension RFCs:</t>
+            <!-- Location.description, VirtualLocation.description -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Location.description, VirtualLocation.description</strong>:</dt>
+              <dd>
+                <t>This requires further work by IETF. The VirtualLocation "description" property does not convert to any parameter of the CONFERENCE property. It would require to define a new parameter or to introduce a new component to augment the CONFERENCE property with a DESCRIPTION or STYLED-DESCRIPTION property. For consistency, the Location "description" property became reserved, too.</t>
+                <t>See <xref target="RFC8984" section="4.2.5" sectionFormat="of"/> and <xref target="RFC8984" section="4.2.6" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+          </section>
+          <section toc="exclude">
+            <name>Reserved for Internal Use</name>
+            <t>The following properties became reserved for internal use by JSCalendar:</t>
+            <!-- excluded -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>excluded</strong>:</dt>
+              <dd>
+                <t>This property name already was defined for internal use only in the recurrenceOverrides property, but registering it for common use had made it appear as being a regular property. Making this a reserved property is to help clarify its purpose. <xref target="prop-recurrenceOverrides"/> has been updated accordingly.</t>
+                <t>See <xref target="RFC8984" section="4.3.4" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+          </section>
+        </section>
+        <section anchor="appendix-updated-properties">
+          <name>Updated Properties</name>
+          <t>The following property definitions were updated:</t>
+          <!-- @type -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>@type</strong>:</dt>
+            <dd>
+              <t>The original definition required this property be set on every object type. The type and property notation in <xref target="type-and-prop-notation"/> now matches the one in JSContact, and the @type property is optional in the majority of cases.</t>
+            </dd>
+          </dl>
+          <!-- Alert.relatedTo -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Alert.relatedTo</strong>:</dt>
+            <dd>
+              <t>The original definition instructed to set the "parent" relation on a snooze alert. It now instructs to set the newly defined "snooze" relation, for compatibility with the VALARM "SNOOZE" relationship type (<xref target="RFC9074" section="7" sectionFormat="of"/>.</t>
+              <t>The original definition did not define that the map keys represent keys of Alert objects in the "alerts" property.</t>
+              <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Alert.trigger -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Alert.trigger</strong>:</dt>
+            <dd>
+              <t>JSCalendar now supports default types for properties of type <tt>A|B</tt>. The default type of this property now is <tt>OffsetTrigger</tt>.</t>
+              <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- {Event|Task|Group}.color -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{Event|Task|Group}.color</strong>:</dt>
+            <dd>
+              <t>The original definition allowed hexadecimal RGB values, which CSS3 specifies to be either in three-digit or six-digit form. The updated definition only allows them in six-digit form to match the proposed update of the iCalendar COLOR property. It also explicitly defines that values are case-insensitive.</t>
+              <t>See <xref target="prop-color" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Link.display -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Link.display</strong>:</dt>
+            <dd>
+              <t>The original definition only allowed one purpose to be set, which is incompatible with the multi-valued iCalendar <xref target="RFC7986" section="6.1" sectionFormat="parens">DISPLAY parameter</xref>. It now supports setting multiple purposes.</t>
+              <t>Setting this property does not anymore require the "rel" property of the Link object be set to "icon".</t>
+              <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Link.rel -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Link.rel</strong>:</dt>
+            <dd>
+              <t>The original definition restricted the value of this property to registered link types. It now also allows extension relation types for compatibility with the <xref target="RFC9253" section="6.1" sectionFormat="parens">LINKREL parameter</xref>.</t>
+              <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- misc Participant -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.delegatedFrom</strong>,
             <strong>Participant.delegatedTo</strong>,
             <strong>Participant.memberOf</strong>,
           </dt>
-          <dd>
-            <t>The original definitions required their values to identify Participant objects. This was incompatible with iCalendar when the DELEGATED-TO, DELEGATED-FROM or MEMBER parameters contained a calendar address but no ATTENDEE property with that same calendar address. The new definition now requires the property values to be calendar addresses.</t>
-            <t>Also, they now require the calendarAddress property to be set.</t>
-            <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- misc Participant -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.expectReply</strong>,
+            <dd>
+              <t>The original definitions required their values to identify Participant objects. This was incompatible with iCalendar when the DELEGATED-TO, DELEGATED-FROM or MEMBER parameters contained a calendar address but no ATTENDEE property with that same calendar address. The new definition now requires the property values to be calendar addresses.</t>
+              <t>Also, they now require the calendarAddress property to be set.</t>
+              <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- misc Participant -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.expectReply</strong>,
             <strong>Participant.invitedBy</strong>,
             <strong>Participant.kind</strong>,
             <strong>Participant.participationStatus</strong>,
             <strong>Participant.progress</strong>,
             <strong>Participant.sentBy</strong>:
           </dt>
-          <dd>
-            <t>The original definitions were incompatible with iCalendar: they did not require the (now reserved) sendTo property to be set, but their equivalent iCalendar parameters require an ATTENDEE property. They now require the calendarAddress property to be set.</t>
-            <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.progress -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.progress</strong>:</dt>
-          <dd>
-            <t>The original definition was incompatible with iCalendar. It allowed the progress value to be "cancelled", but this is not a supported PARTSTAT parameter value of an ATTENDEE property in a VTODO component. The new definition only supports the progress property values "in-process", "completed" and "failed".</t>
-            <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.roles -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.roles</strong>:</dt>
-          <dd>
-            <t>The original definition was incompatible with iCalendar:</t>
-            <ul>
-              <li>It did not cover the "REQ-PARTICIPANT" value of the <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>. It now defines the new "required" role.</li>
-              <li>The "roles" property is multi-valued but the ROLE parameter is single-valued and only allowed to be set once on an ATTENDEE. For compatibility, a precendence of Participant roles got defined for converting roles to iCalendar.</li>
-              <li>It was mandatory for a Participant, but the (now reserved) sendTo property was not. This was incompatible with iCalendar, which required an ATTENDEE property to set the ROLE parameter. It now is optional, but requires the calendarAddress property to be set.</li>
-              <li>It defined a "contact" role, but this role later got redefined as an enumerated value of the <xref target="RFC9073" section="6.2" sectionFormat="parens">PARTICIPANT-TYPE property</xref>. It now removed this role and leaves defining participant types to a future JSCalendar extension.</li>
-              <li>The "attendee" role got removed. There is no equivalent ROLE value in iCalendar and any Participant with a calendarAddress by definition is an ATTENDEE in iCalendar.</li>
-              <li>The "owner" role got redefined. It now makes clear that the semantics of the role depend on the calendaring exchange protocol.</li>
-            </ul>
-            <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Relation.relation -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Relation.relation</strong>:</dt>
-          <dd>
-            <t>The original definition specified the empty relation to represent an unspecified relationship. It now defines the empty relation to default to "parent", unless overridden, for compatibility with the <xref target="RFC5545" section="3.8.4.5" sectionFormat="parens">RELATED-TO property</xref>.</t>
-            <t>See <xref target="type-Relation" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Task.{due|start} -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Task.{due|start}</strong>:</dt>
-          <dd>
-            <t>The original definition defined these as optional, but this is incompatible with iCalendar: if the Task object's timeZone property is set, then it requires the <xref target="RFC5545" section="3.8.2.3" sectionFormat="parens">DUE property</xref> or <xref target="RFC5545" section="3.8.2.4" sectionFormat="parens">DTSTART property</xref> be set in the VTODO component. It now requires at least one of the "due" or "start" properties be set, if the "timeZone" property is set.</t>
-            <t>The original definition did not require the "start" property be set if the "recurrenceRule" property is set. But this is incompatible with the <xref target="RFC5545" section="3.8.5.3" sectionFormat="parens">RRULE property</xref>, which requires the DTSTART property be set in the VTODO component. The "start" property now is required if the "recurrenceRule" or "recurrenceId" properties are set.</t>
-            <t>The "showWithoutTime" property having value "true" now requires at least one of the "due" or "start" properties be set.</t>
-            <t>See <xref target="jstask-props" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
+            <dd>
+              <t>The original definitions were incompatible with iCalendar: they did not require the (now reserved) sendTo property to be set, but their equivalent iCalendar parameters require an ATTENDEE property. They now require the calendarAddress property to be set.</t>
+              <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.progress -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.progress</strong>:</dt>
+            <dd>
+              <t>The original definition was incompatible with iCalendar. It allowed the progress value to be "cancelled", but this is not a supported PARTSTAT parameter value of an ATTENDEE property in a VTODO component. The new definition only supports the progress property values "in-process", "completed" and "failed".</t>
+              <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.roles -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.roles</strong>:</dt>
+            <dd>
+              <t>The original definition was incompatible with iCalendar:</t>
+              <ul>
+                <li>It did not cover the "REQ-PARTICIPANT" value of the <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>. It now defines the new "required" role.</li>
+                <li>The "roles" property is multi-valued but the ROLE parameter is single-valued and only allowed to be set once on an ATTENDEE. For compatibility, a precendence of Participant roles got defined for converting roles to iCalendar.</li>
+                <li>It was mandatory for a Participant, but the (now reserved) sendTo property was not. This was incompatible with iCalendar, which required an ATTENDEE property to set the ROLE parameter. It now is optional, but requires the calendarAddress property to be set.</li>
+                <li>It defined a "contact" role, but this role later got redefined as an enumerated value of the <xref target="RFC9073" section="6.2" sectionFormat="parens">PARTICIPANT-TYPE property</xref>. It now removed this role and leaves defining participant types to a future JSCalendar extension.</li>
+                <li>The "attendee" role got removed. There is no equivalent ROLE value in iCalendar and any Participant with a calendarAddress by definition is an ATTENDEE in iCalendar.</li>
+                <li>The "owner" role got redefined. It now makes clear that the semantics of the role depend on the calendaring exchange protocol.</li>
+              </ul>
+              <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Relation.relation -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Relation.relation</strong>:</dt>
+            <dd>
+              <t>The original definition specified the empty relation to represent an unspecified relationship. It now defines the empty relation to default to "parent", unless overridden, for compatibility with the <xref target="RFC5545" section="3.8.4.5" sectionFormat="parens">RELATED-TO property</xref>.</t>
+              <t>See <xref target="type-Relation" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Task.{due|start} -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Task.{due|start}</strong>:</dt>
+            <dd>
+              <t>The original definition defined these as optional, but this is incompatible with iCalendar: if the Task object's timeZone property is set, then it requires the <xref target="RFC5545" section="3.8.2.3" sectionFormat="parens">DUE property</xref> or <xref target="RFC5545" section="3.8.2.4" sectionFormat="parens">DTSTART property</xref> be set in the VTODO component. It now requires at least one of the "due" or "start" properties be set, if the "timeZone" property is set.</t>
+              <t>The original definition did not require the "start" property be set if the "recurrenceRule" property is set. But this is incompatible with the <xref target="RFC5545" section="3.8.5.3" sectionFormat="parens">RRULE property</xref>, which requires the DTSTART property be set in the VTODO component. The "start" property now is required if the "recurrenceRule" or "recurrenceId" properties are set.</t>
+              <t>The "showWithoutTime" property having value "true" now requires at least one of the "due" or "start" properties be set.</t>
+              <t>See <xref target="jstask-props" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+        </section>
+        <section anchor="appendix-new-properties">
+          <name>New Properties</name>
+          <t>The following new properties were defined:</t>
+          <!-- mainLocationId -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>mainLocationId</strong>:</dt>
+            <dd>
+              <t>This got introduced for better interoperatibility with iCalendar, where the VEVENT and VTODO components allow at most one LOCATION property to be present. While <xref target="RFC9073" section="7.2" sectionFormat="parens">VLOCATION components</xref> may occur multiple times, implementations need to know which Location to choose for the LOCATION property.</t>
+              <t>See <xref target="prop-mainLocationId" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- organizerCalendarAddress -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>organizerCalendarAddress</strong>:</dt>
+            <dd>
+              <t>This replaces the reserved replyTo property.</t>
+              <t>See <xref target="prop-organizerCalendarAddress" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- recurrenceRule -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>recurrenceRule</strong>:</dt>
+            <dd>
+              <t>This replaces the obsoleted recurrenceRules property.</t>
+              <t>See <xref target="prop-recurrenceRule" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- version -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>version</strong>:</dt>
+            <dd>
+              <t>This adds <xref target="versioning">versioning</xref> to JSCalendar, as defined for <xref target="RFC9553">JSContact</xref>.</t>
+              <t>See <xref target="prop-version" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Event.endTimeZone -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Event.endTimeZone</strong>:</dt>
+            <dd>
+              <t>This replaces the obsoleted Location.relativeTo and Location.timeZone properties.</t>
+              <t>See <xref target="prop-endTimeZone" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Location.descriptionContentType -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Location.descriptionContentType</strong>:</dt>
+            <dd>
+              <t>This is for compatibility with the iCalendar <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref> of the VLOCATION component.</t>
+              <t>See <xref target="prop-locations" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.calendarAddress -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.calendarAddress</strong>:</dt>
+            <dd>
+              <t>This replaces the reserved Participant.sendTo property.</t>
+              <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.descriptionContentType -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.descriptionContentType</strong>:</dt>
+            <dd>
+              <t>This is for compatibility with the iCalendar <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref> of the PARTICIPANT component.</t>
+              <t>See <xref target="prop-locations" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- VirtualLocation.descriptionContentType -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>VirtualLocation.descriptionContentType</strong>:</dt>
+            <dd>
+              <t>This is for consistency with the definition of the Location object type. The newly defined VCONFERENCE component will be allowed to contain the <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref>.</t>
+              <t>See <xref target="prop-virtualLocations" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+        </section>
       </section>
-      <section anchor="appendix-new-properties">
-        <name>New Properties</name>
-        <t>The following new properties were defined:</t>
-        <!-- mainLocationId -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>mainLocationId</strong>:</dt>
-          <dd>
-            <t>This got introduced for better interoperatibility with iCalendar, where the VEVENT and VTODO components allow at most one LOCATION property to be present. While <xref target="RFC9073" section="7.2" sectionFormat="parens">VLOCATION components</xref> may occur multiple times, implementations need to know which Location to choose for the LOCATION property.</t>
-            <t>See <xref target="prop-mainLocationId" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- organizerCalendarAddress -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>organizerCalendarAddress</strong>:</dt>
-          <dd>
-            <t>This replaces the reserved replyTo property.</t>
-            <t>See <xref target="prop-organizerCalendarAddress" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- recurrenceRule -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>recurrenceRule</strong>:</dt>
-          <dd>
-            <t>This replaces the obsoleted recurrenceRules property.</t>
-            <t>See <xref target="prop-recurrenceRule" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- version -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>version</strong>:</dt>
-          <dd>
-            <t>This adds <xref target="versioning">versioning</xref> to JSCalendar, as defined for <xref target="RFC9553">JSContact</xref>.</t>
-            <t>See <xref target="prop-version" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Event.endTimeZone -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Event.endTimeZone</strong>:</dt>
-          <dd>
-            <t>This replaces the obsoleted Location.relativeTo and Location.timeZone properties.</t>
-            <t>See <xref target="prop-endTimeZone" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Location.descriptionContentType -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Location.descriptionContentType</strong>:</dt>
-          <dd>
-            <t>This is for compatibility with the iCalendar <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref> of the VLOCATION component.</t>
-            <t>See <xref target="prop-locations" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.calendarAddress -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.calendarAddress</strong>:</dt>
-          <dd>
-            <t>This replaces the reserved Participant.sendTo property.</t>
-            <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- Participant.descriptionContentType -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Participant.descriptionContentType</strong>:</dt>
-          <dd>
-            <t>This is for compatibility with the iCalendar <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref> of the PARTICIPANT component.</t>
-            <t>See <xref target="prop-locations" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-        <!-- VirtualLocation.descriptionContentType -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>VirtualLocation.descriptionContentType</strong>:</dt>
-          <dd>
-            <t>This is for consistency with the definition of the Location object type. The newly defined VCONFERENCE component will be allowed to contain the <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref>.</t>
-            <t>See <xref target="prop-virtualLocations" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
+      <section>
+        <name>Changed Type Definitions</name>
+        <t>This section summarizes the differences from the JSCalendar type definitions of <xref target="RFC8984"/>.</t>
+        <section anchor="appendix-obsolete-types">
+          <name>Obsoleted Types</name>
+          <t>The following type definitions became obsolete:</t>
+          <!-- TimeZone, TimeZoneRule -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>TimeZone, TimeZoneRule</strong>:</dt>
+            <dd>
+              <t>The "timeZones" property became obsolete.</t>
+              <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+        </section>
+        <section anchor="appendix-updated-types">
+          <name>Updated Types</name>
+          <t>The following type definitions were updated:</t>
+          <!-- Duration, LocalDateTime, UTCDateTime -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Duration, LocalDateTime, UTCDateTime</strong>:</dt>
+            <dd>
+              <t>The original definitions supported fractional seconds. This is incompatible with the iCalendar DATE-TIME and DURATION types defined in <xref target="RFC5545" section="3.3.5"/> and <xref target="RFC5545" section="3.3.6"/>.</t>
+            </dd>
+          </dl>
+        </section>
       </section>
-      <section anchor="appendix-obsolete-types">
-        <name>Obsolete Types</name>
-        <t>The following type definitions became obsolete:</t>
-        <!-- TimeZone, TimeZoneRule -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>TimeZone, TimeZoneRule</strong>:</dt>
-          <dd>
-            <t>The "timeZones" property became obsolete.</t>
-            <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
-          </dd>
-        </dl>
-      </section>
-      <section anchor="appendix-updated-types">
-        <name>Updated Types</name>
-        <t>The following type definitions were updated:</t>
-        <!-- Duration, LocalDateTime, UTCDateTime -->
-        <dl newline="true" spacing="normal">
-          <dt><strong>Duration, LocalDateTime, UTCDateTime</strong>:</dt>
-          <dd>
-            <t>The original definitions supported fractional seconds. This is incompatible with the iCalendar DATE-TIME and DURATION types defined in <xref target="RFC5545" section="3.3.5"/> and <xref target="RFC5545" section="3.3.6"/>.</t>
-          </dd>
-        </dl>
+      <section>
+        <name>Other Changes</name>
+	<t>This document aligns JSCalendar with <xref target="RFC9553">JSContact</xref>:</t>
+	<ul>
+	  <li><xref target="versioning"/> defines how to version JSCalendar data.</li>
+	</ul>
       </section>
     </section>
     <section anchor="acknowledgments" numbered="false">
