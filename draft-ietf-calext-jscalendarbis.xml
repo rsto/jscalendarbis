@@ -3397,7 +3397,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>description</dd>
               <dt>Property Type</dt>
-              <dd>Not applicable</dd>
+              <dd>not applicable</dd>
               <dt>Property Context</dt>
               <dd>Location, VirtualLocation</dd>
               <dt>Reference/Description</dt>
@@ -3424,6 +3424,24 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>No</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>extra</dd>
+              <dt>Property Type</dt>
+              <dd>not applicable</dd>
+              <dt>Property Context</dt>
+              <dd>not applicable</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="prop-extra"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
               <dt>Since Version</dt>
               <dd>2.0</dd>
               <dt>Is Per-User</dt>
@@ -3503,7 +3521,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>sentBy</dd>
               <dt>Property Type</dt>
-              <dd>Not applicable</dd>
+              <dd>not applicable</dd>
               <dt>Property Context</dt>
               <dd>Event, Task</dd>
               <dt>Reference/Description</dt>
