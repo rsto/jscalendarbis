@@ -89,8 +89,8 @@
           <li>The iCalendar format itself causes interoperability issues due to misuse of CRLF-terminated strings, line continuations, and subtle differences among iCalendar parsers.</li>
         </ul>
         <t>In recent years, many new products and services have appeared that wish to use a JSON representation of calendar data within their APIs. The JSON format for iCalendar data, <xref target="RFC7265">jCal</xref>, is a direct mapping between iCalendar and JSON. In its effort to represent full iCalendar semantics, it inherits all the same pitfalls and uses a complicated JSON structure.</t>
-	<t>As a consequence, since the standardization of jCal, the majority of implementations and service providers either kept using iCalendar or came up with their own proprietary JSON representations, which are incompatible with each other and often suffer from common pitfalls, such as storing event start times in UTC (which become incorrect if the time zone's rules change in the future). JSCalendar meets the demand for JSON-formatted calendar data that is free of such known problems and provides a standard representation as an alternative to the proprietary formats.</t>
-	<t>Two additional documents define the relation of JSCalendar and iCalendar: <xref target="I-D.ietf-calext-icalendar-jscalendar-extensions"/> defines new iCalendar properties and parameters. <xref target="I-D.ietf-calext-jscalendar-icalendar"/> defines how to convert JSCalendar data from and to iCalendar.</t>
+        <t>As a consequence, since the standardization of jCal, the majority of implementations and service providers either kept using iCalendar or came up with their own proprietary JSON representations, which are incompatible with each other and often suffer from common pitfalls, such as storing event start times in UTC (which become incorrect if the time zone's rules change in the future). JSCalendar meets the demand for JSON-formatted calendar data that is free of such known problems and provides a standard representation as an alternative to the proprietary formats.</t>
+        <t>Two additional documents define the relation of JSCalendar and iCalendar: <xref target="I-D.ietf-calext-icalendar-jscalendar-extensions"/> defines new iCalendar properties and parameters. <xref target="I-D.ietf-calext-jscalendar-icalendar"/> defines how to convert JSCalendar data from and to iCalendar.</t>
       </section>
       <section>
         <name>Relation to obsolete RFC 8984</name>
@@ -223,7 +223,7 @@
         </section>
         <section anchor="type-LocalDateTime">
           <name>LocalDateTime</name>
-	  <t>This is a date-time String with no time zone/offset information. It is otherwise in the same format as UTCDateTime. For example, "2006-01-02T15:04:05" is valid. The time zone to associate with the LocalDateTime comes from the <tt>timeZone</tt> property of the JSCalendar object (see <xref target="prop-timeZone"/>). If no time zone is specified, the LocalDateTime is <em>floating</em>. Floating date-times are not tied to any specific time zone. Instead, they occur in each time zone at the given wall-clock time (as opposed to the same instant point in time).</t>
+          <t>This is a date-time String with no time zone/offset information. It is otherwise in the same format as UTCDateTime. For example, "2006-01-02T15:04:05" is valid. The time zone to associate with the LocalDateTime comes from the <tt>timeZone</tt> property of the JSCalendar object (see <xref target="prop-timeZone"/>). If no time zone is specified, the LocalDateTime is <em>floating</em>. Floating date-times are not tied to any specific time zone. Instead, they occur in each time zone at the given wall-clock time (as opposed to the same instant point in time).</t>
           <t>A time zone may have a period of discontinuity, for example, a change from standard time to daylight savings time. When converting local date-times that fall in the discontinuity to UTC, the offset before the transition <bcp14>MUST</bcp14> be used.</t>
           <t>For example, in the "America/Los_Angeles" time zone, the date-time "2020-11-01T01:30:00" occurs twice: before the daylight savings time (DST) transition with a UTC offset of -07:00 and again after the transition with an offset of -08:00. When converting to UTC, we therefore use the offset before the transition (-07:00), so it becomes "2020-11-01T08:30:00Z".</t>
           <t>Similarly, in the "Australia/Melbourne" time zone, the date-time "2020-10-04T02:30:00" does not exist; the clocks are moved forward one hour for DST on that day at 02:00. However, such a value may appear during calculations (see duration semantics in <xref target="type-Duration"/>) or due to a change in time zone rules (so it was valid when the event was first created). Again, it is interpreted as though the offset before the transition is in effect (+10:00); therefore, when converted to UTC, we get "2020-10-03T16:30:00Z".</t>
@@ -1000,31 +1000,16 @@ jsversion = 1*DIGIT "." 1*DIGIT
             </ol>
             <t>When determining the set of occurrence dates for an event or task, the following extra rules must be applied:</t>
             <ol>
-              <li>The initial date-time to which the rule is applied (the <tt>start</tt> date-time for events
-		          or the <tt>start</tt> or <tt>due</tt> date-time for tasks) is always the first occurrence in the
-			        expansion (and is counted if the recurrence is limited by a <tt>count</tt> property), even if it would
-				      normally not match the rule.</li>
-              <li>The first set of candidates to consider is that which would contain the initial date-time.
-
-
-	            This means the first set may include candidates before the initial date-time; such candidates are
-		          eliminated from the results in step 4 of the list above.</li>
+              <li>The initial date-time to which the rule is applied (the <tt>start</tt> date-time for events or the <tt>start</tt> or <tt>due</tt> date-time for tasks) is always the first occurrence in the expansion (and is counted if the recurrence is limited by a <tt>count</tt> property), even if it would normally not match the rule.</li>
+              <li>The first set of candidates to consider is that which would contain the initial date-time. This means the first set may include candidates before the initial date-time; such candidates are eliminated from the results in step 4 of the list above.</li>
               <li>
                 <t>The following properties <bcp14>MUST</bcp14> be implicitly added to the rule under the given conditions:</t>
                 <ul>
-                  <li>If frequency is not "secondly" and there is no <tt>bySecond</tt> property, add a <tt>bySecond</tt>
-		    property with the sole value being the seconds value of the initial date-time.</li>
-                  <li>If frequency is not "secondly" or "minutely" and there is no <tt>byMinute</tt>
-		    property, add a <tt>byMinute</tt> property with the sole value being the minutes value of the initial
-		      date-time.</li>
-                  <li>If frequency is not "secondly", "minutely", or "hourly" and there is
-		    no <tt>byHour</tt> property, add a <tt>byHour</tt> property with the sole value being the hours value of the
-		      initial date-time.</li>
-                  <li>If frequency is "weekly" and there is no <tt>byDay</tt> property, add a <tt>byDay</tt> property with
-		    the sole value being the day of the week of the initial date-time.</li>
-                  <li>If frequency is "monthly" and there is no <tt>byDay</tt> property and no <tt>byMonthDay</tt>
-		    property, add a <tt>byMonthDay</tt> property with the sole value being the day of the month of the
-		      initial date-time.</li>
+                  <li>If frequency is not "secondly" and there is no <tt>bySecond</tt> property, add a <tt>bySecond</tt> property with the sole value being the seconds value of the initial date-time.</li>
+                  <li>If frequency is not "secondly" or "minutely" and there is no <tt>byMinute</tt> property, add a <tt>byMinute</tt> property with the sole value being the minutes value of the initial date-time.</li>
+                  <li>If frequency is not "secondly", "minutely", or "hourly" and there is no <tt>byHour</tt> property, add a <tt>byHour</tt> property with the sole value being the hours value of the initial date-time.</li>
+                  <li>If frequency is "weekly" and there is no <tt>byDay</tt> property, add a <tt>byDay</tt> property with the sole value being the day of the week of the initial date-time.</li>
+                  <li>If frequency is "monthly" and there is no <tt>byDay</tt> property and no <tt>byMonthDay</tt> property, add a <tt>byMonthDay</tt> property with the sole value being the day of the month of the initial date-time.</li>
                   <li>
                     <t>If frequency is "yearly" and there is no <tt>byYearDay</tt> property:</t>
                     <ul>
@@ -1124,7 +1109,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                     <li>start</li>
                     <li>timeZone</li>
                     <li>uid</li>
-		    <li>updated</li>
+                    <li>updated</li>
                     <li>version</li>
                   </ul>
                 </dd>
