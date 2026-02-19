@@ -1456,18 +1456,19 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <t>Group supports the following common <xref target="jscalendar-props">JSCalendar properties</xref> :</t>
         <ul>
           <li>@type</li>
-          <li>uid</li>
-          <li>prodId</li>
-          <li>created</li>
-          <li>updated</li>
-          <li>title</li>
-          <li>description</li>
-          <li>descriptionContentType</li>
-          <li>links</li>
-          <li>locale</li>
-          <li>keywords</li>
           <li>categories</li>
           <li>color</li>
+          <li>created</li>
+          <li>description</li>
+          <li>descriptionContentType</li>
+          <li>keywords</li>
+          <li>links</li>
+          <li>locale</li>
+          <li>prodId</li>
+          <li>title</li>
+          <li>uid</li>
+          <li>updated</li>
+          <li>version</li>
         </ul>
         <t>In addition, the following Group-specific properties are supported:</t>
         <section anchor="prop-entries">
