@@ -978,7 +978,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                   <dt>byMonthDay:</dt>
                   <dd>The date-time is on the given day of the month. Negative numbers mean the nth last day of the month.</dd>
                   <dt>byDay:</dt>
-                  <dd>The date-time is on the given day of the week. If the day is prefixed by a number, it is the nth occurrence of that day of the week within the month (if frequency is monthly) or year (if frequency is yearly). Negative numbers mean the nth last occurrence within that period.</dd>
+                  <dd>The date-time is on the given day of the week. If an nthOfPeriod property is present, the date-time must be the nth occurrence of that day of the week within the year (if frequency is yearly AND no byMonth property exists on the rule) or month (otherwise). Negative numbers mean the nth last occurrence within that period.</dd>
                   <dt>byHour:</dt>
                   <dd>The date-time has the given hour value.</dd>
                   <dt>byMinute:</dt>
