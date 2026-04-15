@@ -1045,6 +1045,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <li>recurrenceOverrides</li>
                 <li>recurrenceRule</li>
                 <li>relatedTo</li>
+                <li>sentBy</li>
                 <li>uid</li>
               </ul>
             </dd>
@@ -1127,6 +1128,11 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular organizer, even across different calendaring objects.</t>
             </dd>
           </dl>
+        </section>
+        <section anchor="prop-sentBy">
+          <name>sentBy</name>
+          <t>Type: <tt>String</tt> (optional)</t>
+	  <t>This is the email address in the "From" header of the email in which this calendar object was received. This is only relevant if the calendar object is received via iMIP or as an attachment to a message.  The value <bcp14>MUST</bcp14> be a valid <tt>addr-spec</tt> value as defined in Section 3.4.1 of <xref target="RFC5322"/>. If this property is set, then the organizerCalendarAddress property <bcp14>MUST</bcp14> be set.</t>
         </section>
         <section anchor="prop-participants">
           <name>participants</name>
@@ -3171,10 +3177,11 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>sentBy</dd>
               <dt>Property Context</dt>
-              <dd>Participant</dd>
+              <dd>Event, Task, Participant</dd>
               <dt>Reference/Description</dt>
               <dd>
-                <xref target="prop-participants"/>
+                <xref target="prop-participants"/>,
+                <xref target="prop-sentBy"/>
               </dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
@@ -3498,24 +3505,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </dd>
               <dt>Intended Usage</dt>
               <dd>obsolete</dd>
-              <dt>Since Version</dt>
-              <dd>2.0</dd>
-              <dt>Is Per-User</dt>
-              <dd>No</dd>
-            </dl>
-            <dl spacing="compact">
-              <dt>Property Name</dt>
-              <dd>sentBy</dd>
-              <dt>Property Type</dt>
-              <dd>not applicable</dd>
-              <dt>Property Context</dt>
-              <dd>Event, Task</dd>
-              <dt>Reference/Description</dt>
-              <dd>
-                <xref target="appendix-reserved-properties"/>
-              </dd>
-              <dt>Intended Usage</dt>
-              <dd>reserved</dd>
               <dt>Since Version</dt>
               <dd>2.0</dd>
               <dt>Is Per-User</dt>
@@ -4587,14 +4576,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <t>See <xref target="RFC8984" section="4.4.7" sectionFormat="of"/>.</t>
               </dd>
             </dl>
-            <!-- {Event|Task}.sentBy -->
-            <dl newline="true" spacing="normal">
-              <dt><strong>{Event|Task}.sentBy</strong>:</dt>
-              <dd>
-                <t>No equivalent element exists in iCalendar and this property mainly is relevant in context of a combined calendaring and mail service. Note that the Participant.sentBy property does <em>not</em> become reserved: it is equivalent to the iCalendar <xref target="RFC5545" section="3.2.18" sectionFormat="parens">SENT-BY</xref> parameter.</t>
-                <t>See <xref target="RFC8984" section="4.4.5" sectionFormat="of"/>.</t>
-              </dd>
-            </dl>
             <!-- Participant.invitedBy -->
             <dl newline="true" spacing="normal">
               <dt><strong>Participant.invitedBy</strong>:</dt>
@@ -4789,6 +4770,14 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>
               <t>The original definition specified the empty relation to represent an unspecified relationship. It now defines the empty relation to default to "parent", unless overridden, for compatibility with the <xref target="RFC5545" section="3.8.4.5" sectionFormat="parens">RELATED-TO property</xref>.</t>
               <t>See <xref target="type-Relation" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- {Event|Task}.sentBy -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{Event|Task}.sentBy</strong>:</dt>
+            <dd>
+              <t>The property now requires the organizerCalendarAddress property to be set.</t>
+              <t>See <xref target="prop-sentBy" sectionFormat="of"/>.</t>
             </dd>
           </dl>
           <!-- Task.{due|start} -->
