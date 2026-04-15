@@ -1038,6 +1038,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <li>method</li>
                 <li>organizerCalendarAddress</li>
                 <li>participants/*/calendarAddress</li>
+                <li>privacy</li>
                 <li>prodId</li>
                 <li>recurrenceId</li>
                 <li>recurrenceIdTimeZone</li>
@@ -1073,6 +1074,47 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <dd>The object should be ignored when calculating whether the user is busy.</dd>
                 <dt>busy:</dt>
                 <dd>The object should be included when calculating whether the user is busy.</dd>
+              </dl>
+            </dd>
+          </dl>
+        </section>
+        <section anchor="prop-privacy">
+          <name>privacy</name>
+          <dl spacing="normal">
+            <dt>privacy: String (optional; default: "public").</dt>
+            <dd>
+              <t>Calendar objects are normally collected together and may be shared with other users. The privacy property allows the object owner to indicate that it should not be shared or should only have the time information shared but the details withheld. Enforcement of the restrictions indicated by this property is up to the API via which this object is accessed.</t>
+              <t>This property <bcp14>MUST NOT</bcp14> affect the information sent to scheduled participants; it is only interpreted by protocols that share the calendar objects belonging to one user with other users.</t>
+              <t>The value of the privacy property <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>). Any value the client or server doesn't understand should be preserved but treated as equivalent to <tt>private</tt>.</t>
+              <dl newline="false">
+                <dt>public:</dt>
+                <dd>The full details of the object are visible to those whom the object's calendar is shared with.</dd>
+                <dt>private:</dt>
+                <dd>
+                  <t>The details of the object are hidden; only the basic time and metadata are shared. The following properties <bcp14>MAY</bcp14> be shared; any other properties <bcp14>MUST NOT</bcp14> be shared:</t>
+                  <ul>
+                    <li>@type</li>
+                    <li>created</li>
+                    <li>due</li>
+                    <li>duration</li>
+                    <li>estimatedDuration</li>
+                    <li>freeBusyStatus</li>
+                    <li>privacy</li>
+                    <li>recurrenceId</li>
+                    <li>recurrenceIdTimeZone</li>
+                    <li>recurrenceOverrides (Only patches that apply to another permissible property are allowed to be shared.)</li>
+                    <li>recurrenceRule</li>
+                    <li>sequence</li>
+                    <li>showWithoutTime</li>
+                    <li>start</li>
+                    <li>timeZone</li>
+                    <li>uid</li>
+                    <li>updated</li>
+                    <li>version</li>
+                  </ul>
+                </dd>
+                <dt>secret:</dt>
+                <dd>The object is hidden completely (as though it did not exist) when the calendar this object is in is shared.</dd>
               </dl>
             </dd>
           </dl>
@@ -2285,20 +2327,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
             </dl>
             <dl spacing="compact">
               <dt>Property Name</dt>
-              <dd>privacy</dd>
-              <dt>Reference/Description</dt>
-              <dd>
-                <xref target="appendix-reserved-properties"/>
-              </dd>
-              <dt>Intended Usage</dt>
-              <dd>reserved</dd>
-              <dt>Since Version</dt>
-              <dd>1.0</dd>
-              <dt>Until Version</dt>
-              <dd>1.0</dd>
-            </dl>
-            <dl spacing="compact">
-              <dt>Property Name</dt>
               <dd>replyTo</dd>
               <dt>Reference/Description</dt>
               <dd>
@@ -3002,6 +3030,17 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="prop-priority"/>
+              </dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <!-- privacy -->
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>privacy</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="prop-privacy"/>
               </dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
@@ -4097,10 +4136,10 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="compact">
             <dt>Reference</dt>
             <dd>
-              <xref target="appendix-reserved-properties"/>
+              <xref target="prop-privacy"/>
             </dd>
             <dt>Intended Usage</dt>
-            <dd>reserved</dd>
+            <dd>common</dd>
             <dt>Since Version</dt>
             <dd>1.0</dd>
             <dt>Until Version</dt>
@@ -4503,15 +4542,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <name>Reserved Properties</name>
           <section toc="exclude">
             <name>JMAP for Calendars</name>
-	    <t>The following common use properties became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
-            <!-- privacy -->
-            <dl newline="true" spacing="normal">
-              <dt><strong>privacy</strong>:</dt>
-              <dd>
-                <t>The definition of this property presumes shared calendars and users, neither of which are defined for JSCalendar. The property was meant to be equivalent to the <xref target="RFC5545" section="3.8.1.3" sectionFormat="parens">CLASS property</xref> but their semantics differ. This has turned out be an issue where CalDAV clients set the CLASS property and inadvertendly change the sharing semantics of a calendar object in JMAP for Calendars.</t>
-                <t>See <xref target="RFC8984" section="4.4.3"/>.</t>
-              </dd>
-            </dl>
+            <t>The following common use properties became reserved for <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>:</t>
             <!-- useDefaultAlerts -->
             <dl newline="true" spacing="normal">
               <dt><strong>useDefaultAlerts</strong>:</dt>
