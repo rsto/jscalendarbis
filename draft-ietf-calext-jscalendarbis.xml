@@ -1125,7 +1125,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>organizerCalendarAddress: String (optional).</dt>
             <dd>
-              <t>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular organizer, even across different calendaring objects.</t>
+	      <t>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular organizer, even across different calendaring objects. If this property is set then at least one Participant object in the participants property <bcp14>MUST</bcp14> have the calendarAddress property set.</t>
             </dd>
           </dl>
         </section>
@@ -1139,8 +1139,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>participants: Id[Participant] (optional).</dt>
             <dd>
-              <t>This is a map of participant ids to participants, describing their participation in the calendar object.</t>
-              <t>If this property is set and any participant has a <tt>calendarAddress</tt> property set, then the <tt>organizerCalendarAddress</tt> property of this calendar object <bcp14>MUST</bcp14> be set.</t>
+              <t>This is a map of participant ids to participants, describing their participation in the calendar object. If this property is set and any participant has the calendarAddress property set, then the organizerCalendarAddress property of the calendar object <bcp14>MUST</bcp14> be set.</t>
             </dd>
           </dl>
           <t>A Participant object has the following properties:</t>
