@@ -921,12 +921,12 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>These are the occurrences within the recurrence interval to include in the final results. Negative values offset from the end of the list of occurrences. The array <bcp14>MUST</bcp14> have at least one entry if included. This is the BYSETPOS part from iCalendar.</dd>
             <dt>count: UnsignedInt (optional).</dt>
             <dd>
-              <t>These are the number of occurrences at which to range-bound the recurrence. This <bcp14>MUST NOT</bcp14> be included if an <tt>until</tt> property is specified.</t>
+              <t>This is the number of occurrences at which to range-bound the recurrence. This <bcp14>MUST NOT</bcp14> be included if an <tt>until</tt> property is specified.</t>
               <t>This is the COUNT part from iCalendar.</t>
             </dd>
             <dt>until: LocalDateTime (optional).</dt>
             <dd>
-              <t>These are the date-time at which to finish recurring. The last occurrence is on or before this date-time. This <bcp14>MUST NOT</bcp14> be included if a <tt>count</tt> property is specified. Note that if not specified otherwise for a specific JSCalendar object, this date is to be interpreted in the time zone specified in the JSCalendar object's <tt>timeZone</tt> property.</t>
+              <t>This is the date-time at which to finish recurring. The last occurrence is on or before this date-time. This <bcp14>MUST NOT</bcp14> be included if a <tt>count</tt> property is specified. Note that if not specified otherwise for a specific JSCalendar object, this date is to be interpreted in the time zone specified in the JSCalendar object's <tt>timeZone</tt> property.</t>
               <t>This is the UNTIL part from iCalendar.</t>
             </dd>
           </dl>
