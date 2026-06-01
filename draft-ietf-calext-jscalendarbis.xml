@@ -284,7 +284,7 @@ signed-duration = ["+" / "-"] duration
           </ol>
           <t>The value associated with each pointer determines how to apply that patch:</t>
           <ul>
-            <li>If null, remove the property from the patched object. If the key is not present in the parent, this is a no-op.</li>
+            <li>If null, remove the property from the patched object. If the key is not present, this is a no-op.</li>
             <li>If non-null, set the value given as the value for this property (this may be a replacement or addition to the object being patched).</li>
           </ul>
           <t>A PatchObject does not define its own <xref target="prop-type">@type</xref> property. Instead, the @type property in a patch <bcp14>MUST</bcp14> be handled as any other patched property value.</t>
