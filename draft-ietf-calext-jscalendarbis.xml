@@ -4306,7 +4306,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1035.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2397.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2445.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3339.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3986.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9562.xml"/>
@@ -4424,7 +4423,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl newline="true" spacing="normal">
             <dt><strong>excludedRecurrenceRules</strong>:</dt>
             <dd>
-              <t>This is incompatible with iCalendar, which deprecated the <xref target="RFC2445" section="4.8.5.2" sectionFormat="parens">EXRULE property</xref> in <xref target="RFC5545"/>.</t>
+              <t>This is incompatible with iCalendar, which deprecated the EXRULE property in <xref target="RFC5545"/>.</t>
               <t>See <xref target="RFC8984" section="4.3.4" sectionFormat="of"/>.</t>
             </dd>
           </dl>
