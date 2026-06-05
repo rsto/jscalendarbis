@@ -1153,7 +1153,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>name: String (optional).</dt>
             <dd>This is the display name of the participant (e.g., "Joe Bloggs").</dd>
             <dt>email: String (optional).</dt>
-            <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/> .</dd>
+            <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/>. If this property is set, then the calendarAddress property <bcp14>MUST</bcp14> be set.</dd>
             <dt>description: String (optional).</dt>
             <dd>This is a description of this participant. For example, this may include more information about their role in the event or how best to contact them.</dd>
             <dt>descriptionContentType: String (optional).</dt>
