@@ -763,7 +763,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-recurrenceIdTimeZone">
           <name>recurrenceIdTimeZone</name>
           <dl spacing="normal">
-            <dt>recurrenceIdTimeZone: TimeZoneId|null (optional; default: null).</dt>
+            <dt>recurrenceIdTimeZone: TimeZoneId (optional).</dt>
             <dd>
               <t>Identifies the time zone of the main JSCalendar object, of which this JSCalendar object is a recurrence instance. It <bcp14>MUST NOT</bcp14> be set if the <tt>recurrenceId</tt> property is not set.</t>
             </dd>
@@ -1316,9 +1316,9 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-timeZone">
           <name>timeZone</name>
           <dl spacing="normal">
-            <dt>timeZone: TimeZoneId|null (optional; default: null).</dt>
+            <dt>timeZone: TimeZoneId (optional).</dt>
             <dd>
-              <t>This identifies the time zone the object is scheduled in or is null for floating time. If omitted, this <bcp14>MUST</bcp14> be presumed to be null (i.e., floating time).</t>
+              <t>This identifies the time zone the object is scheduled in. If omitted, the object is not scheduled in a particular time zone but in "floating time".</t>
             </dd>
           </dl>
         </section>
@@ -1352,7 +1352,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>endTimeZone: TimeZoneId (optional).</dt>
             <dd>
-              <t>This identifies the time zone in which this event ends, for cases where the start and time zones of the event differ (e.g., a transcontinental flight). If this property is not set, then the event starts and ends in the same time zone. This property <bcp14>MUST NOT</bcp14> be set if the <tt>timeZone</tt> property value is null or not set.</t>
+              <t>This identifies the time zone in which this event ends, for cases where the start and time zones of the event differ (e.g., a transcontinental flight). If this property is not set, then the event starts and ends in the same time zone. This property <bcp14>MUST NOT</bcp14> be set if the <tt>timeZone</tt> property is not set.</t>
             </dd>
           </dl>
         </section>
@@ -1377,7 +1377,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       <section anchor="jstask-props">
         <name>Task Properties</name>
         <t>In addition to the common JSCalendar object <xref target="jscalendar-props">properties</xref>, a Task has the following properties.</t>
-        <t>If the <tt>timeZone</tt> property value is not null or the <tt>showWithoutTime</tt> property value is "true", then at least one of the <tt>due</tt> and <tt>start</tt> properties <bcp14>MUST</bcp14> be set.</t>
+        <t>If the timeZone property value is not set or the showWithoutTime property value is "true", then at least one of the due and start properties <bcp14>MUST</bcp14> be set.</t>
         <section anchor="prop-due">
           <name>due</name>
           <dl spacing="normal">
@@ -3089,6 +3089,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl spacing="compact">
               <dt>Property Name</dt>
               <dd>recurrenceIdTimeZone</dd>
+              <dt>Property Type</dt>
+              <dd>TimeZoneId</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="prop-recurrenceIdTimeZone"/>
@@ -3268,6 +3270,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl spacing="compact">
               <dt>Property Name</dt>
               <dd>timeZone</dd>
+              <dt>Property Type</dt>
+              <dd>TimeZoneId</dd>
               <dt>Property Context</dt>
               <dd>Event, Task</dd>
               <dt>Reference/Description</dt>
@@ -4772,12 +4776,28 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>See <xref target="type-Relation" sectionFormat="of"/>.</t>
             </dd>
           </dl>
+          <!-- {Event|Task}.recurrenceIdTimeZone -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{Event|Task}.recurrenceIdTimeZone</strong>:</dt>
+            <dd>
+              <t>The property value now does not support "null" values anymore. The property either is set to a timezone identifier, or not at all.</t>
+              <t>See <xref target="prop-recurrenceIdTimeZone" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
           <!-- {Event|Task}.sentBy -->
           <dl newline="true" spacing="normal">
             <dt><strong>{Event|Task}.sentBy</strong>:</dt>
             <dd>
               <t>The property now requires the organizerCalendarAddress property to be set.</t>
               <t>See <xref target="prop-sentBy" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- {Event|Task}.timeZone -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{Event|Task}.timeZone</strong>:</dt>
+            <dd>
+              <t>The property value now does not support "null" values anymore. The property either is set to a timezone identifier, or not at all.</t>
+              <t>See <xref target="prop-timeZone" sectionFormat="of"/>.</t>
             </dd>
           </dl>
           <!-- Task.{due|start} -->
