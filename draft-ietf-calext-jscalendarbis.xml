@@ -518,7 +518,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>
               <t>The JSCalendar version of this object. The value <bcp14>MUST</bcp14> be one of the IANA-registered JSCalendar Version values for the version property.</t>
               <t>For version "2.0" or higher, a Group object <bcp14>MUST</bcp14> set the "version" property, but the Event or Task objects that are values in its "entries" property <bcp14>MUST NOT</bcp14> set the "version" property. In contrast, an Event or Task object that is represented without an enclosing Group object <bcp14>MUST</bcp14> set the "version" property, unless specified otherwise. This is to prevent conflicting version values to occur in JSCalendar data.</t>
-              <t>For version "1.0", the "version" property is optional. If it is set, the same rules as described for version "2.0" apply.</t>
+              <t>For version "1.0", the "version" property is optional.</t>
             </dd>
           </dl>
         </section>
