@@ -333,7 +333,7 @@ signed-duration = ["+" / "-"] duration
             <dd>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a link relation type as defined in <xref target="RFC8288" section="2.1" sectionFormat="of"/> .</dd>
             <dt>display: String[Boolean] (optional).</dt>
             <dd>
-              <t>This is a set of intended purposes of a link to an image. The keys <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
+              <t>This is a set of intended purposes of a link to an image. If set, the "rel" property <bcp14>MUST</bcp14> be set to "icon". The keys <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
                 <dt>badge:</dt>
                 <dd>an image meant to be displayed alongside the title of the object</dd>
@@ -4706,7 +4706,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt><strong>Link.display</strong>:</dt>
             <dd>
               <t>The original definition only allowed one purpose to be set, which is incompatible with the multi-valued iCalendar <xref target="RFC7986" section="6.1" sectionFormat="parens">DISPLAY parameter</xref>. It now supports setting multiple purposes.</t>
-              <t>Setting this property does not anymore require the "rel" property of the Link object be set to "icon".</t>
               <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
             </dd>
           </dl>
