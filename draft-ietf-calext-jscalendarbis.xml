@@ -329,7 +329,7 @@ signed-duration = ["+" / "-"] duration
             <dd>This is the media type <xref target="RFC6838"/> of the resource, if known.</dd>
             <dt>size: UnsignedInt (optional).</dt>
             <dd>This is the size, in octets, of the resource when fully decoded (i.e., the number of octets in the file the user would download), if known. Note that this is an informational estimate, and implementations must be prepared to handle the actual size being quite different when the resource is fetched.</dd>
-            <dt>rel: String (optional).</dt>
+            <dt>rel: String (optional; default: "enclosure").</dt>
             <dd>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a link relation type as defined in <xref target="RFC8288" section="2.1" sectionFormat="of"/> .</dd>
             <dt>display: String[Boolean] (optional).</dt>
             <dd>
@@ -4714,6 +4714,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt><strong>Link.rel</strong>:</dt>
             <dd>
               <t>The original definition restricted the value of this property to registered link types. It now also allows extension relation types for compatibility with the <xref target="RFC9253" section="6.1" sectionFormat="parens">LINKREL parameter</xref>.</t>
+              <t>The original definition defined property as optional without default value. It now is optional with default value "enclosure".</t>
               <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
             </dd>
           </dl>
