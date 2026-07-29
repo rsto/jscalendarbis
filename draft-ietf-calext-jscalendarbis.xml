@@ -330,7 +330,12 @@ signed-duration = ["+" / "-"] duration
             <dt>size: UnsignedInt (optional).</dt>
             <dd>This is the size, in octets, of the resource when fully decoded (i.e., the number of octets in the file the user would download), if known. Note that this is an informational estimate, and implementations must be prepared to handle the actual size being quite different when the resource is fetched.</dd>
             <dt>rel: String (optional; default: "enclosure").</dt>
-            <dd>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a link relation type as defined in <xref target="RFC8288" section="2.1" sectionFormat="of"/> .</dd>
+            <dd>
+              <t>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a link relation type as defined in <xref target="RFC8288" section="2.1" sectionFormat="of"/>.</t>
+              <t>Links with a rel of "enclosure" <bcp14>MUST</bcp14> be considered by the client to be attachments for download or documents associated with the calendar object.</t>
+              <t>Links with a rel of "describedby" <bcp14>MUST</bcp14> be considered by the client to be alternative representations of the calendar object.</t>
+              <t>Links with a rel of "icon" <bcp14>MUST</bcp14> be considered by the client to be images that it may use when presenting the calendar data to a user. The "display" property may be set to indicate the purpose of this image.</t>
+          </dd>
             <dt>display: String[Boolean] (optional).</dt>
             <dd>
               <t>This is a set of intended purposes of a link to an image. If set, the "rel" property <bcp14>MUST</bcp14> be set to "icon". The keys <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
@@ -698,9 +703,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>links: Id[Link] (optional).</dt>
             <dd>
               <t>This is a map of link ids to Link objects, representing external resources associated with the object.</t>
-              <t>Links with a rel of "enclosure" <bcp14>MUST</bcp14> be considered by the client to be attachments for download.</t>
-              <t>Links with a rel of "describedby" <bcp14>MUST</bcp14> be considered by the client to be alternative representations of the description.</t>
-              <t>Links with a rel of "icon" <bcp14>MUST</bcp14> be considered by the client to be images that it may use when presenting the calendar data to a user. The "display" property may be set to indicate the purpose of this image.</t>
             </dd>
           </dl>
         </section>
