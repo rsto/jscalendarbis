@@ -4487,6 +4487,14 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>See <xref target="RFC8984" section="4.2.5" sectionFormat="of"/>.</t>
             </dd>
           </dl>
+          <!-- Participant.language -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.language</strong>:</dt>
+            <dd>
+              <t>No equivalent element exists in iCalendar and its current single-valued definition is likely to conflict with any related future extension of the <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>.</t>
+              <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
+            </dd>
+          </dl>
           <!-- Participant.locationId -->
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.locationId</strong>:</dt>
@@ -4502,14 +4510,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <li>It now states: "Multiple participants may partake in the event."</li>
               </ul>
               <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.language -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.language</strong>:</dt>
-            <dd>
-              <t>No equivalent element exists in iCalendar and its current single-valued definition is likely to conflict with any related future extension of the <xref target="RFC9073" section="7.1" sectionFormat="parens">PARTICIPANT component</xref>.</t>
-              <t>See <xref target="RFC8984" section="4.4.6"/>.</t>
             </dd>
           </dl>
           <!-- Participant.progressUpdated, Task.progressUpated -->
@@ -4703,6 +4703,38 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>See <xref target="prop-color" sectionFormat="of"/>.</t>
             </dd>
           </dl>
+          <!-- {Event|Task}.privacy -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{Event|Task}.privacy</strong>:</dt>
+            <dd>
+              <t>The original definition used a lowercase "should" for preserving unknown privacy values and handling them as private. It now requires unknown values to be preserved and handled as "private". This is in line with the definition of the <xref target="RFC5545" section="3.8.1.3" sectionFormat="parens">CLASS property</xref>.</t>
+              <t>See <xref target="prop-privacy" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- {Event|Task}.recurrenceIdTimeZone -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{Event|Task}.recurrenceIdTimeZone</strong>:</dt>
+            <dd>
+              <t>The property value now does not support "null" values anymore. The property either is set to a timezone identifier, or not at all.</t>
+              <t>See <xref target="prop-recurrenceIdTimeZone" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- {Event|Task}.sentBy -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{Event|Task}.sentBy</strong>:</dt>
+            <dd>
+              <t>The property now requires the "organizerCalendarAddress" property to be set.</t>
+              <t>See <xref target="prop-sentBy" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- {Event|Task}.timeZone -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{Event|Task}.timeZone</strong>:</dt>
+            <dd>
+              <t>The property value now does not support "null" values anymore. The property either is set to a timezone identifier, or not at all.</t>
+              <t>See <xref target="prop-timeZone" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
           <!-- Link.display -->
           <dl newline="true" spacing="normal">
             <dt><strong>Link.display</strong>:</dt>
@@ -4776,38 +4808,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>
               <t>The original definition specified the empty relation to represent an unspecified relationship. It now defines the empty relation to default to "parent", unless overridden, for compatibility with the <xref target="RFC5545" section="3.8.4.5" sectionFormat="parens">RELATED-TO property</xref>.</t>
               <t>See <xref target="type-Relation" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- {Event|Task}.privacy -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task}.privacy</strong>:</dt>
-            <dd>
-              <t>The original definition used a lowercase "should" for preserving unknown privacy values and handling them as private. It now requires unknown values to be preserved and handled as "private". This is in line with the definition of the <xref target="RFC5545" section="3.8.1.3" sectionFormat="parens">CLASS property</xref>.</t>
-              <t>See <xref target="prop-privacy" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- {Event|Task}.recurrenceIdTimeZone -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task}.recurrenceIdTimeZone</strong>:</dt>
-            <dd>
-              <t>The property value now does not support "null" values anymore. The property either is set to a timezone identifier, or not at all.</t>
-              <t>See <xref target="prop-recurrenceIdTimeZone" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- {Event|Task}.sentBy -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task}.sentBy</strong>:</dt>
-            <dd>
-              <t>The property now requires the "organizerCalendarAddress" property to be set.</t>
-              <t>See <xref target="prop-sentBy" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- {Event|Task}.timeZone -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task}.timeZone</strong>:</dt>
-            <dd>
-              <t>The property value now does not support "null" values anymore. The property either is set to a timezone identifier, or not at all.</t>
-              <t>See <xref target="prop-timeZone" sectionFormat="of"/>.</t>
             </dd>
           </dl>
           <!-- Task.{due|start} -->
