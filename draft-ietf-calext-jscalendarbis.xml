@@ -1051,7 +1051,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <ul>
                 <li>recurrenceOverrides</li>
                 <li>recurrenceRule</li>
-                <li>relatedTo</li>
               </ul>
               <t>where the "*" character stands for a JSON pointer reference token having any value.</t>
             </dd>
@@ -4717,6 +4716,14 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>
               <t>The property value now does not support "null" values anymore. The property either is set to a timezone identifier, or not at all.</t>
               <t>See <xref target="prop-recurrenceIdTimeZone" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- {Event|Task}.recurrenceOverrides -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>{Event|Task}.recurrenceOverrides</strong>:</dt>
+            <dd>
+              <t>The original definition defined to ignore patches for the "relatedTo" property, it now allows to patch it. This is because the <xref target="RFC5545" section="3.8.4.5" sectionFormat="parens">RELATED-TO property</xref> also can be set in recurrence exceptions.</t>
+              <t>See <xref target="prop-recurrenceOverrides" sectionFormat="of"/>.</t>
             </dd>
           </dl>
           <!-- {Event|Task}.sentBy -->
