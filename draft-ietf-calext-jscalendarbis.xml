@@ -1039,7 +1039,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <li>@type</li>
                 <li>method</li>
                 <li>organizerCalendarAddress</li>
-                <li>participants/*/"calendarAddress"</li>
+                <li>participants/*/calendarAddress</li>
                 <li>privacy</li>
                 <li>prodId</li>
                 <li>recurrenceId</li>
