@@ -4682,7 +4682,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl newline="true" spacing="normal">
             <dt><strong>Alert.relatedTo</strong>:</dt>
             <dd>
-              <t>The original definition instructed to set the "parent" relation on a snooze alert. It now instructs to set the newly defined "snooze" relation, for compatibility with the VALARM "SNOOZE" relationship type (<xref target="RFC9074" section="7" sectionFormat="of"/>.</t>
+              <t>The original definition instructed to set the "parent" relation on a snooze alert. It now instructs to set the newly defined "snooze" relation, for compatibility with the <xref target="RFC9074" section="7" sectionFormat="parens">VALARM "SNOOZE" relationship type</xref>.</t>
               <t>The original definition did not define that the map keys represent keys of Alert objects in the "alerts" property.</t>
               <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
             </dd>
