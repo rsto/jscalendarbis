@@ -297,7 +297,7 @@ signed-duration = ["+" / "-"] duration
           <dl newline="true">
             <dt>@type: String.</dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "Relation", if set.</dd>
-            <dt>relation: String[Boolean] (optional; default: empty Object).</dt>
+            <dt>relation: String[Boolean] (optional; default: {}).</dt>
             <dd>
               <t>This describes how the linked object is related to the linking object. The relation is defined as a set of relation types. Keys in the set <bcp14>MUST</bcp14> be one of the following values, specified in the property definition where the Relation object is used, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
@@ -310,7 +310,7 @@ signed-duration = ["+" / "-"] duration
                 <dt>parent:</dt>
                 <dd>The linking object is a subpart of the linked object.</dd>
               </dl>
-              <t>The value for each key in the map <bcp14>MUST</bcp14> be true.  The empty Object value represents a "parent" relation, unless defined differently for a specific property.</t>
+              <t>The value for each key in the map <bcp14>MUST</bcp14> be true.  The empty object value represents a "parent" relation, unless defined differently for a specific property.</t>
             </dd>
           </dl>
         </section>
@@ -1028,7 +1028,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-recurrenceOverrides">
           <name>recurrenceOverrides</name>
           <dl spacing="normal">
-            <dt>recurrenceOverrides: LocalDateTime[PatchObject] (optional).</dt>
+              <dt>recurrenceOverrides: LocalDateTime[PatchObject] (optional; default: {}).</dt>
             <dd>
               <t>This maps recurrence ids (the date-time produced by the recurrence rule) to the overridden properties of the recurrence instance.</t>
               <t>If the recurrence id does not match a date-time from the recurrence rule (or no rule is specified), it is to be treated as an additional occurrence (like an RDATE from iCalendar). The patch object may often be empty in this case.</t>
@@ -4725,6 +4725,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt><strong>{Event|Task}.recurrenceOverrides</strong>:</dt>
             <dd>
               <t>The original definition required implementations to ignore patches for the listed pointers. The new definition instead forbids patching them and states that such patch objects are invalid. The "relatedTo" property is removed from the list, because the <xref target="RFC5545" section="3.8.4.5" sectionFormat="parens">RELATED-TO property</xref> also can be set in recurrence exceptions.</t>
+              <t>The former specification did not define a default value for this property. Now the default value is the empty JSON object.</t>
               <t>See <xref target="prop-recurrenceOverrides" sectionFormat="of"/>.</t>
             </dd>
           </dl>
