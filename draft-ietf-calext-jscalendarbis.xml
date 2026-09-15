@@ -455,7 +455,7 @@ v-name = 1*(WSP / "!" / %x23-2e / %x30-7d / NON-ASCII)
       </section>
       <section anchor="versioning">
         <name>Versioning</name>
-        <t>A JSCalendar <xref target="jsgroup">Group</xref>, <xref target="jsevent">Event</xref> and <xref target="jstask">Task</xref> indicate which JSCalendar version its IANA-registered properties and values are based on. The version is indicated both in the <xref target="prop-version">version</xref> property of a JSCalendar object and in the <xref target="iana-mime-type">version</xref> parameter of the JSCalendar media type. All IANA-registered elements indicate the version at which they were introduced or obsoleted.</t>
+        <t>A JSCalendar <xref target="jsgroup">Group</xref>, <xref target="jsevent">Event</xref> and <xref target="jstask">Task</xref> indicate which JSCalendar version its IANA-registered properties and values are based on. The version is indicated both in the <xref target="prop-version">"version"</xref> property of a JSCalendar object and in the <xref target="iana-mime-type">version</xref> parameter of the JSCalendar media type. All IANA-registered elements indicate the version at which they were introduced or obsoleted.</t>
         <t>A JSCalendar version consists of a major and minor version.</t>
         <t>Differing major version values indicate substantial differences in JSCalendar semantics and format. Implementations <bcp14>MUST</bcp14> be prepared for property definitions and other JSCalendar elements that differ in a backwards-incompatible manner.
         </t>
@@ -980,7 +980,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                   <dt>byMonthDay:</dt>
                   <dd>The date-time is on the given day of the month. Negative numbers mean the nth last day of the month.</dd>
                   <dt>byDay:</dt>
-                  <dd>The date-time is on the given day of the week. If an "nthOfPeriod" property is present, the date-time must be the nth occurrence of that day of the week within the year (if "frequency" is yearly AND no "byMonth" property exists on the rule) or month (otherwise). Negative numbers mean the nth last occurrence within that period.</dd>
+                  <dd>The date-time is on the given day of the week. If an "nthOfPeriod" property is present, the date-time must be the nth occurrence of that day of the week within the year (if "frequency" is "yearly" AND no "byMonth" property exists on the rule) or month (otherwise). Negative numbers mean the nth last occurrence within that period.</dd>
                   <dt>byHour:</dt>
                   <dd>The date-time has the given hour value.</dd>
                   <dt>byMinute:</dt>
@@ -1109,7 +1109,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                     <li>privacy</li>
                     <li>recurrenceId</li>
                     <li>recurrenceIdTimeZone</li>
-                    <li>"recurrenceOverrides" (Only patches that apply to another permissible property are allowed to be shared.)</li>
+                    <li>"recurrenceOverrides" property (Only patches that apply to another permissible property are allowed to be shared.)</li>
                     <li>recurrenceRule</li>
                     <li>sequence</li>
                     <li>showWithoutTime</li>
@@ -4707,7 +4707,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl newline="true" spacing="normal">
             <dt><strong>{Event|Task}.privacy</strong>:</dt>
             <dd>
-              <t>The original definition used a lowercase "should" for preserving unknown privacy values and handling them as private. It now requires unknown values to be preserved and handled as "private". This is in line with the definition of the <xref target="RFC5545" section="3.8.1.3" sectionFormat="parens">CLASS property</xref>.</t>
+              <t>The original definition used a lowercase "should" for preserving unknown privacy values and handling them as "private". It now requires unknown values to be preserved and handled as "private". This is in line with the definition of the <xref target="RFC5545" section="3.8.1.3" sectionFormat="parens">CLASS property</xref>.</t>
               <t>The original definition only implied that all recurrences have the same privacy, by requiring that a "privacy" pointer in the "recurrenceOverrides" property be ignored. The new definition explicitly requires that all recurrences have the same privacy.</t>
               <t>See <xref target="prop-privacy" sectionFormat="of"/>.</t>
             </dd>
@@ -4792,7 +4792,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.progress</strong>:</dt>
             <dd>
-              <t>The original definition was incompatible with iCalendar. It allowed the progress value to be "cancelled", but this is not a supported PARTSTAT parameter value of an ATTENDEE property in a VTODO component. The new definition only supports the "progress" property values "in-process", "completed" and "failed".</t>
+              <t>The original definition was incompatible with iCalendar. It allowed the "progress" property value to be "cancelled", but this is not a supported PARTSTAT parameter value of an ATTENDEE property in a VTODO component. The new definition only supports the "progress" property values "in-process", "completed" and "failed".</t>
               <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
             </dd>
           </dl>
@@ -4803,7 +4803,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>The original definition was incompatible with iCalendar:</t>
               <ul>
                 <li>It did not cover the "REQ-PARTICIPANT" value of the <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>. It now defines the new "required" role.</li>
-                <li>The "roles" property is multi-valued but the ROLE parameter is single-valued and only allowed to be set once on an ATTENDEE. For compatibility, a precendence of Participant roles got defined for converting roles to iCalendar.</li>
+                <li>The "roles" property is multi-valued but the ROLE parameter is single-valued and only allowed to be set once on an ATTENDEE. For compatibility, a precedence of Participant.roles got defined for converting roles to iCalendar.</li>
                 <li>It was mandatory for a Participant, but the (now reserved) "sendTo" property was not. This was incompatible with iCalendar, which required an ATTENDEE property to set the ROLE parameter. It now is optional, but requires the "calendarAddress" property to be set.</li>
                 <li>It defined a "contact" role, but this role later got redefined as an enumerated value of the <xref target="RFC9073" section="6.2" sectionFormat="parens">PARTICIPANT-TYPE property</xref>. It now removed this role and leaves defining participant types to a future JSCalendar extension.</li>
                 <li>The "attendee" role got removed. There is no equivalent ROLE value in iCalendar and any Participant with a "calendarAddress" by definition is an ATTENDEE in iCalendar.</li>
