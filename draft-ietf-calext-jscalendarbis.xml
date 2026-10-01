@@ -2406,8 +2406,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dd>reserved</dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
-              <dt>Until Version</dt>
-              <dd>1.0</dd>
             </dl>
             <dl spacing="compact">
               <dt>Property Name</dt>
@@ -2434,8 +2432,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dd>reserved</dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
-              <dt>Until Version</dt>
-              <dd>1.0</dd>
             </dl>
             <dl spacing="compact">
               <dt>Property Name</dt>
@@ -2461,8 +2457,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Intended Usage</dt>
               <dd>reserved</dd>
               <dt>Since Version</dt>
-              <dd>1.0</dd>
-              <dt>Until Version</dt>
               <dd>1.0</dd>
               <dt>Is Per-User</dt>
               <dd>Yes</dd>
