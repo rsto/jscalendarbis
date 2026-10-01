@@ -2012,9 +2012,12 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>The JSCalendar version on which the property definition is based. The version <bcp14>MUST</bcp14> be one of the allowed values of the "version" property in the "JSCalendar Version" registry (see <xref target="tab-iana-version-registry"/>).</dd>
             <dt>Until Version:</dt>
             <dd>The JSCalendar version after which the property was obsoleted; therefore, it <bcp14>MUST NOT</bcp14> be used in later versions. The Until Version value either <bcp14>MUST NOT</bcp14> be set or <bcp14>MUST </bcp14> be one of the allowed values of the "version" property in the "JSCalendar Version" registry (see <xref target="tab-iana-version-registry"/>).</dd>
+            <dt>Is Per-User:</dt>
+            <dd>This is either "Yes" or "No". A value of "Yes" indicates that the property value may differ for each user that has access to the calendar object, rather than being shared by all users. Such properties typically represent a user's personal preferences for the calendar object, such as how it is displayed or whether the user is alerted about it. A protocol that shares calendar objects between multiple users, such as <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref>, may use this field to determine which properties to store separately for each user.</dd>
             <dt>Change Controller:</dt>
             <dd>This is who may request a change to this entry's definition ("IETF" for RFCs from the IETF stream).</dd>
           </dl>
+          <t>IANA will add the "Is Per-User" column to the registry. For all existing entries, IANA will set the value of this field to "No", unless otherwise specified in <xref target="iana-property-registry-updated-contents"/>.</t>
         </section>
         <section anchor="iana-property-registry-updated-contents">
           <name>Changes to the "JSCalendar Properties" Registry</name>
@@ -2461,6 +2464,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dd>1.0</dd>
               <dt>Until Version</dt>
               <dd>1.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>Yes</dd>
             </dl>
           </section>
           <section>
@@ -2511,6 +2516,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>Yes</dd>
             </dl>
             <!-- byDay -->
             <dl spacing="compact">
@@ -2643,6 +2650,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>Yes</dd>
             </dl>
             <!-- contentType -->
             <dl spacing="compact">
@@ -2852,6 +2861,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>Yes</dd>
             </dl>
             <!-- frequency -->
             <dl spacing="compact">
@@ -2896,6 +2907,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
               </dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>Yes</dd>
             </dl>
             <!-- kind -->
             <dl spacing="compact">
