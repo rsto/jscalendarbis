@@ -944,7 +944,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                   <dt>yearly:</dt>
                   <dd>
                     <t>every second from midnight on the first day of a year (inclusive) to midnight the first day of the following year (exclusive).</t>
-                    <t>If "skip" is not "omit", the calendar system has leap months, and there is a "byMonth" property, generate candidates for the leap months, even if they don't occur in this year.</t>
+                    <t>If "skip" is not "omit", the calendar system has leap months, and there is a "byMonth" property, generate candidates for the leap months, even if they don't occur in this year. A leap month that does not occur in this year is presumed to have the same number of days as the month it will be changed to by the "skip" behavior (see below), unless the following rule applies.</t>
                     <t>If "skip" is not "omit" and there is a "byMonthDay" property, presume each month has the maximum number of days any month may have in this calendar system when generating candidates, even if it's more than this month actually has.</t>
                   </dd>
                   <dt>monthly:</dt>
@@ -971,7 +971,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                   <dd>The date-time is in the given month.</dd>
                   <dt>byWeekNo:</dt>
                   <dd>
-                    <t>The date-time is in the nth week of the year. Negative numbers mean the nth last week of the year. This corresponds to weeks according to week numbering, as defined in <xref target="ISO.8601.2004"/>, with a week defined as a seven-day period, starting on the "firstDayOfWeek" property value or Monday if omitted. Week number one of the calendar year is the first week that contains at least four days in that calendar year.</t>
+                    <t>The date-time is in the nth week of the year. Negative numbers mean the nth last week of the year. This corresponds to weeks according to week numbering, as defined in <xref target="ISO.8601.2004"/>, with a week defined as a seven-day period, starting on the "firstDayOfWeek" property value or Monday if omitted. Week number one of the calendar year is the first week that contains at least four days in that calendar year. Each date belongs to exactly one week number; this is matched against the "byWeekNo" values even if most of the week falls in the previous or following year. For example, with the default "firstDayOfWeek", 2027-01-01 is in week 53 (of 2026), so it matches a "byWeekNo" value of 53 or -1, but not 1.</t>
                     <t>If the date-time is not valid (this may happen when generating candidates with a "skip" property in effect), it is always eliminated by this property.</t>
                   </dd>
                   <dt>byYearDay:</dt>
@@ -980,7 +980,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                     <t>If the date-time is not valid (this may happen when generating candidates with a "skip" property in effect), it is always eliminated by this property.</t>
                   </dd>
                   <dt>byMonthDay:</dt>
-                  <dd>The date-time is on the given day of the month. Negative numbers mean the nth last day of the month.</dd>
+                  <dd>The date-time is on the given day of the month. Negative numbers mean the nth last day of the month. This is always calculated using the actual number of days in the month, even when generating candidates with a "skip" property in effect (so -1 is always the last valid day of the month).</dd>
                   <dt>byDay:</dt>
                   <dd>The date-time is on the given day of the week. If an "nthOfPeriod" property is present, the date-time must be the nth occurrence of that day of the week within the year (if "frequency" is "yearly" AND no "byMonth" property exists on the rule) or month (otherwise). Negative numbers mean the nth last occurrence within that period.</dd>
                   <dt>byHour:</dt>
@@ -993,9 +993,10 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <t>If a "skip" property is defined and is not "omit", there may be candidates that do not correspond to valid dates (e.g., February 31st in the Gregorian calendar). In this case, the properties <bcp14>MUST</bcp14> be considered in the order above, and:</t>
                 <ol>
                   <li>After applying the "byMonth" filter, if the candidate's month is invalid for the given year, increment it (if "skip" is "forward") or decrement it (if "skip" is "backward") until a valid month is found, incrementing/decrementing the year as well if passing through the beginning/end of the year. This only applies to calendar systems with leap months.</li>
-                  <li>After applying the "byMonthDay" filter, if the day of the month is invalid for the given month and year, change the date to the first day of the next month (if "skip" is "forward") or the last day of the current month (if "skip" is "backward").</li>
+                  <li>After applying the "byMonthDay" filter, if the day of the month is invalid for the given month and year, change the date to the first day of the next month (if "skip" is "forward") or the last day of the current month (if "skip" is "backward"). This includes dates whose month was changed by the previous step, as per <xref target="RFC7529"/>. Similarly, if a negative "byMonthDay" value refers to a day before the first day of the month (e.g., -31 in a 30-day month), this produces the first day of the month (if "skip" is "forward") or the last day of the previous month (if "skip" is "backward").</li>
                   <li>If any valid date produced after applying the skip is already a candidate, eliminate the duplicate. (For example, after adjusting, February 30th and February 31st would both become the same "real" date, so one is eliminated as a duplicate.)</li>
                 </ol>
+                <t>The "skip" property does not adjust "byYearDay" or "byWeekNo" values that do not exist in a particular year (e.g., a "byYearDay" value of 366 in a year with 365 days, or a "byWeekNo" value of 53 in a year with 52 weeks). Such values do not match any date-time in that year, regardless of the "skip" property value.</t>
               </li>
               <li>If a "bySetPosition" property is included, this is now applied to the ordered list of remaining dates. This property specifies the indexes of date-times to keep; all others should be eliminated. Negative numbers are indexed from the end of the list, with -1 being the last item, -2 the second from last, etc.</li>
               <li>Any date-times before the initial date-time are eliminated (see below for why this might be needed).</li>
