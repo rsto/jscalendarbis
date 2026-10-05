@@ -14,10 +14,10 @@
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc iprnotified="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendarbis-21" obsoletes="8984" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendarbis-22" obsoletes="8984" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <front>
     <title abbrev="JSCalendar">JSCalendar 2.0: A JSON Representation of Calendar Data</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-calext-jscalendarbis-21"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-calext-jscalendarbis-22"/>
     <author initials="N." surname="Jenkins" fullname="Neil Jenkins">
       <organization showOnFrontPage="true">Fastmail</organization>
       <address>
@@ -49,7 +49,7 @@
         <uri>https://www.fastmail.com</uri>
       </address>
     </author>
-    <date day="2" month="October" year="2026"/>
+    <date day="5" month="October" year="2026"/>
     <area>Applications</area>
     <workgroup>Calendaring extensions</workgroup>
     <keyword>JSON</keyword>
@@ -100,7 +100,6 @@
       <section anchor="notational-conventions">
         <name>Notational Conventions</name>
         <t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>NOT RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.</t>
-        <t>The underlying format used for this specification is JSON. Consequently, the terms "object" and "array" as well as the four primitive types (strings, numbers, booleans, and null) are to be interpreted as described in <xref target="RFC8259" section="1"/>.</t>
         <t>Some examples in this document contain "partial" JSON documents used for illustrative purposes. In these examples, an ellipsis "..." is used to indicate a portion of the document that has been removed for compactness.</t>
       </section>
       <section anchor="data-type-notations">
@@ -299,7 +298,7 @@ signed-duration = ["+" / "-"] duration
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "Relation", if set.</dd>
             <dt>relation: String[Boolean] (optional; default: {}).</dt>
             <dd>
-              <t>This describes how the linked object is related to the linking object. The relation is defined as a set of relation types. Keys in the set <bcp14>MUST</bcp14> be one of the following values, specified in the property definition where the Relation object is used, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
+              <t>This describes how the linked object is related to the linking object. The relation is defined as a set of relation types. Keys in the set <bcp14>MUST</bcp14> be one of the following values, a value specified in the definition of the property where the Relation object is used, a value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
                 <dt>first:</dt>
                 <dd>The linked object is the first in a series the linking object is part of.</dd>
@@ -414,7 +413,7 @@ signed-duration = ["+" / "-"] duration
           <name>Vendor-Specific Properties</name>
           <t>Vendor-specific property names <bcp14>MUST</bcp14> start with a vendor-specific prefix followed by a name, as produced by the "v-extension" ABNF below. The prefix and name together form the property name. The vendor-specific prefix <bcp14>MUST</bcp14> be a domain name under control of the service or application that sets the property, but it need not resolve in the Domain Name System <xref target="RFC1034"/> <xref target="RFC1035"/>. The prefix "ietf.org" and its subdomain names are reserved for IETF specifications. The name <bcp14>MUST NOT</bcp14> contain the TILDE (U+007E) and SOLIDUS (U+002F) characters, as these require special escaping when encoding a JSON Pointer <xref target="RFC6901"/> for that property.</t>
           <t>Vendor-specific properties <bcp14>MAY</bcp14> be set in any JSCalendar object. Implementations <bcp14>MUST</bcp14> preserve vendor-specific properties in JSCalendar data, irrespective of whether they know their use. They <bcp14>MUST NOT</bcp14> reject the property value as invalid, unless they are in control of the vendor-specific property as outlined in the above paragraph.</t>
-          <t>The ABNF rule "v-extension" formally defines valid vendor-specific property names. Note that the vendor prefix allows for more values than Internationalized Domain Names (IDNs) <xref target="RFC9499"/>; therefore, JSCalendar implementations can simply validate property names without implementing the full set of rules that apply to domain names.</t>
+          <t>The ABNF rule "v-extension" formally defines valid vendor-specific property names. Note that the vendor prefix allows for more values than Internationalized Domain Names (IDNs) <xref target="RFC9499"/>; therefore, JSCalendar implementations can simply validate property names without implementing the full set of rules that apply to domain names. The NON-ASCII rule is defined in <xref target="RFC6350" section="3.3"/>.</t>
           <figure anchor="vendor-property-abnf">
             <name>ABNF Rules for Vendor-Specific Property Names</name>
             <sourcecode name="" type="abnf"><![CDATA[
@@ -513,7 +512,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>uid: String (mandatory).</dt>
             <dd>
               <t>This is a globally unique identifier used to associate objects representing the same event, task, group, or other object across different systems, calendars, and views. For recurring events and tasks, the UID is associated with the base object and therefore is the same for all occurrences; the combination of the UID with a "recurrenceId" identifies a particular instance.</t>
-              <t>The generator of the identifier <bcp14>MUST</bcp14> guarantee that the identifier is unique. <xref target="RFC9562"/> describes a range of established algorithms to generate universally unique identifiers (UUIDs). UUID version 4, described in <xref target="RFC9562" section="4.4"/>, is <bcp14>RECOMMENDED</bcp14>.</t>
+              <t>The generator of the identifier <bcp14>MUST</bcp14> guarantee that the identifier is unique. <xref target="RFC9562"/> describes a range of established algorithms to generate universally unique identifiers (UUIDs). UUID version 4, described in <xref target="RFC9562" section="5.4"/>, is <bcp14>RECOMMENDED</bcp14>.</t>
               <t>For compatibility with UIDs <xref target="RFC5545"/>, implementations <bcp14>MUST</bcp14> be able to receive and persist values of at least 255 octets for this property, but they <bcp14>MUST NOT</bcp14> truncate values in the middle of a UTF-8 multi-octet sequence.</t>
             </dd>
           </dl>
@@ -521,11 +520,11 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-version">
           <name>version</name>
           <dl spacing="normal">
-            <dt>version: String.</dt>
+            <dt>version: String (mandatory, unless specified otherwise below).</dt>
             <dd>
               <t>The JSCalendar version of this object. The value <bcp14>MUST</bcp14> be one of the IANA-registered JSCalendar Version values for the "version" property.</t>
               <t>For version "2.0" or higher, a Group object <bcp14>MUST</bcp14> set the "version" property, but the Event or Task objects that are values in its "entries" property <bcp14>MUST NOT</bcp14> set the "version" property. In contrast, an Event or Task object that is represented without an enclosing Group object <bcp14>MUST</bcp14> set the "version" property, unless specified otherwise. This is to prevent conflicting version values from occurring in JSCalendar data.</t>
-              <t>For version "1.0", the "version" property is optional.</t>
+              <t>A Group object, or an Event or Task object that is represented without an enclosing Group object, that does not have a "version" property is version "1.0".</t>
             </dd>
           </dl>
         </section>
@@ -651,7 +650,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-mainLocationId">
           <name>mainLocationId</name>
           <dl spacing="normal">
-            <dt>mainLocationId: String (optional).</dt>
+            <dt>mainLocationId: Id (optional).</dt>
             <dd>
               <t>This indicates which of the multiple entries in the "locations" property can be considered the main location for the event or task. A client implementation <bcp14>MAY</bcp14> choose to display this location more prominently. The main location is undefined if this property is not set. If this property is set, then its value <bcp14>MUST</bcp14> match a key in the "locations" property and the "name" property of that main Location object <bcp14>MUST</bcp14> be set.</t>
             </dd>
@@ -943,7 +942,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <dl newline="false">
                   <dt>yearly:</dt>
                   <dd>
-                    <t>every second from midnight on the first day of a year (inclusive) to midnight the first day of the following year (exclusive).</t>
+                    <t>every second from midnight on the first day of a year (inclusive) to midnight on the first day of the following year (exclusive).</t>
                     <t>If "skip" is not "omit", the calendar system has leap months, and there is a "byMonth" property, generate candidates for the leap months, even if they don't occur in this year. A leap month that does not occur in this year is presumed to have the same number of days as the month it will be changed to by the "skip" behavior (see below), unless the following rule applies.</t>
                     <t>If "skip" is not "omit" and there is a "byMonthDay" property, presume each month has the maximum number of days any month may have in this calendar system when generating candidates, even if it's more than this month actually has.</t>
                   </dd>
@@ -1135,7 +1134,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>organizerCalendarAddress: String (optional).</dt>
             <dd>
-              <t>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular organizer, even across different calendaring objects. If this property is set then at least one Participant object in the "participants" property <bcp14>MUST</bcp14> have the "calendarAddress" property set.</t>
+              <t>This is a URI as defined by <xref target="RFC3986"/> or any other IANA-registered form for a URI. It is the same as the CAL-ADDRESS value of an iCalendar <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> — it globally identifies a particular organizer, even across different calendaring objects. If this property is set, then at least one Participant object in the "participants" property <bcp14>MUST</bcp14> have the "calendarAddress" property set.</t>
             </dd>
           </dl>
         </section>
@@ -1279,8 +1278,9 @@ jsversion = 1*DIGIT "." 1*DIGIT
                     <dt>start:</dt>
                     <dd>triggers the alert relative to the start of the calendar object</dd>
                     <dt>end:</dt>
-                    <dd>triggers the alert relative to the end/due time of the calendar object</dd>
+                    <dd>triggers the alert relative to the end time of an event or due time of a task</dd>
                   </dl>
+                  <t>For an alert on a Task, the value "start" <bcp14>MUST NOT</bcp14> be used (including by omitting the property, as "start" is the default) if the Task does not have a "start" property, and the value "end" <bcp14>MUST NOT</bcp14> be used if the Task does not have a "due" property.</t>
                 </dd>
               </dl>
               <t>An "AbsoluteTrigger" object has the following properties:</t>
@@ -1502,7 +1502,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       <t>The following examples illustrate several aspects of the JSCalendar data model and format. The examples may omit mandatory or additional properties, which is indicated by a placeholder property with key "...". While most of the examples use calendar event objects, they are also illustrative for tasks.</t>
       <section anchor="example-simple-event">
         <name>Simple Event</name>
-        <t>This example illustrates a simple one-time event. It specifies a one-time event that begins on January 15, 2020 at 1 pm New York local time and ends after 1 hour.</t>
+        <t>This example illustrates a simple one-time event. It specifies a one-time event that begins on January 15, 2020 at 1pm New York local time and ends after 1 hour.</t>
         <sourcecode name="" type="json">
 {
   "@type": "Event",
@@ -1575,7 +1575,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       </section>
       <section anchor="example-due-task">
         <name>Task with a Due Date</name>
-        <t>This example illustrates a task with a due date. It is a reminder to buy groceries before 6 pm Vienna local time on January 19, 2020. The calendar user expects to need 1 hour for shopping.</t>
+        <t>This example illustrates a task with a due date. It is a reminder to buy groceries before 6pm Vienna local time on January 19, 2020. The calendar user expects to need 1 hour for shopping.</t>
         <sourcecode name="" type="json">
 {
   "...": "",
@@ -1611,7 +1611,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       </section>
       <section anchor="example-floating-event">
         <name>Floating-Time Event (with Recurrence)</name>
-        <t>This example illustrates the use of floating time. Since January 1, 2020, a calendar user blocks 30 minutes every day to practice yoga at 7 am local time in whatever time zone the user is located on that date.</t>
+        <t>This example illustrates the use of floating time. Since January 1, 2020, a calendar user blocks 30 minutes every day to practice yoga at 7am local time in whatever time zone the user is located on that date.</t>
         <sourcecode name="" type="json">
 {
   "...": "",
@@ -1661,7 +1661,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       </section>
       <section anchor="example-recurring-overrides">
         <name>Recurring Event with Overrides</name>
-        <t>This example illustrates the use of recurrence overrides. A math course at a university is held for the first time on January 8, 2020 at 9 am London time and occurs every week until June 24, 2020. Each lecture lasts for one hour and 30 minutes and is located at the Mathematics department. This event has exceptional occurrences: at the last occurrence of the course is an exam, which lasts for 2 hours and starts at 10 am. Also, the location of the exam differs from the usual location. On April 1, no course is held. On January 7 at 2 pm, there is an optional introduction course, which occurs before the first regular lecture.</t>
+        <t>This example illustrates the use of recurrence overrides. A math course at a university is held for the first time on January 8, 2020 at 9am London time and occurs every week until June 24, 2020. Each lecture lasts for one hour and 30 minutes and is located at the Mathematics department. This event has exceptional occurrences: at the last occurrence of the course is an exam, which lasts for 2 hours and starts at 10am. Also, the location of the exam differs from the usual location. On April 1, no course is held. On January 7 at 2pm, there is an optional introduction course, which occurs before the first regular lecture.</t>
         <sourcecode name="" type="json">
 {
   "...": "",
@@ -1755,7 +1755,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       </section>
       <section anchor="example-recurring-participants">
         <name>Recurring Event with Participants</name>
-        <t>This example illustrates scheduled events. A team meeting occurs every week since January 8, 2020 at 9 am Johannesburg time. The event owner also chairs the event. Participants meet in a virtual meeting room. A participant has accepted the invitation, but, on March 4, 2020, they are unavailable and declined participation for this occurrence.</t>
+        <t>This example illustrates scheduled events. A team meeting occurs every week since January 8, 2020 at 9am Johannesburg time. The event owner also chairs the event. Participants meet in a virtual meeting room. A participant has accepted the invitation, but, on March 4, 2020, they are unavailable and declined participation for this occurrence.</t>
         <sourcecode name="" type="json">
 {
   "...": "",
@@ -1810,7 +1810,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <name>Expanding Recurrences</name>
         <t>A recurrence rule may produce infinite occurrences of an event. Implementations <bcp14>MUST</bcp14> handle expansions carefully to prevent accidental or deliberate resource exhaustion.</t>
         <t>Conversely, a recurrence rule may be specified that does not expand to anything. It is not always possible to tell this through static analysis of the rule, so implementations <bcp14>MUST</bcp14> be careful to avoid getting stuck in infinite loops or otherwise exhausting resources while searching for the next occurrence.</t>
-        <t>Events recur in the event's time zone. If the user is in a different time zone, daylight saving transitions may cause an event that normally occurs at, for example, 9 am to suddenly shift an hour earlier. This may be used in an attempt to cause a participant to miss an important meeting. User agents must be careful to translate date-times correctly between time zones and may wish to call out unexpected changes in the time of a recurring event.</t>
+        <t>Events recur in the event's time zone. If the user is in a different time zone, daylight saving transitions may cause an event that normally occurs at, for example, 9am to suddenly shift an hour earlier. This may be used in an attempt to cause a participant to miss an important meeting. User agents must be careful to translate date-times correctly between time zones and may wish to call out unexpected changes in the time of a recurring event.</t>
       </section>
       <section anchor="json-parsing">
         <name>JSON Parsing</name>
@@ -1842,7 +1842,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
     </section>
     <section anchor="iana-considerations">
       <name>IANA Considerations</name>
-      <t>IANA has created the "JSCalendar Properties", "JSCalendar Types" and "JSCalendar Enum Values" registries, originally defined in <xref target="RFC8984"/>. This document updates some of the registry definitions and registry contents. The following sections redefine all IANA considerations, even if they are unchanged.</t>
+      <t>IANA has created the "JSCalendar Properties", "JSCalendar Types", and "JSCalendar Enum Values" registries, originally defined in <xref target="RFC8984"/>. This document updates some of the registry definitions and registry contents. The following sections redefine all IANA considerations, even if they are unchanged.</t>
       <t>[RFC Editor: please replace "RFC XXXX" with the RFC number of this document and remove this note.]</t>
       <section anchor="iana-mime-type" numbered="true" toc="default">
         <name>Media Type Registration</name>
@@ -1960,6 +1960,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>Highest Minor Version:</dt>
             <dd>The maximum numeric value of a JSCalendar minor version for the given major version. It <bcp14>MUST</bcp14> be zero or a positive integer. All numbers less than or equal to this value are valid minor version values for the given major version.
             </dd>
+            <dt>Reference:</dt>
+            <dd>This is a reference to the specification that defines the highest minor version for the given major version.</dd>
           </dl>
         </section>
         <section anchor="iana-version-registry-contents" numbered="true" toc="default">
@@ -2719,7 +2721,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Context</dt>
               <dd>Event, Task, Participant</dd>
               <dt>Reference/Description</dt>
-              <dd><xref target="prop-description"/>, <xref target="prop-participants"/></dd>
+              <dd><xref target="prop-descriptionContentType"/>, <xref target="prop-participants"/></dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
             </dl>
@@ -2727,6 +2729,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl spacing="compact">
               <dt>Property Name</dt>
               <dd>display</dd>
+              <dt>Property Type</dt>
+              <dd>String[Boolean]</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="type-Link"/>
@@ -3090,7 +3094,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl spacing="compact">
               <dt>Property Name</dt>
               <dd>recurrenceOverrides</dd>
-              <dt>Property Content</dt>
+              <dt>Property Context</dt>
               <dd>Event, Task</dd>
               <dt>Reference/Description</dt>
               <dd>
@@ -3363,6 +3367,24 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <t>IANA will add the following entries in the JSCalendar Properties Registry. Referenced section numbers refer to this document, unless otherwise noted.</t>
             <dl spacing="compact">
               <dt>Property Name</dt>
+              <dd>@type</dd>
+              <dt>Property Context</dt>
+              <dd>TimeZone, TimeZoneRule</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>No</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
               <dd>calendarAddress</dd>
               <dt>Property Type</dt>
               <dd>String</dd>
@@ -3393,7 +3415,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Intended Usage</dt>
               <dd>reserved</dd>
               <dt>Since Version</dt>
-              <dd>2.0</dd>
+              <dd>1.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -3437,7 +3459,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>mainLocationId</dd>
               <dt>Property Type</dt>
-              <dd>String</dd>
+              <dd>Id</dd>
               <dt>Property Context</dt>
               <dd>Event, Task</dd>
               <dt>Reference/Description</dt>
@@ -3466,6 +3488,24 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dd>common</dd>
               <dt>Since Version</dt>
               <dd>2.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>No</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>recurrenceOverrides</dd>
+              <dt>Property Context</dt>
+              <dd>TimeZoneRule</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -3919,21 +3959,23 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <t>The registry policy is defined in <xref target="iana-registry-policy" format="default"/>.</t>
         <section anchor="iana-enum-registry-registry-template" numbered="true" toc="default">
           <name>"JSCalendar Enum Values" Registry Property Template</name>
-          <t>This template is for adding a subregistry for a new enumerable property to the "JSCalendar Enum" registry. To add or amend enumerated values for a new or existing subregistry use the template in <xref target="iana-enum-registry-value-template"/>.</t>
+          <t>This template is for adding a subregistry for a new enumerable property to the "JSCalendar Enum Values" registry. To add or amend enumerated values for a new or existing subregistry use the template in <xref target="iana-enum-registry-value-template"/>.</t>
           <dl newline="false">
             <dt>Property Name:</dt>
             <dd>These are the name(s) of the property or properties where these values may be used. This <bcp14>MUST</bcp14> be registered in the "JSCalendar Properties" registry.</dd>
             <dt>Context:</dt>
             <dd>This is the list of allowed object types where the property or properties may appear, as registered in the "JSCalendar Properties" registry. This disambiguates where there may be two distinct properties with the same name in different contexts.</dd>
+            <dt>Reference:</dt>
+            <dd>This is the RFC number or other specification where the enumerated property is defined.</dd>
             <dt>Change Controller:</dt>
-            <dd> ("IETF" for properties defined in RFCs from the IETF stream).</dd>
+            <dd>This is who may request a change to this entry's definition ("IETF" for RFCs from the IETF stream).</dd>
             <dt>Initial Contents:</dt>
             <dd>This is the initial list of defined values for this enum, using the template defined in <xref target="iana-enum-registry-value-template" format="default"/>. A subregistry will be created with these values for this property name/context tuple.</dd>
           </dl>
         </section>
         <section anchor="iana-enum-registry-value-template" numbered="true" toc="default">
           <name>"JSCalendar Enum Values" Registry Value Template</name>
-          <t>This template is for adding a new enum value to a subregistry in the JSCalendar Enum registry.</t>
+          <t>This template is for adding a new enum value to a subregistry in the "JSCalendar Enum Values" registry.</t>
           <dl newline="false">
             <dt>Enum Value:</dt>
             <dd>This is the verbatim value of the enum.</dd>
@@ -3945,6 +3987,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>The JSCalendar version on which the enum value definition is based. The version <bcp14>MUST</bcp14> be one of the allowed values of the "version" property in the "JSCalendar Version" registry (see <xref target="tab-iana-version-registry"/>).</dd>
             <dt>Until Version:</dt>
             <dd>The JSCalendar version after which the enum value was obsoleted; therefore, it <bcp14>MUST NOT</bcp14> be used in later versions. The Until Version value either <bcp14>MUST NOT</bcp14> be set or <bcp14>MUST</bcp14> be one of the allowed values of the "version" property in the "JSCalendar Version" registry (see <xref target="tab-iana-version-registry"/>).</dd>
+            <dt>Change Controller:</dt>
+            <dd>This is who may request a change to this entry's definition ("IETF" for RFCs from the IETF stream).</dd>
           </dl>
         </section>
         <section anchor="iana-enum-registry-updated-contents">
@@ -4326,20 +4370,16 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5546.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5646.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5870.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6638.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6350.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6838.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6901.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7493.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7529.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7809.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8126.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8288.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8984.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9073.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9074.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9253.xml"/>
       </references>
       <references>
         <name>Informative References</name>
@@ -4412,6 +4452,11 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9499.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8607.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9553.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9253.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9074.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9073.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7809.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6638.xml"/>
       </references>
     </references>
     <section anchor="differences-from-rfc8984">
@@ -4554,7 +4599,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt><strong>useDefaultAlerts</strong>:</dt>
               <dd>
                 <t>No equivalent element exists in iCalendar and no consensus for default alarms in CalDAV and iCalendar was found at IETF as part of <xref target="RFC9074"/>.</t>
-                <t>See <xref target="RFC8984" section="4.4.1" sectionFormat="of"/>.</t>
+                <t>See <xref target="RFC8984" section="4.5.1" sectionFormat="of"/>.</t>
               </dd>
             </dl>
             <!-- Participant.scheduleSequence -->
@@ -4674,7 +4719,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt><strong>excluded</strong>:</dt>
               <dd>
                 <t>This property name already was defined for internal use only in the "recurrenceOverrides" property, but registering it for common use had made it appear as being a regular property. Making this a reserved property is to help clarify its purpose. <xref target="prop-recurrenceOverrides"/> has been updated accordingly, and <xref target="reserved-properties"/> defines where this property is allowed to be set.</t>
-                <t>See <xref target="RFC8984" section="4.3.4" sectionFormat="of"/>.</t>
+                <t>See <xref target="RFC8984" section="4.3.6" sectionFormat="of"/>.</t>
               </dd>
             </dl>
           </section>
@@ -4773,6 +4818,14 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
             </dd>
           </dl>
+          <!-- OffsetTrigger.relativeTo -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>OffsetTrigger.relativeTo</strong>:</dt>
+            <dd>
+              <t>The original definition did not define the semantics of an alert relative to the start or due time of a Task that does not have the respective "start" or "due" property. This was incompatible with the <xref target="RFC5545" section="3.8.6.3" sectionFormat="parens">TRIGGER property</xref>, which requires the DTSTART property to be present in the VTODO component when the alarm triggers relative to the start, and the DUE property (or the DTSTART and DURATION properties) when it triggers relative to the end. It now forbids the "start" value for a Task without a "start" property, and the "end" value for a Task without a "due" property.</t>
+              <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
           <!-- misc Participant -->
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.delegatedFrom</strong>,
@@ -4787,7 +4840,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
           </dl>
           <!-- misc Participant -->
           <dl newline="true" spacing="normal">
-            <dt><strong>Participant.expectReply</strong>,
+            <dt><strong>Participant.email</strong>,
+            <strong>Participant.expectReply</strong>,
             <strong>Participant.kind</strong>,
             <strong>Participant.participationStatus</strong>,
             <strong>Participant.progress</strong>,
@@ -4844,6 +4898,14 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="appendix-new-properties">
           <name>New Properties</name>
           <t>The following new properties were defined:</t>
+          <!-- extra -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>extra</strong>:</dt>
+            <dd>
+              <t>This reserved property provides implementors with a property name that is certain to never occur in any JSCalendar object.</t>
+              <t>See <xref target="prop-extra" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
           <!-- mainLocationId -->
           <dl newline="true" spacing="normal">
             <dt><strong>mainLocationId</strong>:</dt>
@@ -4920,6 +4982,14 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="appendix-updated-types">
           <name>Updated Types</name>
           <t>The following type definitions were updated:</t>
+          <!-- PatchObject -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>PatchObject</strong>:</dt>
+            <dd>
+              <t>The original definition forbade a pointer from referencing inside an array, so changing any member of an array required replacing the complete array. It now allows patching the members of an existing array, although members still cannot be inserted or removed. This matches the definition of the PatchObject type in <xref target="RFC9553">JSContact</xref>.</t>
+              <t>See <xref target="type-PatchObject" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
           <!-- Duration, LocalDateTime, UTCDateTime -->
           <dl newline="true" spacing="normal">
             <dt><strong>Duration, LocalDateTime, UTCDateTime</strong>:</dt>
