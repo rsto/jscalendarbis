@@ -5,7 +5,7 @@
 <!ENTITY nbhy "&#8209;">
 <!ENTITY wj "&#8288;">
 ]>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-icalendar-jscalendar-extensions-08" obsoletes="" updates="5545,7986,9073" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-icalendar-jscalendar-extensions-09" obsoletes="" updates="5545,7986,9073" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <front>
     <title abbrev="iCalendar JSCalendar Extensions">iCalendar Format Extensions for JSCalendar</title>
     <author initials="R." surname="Stepanek" fullname="Robert Stepanek">
@@ -22,7 +22,7 @@
         <email>rsto@fastmailteam.com</email>
       </address>
     </author>
-    <date year="2026" month="September" day="17"/>
+    <date year="2026" month="October" day="29"/>
     <area>art</area>
     <workgroup>calext</workgroup>
     <keyword>calendars</keyword>
