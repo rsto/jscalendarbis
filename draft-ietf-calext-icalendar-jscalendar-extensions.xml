@@ -29,7 +29,7 @@
     <keyword>iCalendar</keyword>
     <keyword>JSCalendar</keyword>
     <abstract>
-      <t>This document defines a set of new elements for iCalendar and extends the use of existing ones. Their main purpose is to extend the semantics of iCalendar with elements defined in JSCalendar, but the new definitions also aim to be useful within just the iCalendar format.  This document updates RFC 5545 ("iCalendar") and its extension documents RFC 7986 and RFC 9073.</t>
+      <t>This document defines a set of new elements for iCalendar and extends the use of existing ones. Their main purpose is to extend the semantics of iCalendar with elements defined in JSCalendar, but the new definitions also aim to be useful within just the iCalendar format.  This document updates RFC 5545, RFC 7986, and RFC 9073.</t>
     </abstract>
   </front>
   <middle>
@@ -79,7 +79,8 @@
             <t>This property is defined by the following notation:</t>
             <sourcecode name=""><![CDATA[
 color       = "COLOR" colorparam ":" text CRLF
-              ; Value is CSS3 color name or CSS3 six-digit RGB hex value.
+              ; Value is a CSS3 color name or
+              ; a CSS3 six-digit RGB hex value.
 
 colorparam     = *(";" other-param)
 ]]></sourcecode>
