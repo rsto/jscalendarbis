@@ -135,7 +135,7 @@ locprop /= *(
           <dd>This property can be specified in a "VLOCATION" calendar component.</dd>
           <dt>Description:</dt>
           <dd>
-            <t>This property represents spatial (geographic) coordinates. In contrast to the the "GEO" property, this property allows to represent not only latitude and longitude but also altitude of a location. In addition, it supports to indicate the uncertainty of the coordinates, is interoperable with other internet standards making use of spatial information, and is extensible, such as for use with other coordinate reference systems. The property value <bcp14>MUST</bcp14> a URI in the "geo" URI scheme, as defined in <xref target="RFC5870"/> and updates.</t>
+            <t>This property represents spatial (geographic) coordinates. In contrast to the the "GEO" property, this property allows to represent not only latitude and longitude but also altitude of a location, and to indicate the uncertainty of the coordinates. It improves interoperability with other internet standards making use of spatial information, and is extensible, such as for use with other coordinate reference systems. The property value <bcp14>MUST</bcp14> a URI in the "geo" URI scheme, as defined in <xref target="RFC5870"/> and updates.</t>
           </dd>
           <dt>Format Definition:</dt>
           <dd>
