@@ -240,7 +240,7 @@ ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:jsmith@example.com
     </section>
     <section anchor="security-considerations" numbered="true" toc="default">
       <name>Security Considerations</name>
-      <t>This specification extends <xref target="RFC5545"/>.  The same security considerations as outlined in <xref target="RFC5545" sectionFormat="of" section="7"/> apply.</t>
+      <t>This specification extends <xref target="RFC5545"/>.  The same security considerations as outlined in <xref target="RFC5545" sectionFormat="of" section="7"/> apply. <xref target="RFC7986"/> describes security considerations for the COLOR property.</t>
       <t>The OWNER participation role (<xref target="param-role-owner"/>) is indicative only: its presence in an iCalendar object does not by itself grant any authorization. Implementations <bcp14>MUST NOT</bcp14> grant a calendar user the ability to make changes to a calendar object based solely on the presence of this role; authorization is determined by the calendaring exchange protocol in use. In the context of <xref target="I-D.ietf-jmap-calendars">JMAP Calendars</xref>, this role is equivalent to the "owner" role of the Participant object. Its semantics in the context of other calendaring exchange protocols, such as <xref target="RFC4791">CalDAV</xref>, are not defined by this document.</t>
     </section>
     <section anchor="iana">
