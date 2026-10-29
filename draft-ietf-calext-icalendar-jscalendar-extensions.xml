@@ -104,7 +104,7 @@ COLOR:#ffd755
       <name>Updated Components</name>
       <section anchor="comp-vlocation">
         <name>VLOCATION component</name>
-        <t>This document updates the definition of the "VLOCATION" component. It allows to specify the newly defined <xref target="prop-coordinates">"COORDINATES" property</xref> at most once in a "VLOCATION" component. It appends the following to the "Format Definition" of the "VLOCATION" component, defined in <xref target="RFC9073" section="7.2"/>:</t>
+        <t>This document updates the definition of the "VLOCATION" component to allow setting the newly defined <xref target="prop-coordinates">"COORDINATES" property</xref> at most once in the component. To achieve this, the following additions are made to the "Format Definition" of the "VLOCATION" component, defined in <xref target="RFC9073" section="7.2"/>:</t>
         <sourcecode name=""><![CDATA[
 locprop /= *(
             ;
