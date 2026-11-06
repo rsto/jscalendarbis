@@ -1143,7 +1143,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>sentBy: String (optional).</dt>
             <dd>
-              <t>This is the email address in the "From" header of the email in which this calendar object was received. This is only relevant if the calendar object is received via iMIP or as an attachment to a message. The value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/>. If this property is set, then the "organizerCalendarAddress" property <bcp14>MUST</bcp14> be set.</t>
+              <t>This is the email address in the "From" header of the email in which this calendar object was received. This is only relevant if the calendar object is received via iMIP or as an attachment to a message. The value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/> and extended in <xref target="RFC6532" section="3.2"/>. If this property is set, then the "organizerCalendarAddress" property <bcp14>MUST</bcp14> be set.</t>
             </dd>
           </dl>
         </section>
@@ -1162,7 +1162,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>name: String (optional).</dt>
             <dd>This is the display name of the participant (e.g., "Joe Bloggs").</dd>
             <dt>email: String (optional).</dt>
-            <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/>. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set.</dd>
+            <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/> and extended in <xref target="RFC6532" section="3.2"/>. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set.</dd>
             <dt>description: String (optional).</dt>
             <dd>This is a description of this participant. For example, this may include more information about their role in the event or how best to contact them.</dd>
             <dt>descriptionContentType: String (optional).</dt>
@@ -1221,7 +1221,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>If true, the organizer is expecting the participant to notify them of their participation status. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set.</dd>
             <dt>sentBy: String (optional).</dt>
             <dd>
-              <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set. This <bcp14>SHOULD</bcp14> only be set if the email address is different from that in the mailto URI of this participant's "calendarAddress" property (i.e., the response was received from a different address than the one the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/>.</t>
+              <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set. This <bcp14>SHOULD</bcp14> only be set if the email address is different from that in the mailto URI of this participant's "calendarAddress" property (i.e., the response was received from a different address than the one the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/> and extended in <xref target="RFC6532" section="3.2"/>.</t>
             </dd>
             <dt>delegatedTo: String[Boolean] (optional).</dt>
             <dd>This is the set of participants that this participant has delegated their participation to. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be a URI according to the definition of the "calendarAddress" property. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegates, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
@@ -4371,6 +4371,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5646.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5870.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6350.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6532.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6838.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6901.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7493.xml"/>
@@ -4789,7 +4790,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl newline="true" spacing="normal">
             <dt><strong>{Event|Task}.sentBy</strong>:</dt>
             <dd>
-              <t>The property now requires the "organizerCalendarAddress" property to be set.</t>
+              <t>The property now requires the "organizerCalendarAddress" property to be set. It also supports internationalized email addresses.</t>
               <t>See <xref target="prop-sentBy" sectionFormat="of"/>.</t>
             </dd>
           </dl>
@@ -4848,7 +4849,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <strong>Participant.sentBy</strong>:
           </dt>
             <dd>
-              <t>The original definitions were incompatible with iCalendar: they did not require the (now reserved) "sendTo" property to be set, but their equivalent iCalendar parameters require an ATTENDEE property. They now require the "calendarAddress" property to be set.</t>
+              <t>The original definitions were incompatible with iCalendar: they did not require the (now reserved) "sendTo" property to be set, but their equivalent iCalendar parameters require an ATTENDEE property. They now require the "calendarAddress" property to be set. The email and sentBy properties now also support internationalized email addresses.</t>
               <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
             </dd>
           </dl>
