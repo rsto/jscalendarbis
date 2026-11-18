@@ -334,7 +334,7 @@ signed-duration = ["+" / "-"] duration
               <t>Links with a rel of "enclosure" <bcp14>MUST</bcp14> be considered by the client to be attachments for download or documents associated with the calendar object.</t>
               <t>Links with a rel of "describedby" <bcp14>MUST</bcp14> be considered by the client to be alternative representations of the calendar object.</t>
               <t>Links with a rel of "icon" <bcp14>MUST</bcp14> be considered by the client to be images that it may use when presenting the calendar data to a user. The "display" property may be set to indicate the purpose of this image.</t>
-          </dd>
+            </dd>
             <dt>display: String[Boolean] (optional).</dt>
             <dd>
               <t>This is a set of intended purposes of a link to an image. If set, the "rel" property <bcp14>MUST</bcp14> be set to "icon". The keys <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
@@ -1030,7 +1030,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-recurrenceOverrides">
           <name>recurrenceOverrides</name>
           <dl spacing="normal">
-              <dt>recurrenceOverrides: LocalDateTime[PatchObject] (optional; default: {}).</dt>
+            <dt>recurrenceOverrides: LocalDateTime[PatchObject] (optional; default: {}).</dt>
             <dd>
               <t>This maps recurrence ids (the date-time produced by the recurrence rule) to the overridden properties of the recurrence instance.</t>
               <t>If the recurrence id does not match a date-time from the recurrence rule (or no rule is specified), it is to be treated as an additional occurrence (like an RDATE from iCalendar). The patch object may often be empty in this case.</t>
