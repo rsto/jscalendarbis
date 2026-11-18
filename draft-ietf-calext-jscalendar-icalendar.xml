@@ -197,7 +197,7 @@ SUMMARY:he
         <section anchor="notation-conversion">
           <name>Conversion Examples</name>
           <t>A conversion example depicts iCalendar data together with the JSCalendar data it converts to.  The iCalendar data follows the notation defined in <xref target="notation-icalendar"/>, the JSCalendar data follows the notation defined in <xref target="notation-jscalendar"/>.</t>
-          <t>The iCalendar data is preceded by a line containing just <tt>---&#160;iCalendar:</tt>, and the JSCalendar data is preceded by a line containing just <tt>---&#160;JSCalendar:</tt>.  These marker lines are not part of the example data.  Empty lines are not part of the example data either and are ignored.  <xref target="example-notation-conversion"/> illustrates this.</t>
+          <t>The iCalendar data is preceded by a line containing just <tt>--- iCalendar:</tt>, and the JSCalendar data is preceded by a line containing just <tt>--- JSCalendar:</tt>.  These marker lines are not part of the example data.  Empty lines are not part of the example data either and are ignored.  <xref target="example-notation-conversion"/> illustrates this.</t>
           <figure anchor="example-notation-conversion">
             <name>Example for the notation of a conversion example</name>
             <sourcecode><![CDATA[
@@ -654,8 +654,7 @@ END:PARTICIPANT
               <tr>
                 <td>ACTION</td>
                 <td>action</td>
-                <td>
-                  <xref target="ical-prop-action" format="counter"/>, and remarks below
+                <td><xref target="ical-prop-action" format="counter"/>, and remarks below
                 </td>
               </tr>
               <tr>
