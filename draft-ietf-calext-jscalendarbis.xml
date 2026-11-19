@@ -4014,7 +4014,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         </section>
         <section anchor="iana-enum-registry-progress-participant">
           <name>Additions to the "JSCalendar Enum Values" Registry</name>
-          <t>IANA will add the following entry to the "JSCalendar Enum Values" registry entry:</t>
+          <t>IANA will add the following entry to the "JSCalendar Enum Values" registry:</t>
           <dl spacing="compact">
             <dt>Property Name</dt>
             <dd>progress</dd>
