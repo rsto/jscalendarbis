@@ -4857,7 +4857,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.progress</strong>:</dt>
             <dd>
-              <t>The original definition was incompatible with iCalendar. It allowed the "progress" property value to be "cancelled", but this is not a supported PARTSTAT parameter value of an ATTENDEE property in a VTODO component. The new definition only supports the "progress" property values "in-process", "completed" and "failed".</t>
+              <t>The original definition was incompatible with iCalendar. It allowed the "progress" property value to be "cancelled", but this is not a supported PARTSTAT parameter value of an ATTENDEE property in a VTODO component. It also allowed the "progress" property value to be "needs-action", which is now expressed by the "participationStatus" property value "needs-action" instead: the "progress" property may only be set if the "participationStatus" property value is "accepted". The new definition only supports the "progress" property values "in-process", "completed" and "failed".</t>
               <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
             </dd>
           </dl>
