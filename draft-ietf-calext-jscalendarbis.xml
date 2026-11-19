@@ -4038,7 +4038,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>Intended Usage</dt>
             <dd>common</dd>
             <dt>Since Version</dt>
-            <dd>2.0</dd>
+            <dd>1.0</dd>
             <dt>Until Version</dt>
             <dd/>
             <dt>Change Controller</dt>
@@ -4054,7 +4054,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>Intended Usage</dt>
             <dd>common</dd>
             <dt>Since Version</dt>
-            <dd>2.0</dd>
+            <dd>1.0</dd>
             <dt>Until Version</dt>
             <dd/>
             <dt>Change Controller</dt>
@@ -4070,9 +4070,41 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>Intended Usage</dt>
             <dd>common</dd>
             <dt>Since Version</dt>
-            <dd>2.0</dd>
+            <dd>1.0</dd>
             <dt>Until Version</dt>
             <dd/>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Enum Value</dt>
+            <dd>needs-action</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="appendix-updated-properties"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>obsolete</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd>1.0</dd>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
+          </dl>
+          <dl spacing="compact">
+            <dt>Enum Value</dt>
+            <dd>cancelled</dd>
+            <dt>Reference/Description</dt>
+            <dd>
+              <xref target="appendix-updated-properties"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>obsolete</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd>1.0</dd>
             <dt>Change Controller</dt>
             <dd>IETF</dd>
           </dl>
