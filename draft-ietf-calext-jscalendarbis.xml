@@ -2708,7 +2708,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>description</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task, Participant</dd>
+              <dd>Event, Task, Group, Participant</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-description"/>, <xref target="prop-participants"/></dd>
               <dt>Since Version</dt>
@@ -2719,7 +2719,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>descriptionContentType</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task, Participant</dd>
+              <dd>Event, Task, Group, Participant</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-descriptionContentType"/>, <xref target="prop-participants"/></dd>
               <dt>Since Version</dt>
