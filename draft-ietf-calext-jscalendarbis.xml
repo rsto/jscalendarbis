@@ -581,7 +581,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>method: String (optional).</dt>
             <dd>
-              <t>This is the iTIP <xref target="RFC5546"/> method, in lowercase. This <bcp14>MUST</bcp14> only be present if the JSCalendar object represents an iTIP scheduling message.</t>
+              <t>This is the iTIP <xref target="RFC5546"/> method. The value <bcp14>MUST</bcp14> be the name of a method registered in the iCalendar "Methods" registry (<xref target="RFC5545" section="8.3.12"/>), in lowercase. This <bcp14>MUST</bcp14> only be present if the JSCalendar object represents an iTIP scheduling message.</t>
             </dd>
           </dl>
         </section>
