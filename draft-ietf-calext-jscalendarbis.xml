@@ -110,7 +110,7 @@
           interpreted as described in <xref target="RFC8259" section="1"/>. All JSCalendar data <bcp14>MUST</bcp14> be
           valid according to the constraints given in <xref target="RFC7493">I-JSON</xref>. Unless otherwise noted, all
           member names in JSON objects and all string values are case-sensitive. Within the context of JSON objects, the
-          term "key" is synonymous with "member name" as defined in <xref target="RFC8259" section="1"/>.
+          term "key" is synonymous with the name of an object member as defined in <xref target="RFC8259" section="4"/>.
         </t>
         <section anchor="objects-and-properties" numbered="true" toc="default">
           <name>Objects and Properties</name>
