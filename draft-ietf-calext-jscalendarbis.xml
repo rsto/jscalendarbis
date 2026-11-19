@@ -457,7 +457,7 @@ v-name = 1*(WSP / "!" / %x23-2e / %x30-7d / NON-ASCII)
       </section>
       <section anchor="versioning">
         <name>Versioning</name>
-        <t>A JSCalendar <xref target="jsgroup">Group</xref>, <xref target="jsevent">Event</xref>, or <xref target="jstask">Task</xref> indicates which JSCalendar version its IANA-registered properties and values are based on. The version is indicated both in the <xref target="prop-version">"version"</xref> property of a JSCalendar object and in the <xref target="iana-mime-type">version</xref> parameter of the JSCalendar media type. All IANA-registered elements indicate the version at which they were introduced or obsoleted.</t>
+        <t>A JSCalendar <xref target="jsgroup">Group</xref>, <xref target="jsevent">Event</xref>, or <xref target="jstask">Task</xref> indicates which JSCalendar version its IANA-registered properties and values are based on. The version is indicated in the <xref target="prop-version">"version"</xref> property of a JSCalendar object. All IANA-registered elements indicate the version at which they were introduced or obsoleted.</t>
         <t>A JSCalendar version consists of a major and minor version.</t>
         <t>Differing major version values indicate substantial differences in JSCalendar semantics and format. Implementations <bcp14>MUST</bcp14> be prepared for property definitions and other JSCalendar elements that differ in a backwards-incompatible manner.
         </t>
@@ -1850,7 +1850,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       <t>[RFC Editor: please replace "RFC XXXX" with the RFC number of this document and remove this note.]</t>
       <section anchor="iana-mime-type" numbered="true" toc="default">
         <name>Media Type Registration</name>
-        <t><xref target="RFC8984"/> defined a media type for use with JSCalendar data formatted in JSON. IANA will update the registration of this media type to the following definition, which adds the optional "version" parameter.</t>
+        <t><xref target="RFC8984"/> defined a media type for use with JSCalendar data formatted in JSON. IANA will update the registration of this media type to refer to this document instead of <xref target="RFC8984"/>. The definition of the media type is unchanged:</t>
         <dl newline="false" spacing="normal">
           <dt>Type name:</dt>
           <dd>application</dd>
@@ -1863,22 +1863,18 @@ jsversion = 1*DIGIT "." 1*DIGIT
           allowed parameter values correspond to the "@type" property of the JSON-formatted
         JSCalendar object in the body:</t>
             <dl newline="false" spacing="normal">
-              <dt>event:</dt>
+              <dt>"event":</dt>
               <dd>The "@type" property value <bcp14>MUST</bcp14> be "Event".</dd>
-              <dt>task:</dt>
+              <dt>"task":</dt>
               <dd>The "@type" property value <bcp14>MUST</bcp14> be "Task".</dd>
-              <dt>group:</dt>
+              <dt>"group":</dt>
               <dd>The "@type" property value <bcp14>MUST</bcp14> be "Group".</dd>
             </dl>
             <t>No other parameter values are allowed. The parameter <bcp14>MUST NOT</bcp14> occur more than
           once.</t>
           </dd>
           <dt>Optional parameters:</dt>
-          <dd>
-            <t>version</t>
-            <t>This parameter conveys the version of the JSCalendar data in the body part. It <bcp14>MUST NOT</bcp14> occur more than once. If this parameter is set, then the values of all JSCalendar <xref target="prop-version">"version"</xref> properties in the body part <bcp14>MUST</bcp14> match the parameter value.
-            </t>
-          </dd>
+          <dd>none</dd>
           <dt>Encoding considerations:</dt>
           <dd>This is the same as the encoding considerations of application/json, as specified in <xref target="RFC8259" sectionFormat="of" section="11"/>.</dd>
           <dt>Security considerations:</dt>
