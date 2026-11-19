@@ -4653,8 +4653,16 @@ jsversion = 1*DIGIT "." 1*DIGIT
             </dl>
           </section>
           <section toc="exclude">
-            <name>Scheduling Extensions for CalDAV and iTIP</name>
-            <t>The following common use properties became reserved for future JSCalendar extensions of <xref target="RFC6638">Scheduling Extensions for CalDAV</xref> and <xref target="RFC5546">iTIP</xref>:</t>
+            <name>Reserved for Future RFCs</name>
+            <t>The following properties became reserved for some future JSCalendar extension RFCs:</t>
+            <!-- localizations -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>localizations</strong>:</dt>
+              <dd>
+                <t>This requires further work by IETF. The "localizations" property primarily was introduced in JSCalendar for event publishing, but neither the <xref target="RFC9073">Event Publishing extensions for iCalendar</xref> nor other iCalendar extensions define how to localize iCalendar data. This property may later be redefined for common use.</t>
+                <t>See <xref target="RFC8984" section="4.6.1" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
             <!-- replyTo -->
             <dl newline="true" spacing="normal">
               <dt><strong>replyTo</strong>:</dt>
@@ -4667,8 +4675,16 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl newline="true" spacing="normal">
               <dt><strong>requestStatus</strong>:</dt>
               <dd>
-                <t>This is mainly applicable in scheduling over CalDAV.</t>
+                <t>This is mainly applicable in scheduling over CalDAV <xref target="RFC6638"/>.</t>
                 <t>See <xref target="RFC8984" section="4.4.7" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- Location.description, VirtualLocation.description -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Location.description, VirtualLocation.description</strong>:</dt>
+              <dd>
+                <t>This requires further work by IETF. The VirtualLocation "description" property does not convert to any parameter of the CONFERENCE property. It would require to define a new parameter or to introduce a new component to augment the CONFERENCE property with a DESCRIPTION or STYLED-DESCRIPTION property. For consistency, the Location "description" property became reserved, too.</t>
+                <t>See <xref target="RFC8984" section="4.2.5" sectionFormat="of"/> and <xref target="RFC8984" section="4.2.6" sectionFormat="of"/>.</t>
               </dd>
             </dl>
             <!-- Participant.invitedBy -->
@@ -4691,7 +4707,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl newline="true" spacing="normal">
               <dt><strong>Participant.scheduleAgent</strong>:</dt>
               <dd>
-                <t>This is only applicable in scheduling over CalDAV.</t>
+                <t>This is only applicable in scheduling over CalDAV <xref target="RFC6638"/>.</t>
                 <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
               </dd>
             </dl>
@@ -4699,7 +4715,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl newline="true" spacing="normal">
               <dt><strong>Participant.scheduleForceSend</strong>:</dt>
               <dd>
-                <t>This is only applicable in scheduling over CalDAV.</t>
+                <t>This is only applicable in scheduling over CalDAV <xref target="RFC6638"/>.</t>
                 <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
               </dd>
             </dl>
@@ -4707,7 +4723,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl newline="true" spacing="normal">
               <dt><strong>Participant.scheduleStatus</strong>:</dt>
               <dd>
-                <t>This is only applicable in scheduling over CalDAV.</t>
+                <t>This is only applicable in scheduling over CalDAV <xref target="RFC6638"/>.</t>
                 <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
               </dd>
             </dl>
@@ -4717,30 +4733,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dd>
                 <t>This requires further work by IETF. For compatibility with iCalendar, the newly introduced <xref target="prop-participants">Participant.calendarAddress property</xref> replaces it.</t>
                 <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
-              </dd>
-            </dl>
-          </section>
-          <section toc="exclude">
-            <name>Localization Extensions for iCalendar and JSCalendar</name>
-            <t>The following properties became reserved for future JSCalendar and iCalendar extensions for multi-lingual calendar data:</t>
-            <!-- localizations -->
-            <dl newline="true" spacing="normal">
-              <dt><strong>localizations</strong>:</dt>
-              <dd>
-                <t>This requires further work by IETF. The "localizations" property primarily was introduced in JSCalendar for event publishing, but neither the <xref target="RFC9073">Event Publishing extensions for iCalendar</xref> nor other iCalendar extensions define how to localize iCalendar data. This property may later be redefined for common use.</t>
-                <t>See <xref target="RFC8984" section="4.6.1" sectionFormat="of"/>.</t>
-              </dd>
-            </dl>
-          </section>
-          <section toc="exclude">
-            <name>Reserved for Future RFCs</name>
-            <t>The following properties became reserved for some future JSCalendar extension RFCs:</t>
-            <!-- Location.description, VirtualLocation.description -->
-            <dl newline="true" spacing="normal">
-              <dt><strong>Location.description, VirtualLocation.description</strong>:</dt>
-              <dd>
-                <t>This requires further work by IETF. The VirtualLocation "description" property does not convert to any parameter of the CONFERENCE property. It would require to define a new parameter or to introduce a new component to augment the CONFERENCE property with a DESCRIPTION or STYLED-DESCRIPTION property. For consistency, the Location "description" property became reserved, too.</t>
-                <t>See <xref target="RFC8984" section="4.2.5" sectionFormat="of"/> and <xref target="RFC8984" section="4.2.6" sectionFormat="of"/>.</t>
               </dd>
             </dl>
           </section>
