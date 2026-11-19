@@ -1048,6 +1048,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <li>recurrenceIdTimeZone</li>
                 <li>sentBy</li>
                 <li>uid</li>
+                <li>version</li>
               </ul>
               <t>where the "*" character stands for a JSON pointer reference token having any value.</t>
               <t>In addition, the first reference token of the pointer <bcp14>MUST NOT</bcp14> match one of:</t>
