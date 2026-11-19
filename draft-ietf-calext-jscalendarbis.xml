@@ -476,6 +476,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="current-version">
           <name>Current Version</name>
           <t>This specification registers JSCalendar version values "1.0" and "2.0" in the JSCalendar Version registry. Version "2.0" applies for JSCalendar data that conforms with the specifications in this document. Version "1.0" applies for JSCalendar data that conforms with the now obsolete specifications of <xref target="RFC8984"/>.</t>
+          <t>Version "2.0" introduces backwards-incompatible changes to version "1.0", which are documented in <xref target="differences-from-rfc8984"/>. Consequently, JSCalendar data that is valid as version "1.0" may not be valid as version "2.0". How to convert JSCalendar data of version "1.0" to version "2.0" is implementation-specific.</t>
         </section>
       </section>
     </section>
