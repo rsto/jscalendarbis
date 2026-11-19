@@ -5063,8 +5063,11 @@ END:X-BAZ
     </section>
     <section anchor="security_considerations">
       <name>Security Considerations</name>
-      <t>This specification defines how to convert between the JSCalendar and iCalendar data formats.
-      The security considerations for parsing and formatting such data apply and are outlined in <xref target="I-D.ietf-calext-jscalendarbis" sectionFormat="of" section="6"/> and <xref target="RFC5545" sectionFormat="of" section="7"/>.</t>
+      <t>The security considerations of <xref target="I-D.ietf-calext-jscalendarbis" sectionFormat="of" section="6"/> and <xref target="RFC5545" sectionFormat="of" section="7"/> apply. In addition, the two formats do not map one-to-one, which introduces the following risks.</t>
+      <t>Conversion does not preserve the exact byte sequence of the source data, which invalidates cryptographic signatures, for example in <xref target="RFC6047">iMIP</xref> messages, so authorization decisions are best made on the original data. Repeated conversion may also not produce identical results, so converting from the original data is preferable.</t>
+      <t>Lossy conversion may drop elements that restrict access to or disclosure of calendar data. For example, choosing a single "privacy" value for recurrences with differing <xref target="ical-prop-class">CLASS</xref> values may disclose private occurrences.</t>
+      <t>The <xref target="ical-prop-jsprop">JSPROP</xref> and <xref target="jscal-prop-icalendar">"iCalendar"</xref> properties preserve elements as opaque data. This content may pass undetected through spam, malware or link filters that operate on one format, and become active after converting back. Such filters should also inspect preserved elements.</t>
+      <t>Representations such as <xref target="ical-prop-description">DESCRIPTION</xref> and <xref target="ical-prop-styled-description">STYLED-DESCRIPTION</xref>, or <xref target="ical-prop-geo">GEO</xref> and <xref target="ical-prop-coordinates">COORDINATES</xref>, may contain conflicting values, so clients of either format may present different content.</t>
     </section>
     <section anchor="IANA">
       <!-- All drafts are required to have an IANA considerations section.  See RFC 8126 for a guide.-->
