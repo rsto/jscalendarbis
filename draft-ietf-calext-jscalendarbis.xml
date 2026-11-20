@@ -59,7 +59,7 @@
     <keyword>date</keyword>
     <keyword>time</keyword>
     <abstract>
-      <t>This specification defines version "2.0" of JSCalendar, a data model and JSON representation of calendar data that can be used for storage and data exchange in a calendaring and scheduling environment. This document obsoletes RFC 8984, also referred to as version "1.0" in this document. The newly defined version "2.0" aims to improve interoperability with existing iCalendar-based systems. It also aligns its definitions with JSContact, such as the IANA registry policy, validation requirements, and versioning scheme.</t>
+      <t>This specification defines version "2.0" of JSCalendar, a data model and JSON representation of calendar data that can be used for storage and data exchange in a calendaring and scheduling environment. This document obsoletes RFC 8984, also referred to as version "1.0" in this document. The newly defined version "2.0" aims to improve interoperability with existing iCalendar-based systems. It also aligns its definitions with JSContact, such as the IANA registry policy, validation requirements, and versioning scheme. It reserves the Task object type for future work.</t>
     </abstract>
     <note removeInRFC="true">
       <t>Differences from RFC 8984 are documented in <xref target="differences-from-rfc8984"/>.</t>
@@ -68,7 +68,7 @@
   <middle>
     <section anchor="introduction">
       <name>Introduction</name>
-      <t>This document defines a data model for calendar event and task objects, or groups of such objects, in electronic calendar applications and systems. The format aims to be unambiguous, extendable, and simple to process.</t>
+      <t>This document defines a data model for calendar events, or groups of such objects, in electronic calendar applications and systems. The format aims to be unambiguous, extendable, and simple to process.</t>
       <t>The key design considerations for this data model are as follows:</t>
       <ul>
         <li>The attributes of the calendar entry represented must be described as simple key-value pairs. Simple events are simple to represent; complex events can be modeled accurately.</li>
@@ -95,6 +95,7 @@
       <section>
         <name>Relation to obsolete RFC 8984</name>
         <t>This document obsoletes the data model originally defined in <xref target="RFC8984"/>. The goal of this new document is to improve interoperability with systems that also make use of <xref target="RFC5545">iCalendar</xref>. It obsoletes elements which semantically conflict with related iCalendar elements. It reserves elements which require further work by IETF. Further differences from <xref target="RFC8984"/> are documented in <xref target="differences-from-rfc8984"/>.</t>
+        <t><xref target="RFC8984"/> also defined the Task object type to represent to-do items. This document reserves the Task object type and its type-specific properties for future work (see <xref target="appendix-reserved-types"/>).</t>
         <t>This document also aligns general definitions of JSCalendar with <xref target="RFC9553">JSContact</xref>: It defines the same notation for specifying data types (<xref target="data-type-notations"/>), redefines the PatchObject type to allow patching existing array entries (<xref target="type-PatchObject"/>) and provides the same guidance on how to process URIs and internationalized text (<xref target="internationalization"/>). Also, it defines the same validation scheme (<xref target="validating-jscalendar"/>), the same versioning scheme (<xref target="versioning"/>), and the same IANA registry policy and change procedures (<xref target="iana-registry-policy"/>).</t>
       </section>
       <section anchor="notational-conventions">
@@ -157,6 +158,8 @@
             <dd>The JSON number type.</dd>
             <dt>Boolean:</dt>
             <dd>The JSON boolean type.</dd>
+            <dt>Object:</dt>
+            <dd>The JSON object type.</dd>
             <dt>A[B]:</dt>
             <dd>A JSON object where all keys are of type A and all values are of type B.</dd>
             <dt>A[]:</dt>
@@ -181,6 +184,7 @@
             <dt>defaultType:</dt>
             <dd>This is followed by the name of a JSCalendar object type. A property value of JSCalendar object type is expected to be of this named type, in case it omits the "@type" property.</dd>
           </dl>
+          <t>A property definition may omit both the "mandatory" and "optional" attributes, or qualify them with a condition, such as "optional, unless specified otherwise by the calendar object type". In this case, the free-text definition of the property defines under which circumstances the property is mandatory.</t>
         </section>
         <section anchor="prop-type" numbered="true" toc="default">
           <name>The @type Property</name>
@@ -457,7 +461,7 @@ v-name = 1*(WSP / "!" / %x23-2e / %x30-7d / NON-ASCII)
       </section>
       <section anchor="versioning">
         <name>Versioning</name>
-        <t>A JSCalendar <xref target="jsgroup">Group</xref>, <xref target="jsevent">Event</xref>, or <xref target="jstask">Task</xref> indicates which JSCalendar version its IANA-registered properties and values are based on. The version is indicated in the <xref target="prop-version">"version"</xref> property of a JSCalendar object. All IANA-registered elements indicate the version at which they were introduced or obsoleted.</t>
+        <t>A JSCalendar <xref target="jsgroup">Group</xref> or <xref target="calendar-objects">calendar object</xref> indicates which JSCalendar version its IANA-registered properties and values are based on. The version is indicated in the <xref target="prop-version">"version"</xref> property of a JSCalendar object. All IANA-registered elements indicate the version at which they were introduced or obsoleted.</t>
         <t>A JSCalendar version consists of a major and minor version.</t>
         <t>Differing major version values indicate substantial differences in JSCalendar semantics and format. Implementations <bcp14>MUST</bcp14> be prepared for property definitions and other JSCalendar elements that differ in a backwards-incompatible manner.
         </t>
@@ -483,29 +487,38 @@ jsversion = 1*DIGIT "." 1*DIGIT
     </section>
     <section anchor="jscalendar-objects">
       <name>JSCalendar Objects</name>
-      <t>This section describes the calendar object types specified by JSCalendar.</t>
+      <t>This section defines calendar objects and describes the JSCalendar object types Event and Group.</t>
+      <section anchor="calendar-objects">
+        <name>Calendar Objects</name>
+        <t>A calendar object represents an entry in a calendar, such as an event. Calendar objects are the JSCalendar objects that can be the entries of a <xref target="jsgroup">Group</xref>. This document defines one calendar object type: <xref target="jsevent">Event</xref>. Other JSCalendar object types, such as Group, Location, or Alert, are not calendar objects.</t>
+        <t>Calendar objects support the common properties defined in <xref target="jscalendar-props"/>, unless their calendar object type only supports a subset of them. Each calendar object type defines its type-specific properties in <xref target="jscalendar-object-props"/>. In addition, the definition of a calendar object type specifies the following:</t>
+        <ul>
+          <li>Which common properties it does not support, if any.</li>
+          <li>The value of the "type" parameter of the <xref target="iana-mime-type">JSCalendar media type</xref> for objects of this type.</li>
+          <li>Whether the <xref target="prop-start">"start"</xref> property is mandatory.</li>
+          <li>The end of a calendar object of this type, if it has one. Alerts may trigger relative to the end of a calendar object (see <xref target="prop-alerts"/>).</li>
+          <li>The date-time properties that determine the initial date-time to which a recurrence rule applies, if this is not just the "start" property (see <xref target="prop-recurrenceRule"/>).</li>
+          <li>Which of its type-specific properties may be shared if the calendar object is private (see <xref target="prop-privacy"/>).</li>
+          <li>Additional properties of JSCalendar objects that are not calendar objects, such as Participant or Alert objects, when they occur within calendar objects of this type, if any.</li>
+        </ul>
+        <t>Other specifications may define additional calendar object types.</t>
+      </section>
       <section anchor="jsevent">
         <name>Event</name>
         <t>Media type: "application/jscalendar+json;type=event"</t>
         <t>An Event represents a scheduled amount of time on a calendar, typically a meeting, appointment, reminder, or anniversary. It is required to start at a certain point in time and typically has a non-zero duration. Multiple participants may partake in the event.</t>
         <t>The <xref target="prop-type">"@type"</xref> property is mandatory; it <bcp14>MUST</bcp14> be set to value "Event".</t>
       </section>
-      <section anchor="jstask">
-        <name>Task</name>
-        <t>Media type: "application/jscalendar+json;type=task"</t>
-        <t>A Task represents an action item, assignment, to-do item, or work item. It may start and be due at certain points in time, take some estimated time to complete, and recur, none of which is required.</t>
-        <t>The <xref target="prop-type">"@type"</xref> property is mandatory; it <bcp14>MUST</bcp14> be set to value "Task".</t>
-      </section>
       <section anchor="jsgroup">
         <name>Group</name>
         <t>Media type: "application/jscalendar+json;type=group"</t>
-        <t>A Group is a collection of <xref target="jsevent">Event</xref> and/or <xref target="jstask">Task</xref> objects. Typically, objects are grouped by topic (e.g., by keywords) or calendar membership.</t>
+        <t>A Group is a collection of <xref target="calendar-objects">calendar objects</xref>, such as Event objects. Typically, objects are grouped by topic (e.g., by keywords) or calendar membership.</t>
         <t>The <xref target="prop-type">"@type"</xref> property is mandatory; it <bcp14>MUST</bcp14> be set to value "Group".</t>
       </section>
     </section>
     <section anchor="jscalendar-props">
       <name>Common Properties</name>
-      <t>This section describes the properties that are common to the various JSCalendar object types. Specific JSCalendar object types may only support a subset of these properties. The object type definitions in <xref target="jscalendar-object-props"/> describe the set of supported properties per type.</t>
+      <t>This section describes the properties that are common to <xref target="calendar-objects">calendar objects</xref>. A calendar object type may only support a subset of these properties. The Group object type also only supports a subset of these properties, as listed in <xref target="jsgroup-props"/>.</t>
       <section anchor="metadata-properties">
         <name>Metadata Properties</name>
         <section anchor="prop-uid">
@@ -513,7 +526,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>uid: String (mandatory).</dt>
             <dd>
-              <t>This is a globally unique identifier used to associate objects representing the same event, task, group, or other object across different systems, calendars, and views. For recurring events and tasks, the UID is associated with the base object and therefore is the same for all occurrences; the combination of the UID with a "recurrenceId" identifies a particular instance.</t>
+              <t>This is a globally unique identifier used to associate objects representing the same calendar object, group, or other object across different systems, calendars, and views. For recurring calendar objects, the UID is associated with the base object and therefore is the same for all occurrences; the combination of the UID with a "recurrenceId" identifies a particular instance.</t>
               <t>The generator of the identifier <bcp14>MUST</bcp14> guarantee that the identifier is unique. <xref target="RFC9562"/> describes a range of established algorithms to generate universally unique identifiers (UUIDs). UUID version 4, described in <xref target="RFC9562" section="5.4"/>, is <bcp14>RECOMMENDED</bcp14>.</t>
               <t>For compatibility with UIDs <xref target="RFC5545"/>, implementations <bcp14>MUST</bcp14> be able to receive and persist values of at least 255 octets for this property, but they <bcp14>MUST NOT</bcp14> truncate values in the middle of a UTF-8 multi-octet sequence.</t>
             </dd>
@@ -522,11 +535,11 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-version">
           <name>version</name>
           <dl spacing="normal">
-            <dt>version: String (mandatory, unless specified otherwise below).</dt>
+            <dt>version: String.</dt>
             <dd>
               <t>The JSCalendar version of this object. The value <bcp14>MUST</bcp14> be one of the IANA-registered JSCalendar Version values for the "version" property.</t>
-              <t>For version "2.0" or higher, a Group object <bcp14>MUST</bcp14> set the "version" property, but the Event or Task objects that are values in its "entries" property <bcp14>MUST NOT</bcp14> set the "version" property. In contrast, an Event or Task object that is represented without an enclosing Group object <bcp14>MUST</bcp14> set the "version" property, unless specified otherwise. This is to prevent conflicting version values from occurring in JSCalendar data.</t>
-              <t>A Group object, or an Event or Task object that is represented without an enclosing Group object, that does not have a "version" property is version "1.0".</t>
+              <t>For version "2.0" or higher, a Group object <bcp14>MUST</bcp14> set the "version" property, but the calendar objects that are values in its "entries" property <bcp14>MUST NOT</bcp14> set the "version" property. In contrast, a calendar object that is represented without an enclosing Group object <bcp14>MUST</bcp14> set the "version" property, unless specified otherwise. This is to prevent conflicting version values from occurring in JSCalendar data.</t>
+              <t>A Group object, or a calendar object that is represented without an enclosing Group object, that does not have a "version" property is version "1.0".</t>
             </dd>
           </dl>
         </section>
@@ -654,7 +667,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>mainLocationId: Id (optional).</dt>
             <dd>
-              <t>This indicates which of the multiple entries in the "locations" property can be considered the main location for the event or task. A client implementation <bcp14>MAY</bcp14> choose to display this location more prominently. The main location is undefined if this property is not set. If this property is set, then its value <bcp14>MUST</bcp14> match a key in the "locations" property and the "name" property of that main Location object <bcp14>MUST</bcp14> be set.</t>
+              <t>This indicates which of the multiple entries in the "locations" property can be considered the main location for the calendar object. A client implementation <bcp14>MAY</bcp14> choose to display this location more prominently. The main location is undefined if this property is not set. If this property is set, then its value <bcp14>MUST</bcp14> match a key in the "locations" property and the "name" property of that main Location object <bcp14>MUST</bcp14> be set.</t>
             </dd>
           </dl>
         </section>
@@ -749,7 +762,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       </section>
       <section anchor="recurrence-props">
         <name>Recurrence Properties</name>
-        <t>Some events and tasks occur at regular or irregular intervals. Rather than having to copy the data for every occurrence, there can be a base event with a rule to generate recurrences and/or overrides that add extra dates or exceptions to the rule.</t>
+        <t>Some calendar objects occur at regular or irregular intervals. Rather than having to copy the data for every occurrence, there can be a base object with a rule to generate recurrences and/or overrides that add extra dates or exceptions to the rule.</t>
         <t>The recurrence set is the complete set of instances for an object. It is generated by considering the following properties in order, all of which are optional:</t>
         <ol>
           <li>The "recurrenceRule" property (<xref target="prop-recurrenceRule"/>) generates a set of extra date-times on which the object occurs.</li>
@@ -761,7 +774,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>recurrenceId: LocalDateTime (optional).</dt>
             <dd>
               <t>If present, this JSCalendar object represents one occurrence of a recurring JSCalendar object. If present, the "recurrenceRule" and "recurrenceOverrides" properties <bcp14>MUST NOT</bcp14> be present.</t>
-              <t>The value is a date-time either produced by the "recurrenceRule" of the base event or added as a key to the "recurrenceOverrides" property of the base event.</t>
+              <t>The value is a date-time either produced by the "recurrenceRule" of the base object or added as a key to the "recurrenceOverrides" property of the base object.</t>
             </dd>
           </dl>
         </section>
@@ -780,8 +793,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>recurrenceRule: RecurrenceRule (optional).</dt>
             <dd>
               <t>This is a recurrence rule (a repeating pattern) for recurring calendar objects.</t>
-              <t>An Event recurs by applying the recurrence rule to the "start" date-time.</t>
-              <t>A Task recurs by applying the recurrence rule to the "start" date-time. If the task does not define a "start" date-time, it <bcp14>MUST NOT</bcp14> define a "recurrenceRule" property.</t>
+              <t>A calendar object recurs by applying the recurrence rule to its initial date-time. The initial date-time is the value of the <xref target="prop-start">"start"</xref> property, unless the calendar object type defines differently (see <xref target="calendar-objects"/>). If the calendar object does not have an initial date-time, then it <bcp14>MUST NOT</bcp14> have the "recurrenceRule" property set.</t>
             </dd>
           </dl>
           <t>A RecurrenceRule object is a JSON object mapping of a RECUR value type in iCalendar <xref target="RFC5545"/> <xref target="RFC7529"/> and has the same semantics. It has the following properties:</t>
@@ -1004,9 +1016,9 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <li>If a "skip" property is included and is not "omit", eliminate any date-times that have already been produced by previous iterations of the algorithm. (This is not possible if "skip" is "omit".)</li>
               <li>If further dates are required (we have not reached the until date or count limit), skip the next (interval - 1) sets of candidates, then continue from step 1.</li>
             </ol>
-            <t>When determining the set of occurrence dates for an event or task, the following extra rules must be applied:</t>
+            <t>When determining the set of occurrence dates for a calendar object, the following extra rules must be applied:</t>
             <ol>
-              <li>The initial date-time to which the rule is applied (the "start" date-time) is always the first occurrence in the expansion (and is counted if the recurrence is limited by a "count" property), even if it would normally not match the rule.</li>
+              <li>The initial date-time to which the rule is applied (see <xref target="prop-recurrenceRule"/>) is always the first occurrence in the expansion (and is counted if the recurrence is limited by a "count" property), even if it would normally not match the rule.</li>
               <li>The first set of candidates to consider is that which would contain the initial date-time. This means the first set may include candidates before the initial date-time; such candidates are eliminated from the results in step 4 of the list above.</li>
               <li>
                 <t>The following properties <bcp14>MUST</bcp14> be implicitly added to the rule under the given conditions:</t>
@@ -1037,8 +1049,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>This maps recurrence ids (the date-time produced by the recurrence rule) to the overridden properties of the recurrence instance.</t>
               <t>If the recurrence id does not match a date-time from the recurrence rule (or no rule is specified), it is to be treated as an additional occurrence (like an RDATE from iCalendar). The patch object may often be empty in this case.</t>
               <t>If the occurrence generated by the recurrence id shall be omitted from the final set of recurrences (like an EXDATE from iCalendar), then the patch object <bcp14>MUST</bcp14> be a JSON object with a single member. The member name <bcp14>MUST</bcp14> be "excluded", the member value <bcp14>MUST</bcp14> be true. The JSON object <bcp14>MUST NOT</bcp14> contain any other members.</t>
-              <t>By default, an occurrence inherits all properties from the main object except the start date-time, which is shifted to match the recurrence id LocalDateTime. However, individual properties of the occurrence can be modified by a patch or multiple patches. Unless the occurrence is excluded, as described in the previous paragraph, the occurrence that results from applying the patch object <bcp14>MUST</bcp14> be valid according to the definitions of its object type and properties. A patch object that produces an invalid occurrence is invalid.</t>
-              <t>It is valid to patch the "start" property value, and this patch takes precedence over the value generated from the recurrence id. Both the recurrence id as well as the patched "start" date-time may occur before the original JSCalendar object's "start" date-time.</t>
+              <t>By default, an occurrence inherits all properties from the main object except the property holding the initial date-time (the "start" property, unless defined otherwise in <xref target="prop-recurrenceRule"/>), which is shifted to match the recurrence id LocalDateTime. However, individual properties of the occurrence can be modified by a patch or multiple patches. Unless the occurrence is excluded, as described in the previous paragraph, the occurrence that results from applying the patch object <bcp14>MUST</bcp14> be valid according to the definitions of its object type and properties. A patch object that produces an invalid occurrence is invalid.</t>
+              <t>It is valid to patch the property holding the initial date-time, and this patch takes precedence over the value generated from the recurrence id. Both the recurrence id as well as the patched date-time may occur before the initial date-time of the original JSCalendar object.</t>
               <t>A pointer in the patch object <bcp14>MUST NOT</bcp14> exactly match one of:</t>
               <ul>
                 <li>@type</li>
@@ -1104,14 +1116,10 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <dd>The full details of the object are visible to those whom the object's calendar is shared with.</dd>
                 <dt>private:</dt>
                 <dd>
-                  <t>The details of the object are hidden; only the basic time and metadata are shared. The following properties <bcp14>MAY</bcp14> be shared; any other properties <bcp14>MUST NOT</bcp14> be shared:</t>
+                  <t>The details of the object are hidden; only the basic time and metadata are shared. The following properties, as well as the type-specific properties that the calendar object type allows to be shared (see <xref target="calendar-objects"/>), <bcp14>MAY</bcp14> be shared; any other properties <bcp14>MUST NOT</bcp14> be shared:</t>
                   <ul>
                     <li>@type</li>
                     <li>created</li>
-                    <li>due</li>
-                    <li>duration</li>
-                    <li>endTimeZone</li>
-                    <li>estimatedDuration</li>
                     <li>freeBusyStatus</li>
                     <li>privacy</li>
                     <li>recurrenceId</li>
@@ -1194,13 +1202,13 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <dt>owner:</dt>
                 <dd>The participant is an owner of the calendar object. This signifies they can make changes that affect all participants (for example, rescheduling the calendar object, adding and removing participants and roles). The presence of this role is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars"/> for an example of making use of this role.</dd>
                 <dt>optional:</dt>
-                <dd>The participant's involvement with the event is optional.</dd>
+                <dd>The participant's involvement with the calendar object is optional.</dd>
                 <dt>informational:</dt>
-                <dd>The participant is copied for informational reasons and is not expected to attend.</dd>
+                <dd>The participant is copied for informational reasons and is not expected to participate.</dd>
                 <dt>chair:</dt>
-                <dd>The participant is in charge of the event/task when it occurs.</dd>
+                <dd>The participant is in charge of the calendar object when it occurs.</dd>
                 <dt>required:</dt>
-                <dd>The participant is required to be present at the event.</dd>
+                <dd>The participation of the participant is required.</dd>
               </dl>
               <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "required", "optional", "informational" and "chair" be present; if more than one are given, they take precedence as follows: "chair" over "required", either of them over "optional", all of them over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
             </dd>
@@ -1235,20 +1243,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>This is a set of group participants that were invited to this calendar object, which caused this participant to be invited due to their membership in the group(s). If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be a URI according to the definition of the "calendarAddress" property. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no groups, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
             <dt>links: Id[Link] (optional).</dt>
             <dd>This is a map of link ids to Link objects, representing external resources associated with this participant, for example, an image. If there are no links, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
-            <dt>progress: String (optional).</dt>
-            <dd>
-              <t>This property is only defined for Participant objects within a Task object; it otherwise <bcp14>MUST NOT</bcp14> be set. It represents the progress of the participant for this task. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set and the "participationStatus" of this participant <bcp14>MUST</bcp14> be "accepted". The property value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
-              <dl newline="false">
-                <dt>in-process:</dt>
-                <dd>The participant is in process of contributing to the task.</dd>
-                <dt>completed:</dt>
-                <dd>The participant successfully completed contributing to the task.</dd>
-                <dt>failed:</dt>
-                <dd>The participant could not complete their contribution to the task.</dd>
-              </dl>
-            </dd>
-            <dt>percentComplete: UnsignedInt (optional; only allowed for participants of a Task).</dt>
-            <dd>This represents the percent completion of the participant for this task. The property value <bcp14>MUST</bcp14> be an integer between 0 and 100.</dd>
           </dl>
         </section>
       </section>
@@ -1280,11 +1274,11 @@ jsversion = 1*DIGIT "." 1*DIGIT
                   <t>This specifies the time property that the alert offset is relative to. The value <bcp14>MUST</bcp14> be one of the following:</t>
                   <dl newline="false">
                     <dt>start:</dt>
-                    <dd>triggers the alert relative to the start of the calendar object</dd>
+                    <dd>triggers the alert relative to the start of the calendar object, as defined by its <xref target="prop-start">"start"</xref> property</dd>
                     <dt>end:</dt>
-                    <dd>triggers the alert relative to the end time of an event or due time of a task</dd>
+                    <dd>triggers the alert relative to the end of the calendar object, as defined by its calendar object type (see <xref target="calendar-objects"/>)</dd>
                   </dl>
-                  <t>For an alert on a Task, the value "start" <bcp14>MUST NOT</bcp14> be used (including by omitting the property, as "start" is the default) if the Task does not have a "start" property, and the value "end" <bcp14>MUST NOT</bcp14> be used if the Task does not have a "due" property.</t>
+                  <t>The value "start" <bcp14>MUST NOT</bcp14> be used (including by omitting the property, as "start" is the default) if the calendar object does not have a "start" property, and the value "end" <bcp14>MUST NOT</bcp14> be used if the calendar object does not have an end.</t>
                 </dd>
               </dl>
               <t>An "AbsoluteTrigger" object has the following properties:</t>
@@ -1299,7 +1293,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>acknowledged: UTCDateTime (optional).</dt>
             <dd>
               <t>This records when an alert was last acknowledged. This is set when the user has dismissed the alert; other clients that sync this property <bcp14>SHOULD</bcp14> automatically dismiss or suppress duplicate alerts (alerts with the same alert id that triggered on or before this date-time).</t>
-              <t>For a recurring calendar object, setting the "acknowledged" property <bcp14>MUST NOT</bcp14> add a new override to the "recurrenceOverrides" property. If the alert is not already overridden, the "acknowledged" property <bcp14>MUST</bcp14> be set on the alert in the base event/task.</t>
+              <t>For a recurring calendar object, setting the "acknowledged" property <bcp14>MUST NOT</bcp14> add a new override to the "recurrenceOverrides" property. If the alert is not already overridden, the "acknowledged" property <bcp14>MUST</bcp14> be set on the alert in the base object.</t>
               <t>Certain kinds of alert action may not provide feedback as to when the user sees them, for example, email-based alerts. For those kinds of alerts, this property <bcp14>MUST</bcp14> be set immediately when the alert is triggered and the action is successfully carried out.</t>
             </dd>
             <dt>relatedTo: String[Relation] (optional).</dt>
@@ -1325,8 +1319,17 @@ jsversion = 1*DIGIT "." 1*DIGIT
           </dl>
         </section>
       </section>
-      <section anchor="timezone-props">
-        <name>Time Zone Properties</name>
+      <section anchor="datetime-props">
+        <name>Date and Time Properties</name>
+        <section anchor="prop-start">
+          <name>start</name>
+          <dl spacing="normal">
+            <dt>start: LocalDateTime (optional, unless specified otherwise by the calendar object type).</dt>
+            <dd>
+              <t>This is the date-time the calendar object starts in the calendar object's time zone (as specified in the "timeZone" property, see <xref target="prop-timeZone"/>). The definition of a calendar object type specifies whether this property is mandatory (see <xref target="calendar-objects"/>).</t>
+            </dd>
+          </dl>
+        </section>
         <section anchor="prop-timeZone">
           <name>timeZone</name>
           <dl spacing="normal">
@@ -1342,16 +1345,13 @@ jsversion = 1*DIGIT "." 1*DIGIT
       <name>Type-Specific JSCalendar Properties</name>
       <section anchor="jsevent-props">
         <name>Event Properties</name>
-        <t>In addition to the common JSCalendar object <xref target="jscalendar-props">properties</xref>, an Event has the following properties:</t>
-        <section anchor="prop-start-jsevent">
-          <name>start</name>
-          <dl spacing="normal">
-            <dt>start: LocalDateTime (mandatory).</dt>
-            <dd>
-              <t>This is the date/time the event starts in the event's time zone (as specified in the "timeZone" property, see <xref target="prop-timeZone"/>).</t>
-            </dd>
-          </dl>
-        </section>
+        <t>The Event <xref target="calendar-objects">calendar object type</xref> refines the common properties as follows:</t>
+        <ul>
+          <li><xref target="prop-start">start</xref>: The property is mandatory. It defines when the event starts.</li>
+          <li><xref target="prop-alerts">alerts</xref>: The end of an Event is the date-time obtained by adding the value of its "duration" property to the value of its "start" property.</li>
+          <li><xref target="prop-privacy">privacy</xref>: If the Event is private, its "duration" and "endTimeZone" properties <bcp14>MAY</bcp14> be shared.</li>
+        </ul>
+        <t>In addition to the <xref target="jscalendar-props">common properties</xref>, an Event has the following properties:</t>
         <section anchor="prop-duration">
           <name>duration</name>
           <dl spacing="normal">
@@ -1388,79 +1388,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
           </dl>
         </section>
       </section>
-      <section anchor="jstask-props">
-        <name>Task Properties</name>
-        <t>In addition to the common JSCalendar object <xref target="jscalendar-props">properties</xref>, a Task has the following properties.</t>
-        <t>If the "timeZone" property is set or the "showWithoutTime" property value is true, then at least one of the "due" and "start" properties <bcp14>MUST</bcp14> be set.</t>
-        <section anchor="prop-due">
-          <name>due</name>
-          <dl spacing="normal">
-            <dt>due: LocalDateTime (optional).</dt>
-            <dd>
-              <t>This is the date/time the task is due in the task's time zone.</t>
-            </dd>
-          </dl>
-        </section>
-        <section anchor="prop-start-jstask">
-          <name>start</name>
-          <dl spacing="normal">
-            <dt>start: LocalDateTime (optional).</dt>
-            <dd>
-              <t>This is the date/time the task should start in the task's time zone. This <bcp14>MUST</bcp14> be set if the "recurrenceRule" or "recurrenceId" properties are set.</t>
-            </dd>
-          </dl>
-        </section>
-        <section anchor="prop-estimatedDuration">
-          <name>estimatedDuration</name>
-          <dl spacing="normal">
-            <dt>estimatedDuration: Duration (optional).</dt>
-            <dd>
-              <t>This specifies the estimated positive duration of time the task takes to complete.</t>
-            </dd>
-          </dl>
-        </section>
-        <section anchor="prop-percentComplete">
-          <name>percentComplete</name>
-          <dl spacing="normal">
-            <dt>percentComplete: UnsignedInt (optional).</dt>
-            <dd>
-              <t>This represents the percent completion of the task overall. The property value <bcp14>MUST</bcp14> be an integer between 0 and 100.</t>
-            </dd>
-          </dl>
-        </section>
-        <section anchor="prop-progress">
-          <name>progress</name>
-          <dl spacing="normal">
-            <dt>progress: String (optional).</dt>
-            <dd>
-              <t>This defines the progress of this task. If omitted, the default progress of a Task is defined as follows (in order of evaluation):</t>
-              <dl newline="false">
-                <dt>completed:</dt>
-                <dd>if at least one participant has a "progress" property value, and the "progress" property value of all such participants is "completed"</dd>
-                <dt>failed:</dt>
-                <dd>if at least one "progress" property value of a participant is "failed"</dd>
-                <dt>in-process:</dt>
-                <dd>if at least one "progress" property value of a participant is "in-process"</dd>
-                <dt>needs-action:</dt>
-                <dd>if none of the other criteria match</dd>
-              </dl>
-              <t>If set, it <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
-              <dl newline="false">
-                <dt>needs-action:</dt>
-                <dd>indicates the task needs action</dd>
-                <dt>in-process:</dt>
-                <dd>indicates the task is in process</dd>
-                <dt>completed:</dt>
-                <dd>indicates the task is completed</dd>
-                <dt>failed:</dt>
-                <dd>indicates the task failed</dd>
-                <dt>cancelled:</dt>
-                <dd>indicates the task was cancelled</dd>
-              </dl>
-            </dd>
-          </dl>
-        </section>
-      </section>
       <section anchor="jsgroup-props">
         <name>Group Properties</name>
         <t>Group supports the following common <xref target="jscalendar-props">JSCalendar properties</xref>:</t>
@@ -1484,9 +1411,9 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-entries">
           <name>entries</name>
           <dl spacing="normal">
-            <dt>entries: (Task|Event)[] (mandatory).</dt>
+            <dt>entries: Object[] (mandatory).</dt>
             <dd>
-              <t>This is a collection of group members. Implementations <bcp14>MUST</bcp14> ignore entries of unknown type.</t>
+              <t>This is a collection of group members. Each member <bcp14>MUST</bcp14> be a <xref target="calendar-objects">calendar object</xref> and <bcp14>MUST</bcp14> have the "@type" property set. Implementations <bcp14>MUST</bcp14> ignore entries of unknown type.</t>
             </dd>
           </dl>
         </section>
@@ -1503,7 +1430,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
     </section>
     <section anchor="examples">
       <name>Examples</name>
-      <t>The following examples illustrate several aspects of the JSCalendar data model and format. The examples may omit mandatory or additional properties, which is indicated by a placeholder property with key "...". While most of the examples use calendar event objects, they are also illustrative for tasks.</t>
+      <t>The following examples illustrate several aspects of the JSCalendar data model and format. The examples may omit mandatory or additional properties, which is indicated by a placeholder property with key "...".</t>
       <section anchor="example-simple-event">
         <name>Simple Event</name>
         <t>This example illustrates a simple one-time event. It specifies a one-time event that begins on January 15, 2020 at 1pm New York local time and ends after 1 hour.</t>
@@ -1520,22 +1447,9 @@ jsversion = 1*DIGIT "." 1*DIGIT
 }
 </sourcecode>
       </section>
-      <section anchor="example-simple-task">
-        <name>Simple Task</name>
-        <t>This example illustrates a simple task for a plain to-do item.</t>
-        <sourcecode name="" type="json">
-{
-  "@type": "Task",
-  "version": "2.0",
-  "uid": "2a358cee-6489-4f14-a57f-c104db4dc2f2",
-  "updated": "2020-01-09T14:32:01Z",
-  "title": "Do something"
-}
-</sourcecode>
-      </section>
       <section anchor="example-simple-group">
         <name>Simple Group</name>
-        <t>This example illustrates a simple calendar object group that contains an event and a task.</t>
+        <t>This example illustrates a simple calendar object group that contains an event.</t>
         <sourcecode name="" type="json">
 {
   "@type": "Group",
@@ -1551,12 +1465,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
     "start": "2020-01-15T13:00:00",
     "timeZone": "America/New_York",
     "duration": "PT1H"
-  },
-  {
-    "@type": "Task",
-    "uid": "2a358cee-6489-4f14-a57f-c104db4dc2f2",
-    "updated": "2020-01-09T14:32:01Z",
-    "title": "Do something"
   }]
 }
 </sourcecode>
@@ -1574,19 +1482,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
   "recurrenceRule": {
     "frequency": "yearly"
   }
-}
-</sourcecode>
-      </section>
-      <section anchor="example-due-task">
-        <name>Task with a Due Date</name>
-        <t>This example illustrates a task with a due date. It is a reminder to buy groceries before 6pm Vienna local time on January 19, 2020. The calendar user expects to need 1 hour for shopping.</t>
-        <sourcecode name="" type="json">
-{
-  "...": "",
-  "title": "Buy groceries",
-  "due": "2020-01-19T18:00:00",
-  "timeZone": "Europe/Vienna",
-  "estimatedDuration": "PT1H"
 }
 </sourcecode>
       </section>
@@ -1807,7 +1702,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
     </section>
     <section anchor="security-considerations">
       <name>Security Considerations</name>
-      <t>Calendaring and scheduling information is very privacy sensitive.  It can reveal the social network of a user, location information of this user and those in their social network, identity and credentials information, and patterns of behavior of the user in both the physical and cyber realm. Additionally, calendar events and tasks can influence the physical location of a user or their cyber behavior within a known time window.  Its transmission and storage must be done carefully to protect it from possible threats, such as eavesdropping, replay, message insertion, deletion, modification, and on-path attacks.</t>
+      <t>Calendaring and scheduling information is very privacy sensitive.  It can reveal the social network of a user, location information of this user and those in their social network, identity and credentials information, and patterns of behavior of the user in both the physical and cyber realm. Additionally, calendar objects can influence the physical location of a user or their cyber behavior within a known time window.  Its transmission and storage must be done carefully to protect it from possible threats, such as eavesdropping, replay, message insertion, deletion, modification, and on-path attacks.</t>
       <t>The data being stored and transmitted may be used in systems with real-world consequences. For example, a home automation system may turn an alarm on and off or a coworking space may charge money to the organizer of an event that books one of their meeting rooms. Such systems must be careful to authenticate all data they receive to prevent them from being subverted and ensure the change comes from an authorized entity.</t>
       <t>This document only defines the data format; such considerations are primarily the concern of the API or method of storage and transmission of such files.</t>
       <section anchor="sec-recurrences">
@@ -2028,6 +1923,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         </section>
         <section anchor="iana-property-registry-updated-contents">
           <name>Changes to the "JSCalendar Properties" Registry</name>
+          <t>The Task object type is reserved (see <xref target="appendix-reserved-types"/>). For every entry in the JSCalendar Properties Registry that has Intended Usage "common" and whose Property Context contains "Task", IANA will remove "Task" from the Property Context field. This also applies to entries that are not listed in the following sections.</t>
           <section>
             <name>Obsoleted Properties</name>
             <t>IANA will change the Intended Usage from "common" to "obsolete" for the following entries in the JSCalendar Properties Registry. For each entry, the Property Name and its changed fields are listed.</t>
@@ -2292,6 +2188,30 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <t>IANA will change the Intended Usage from "common" to "reserved" for the following entries in the JSCalendar Properties Registry. For each entry, the Property Name and its changed fields are listed.</t>
             <dl spacing="compact">
               <dt>Property Name</dt>
+              <dd>due</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>estimatedDuration</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
               <dd>excluded</dd>
               <dt>Reference/Description</dt>
               <dd>
@@ -2329,6 +2249,30 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl spacing="compact">
               <dt>Property Name</dt>
               <dd>participationComment</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>percentComplete</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-reserved-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>progress</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="appendix-reserved-properties"/>
@@ -2457,7 +2401,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>@type</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task, Group, AbsoluteTrigger, Alert, Link, Location, NDay, OffsetTrigger, Participant, RecurrenceRule, Relation, VirtualLocation</dd>
+              <dd>Event, Group, AbsoluteTrigger, Alert, Link, Location, NDay, OffsetTrigger, Participant, RecurrenceRule, Relation, VirtualLocation</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="prop-type"/>
@@ -2709,7 +2653,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>description</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task, Group, Participant</dd>
+              <dd>Event, Group, Participant</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-description"/>, <xref target="prop-participants"/></dd>
               <dt>Since Version</dt>
@@ -2720,7 +2664,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>descriptionContentType</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task, Group, Participant</dd>
+              <dd>Event, Group, Participant</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-descriptionContentType"/>, <xref target="prop-participants"/></dd>
               <dt>Since Version</dt>
@@ -2735,17 +2679,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="type-Link"/>
-              </dd>
-              <dt>Since Version</dt>
-              <dd>1.0</dd>
-            </dl>
-            <!-- due -->
-            <dl spacing="compact">
-              <dt>Property Name</dt>
-              <dd>due</dd>
-              <dt>Reference/Description</dt>
-              <dd>
-                <xref target="prop-due"/>
               </dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
@@ -2776,20 +2709,11 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl spacing="compact">
               <dt>Property Name</dt>
               <dd>entries</dd>
+              <dt>Property Type</dt>
+              <dd>Object[]</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="prop-entries"/>
-              </dd>
-              <dt>Since Version</dt>
-              <dd>1.0</dd>
-            </dl>
-            <!-- estimatedDuration -->
-            <dl spacing="compact">
-              <dt>Property Name</dt>
-              <dd>estimatedDuration</dd>
-              <dt>Reference/Description</dt>
-              <dd>
-                <xref target="prop-estimatedDuration"/>
               </dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
@@ -3016,15 +2940,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Since Version</dt>
               <dd>1.0</dd>
             </dl>
-            <!-- percentComplete -->
-            <dl spacing="compact">
-              <dt>Property Name</dt>
-              <dd>percentComplete</dd>
-              <dt>Reference/Description</dt>
-              <dd><xref target="prop-percentComplete"/>, <xref target="prop-participants"/></dd>
-              <dt>Since Version</dt>
-              <dd>1.0</dd>
-            </dl>
             <!-- priority -->
             <dl spacing="compact">
               <dt>Property Name</dt>
@@ -3058,15 +2973,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Since Version</dt>
               <dd>1.0</dd>
             </dl>
-            <!-- progress -->
-            <dl spacing="compact">
-              <dt>Property Name</dt>
-              <dd>progress</dd>
-              <dt>Reference/Description</dt>
-              <dd><xref target="prop-progress"/>, <xref target="prop-participants"/></dd>
-              <dt>Since Version</dt>
-              <dd>1.0</dd>
-            </dl>
             <!-- recurrenceId -->
             <dl spacing="compact">
               <dt>Property Name</dt>
@@ -3096,7 +3002,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>recurrenceOverrides</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task</dd>
+              <dd>Event</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="prop-recurrenceOverrides"/>
@@ -3175,7 +3081,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>sentBy</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task, Participant</dd>
+              <dd>Event, Participant</dd>
               <dt>Reference/Description</dt>
               <dd><xref target="prop-participants"/>,
                 <xref target="prop-sentBy"/></dd>
@@ -3242,9 +3148,11 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Name</dt>
               <dd>start</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task</dd>
+              <dd>Event</dd>
               <dt>Reference/Description</dt>
-              <dd><xref target="prop-start-jsevent"/>, <xref target="prop-start-jstask"/></dd>
+              <dd>
+                <xref target="prop-start"/>
+              </dd>
               <dt>Since Version</dt>
               <dd>1.0</dd>
             </dl>
@@ -3266,7 +3174,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Type</dt>
               <dd>TimeZoneId</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task</dd>
+              <dd>Event</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="prop-timeZone"/>
@@ -3462,7 +3370,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Type</dt>
               <dd>Id</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task</dd>
+              <dd>Event</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="prop-mainLocationId"/>
@@ -3480,7 +3388,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Type</dt>
               <dd>String</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task</dd>
+              <dd>Event</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="prop-organizerCalendarAddress"/>
@@ -3516,7 +3424,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Type</dt>
               <dd>RecurrenceRule</dd>
               <dt>Property Context</dt>
-              <dd>Event, Task</dd>
+              <dd>Event</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="prop-recurrenceRule"/>
@@ -3570,7 +3478,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Property Type</dt>
               <dd>String</dd>
               <dt>Property Context</dt>
-              <dd>Group, Event, Task</dd>
+              <dd>Group, Event</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="prop-version"/>
@@ -3900,12 +3808,26 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dd>Task</dd>
               <dt>Reference/Description</dt>
               <dd>
-                <xref target="jstask"/>
+                <xref target="appendix-reserved-types"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>reserved</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Change Controller</dt>
+              <dd>IETF</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Type Name</dt>
+              <dd>Object</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="type-signatures"/>
               </dd>
               <dt>Intended Usage</dt>
               <dd>common</dd>
               <dt>Since Version</dt>
-              <dd>1.0</dd>
+              <dd>2.0</dd>
               <dt>Change Controller</dt>
               <dd>IETF</dd>
             </dl>
@@ -3997,14 +3919,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <t>IANA will update the following entries. For each entry, the Property Name and its changed fields are listed. Unchanged fields are omitted.</t>
           <dl spacing="compact">
             <dt>Property Name</dt>
-            <dd>progress</dd>
-            <dt>Context</dt>
-            <dd>Task</dd>
-            <dt>Reference</dt>
-            <dd>RFC XXXX</dd>
-          </dl>
-          <dl spacing="compact">
-            <dt>Property Name</dt>
             <dd>relativeTo</dd>
             <dt>Context</dt>
             <dd>OffsetTrigger</dd>
@@ -4012,101 +3926,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>RFC XXXX</dd>
           </dl>
           <t>For every other existing entry, IANA will replace the contents of the "Reference" column with a reference to this document.</t>
-        </section>
-        <section anchor="iana-enum-registry-progress-participant">
-          <name>Additions to the "JSCalendar Enum Values" Registry</name>
-          <t>IANA will add the following entry to the "JSCalendar Enum Values" registry:</t>
-          <dl spacing="compact">
-            <dt>Property Name</dt>
-            <dd>progress</dd>
-            <dt>Context</dt>
-            <dd>Participant</dd>
-            <dt>Reference</dt>
-            <dd>RFC XXXX</dd>
-            <dt>Change Controller</dt>
-            <dd>IETF</dd>
-          </dl>
-          <t>IANA will add the following enumerated values in the newly created subregistry:</t>
-          <dl spacing="compact">
-            <dt>Enum Value</dt>
-            <dd>in-process</dd>
-            <dt>Reference/Description</dt>
-            <dd>
-              <xref target="prop-participants"/>
-            </dd>
-            <dt>Intended Usage</dt>
-            <dd>common</dd>
-            <dt>Since Version</dt>
-            <dd>1.0</dd>
-            <dt>Until Version</dt>
-            <dd/>
-            <dt>Change Controller</dt>
-            <dd>IETF</dd>
-          </dl>
-          <dl spacing="compact">
-            <dt>Enum Value</dt>
-            <dd>completed</dd>
-            <dt>Reference/Description</dt>
-            <dd>
-              <xref target="prop-participants"/>
-            </dd>
-            <dt>Intended Usage</dt>
-            <dd>common</dd>
-            <dt>Since Version</dt>
-            <dd>1.0</dd>
-            <dt>Until Version</dt>
-            <dd/>
-            <dt>Change Controller</dt>
-            <dd>IETF</dd>
-          </dl>
-          <dl spacing="compact">
-            <dt>Enum Value</dt>
-            <dd>failed</dd>
-            <dt>Reference/Description</dt>
-            <dd>
-              <xref target="prop-participants"/>
-            </dd>
-            <dt>Intended Usage</dt>
-            <dd>common</dd>
-            <dt>Since Version</dt>
-            <dd>1.0</dd>
-            <dt>Until Version</dt>
-            <dd/>
-            <dt>Change Controller</dt>
-            <dd>IETF</dd>
-          </dl>
-          <dl spacing="compact">
-            <dt>Enum Value</dt>
-            <dd>needs-action</dd>
-            <dt>Reference/Description</dt>
-            <dd>
-              <xref target="appendix-updated-properties"/>
-            </dd>
-            <dt>Intended Usage</dt>
-            <dd>obsolete</dd>
-            <dt>Since Version</dt>
-            <dd>1.0</dd>
-            <dt>Until Version</dt>
-            <dd>1.0</dd>
-            <dt>Change Controller</dt>
-            <dd>IETF</dd>
-          </dl>
-          <dl spacing="compact">
-            <dt>Enum Value</dt>
-            <dd>cancelled</dd>
-            <dt>Reference/Description</dt>
-            <dd>
-              <xref target="appendix-updated-properties"/>
-            </dd>
-            <dt>Intended Usage</dt>
-            <dd>obsolete</dd>
-            <dt>Since Version</dt>
-            <dd>1.0</dd>
-            <dt>Until Version</dt>
-            <dd>1.0</dd>
-            <dt>Change Controller</dt>
-            <dd>IETF</dd>
-          </dl>
         </section>
         <section anchor="iana-enum-value-action-changes">
           <name>Changes to the "JSCalendar Enum Values for action (Context: Alert)" Registry</name>
@@ -4222,15 +4041,14 @@ jsversion = 1*DIGIT "." 1*DIGIT
         </section>
         <section anchor="iana-enum-value-progress-changes">
           <name>Changes to the "JSCalendar Enum Values for progress (Context: Task, Participant)" Registry</name>
-          <t>IANA will rename the sub-registry to "JSCalendar Enum Values for progress (Context: Task)".</t>
           <t>For every existing entry, IANA will set the following fields. Unchanged fields are omitted.</t>
           <dl spacing="compact">
             <dt>Reference</dt>
             <dd>
-              <xref target="prop-progress"/>
+              <xref target="appendix-reserved-properties"/>
             </dd>
             <dt>Intended Usage</dt>
-            <dd>common</dd>
+            <dd>reserved</dd>
             <dt>Since Version</dt>
             <dd>1.0</dd>
             <dt>Until Version</dt>
@@ -4654,6 +4472,25 @@ jsversion = 1*DIGIT "." 1*DIGIT
             </dl>
           </section>
           <section toc="exclude">
+            <name>Task Object Type</name>
+            <t>The following properties became reserved, because they are only defined for the Task object type, which became reserved (see <xref target="appendix-reserved-types"/>):</t>
+            <!-- Task.* -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Task.{due|estimatedDuration|percentComplete|progress}</strong>:</dt>
+              <dd>
+                <t>See <xref target="RFC8984" section="5.2" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+            <!-- Participant.percentComplete, Participant.progress -->
+            <dl newline="true" spacing="normal">
+              <dt><strong>Participant.{percentComplete|progress}</strong>:</dt>
+              <dd>
+                <t>These were only allowed for participants of a Task.</t>
+                <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+              </dd>
+            </dl>
+          </section>
+          <section toc="exclude">
             <name>Reserved for Future RFCs</name>
             <t>The following properties became reserved for some future JSCalendar extension RFCs:</t>
             <!-- localizations -->
@@ -4777,51 +4614,51 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
             </dd>
           </dl>
-          <!-- {Event|Task|Group}.color -->
+          <!-- {Event|Group}.color -->
           <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task|Group}.color</strong>:</dt>
+            <dt><strong>{Event|Group}.color</strong>:</dt>
             <dd>
               <t>The original definition allowed hexadecimal RGB values, which CSS3 specifies to be either in three-digit or six-digit form. The updated definition only allows them in six-digit form to match the proposed update of the iCalendar COLOR property. It also explicitly defines that values are case-insensitive.</t>
               <t>See <xref target="prop-color" sectionFormat="of"/>.</t>
             </dd>
           </dl>
-          <!-- {Event|Task}.privacy -->
+          <!-- Event.privacy -->
           <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task}.privacy</strong>:</dt>
+            <dt><strong>Event.privacy</strong>:</dt>
             <dd>
               <t>The original definition used a lowercase "should" for preserving unknown privacy values and handling them as "private". It now requires unknown values to be preserved and handled as "private". This is in line with the definition of the <xref target="RFC5545" section="3.8.1.3" sectionFormat="parens">CLASS property</xref>.</t>
               <t>The original definition only implied that all recurrences have the same privacy, by requiring that a "privacy" pointer in the "recurrenceOverrides" property be ignored. The new definition explicitly requires that all recurrences have the same privacy.</t>
               <t>See <xref target="prop-privacy" sectionFormat="of"/>.</t>
             </dd>
           </dl>
-          <!-- {Event|Task}.recurrenceIdTimeZone -->
+          <!-- Event.recurrenceIdTimeZone -->
           <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task}.recurrenceIdTimeZone</strong>:</dt>
+            <dt><strong>Event.recurrenceIdTimeZone</strong>:</dt>
             <dd>
               <t>The property value now does not support "null" values anymore. The property either is set to a time zone identifier, or not at all.</t>
               <t>See <xref target="prop-recurrenceIdTimeZone" sectionFormat="of"/>.</t>
             </dd>
           </dl>
-          <!-- {Event|Task}.recurrenceOverrides -->
+          <!-- Event.recurrenceOverrides -->
           <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task}.recurrenceOverrides</strong>:</dt>
+            <dt><strong>Event.recurrenceOverrides</strong>:</dt>
             <dd>
               <t>The original definition required implementations to ignore patches for the listed pointers. The new definition instead forbids patching them and states that such patch objects are invalid. The "relatedTo" property is removed from the list, because the <xref target="RFC5545" section="3.8.4.5" sectionFormat="parens">RELATED-TO property</xref> also can be set in recurrence exceptions.</t>
               <t>The former specification did not define a default value for this property. Now the default value is the empty JSON object.</t>
               <t>See <xref target="prop-recurrenceOverrides" sectionFormat="of"/>.</t>
             </dd>
           </dl>
-          <!-- {Event|Task}.sentBy -->
+          <!-- Event.sentBy -->
           <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task}.sentBy</strong>:</dt>
+            <dt><strong>Event.sentBy</strong>:</dt>
             <dd>
               <t>The property now requires the "organizerCalendarAddress" property to be set. It also supports internationalized email addresses.</t>
               <t>See <xref target="prop-sentBy" sectionFormat="of"/>.</t>
             </dd>
           </dl>
-          <!-- {Event|Task}.timeZone -->
+          <!-- Event.timeZone -->
           <dl newline="true" spacing="normal">
-            <dt><strong>{Event|Task}.timeZone</strong>:</dt>
+            <dt><strong>Event.timeZone</strong>:</dt>
             <dd>
               <t>The property value now does not support "null" values anymore. The property either is set to a time zone identifier, or not at all.</t>
               <t>See <xref target="prop-timeZone" sectionFormat="of"/>.</t>
@@ -4844,14 +4681,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>See <xref target="type-Link" sectionFormat="of"/>.</t>
             </dd>
           </dl>
-          <!-- OffsetTrigger.relativeTo -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>OffsetTrigger.relativeTo</strong>:</dt>
-            <dd>
-              <t>The original definition did not define the semantics of an alert relative to the start or due time of a Task that does not have the respective "start" or "due" property. This was incompatible with the <xref target="RFC5545" section="3.8.6.3" sectionFormat="parens">TRIGGER property</xref>, which requires the DTSTART property to be present in the VTODO component when the alarm triggers relative to the start, and the DUE property (or the DTSTART and DURATION properties) when it triggers relative to the end. It now forbids the "start" value for a Task without a "start" property, and the "end" value for a Task without a "due" property.</t>
-              <t>See <xref target="prop-alerts" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
           <!-- misc Participant -->
           <dl newline="true" spacing="normal">
             <dt><strong>Participant.delegatedFrom</strong>,
@@ -4870,19 +4699,10 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <strong>Participant.expectReply</strong>,
             <strong>Participant.kind</strong>,
             <strong>Participant.participationStatus</strong>,
-            <strong>Participant.progress</strong>,
             <strong>Participant.sentBy</strong>:
           </dt>
             <dd>
               <t>The original definitions were incompatible with iCalendar: they did not require the (now reserved) "sendTo" property to be set, but their equivalent iCalendar parameters require an ATTENDEE property. They now require the "calendarAddress" property to be set. The email and sentBy properties now also support internationalized email addresses.</t>
-              <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Participant.progress -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.progress</strong>:</dt>
-            <dd>
-              <t>The original definition was incompatible with iCalendar. It allowed the "progress" property value to be "cancelled", but this is not a supported PARTSTAT parameter value of an ATTENDEE property in a VTODO component. It also allowed the "progress" property value to be "needs-action", which is now expressed by the "participationStatus" property value "needs-action" instead: the "progress" property may only be set if the "participationStatus" property value is "accepted". The new definition only supports the "progress" property values "in-process", "completed" and "failed".</t>
               <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
             </dd>
           </dl>
@@ -4908,16 +4728,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>
               <t>The original definition specified the empty relation to represent an unspecified relationship. It now defines the empty relation to default to "parent", unless overridden, for compatibility with the <xref target="RFC5545" section="3.8.4.5" sectionFormat="parens">RELATED-TO property</xref>.</t>
               <t>See <xref target="type-Relation" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
-          <!-- Task.{due|start} -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Task.{due|start}</strong>:</dt>
-            <dd>
-              <t>The original definition defined these as optional, but this is incompatible with iCalendar: if the Task object's "timeZone" property is set, then it requires the <xref target="RFC5545" section="3.8.2.3" sectionFormat="parens">DUE property</xref> or <xref target="RFC5545" section="3.8.2.4" sectionFormat="parens">DTSTART property</xref> be set in the VTODO component. It now requires at least one of the "due" or "start" properties be set, if the "timeZone" property is set.</t>
-              <t>The original definition did not require the "start" property be set if the "recurrenceRule" property is set. But this is incompatible with the <xref target="RFC5545" section="3.8.5.3" sectionFormat="parens">RRULE property</xref>, whose recurrence set is only defined relative to the DTSTART property of the VTODO component. The "start" property now is required if the "recurrenceRule" or "recurrenceId" properties are set.</t>
-              <t>The "showWithoutTime" property having value "true" now requires at least one of the "due" or "start" properties be set.</t>
-              <t>See <xref target="jstask-props" sectionFormat="of"/>.</t>
             </dd>
           </dl>
         </section>
@@ -5002,6 +4812,18 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>
               <t>The "timeZones" property became obsolete.</t>
               <t>See <xref target="RFC8984" section="4.7.2" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+        </section>
+        <section anchor="appendix-reserved-types">
+          <name>Reserved Types</name>
+          <t>The following type definitions became reserved:</t>
+          <!-- Task -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Task</strong>:</dt>
+            <dd>
+              <t>The Task object type and its type-specific properties are reserved for future work.</t>
+              <t>See <xref target="RFC8984" section="2.2" sectionFormat="of"/> and <xref target="RFC8984" section="5.2" sectionFormat="of"/>.</t>
             </dd>
           </dl>
         </section>
