@@ -390,14 +390,15 @@ signed-duration = ["+" / "-"] duration
         </section>
         <section anchor="reserved-properties">
           <name>Reserved Properties</name>
-          <t>IANA-registered properties can be reserved (<xref target="iana-registry-policy"/>).  Implementations <bcp14>MUST NOT</bcp14> set properties having a reserved name in JSCalendar objects for which this property is reserved, or all objects if the property context in the registry is "not applicable". Reserved properties have no type and their type signature is "not applicable". Any JSCalendar object of version "2.0" or later including a property which is reserved in context of this object <bcp14>MUST</bcp14> be considered invalid.</t>
-          <t>These restrictions do not apply to the protocols or extensions for which a property is reserved (see <xref target="iana-registry-policy"/>), when they use the property as defined by them. Also, the reserved property "excluded" <bcp14>MUST</bcp14> be set in a "recurrenceOverrides" patch object to exclude an occurrence, as defined in <xref target="prop-recurrenceOverrides"/>; it <bcp14>MUST NOT</bcp14> be set anywhere else.</t>
-          <t>This document reserves one property:</t>
+          <t>IANA-registered properties can be reserved (<xref target="iana-registry-policy"/>). A reserved property has no type, and its type signature is "not applicable". A property may be reserved for a protocol or extension that defines the property for its own use, or it may be reserved without any such use, for example to allow a future specification to define it for common use.</t>
+          <t>Implementations <bcp14>MUST NOT</bcp14> set a reserved property, unless they implement a protocol or extension for which the property is reserved and set the property as defined there. All other implementations <bcp14>MUST</bcp14> handle reserved properties in JSCalendar data as <xref target="unknown-properties">unknown properties</xref>. The same applies to reserved object types: an object of a reserved type is handled as an object of unknown type.</t>
+          <t>This document itself uses the reserved property "excluded": it <bcp14>MUST</bcp14> be set in a "recurrenceOverrides" patch object to exclude an occurrence, as defined in <xref target="prop-recurrenceOverrides"/>, and it <bcp14>MUST NOT</bcp14> be set anywhere else.</t>
+          <t>This document also reserves the following property:</t>
           <section anchor="prop-extra" numbered="true" toc="default">
             <name>extra</name>
             <dl spacing="normal">
               <dt>extra: not applicable.</dt>
-              <dd>The reserved property "extra" provides implementors with a property name that is certain to never occur as a property in any JSCalendar object. Implementations might want to map unknown or vendor-specific properties to a variable with this name, but this is implementation-specific.</dd>
+              <dd>The reserved property "extra" provides implementors with a property name that is certain to never occur as a property in any JSCalendar object. It is not reserved for any protocol or extension, and implementations <bcp14>MUST NOT</bcp14> set it under any circumstances. If it is set nevertheless, implementations <bcp14>MUST</bcp14> discard it. Implementations might want to map unknown or vendor-specific properties to a variable with this name, but this is implementation-specific.</dd>
             </dl>
           </section>
         </section>
@@ -1813,7 +1814,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <t>A registration <bcp14>MUST</bcp14> have an intended usage of "common", "reserved", or "obsolete".</t>
         <ul>
           <li>A "common" usage denotes an item with shared semantics and syntax across systems. Up-to-date systems <bcp14>MUST</bcp14> expect such items to occur in JSCalendar data.</li>
-          <li>A "reserved" usage reserves an item in the registry without assigning semantics to avoid name collisions with future extensions or protocol use. Implementations <bcp14>MUST NOT</bcp14> expect or add items with such names outside the protocols or extensions that use them; otherwise, any such JSCalendar data is invalid.</li>
+          <li>A "reserved" usage reserves a name in the registry without assigning it semantics for common use. This avoids name collisions with protocols or extensions that define the item for their own use, and allows a later specification to define the item for common use. Implementations <bcp14>MUST NOT</bcp14> set reserved items, unless they implement a protocol or extension for which an item is reserved; all other implementations handle reserved items as unknown items (see <xref target="reserved-properties"/>).</li>
           <li>An "obsolete" usage denotes an item that is no longer expected to be added by up-to-date systems. A new assignment has probably been defined, covering the obsolete item's semantics. Implementations <bcp14>MUST</bcp14> expect such items to occur in JSCalendar data up to the "Until Version" registry field, inclusively. They <bcp14>MUST NOT</bcp14> add such items for any version after which the item was obsoleted; otherwise, any such JSCalendar data is invalid.</li>
         </ul>
         <t>The intended usage of registry items may change between versions, but the DE must carefully consider the impact on existing implementations and standards before doing so.</t>
