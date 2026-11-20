@@ -393,14 +393,6 @@ signed-duration = ["+" / "-"] duration
           <t>IANA-registered properties can be reserved (<xref target="iana-registry-policy"/>). A reserved property has no type, and its type signature is "not applicable". A property may be reserved for a protocol or extension that defines the property for its own use, or it may be reserved without any such use, for example to allow a future specification to define it for common use.</t>
           <t>Implementations <bcp14>MUST NOT</bcp14> set a reserved property, unless they implement a protocol or extension for which the property is reserved and set the property as defined there. All other implementations <bcp14>MUST</bcp14> handle reserved properties in JSCalendar data as <xref target="unknown-properties">unknown properties</xref>. The same applies to reserved object types: an object of a reserved type is handled as an object of unknown type.</t>
           <t>This document itself uses the reserved property "excluded": it <bcp14>MUST</bcp14> be set in a "recurrenceOverrides" patch object to exclude an occurrence, as defined in <xref target="prop-recurrenceOverrides"/>, and it <bcp14>MUST NOT</bcp14> be set anywhere else.</t>
-          <t>This document also reserves the following property:</t>
-          <section anchor="prop-extra" numbered="true" toc="default">
-            <name>extra</name>
-            <dl spacing="normal">
-              <dt>extra: not applicable.</dt>
-              <dd>The reserved property "extra" provides implementors with a property name that is certain to never occur as a property in any JSCalendar object. It is not reserved for any protocol or extension, and implementations <bcp14>MUST NOT</bcp14> set it under any circumstances. If it is set nevertheless, implementations <bcp14>MUST</bcp14> discard it. Implementations might want to map unknown or vendor-specific properties to a variable with this name, but this is implementation-specific.</dd>
-            </dl>
-          </section>
         </section>
         <section anchor="unknown-properties" numbered="true" toc="default">
           <name>Unknown Properties</name>
@@ -3349,24 +3341,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
             </dl>
             <dl spacing="compact">
               <dt>Property Name</dt>
-              <dd>extra</dd>
-              <dt>Property Type</dt>
-              <dd>not applicable</dd>
-              <dt>Property Context</dt>
-              <dd>not applicable</dd>
-              <dt>Reference/Description</dt>
-              <dd>
-                <xref target="prop-extra"/>
-              </dd>
-              <dt>Intended Usage</dt>
-              <dd>reserved</dd>
-              <dt>Since Version</dt>
-              <dd>2.0</dd>
-              <dt>Is Per-User</dt>
-              <dd>No</dd>
-            </dl>
-            <dl spacing="compact">
-              <dt>Property Name</dt>
               <dd>mainLocationId</dd>
               <dt>Property Type</dt>
               <dd>Id</dd>
@@ -4735,14 +4709,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="appendix-new-properties">
           <name>New Properties</name>
           <t>The following new properties were defined:</t>
-          <!-- extra -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>extra</strong>:</dt>
-            <dd>
-              <t>This reserved property provides implementors with a property name that is certain to never occur in any JSCalendar object.</t>
-              <t>See <xref target="prop-extra" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
           <!-- mainLocationId -->
           <dl newline="true" spacing="normal">
             <dt><strong>mainLocationId</strong>:</dt>
