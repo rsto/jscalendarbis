@@ -361,7 +361,7 @@ signed-duration = ["+" / "-"] duration
       </section>
       <section anchor="internationalization">
         <name>Internationalization</name>
-        <t>JSCalendar aims to be used for international calendaring data. Notably, text values such as event titles or locations are likely to cover a wide range of languages and cultures. This section describes internationalization for free-form text values as well as Uniform Resource Identifiers (URIs).</t>
+        <t>JSCalendar aims to be used for international calendaring data. Notably, text values such as event titles or locations are likely to cover a wide range of languages and cultures. This section describes internationalization for free-form text values, Uniform Resource Identifiers (URIs), and email addresses.</t>
         <section>
           <name>Free-Form Text</name>
           <t>Properties having free-form text values <bcp14>MAY</bcp14> contain any valid sequence of Unicode characters encoded as a JSON string. Such values can contain unidirectional left-to-right and right-to-left text, as well as bidirectional text using Unicode Directional Formatting Characters as described in Section 2 of <xref target="UBiDi"/>. Implementations setting bidirectional text <bcp14>MUST</bcp14> make sure that each property value complies with the requirements of the Unicode Bidirectional Algorithm. Implementations <bcp14>MUST NOT</bcp14> assume that text values of adjacent properties are processed or displayed as a combined string; for example, the values of an event title and description may or may not be rendered together.</t>
@@ -369,6 +369,11 @@ signed-duration = ["+" / "-"] duration
         <section>
           <name>URIs</name>
           <t>Several properties require their string value to be a URI as defined in <xref target="RFC3986"/>. Implementations <bcp14>MUST</bcp14> make sure to use proper percent-encoding for URIs that cannot be represented using unreserved URI characters. <xref target="RFC3987" section="3.1"/> defines how to convert Internationalized Resource Identifiers to URIs. JSCalendar makes no recommendation on how to display URIs, but the WHATWG URL Living Standard (see "Internationalization and special characters" (Section 4.8.3) of <xref target="WHATWG-URL"/>) provides guidance for URLs found in the context of a web browser.</t>
+        </section>
+        <section anchor="email-addresses">
+          <name>Email Addresses</name>
+          <t>Several properties require their string value to be an email address. Such a value <bcp14>MUST</bcp14> be a valid "Mailbox" as defined in <xref target="RFC5321" section="4.1.2"/>, optionally extended for internationalized email addresses as defined in <xref target="RFC6531" section="3.3"/>.</t>
+          <t>Some properties contain an email address that originates from an email message, such as the "sentBy" properties, whose values come from the "From" header field (<xref target="RFC5322" section="3.6.2"/>, extended for internationalized email addresses in <xref target="RFC6532"/>). Implementations convert such an address by removing any comments and folding white space. If the result is not a valid email address, then the property <bcp14>MUST NOT</bcp14> be set. If the "From" header field contains more than one mailbox, then which address to use is implementation-specific.</t>
         </section>
       </section>
       <section anchor="validating-jscalendar">
@@ -1148,7 +1153,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>sentBy: String (optional).</dt>
             <dd>
-              <t>This is the email address in the "From" header of the email in which this calendar object was received. This is only relevant if the calendar object is received via iMIP or as an attachment to a message. The value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/> and extended in <xref target="RFC6532" section="3.2"/>. If this property is set, then the "organizerCalendarAddress" property <bcp14>MUST</bcp14> be set.</t>
+              <t>This is the email address in the "From" header of the email in which this calendar object was received. This is only relevant if the calendar object is received via iMIP or as an attachment to a message. The value <bcp14>MUST</bcp14> be an email address (<xref target="email-addresses"/>), converted from the "From" header field as defined in that section. If this property is set, then the "organizerCalendarAddress" property <bcp14>MUST</bcp14> be set.</t>
             </dd>
           </dl>
         </section>
@@ -1167,7 +1172,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>name: String (optional).</dt>
             <dd>This is the display name of the participant (e.g., "Joe Bloggs").</dd>
             <dt>email: String (optional).</dt>
-            <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/> and extended in <xref target="RFC6532" section="3.2"/>. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set.</dd>
+            <dd>This is the email address to use to contact the participant or, for example, match with an address book entry. If set, the value <bcp14>MUST</bcp14> be an email address (<xref target="email-addresses"/>). If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set.</dd>
             <dt>description: String (optional).</dt>
             <dd>This is a description of this participant. For example, this may include more information about their role in the event or how best to contact them.</dd>
             <dt>descriptionContentType: String (optional).</dt>
@@ -1226,7 +1231,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>If true, the organizer is expecting the participant to notify them of their participation status. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set.</dd>
             <dt>sentBy: String (optional).</dt>
             <dd>
-              <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set. This <bcp14>SHOULD</bcp14> only be set if the email address is different from that in the mailto URI of this participant's "calendarAddress" property (i.e., the response was received from a different address than the one the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be a valid "addr-spec" value as defined in <xref target="RFC5322" section="3.4.1"/> and extended in <xref target="RFC6532" section="3.2"/>.</t>
+              <t>This is the email address in the "From" header of the email that last updated this participant via iMIP. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set. This <bcp14>SHOULD</bcp14> only be set if the email address is different from that in the mailto URI of this participant's "calendarAddress" property (i.e., the response was received from a different address than the one the invitation was sent to). If set, the value <bcp14>MUST</bcp14> be an email address (<xref target="email-addresses"/>), converted from the "From" header field as defined in that section.</t>
             </dd>
             <dt>delegatedTo: String[Boolean] (optional).</dt>
             <dd>This is the set of participants that this participant has delegated their participation to. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set. Each key in the set <bcp14>MUST</bcp14> be a URI according to the definition of the "calendarAddress" property. The value for each key in the map <bcp14>MUST</bcp14> be true. If there are no delegates, this <bcp14>MUST</bcp14> be omitted (rather than specified as an empty set).</dd>
@@ -4189,13 +4194,13 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4589.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4648.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5234.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5322.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5321.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5545.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5546.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5646.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5870.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6350.xml"/>
-        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6532.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6531.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6838.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6901.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7493.xml"/>
@@ -4273,6 +4278,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1034.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1035.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3987.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5322.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6532.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6376.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7265.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7986.xml"/>
@@ -4627,7 +4634,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl newline="true" spacing="normal">
             <dt><strong>Event.sentBy</strong>:</dt>
             <dd>
-              <t>The property now requires the "organizerCalendarAddress" property to be set. It also supports internationalized email addresses.</t>
+              <t>The property now requires the "organizerCalendarAddress" property to be set. Its value now is an email address as defined in <xref target="email-addresses"/>: a "Mailbox" as defined in <xref target="RFC5321"/>, which supports internationalized email addresses but, unlike the former "addr-spec" of <xref target="RFC5322"/>, no comments, folding white space, or obsolete syntax.</t>
               <t>See <xref target="prop-sentBy" sectionFormat="of"/>.</t>
             </dd>
           </dl>
@@ -4677,7 +4684,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <strong>Participant.sentBy</strong>:
           </dt>
             <dd>
-              <t>The original definitions were incompatible with iCalendar: they did not require the (now reserved) "sendTo" property to be set, but their equivalent iCalendar parameters require an ATTENDEE property. They now require the "calendarAddress" property to be set. The email and sentBy properties now also support internationalized email addresses.</t>
+              <t>The original definitions were incompatible with iCalendar: they did not require the (now reserved) "sendTo" property to be set, but their equivalent iCalendar parameters require an ATTENDEE property. They now require the "calendarAddress" property to be set. The values of the email and sentBy properties now are email addresses as defined in <xref target="email-addresses"/>: a "Mailbox" as defined in <xref target="RFC5321"/>, which supports internationalized email addresses but, unlike the former "addr-spec" of <xref target="RFC5322"/>, no comments, folding white space, or obsolete syntax.</t>
               <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
             </dd>
           </dl>
