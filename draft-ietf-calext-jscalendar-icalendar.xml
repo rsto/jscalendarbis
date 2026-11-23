@@ -14,7 +14,7 @@
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc iprnotified="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendar-icalendar-30" obsoletes="" updates="5545,jscalendarbis" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendar-icalendar-30" obsoletes="" updates="5545,jscalendarbis,7986,9073" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <front>
     <title abbrev="JSCalendar">JSCalendar: Converting from and to iCalendar</title>
     <seriesInfo name="Internet-Draft" value="draft-ietf-calext-jscalendar-icalendar-30"/>
@@ -45,7 +45,7 @@
     <keyword>time</keyword>
     <!-- TODO replace any occurrence of "jscalendarbis" with its RFC number -->
     <abstract>
-      <t>This document defines how to convert calendaring information between the JSCalendar and iCalendar data formats. It considers every JSCalendar and iCalendar element registered at IANA at the time of publication. It defines conversion rules for all elements that are common to both formats, as well as how convert arbitrary or unknown JSCalendar and iCalendar elements. This document updates RFC 5545 ("iCalendar") and jscalendarbis ("JSCalendar") by defining new properties and parameters for JSCalendar and iCalendar conversion.</t>
+      <t>This document defines how to convert calendaring information between the JSCalendar and iCalendar data formats. It considers every JSCalendar and iCalendar element registered at IANA at the time of publication, and defines conversion rules for all elements that are common to both formats. It updates the semantics of some iCalendar elements to align with JSCalendar, and extends both formats to support converting arbitrary or unknown JSCalendar and iCalendar elements. This document updates RFC 5545 ("iCalendar") and its extensions RFC 7986 and RFC 9073, as well as jscalendarbis ("JSCalendar").</t>
     </abstract>
   </front>
   <middle>
@@ -60,7 +60,7 @@
       <section anchor="scope-and-goals">
         <name>Scope and Goals</name>
         <t>This document outlines how to convert between the <xref target="RFC5545">iCalendar</xref> and <xref target="I-D.ietf-calext-jscalendarbis">JSCalendar</xref> data formats.  It describes which elements are common to both, but also highlights where the two formats differ. For each common element, it defines a conversion rule and includes an example of how to convert that element. All iCalendar and JSCalendar elements currently registered at IANA are in scope, but not all of these elements are common to both formats.</t>
-        <t>For elements that have no counterpart in the other format, it is the goal of this document to define how to preserve them during conversion, but in general it is not the goal to achieve this by defining new standard elements. Instead, this document updates <xref target="RFC5545"/> and <xref target="I-D.ietf-calext-jscalendarbis"/> by defining iCalendar and JSCalendar elements to preserve elements that have no equivalent in the other format. These conversion-specific properties are defined in Section <xref target="ical-prop-jsprop" format="counter"/> for iCalendar, and <xref target="jscal-prop-icalendar"/> for JSCalendar. <xref target="appendix-discrepancies"/> further outlines the discrepancies between the two formats.</t>
+        <t>For elements that have no counterpart in the other format, it is the goal of this document to define how to preserve them during conversion, but in general it is not the goal to achieve this by defining new standard elements. However, this document does update the definitions of some iCalendar elements where their JSCalendar counterparts more accurately model current practices and standards, such as formatting colors and geospatial coordinates. In addition, this document defines conversion-specific iCalendar and JSCalendar elements to preserve elements that have no equivalent in the other format. See <xref target="ical-prop-jsprop"/> for updates to iCalendar, and <xref target="jscal-prop-icalendar"/> for JSCalendar. <xref target="appendix-discrepancies"/> further outlines the discrepancies between the two formats.</t>
       </section>
       <section>
         <name>How to Read the Examples</name>
@@ -1376,7 +1376,7 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
               <tr>
                 <td>ROLE</td>
                 <td>roles</td>
-                <td>OWNER role defined in <xref target="I-D.ietf-calext-icalendar-jscalendar-extensions"/></td>
+                <td>OWNER role defined in <xref target="param-role-owner"/></td>
               </tr>
               <tr>
                 <td>RSVP</td>
@@ -1784,7 +1784,7 @@ CONFERENCE;VALUE=URI;FEATURE=AUDIO,VIDEO;
         <section anchor="ical-prop-coordinates">
           <name>COORDINATES</name>
           <t>
-            The <xref target="I-D.ietf-calext-icalendar-jscalendar-extensions" section="4.1" sectionFormat="parens">COORDINATES property</xref> in a VLOCATION component converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.5" sectionFormat="parens">"coordinates" property</xref> of the Location object.</t>
+            The <xref target="ical-prop-coordinates-new">COORDINATES property</xref> in a VLOCATION component converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.5" sectionFormat="parens">"coordinates" property</xref> of the Location object.</t>
           <t>The following example illustrates how to convert the COORDINATES property:</t>
           <figure anchor="test_ical_prop_coordinates">
             <name>Converting the COORDINATES property</name>
@@ -2991,7 +2991,7 @@ SEQUENCE:3
         </section>
         <section anchor="ical-prop-show-without-time">
           <name>SHOW-WITHOUT-TIME</name>
-          <t>The <xref target="I-D.ietf-calext-icalendar-jscalendar-extensions" section="4.2" sectionFormat="parens">SHOW-WITHOUT-TIME property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.4" sectionFormat="parens">"showWithoutTime" property</xref> of its target object. As outlined in the definition of the SHOW-WITHOUT-TIME property, the property <bcp14>MUST</bcp14> be ignored if the temporal value type of its component is DATE, or if the property value is "FALSE".</t>
+          <t>The <xref target="ical-prop-show-without-time-new">SHOW-WITHOUT-TIME property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.4" sectionFormat="parens">"showWithoutTime" property</xref> of its target object. As outlined in the definition of the SHOW-WITHOUT-TIME property, the property <bcp14>MUST</bcp14> be ignored if the temporal value type of its component is DATE, or if the property value is "FALSE".</t>
           <t>The following example illustrates how to convert the SHOW-WITHOUT-TIME property:</t>
           <figure anchor="test_ical_prop_show_without_time">
             <name>Example for converting the SHOW-WITHOUT-TIME property</name>
@@ -4118,15 +4118,203 @@ URL:https://example.com/myurl
     </section>
     <section anchor="updates-icalendar">
       <name>Updates to iCalendar</name>
-      <section anchor="new-icalendar-properties">
-        <name>New Properties</name>
+      <t>This section updates the iCalendar data format.</t>
+      <section anchor="new-icalendar-parameters">
+        <name>Parameters</name>
+        <t>This section updates the iCalendar parameter definitions.</t>
+        <section anchor="ical-param-jsid">
+          <name>JSID Parameter</name>
+          <t>This section defines the new JSID parameter.</t>
+          <dl>
+            <dt>Parameter Name:</dt>
+            <dd>JSID</dd>
+            <dt>Format Definition:</dt>
+            <dd>
+              <sourcecode type="abnf"><![CDATA[
+jsid-param  = "JSID" "=" param-value
+]]></sourcecode>
+            </dd>
+            <dt>Description:</dt>
+            <dd>
+              <t>This parameter is specific to conversion between iCalendar and JSCalendar. It specifies the JSON object key of the JSCalendar object to which an iCalendar property converts to. For example, this parameter set on an ATTACH property within a VEVENT component defines the key of the Link object in the Event object's "links" property (see below for an example).</t>
+              <t>The value of the JSID parameter <bcp14>MUST</bcp14> be a valid key according to the definition of the JSCalendar property to which the property that this parameter is set on converts to. Typically, this requires the value to be a valid <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.1" sectionFormat="parens">Id</xref>.</t>
+            </dd>
+            <dt>Example(s):</dt>
+            <dd>
+              <figure anchor="test_ical_param_jsid_attach">
+                <name>Converting the JSID parameter on an ATTACH property</name>
+                <sourcecode><![CDATA[
+--- iCalendar:
+ATTACH;JSID=mylink1:https://example.com
+
+--- JSCalendar:
+"links": {
+  "mylink1": {
+    "@type": "Link",
+    "href": "https://example.com"
+  }
+}
+]]></sourcecode>
+              </figure>
+            </dd>
+          </dl>
+        </section>
+        <section anchor="ical-param-jsptr">
+          <name>JSPTR Parameter</name>
+          <t>This section defines the new JSPTR parameter.</t>
+          <dl>
+            <dt>Parameter name:</dt>
+            <dd>JSPTR</dd>
+            <dt>Purpose:</dt>
+            <dd>To specify a pointer to a JSCalendar property.</dd>
+            <dt>Description:</dt>
+            <dd>
+              <t>This parameter is specific to conversion between iCalendar and JSCalendar. It is set on a <xref target="ical-prop-jsprop">JSPROP</xref> property.  Its value points to a JSCalendar property.  The parameter has a single value that <bcp14>MUST</bcp14> be a valid PatchObject key as defined in <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.9"/>. The parameter value <bcp14>MUST</bcp14> be quoted.</t>
+            </dd>
+            <dt>Format definition:</dt>
+            <dd>
+              <sourcecode name="" type="abnf"><![CDATA[
+jsptr-param  = "JSPTR" "=" quoted-string
+]]></sourcecode>
+            </dd>
+            <dt>Example(s):</dt>
+            <dd>
+              <t>For further examples, see <xref target="ical-prop-jsprop-examples"/>.</t>
+              <sourcecode name="" type="text/plain"><![CDATA[
+JSPROP;JSPTR="example.com:foo":"bar"
+]]></sourcecode>
+            </dd>
+          </dl>
+        </section>
+        <section anchor="param-role-owner">
+          <name>ROLE Parameter</name>
+          <t>This section modifies the definition of the ROLE parameter, originally defined in <xref target="RFC5545" section="3.2.16"/>. It defines the new OWNER participation role.</t>
+          <dl>
+            <dt>Value:</dt>
+            <dd>OWNER</dd>
+            <dt>Purpose:</dt>
+            <dd>This participation role indicates that the calendar user is an owner of the calendar object. This signifies they can make changes that affect all calendar users participating in this calendar object (for example, rescheduling the calendar object, adding and removing attendees and roles). The presence of this role is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars"/> for an example of making use of this role.</dd>
+            <dt>Conformance:</dt>
+            <dd>This value can be used with the "ROLE" parameter.</dd>
+            <dt>Example(s):</dt>
+            <dd>
+              <sourcecode name=""><![CDATA[
+ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:jsmith@example.com
+]]></sourcecode>
+            </dd>
+          </dl>
+        </section>
+      </section>
+      <section>
+        <name>Properties</name>
+        <t>This section updates the iCalendar property definitions. The new properties defined in this section follow the recommendation of <xref target="RFC7986" section="3"/> that properties not defined in <xref target="RFC5545"/> always include a "VALUE" parameter if the value type is other than TEXT. Accordingly, the new properties with a value type other than TEXT have no default value type.</t>
+        <section anchor="ical-prop-color-update">
+          <name>COLOR Property</name>
+          <t>This section modifies the definition of the COLOR property. It allows its value to be a named color or a numeric color. The following definitions replace the definitions of the "COLOR" property, originally specified in <xref target="RFC7986" section="5.9"/> from which the definitions for "Description", "Format Definition" and "Example" differ.</t>
+          <dl>
+            <dt>Property Name:</dt>
+            <dd>COLOR</dd>
+            <dt>Purpose:</dt>
+            <dd>This property specifies a color used for displaying the calendar, event, todo, or journal data.</dd>
+            <dt>Value Type:</dt>
+            <dd>TEXT</dd>
+            <dt>Property Parameters:</dt>
+            <dd>IANA and non-standard property parameters can be specified on this property.</dd>
+            <dt>Conformance:</dt>
+            <dd>This property can be specified once in an iCalendar object or in "VEVENT", "VTODO", or "VJOURNAL" calendar components.</dd>
+            <dt>Description:</dt>
+            <dd>
+              <t>This property specifies a color that clients <bcp14>MAY</bcp14> use when presenting the relevant data to a user.  Typically, this would appear as the "background" color of events or tasks. The value is a color name taken from the set of names defined in <xref target="CSS3" section="4.3" relative="#svg-color"/> or an RGB value in six-digit hexadecimal notation, as defined in <xref target="CSS3" section="4.2.1" relative="#rgb-color"/>. Values are case-insensitive.</t>
+            </dd>
+            <dt>Format Definition:</dt>
+            <dd>
+              <t>This property is defined by the following notation:</t>
+              <sourcecode name=""><![CDATA[
+color       = "COLOR" colorparam ":" text CRLF
+              ; Value is a CSS3 color name or
+              ; a CSS3 six-digit RGB hex value.
+
+colorparam     = *(";" other-param)
+]]></sourcecode>
+            </dd>
+            <dt>Example:</dt>
+            <dd>
+              <t>The following are examples of this property:</t>
+              <sourcecode name=""><![CDATA[
+COLOR:turquoise
+]]></sourcecode>
+              <sourcecode name=""><![CDATA[
+COLOR:#40E0D0
+]]></sourcecode>
+              <sourcecode name=""><![CDATA[
+COLOR:#ffd755
+]]></sourcecode>
+            </dd>
+          </dl>
+        </section>
+        <section anchor="ical-prop-coordinates-new">
+          <name>COORDINATES Property</name>
+          <t>This section defines the new COORDINATES property.</t>
+          <dl>
+            <dt>Property Name:</dt>
+            <dd>COORDINATES</dd>
+            <dt>Purpose:</dt>
+            <dd>To represent a geographic location using the protocol-independent, extensible "geo" URI scheme.</dd>
+            <dt>Value Type:</dt>
+            <dd>URI -- no default</dd>
+            <dt>Property Parameters:</dt>
+            <dd>IANA and non-standard parameters <bcp14>MAY</bcp14> be specified on this property.</dd>
+            <dt>Conformance:</dt>
+            <dd>This property can be specified in a "VLOCATION" calendar component.</dd>
+            <dt>Description:</dt>
+            <dd>
+              <t>This property represents spatial (geographic) coordinates. In contrast to the the "GEO" property, this property allows to represent not only latitude and longitude but also altitude of a location, and to indicate the uncertainty of the coordinates. It improves interoperability with other internet standards making use of spatial information, and is extensible, such as for use with other coordinate reference systems. The property value <bcp14>MUST</bcp14> a URI in the "geo" URI scheme, as defined in <xref target="RFC5870"/> and updates.</t>
+            </dd>
+            <dt>Format Definition:</dt>
+            <dd>
+              <sourcecode name=""><![CDATA[
+coord       = "COORDINATES" coordparam ":" uri CRLF
+
+coordparam  = *(
+               ;
+               ; The following is REQUIRED,
+               ; but MUST NOT occur more than once.
+               ;
+               (";" "VALUE" "=" "URI") /
+               ;
+               ; The following is OPTIONAL,
+               ; and MAY occur more than once.
+               ;
+               (";" other-param)
+               ;
+               )
+]]></sourcecode>
+            </dd>
+            <dt>Example:</dt>
+            <dd>
+              <t>The following is an example of this property:</t>
+              <sourcecode name=""><![CDATA[
+COORDINATES;VALUE=URI:geo:48.198634,16.371648;crs=wgs84;u=40
+]]></sourcecode>
+            </dd>
+          </dl>
+        </section>
+        <section anchor="ical-prop-geo-update">
+          <name>GEO Property</name>
+          <t>This section deprecates the "GEO" property and introduces the <xref target="ical-prop-coordinates-new">"COORDINATES"</xref> property to replace it. Implementations <bcp14>SHOULD NOT</bcp14> use the "GEO" property to represent spatial coordinates. Instead, they <bcp14>SHOULD</bcp14> specify the "COORDINATES" property in a <xref target="RFC9073" section="7.2" sectionFormat="parens">"VLOCATION" component</xref>. They <bcp14>MAY</bcp14> additionally specify a "GEO" property in a "VEVENT" or "VTODO" component, in which case its <xref target="RFC9073" section="5.3" sectionFormat="parens">"DERIVED" parameter</xref> <bcp14>MUST</bcp14> have value "TRUE".</t>
+          <t>The remainder of this section documents the rationale for deprecating the "GEO" property:</t>
+          <t>
+          The "GEO" property definition dates back to 1998, a time at which multiple internet protocols and data formats incorporated spatial coordinates in slightly different formats, making interoperability difficult. This got addressed in 2010 in <xref target="RFC5870"/>, which introduced a Uniform Resource Identifier (URI) for geographic locations. The 'geo' URI scheme not only improves interoperability but also allows for richer information than the "GEO" property value, e.g. it supports specifying the location altitude and the spatial uncertainty of the coordinates.</t>
+          <t>Alternatively to deprecating, this specification could have updated the "GEO" property to allow its property value type to be URI. This turned out to not interoperate, as implementations tended to reject such iCalendar data as invalid. This was regardless if the "GEO" property was specified in a "VEVENT" component, or if it was specified in iCalendar components that were unsupported by the implementation (e.g. an implementation that was unaware of the "VLOCATION" component still rejected the "GEO" property with value type URI in that component as invalid). Introducing a new property turned out to better interoperate with such systems.</t>
+        </section>
         <section anchor="ical-prop-jsid">
-          <name>JSID</name>
-          <dl newline="true">
+          <name>JSID Property</name>
+          <t>This section defines the new JSID property.</t>
+          <dl>
             <dt>Property Name:</dt>
             <dd>JSID</dd>
             <dt>Purpose:</dt>
-            <dd>This property preserves the identifier of a JSCalendar object value in iCalendar.</dd>
+            <dd>This property is specific to conversion between iCalendar and JSCalendar. It preserves the identifier of a JSCalendar object value in iCalendar.</dd>
             <dt>Value type:</dt>
             <dd>TEXT; also see "Format Definition" below for value restrictions.</dd>
             <dt>Property Parameters:</dt>
@@ -4137,7 +4325,7 @@ URL:https://example.com/myurl
             <dd>This property can be specified at most once in any calendar component.</dd>
             <dt>Description:</dt>
             <dd>
-              <t>This property specifies the JSON object key of the JSCalendar object to which an iCalendar component converts to. For example, this property set in a VALARM component within a VEVENT component defines the key of the Alert object in the Event object's "alerts" property (see <xref target="test_ical_prop_jsid_alert"/>).</t>
+              <t>This property is specific to conversion between iCalendar and JSCalendar. It specifies the JSON object key of the JSCalendar object to which an iCalendar component converts to. For example, this property set in a VALARM component within a VEVENT component defines the key of the Alert object in the Event object's "alerts" property (see <xref target="test_ical_prop_jsid_alert"/>).</t>
               <t>The value of the JSID property <bcp14>MUST</bcp14> be a valid object key according to the definition of the JSCalendar property to which the component converts to.</t>
             </dd>
             <dt>Format Definition:</dt>
@@ -4188,12 +4376,13 @@ END:VALARM
           </dl>
         </section>
         <section anchor="ical-prop-jsprop">
-          <name>JSPROP</name>
-          <dl newline="true">
+          <name>JSPROP Property</name>
+          <t>This section defines the new JSPROP property.</t>
+          <dl>
             <dt>Property Name:</dt>
             <dd>JSPROP</dd>
             <dt>Purpose:</dt>
-            <dd>This property represents a JSCalendar property in iCalendar.</dd>
+            <dd>This property is specific to conversion between iCalendar and JSCalendar. It represents a JSCalendar property in iCalendar.</dd>
             <dt>Value type:</dt>
             <dd>TEXT; also see "Format Definition" below for value restrictions.</dd>
             <dt>Property Parameters:</dt>
@@ -4303,124 +4492,127 @@ JSPROP;JSPTR="links/mylink1/example.com:foo":"bar"
             </dd>
           </dl>
         </section>
-      </section>
-      <section anchor="new-icalendar-parameters">
-        <name>New Parameters</name>
-        <section anchor="ical-param-jsid">
-          <name>JSID</name>
-          <dl newline="true">
-            <dt>Parameter Name:</dt>
-            <dd>JSID</dd>
-            <dt>Format Definition:</dt>
-            <dd>
-              <sourcecode type="abnf"><![CDATA[
-jsid-param  = "JSID" "=" param-value
-]]></sourcecode>
-            </dd>
+        <section anchor="ical-prop-show-without-time-new">
+          <name>SHOW-WITHOUT-TIME Property</name>
+          <t>This section defines the new SHOW-WITHOUT-TIME property.</t>
+          <dl>
+            <dt>Property Name:</dt>
+            <dd>SHOW-WITHOUT-TIME</dd>
+            <dt>Purpose:</dt>
+            <dd>To indicate that the exact time span is not important when displaying this calendar object.</dd>
+            <dt>Value Type:</dt>
+            <dd>BOOLEAN -- no default</dd>
+            <dt>Property Parameters:</dt>
+            <dd>IANA and non-standard parameters can be specified on this property.</dd>
+            <dt>Conformance:</dt>
+            <dd>This property can be specified in a "VEVENT" or "VTODO" calendar component.</dd>
             <dt>Description:</dt>
             <dd>
-              <t>This parameter specifies the JSON object key of the JSCalendar object to which an iCalendar property converts to. For example, this parameter set on an ATTACH property within a VEVENT component defines the key of the Link object in the Event object's "links" property (see below for an example).</t>
-              <t>The value of the JSID parameter <bcp14>MUST</bcp14> be a valid key according to the definition of the JSCalendar property to which the property that this parameter is set on converts to. Typically, this requires the value to be a valid <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.1" sectionFormat="parens">Id</xref>.</t>
+              <t>This indicates that the exact time span is not important to display when rendering this calendar object. An example of this is an event that occurs over a full or almost full day, but in contrast to a DATE value is limited to a specific time zone or business hours. While the time component is important for free-busy calculations and checking for scheduling clashes, calendars may choose to display it as an all-day event, or display the object separately to other objects to enhance the user's view of their schedule.</t>
+              <t>This property only is for presentation purposes, it does not have any impact on the temporal span or value type of a calendar object.</t>
+              <t>This property <bcp14>MAY</bcp14> be specified on VEVENT components where the DTSTART property is of type DATE-TIME, or in VTODO components where either the DTSTART or DUE property is specified and has type DATE-TIME. In all other cases it <bcp14>MUST NOT</bcp14> be set. If this property is set, its property value <bcp14>MUST</bcp14> be "TRUE", e.g. it <bcp14>MUST</bcp14> be omitted rather than having value "FALSE".</t>
+              <t>Implementations that are unaware of the "SHOW-WITHOUT-TIME" property might inadvertently preserve this property when changing a calendar object's temporal type from DATE-TIME to DATE. Implementations <bcp14>SHOULD</bcp14> therefore ignore rather than reject the incorrectly specified SHOW-WITHOUT-TIME property. They <bcp14>MUST NOT</bcp14> preserve the ill-specified property in the calendaring data.</t>
             </dd>
-            <dt>Example(s):</dt>
+            <dt>Format Definition:</dt>
             <dd>
-              <figure anchor="test_ical_param_jsid_attach">
-                <name>Converting the JSID parameter on an ATTACH property</name>
-                <sourcecode><![CDATA[
---- iCalendar:
-ATTACH;JSID=mylink1:https://example.com
+              <sourcecode name=""><![CDATA[
+showwt      = "SHOW-WITHOUT-TIME" showwtparam ":" "TRUE" CRLF
 
---- JSCalendar:
-"links": {
-  "mylink1": {
-    "@type": "Link",
-    "href": "https://example.com"
-  }
-}
+showwtparam = *(
+               ;
+               ; The following is REQUIRED,
+               ; but MUST NOT occur more than once.
+               ;
+               (";" "VALUE" "=" "BOOLEAN") /
+               ;
+               ; The following is OPTIONAL,
+               ; and MAY occur more than once.
+               ;
+               (";" other-param)
+               ;
+               )
 ]]></sourcecode>
-              </figure>
+            </dd>
+            <dt>Example:</dt>
+            <dd>
+              <sourcecode name=""><![CDATA[
+SHOW-WITHOUT-TIME;VALUE=BOOLEAN:TRUE
+]]></sourcecode>
             </dd>
           </dl>
         </section>
-        <section anchor="ical-param-jsptr">
-          <name>JSPTR</name>
-          <dl newline="true">
-            <dt>Parameter name:</dt>
-            <dd>JSPTR</dd>
-            <dt>Purpose:</dt>
-            <dd>To specify a pointer to a JSCalendar property.</dd>
-            <dt>Description:</dt>
-            <dd>
-              <t>This parameter is set on a <xref target="ical-prop-jsprop">JSPROP</xref> property.  Its value points to a JSCalendar property.  The parameter has a single value that <bcp14>MUST</bcp14> be a valid PatchObject key as defined in <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.9"/>. The parameter value <bcp14>MUST</bcp14> be quoted.</t>
-            </dd>
-            <dt>Format definition:</dt>
-            <dd>
-              <sourcecode name="" type="abnf"><![CDATA[
-jsptr-param  = "JSPTR" "=" quoted-string
+      </section>
+      <section>
+        <name>Components</name>
+        <t>This section updates the iCalendar component definitions.</t>
+        <section anchor="comp-vlocation">
+          <name>VLOCATION Component</name>
+          <t>This section modifies the definition of the "VLOCATION" component to allow setting the newly defined <xref target="ical-prop-coordinates-new">"COORDINATES" property</xref> at most once in the component. To achieve this, the following additions are made to the "Format Definition" of the "VLOCATION" component, defined in <xref target="RFC9073" section="7.2"/>:</t>
+          <sourcecode name=""><![CDATA[
+locprop /= *(
+            ;
+            ; The following is OPTIONAL
+            ; but MUST NOT occur more than once.
+            ;
+            coord
+            ;
+            )
 ]]></sourcecode>
-            </dd>
-            <dt>Example(s):</dt>
-            <dd>
-              <t>For further examples, see <xref target="ical-prop-jsprop-examples"/>.</t>
-              <sourcecode name="" type="text/plain"><![CDATA[
-JSPROP;JSPTR="example.com:foo":"bar"
-]]></sourcecode>
-            </dd>
-          </dl>
+          <t>The "coord" ABNF is defined in <xref target="ical-prop-coordinates-new"/>.</t>
         </section>
       </section>
     </section>
     <section anchor="updates-jscalendar">
       <name>Updates to JSCalendar</name>
-      <section anchor="new-jscalendar-properties">
-        <name>New Properties</name>
-        <section anchor="jscal-prop-icalendar">
-          <name>iCalendar</name>
-          <dl newline="true">
-            <dt>Name:</dt>
-            <dd>iCalendar</dd>
-            <dt>Context:</dt>
-            <dd>Any JSCalendar object</dd>
-            <dt>Type:</dt>
-            <dd>ICalComponent (optional)</dd>
-            <dt>Description</dt>
-            <dd>
-              <t>This property contains information about iCalendar data that got converted to this JSCalendar object.  It allows for preserving the name of iCalendar elements, such as a component's name, properties and subcomponents. This specification defines the ICalComponent object type for converting iCalendar components to a JSCalendar object. Future specifications <bcp14>MAY</bcp14> define additional value types for this property.</t>
-              <t>An ICalComponent object has the following properties:</t>
-              <dl>
-                <dt>@type: String</dt>
-                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "ICalComponent", if set.</dd>
-                <dt>name: String (mandatory)</dt>
-                <dd>This is the name of the iCalendar component in lowercase.</dd>
-                <dt>components: *[][] (optional)</dt>
-                <dd>This contains subcomponents of the iCalendar component which did not convert to standard JSCalendar elements. The value <bcp14>MUST</bcp14> be a list of iCalendar components formatted in jCal as defined in <xref target="RFC7265" section="3.3" sectionFormat="of"/>. The order of the list elements is not significant.
+      <t>This section updates the JSCalendar data format.</t>
+      <section anchor="jscal-prop-icalendar">
+        <name>iCalendar Property</name>
+        <t>This section defines the new "iCalendar" property.</t>
+        <dl>
+          <dt>Name:</dt>
+          <dd>iCalendar</dd>
+          <dt>Context:</dt>
+          <dd>Any JSCalendar object</dd>
+          <dt>Type:</dt>
+          <dd>ICalComponent (optional)</dd>
+          <dt>Description</dt>
+          <dd>
+            <t>This property is specific to conversion between JSCalendar and iCalendar. It contains information about iCalendar data that got converted to this JSCalendar object.  It allows for preserving the name of iCalendar elements, such as a component's name, properties and subcomponents. This specification defines the ICalComponent object type for converting iCalendar components to a JSCalendar object. Future specifications <bcp14>MAY</bcp14> define additional value types for this property.</t>
+            <t>An ICalComponent object has the following properties:</t>
+            <dl newline="true">
+              <dt>@type: String</dt>
+              <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "ICalComponent", if set.</dd>
+              <dt>name: String (mandatory)</dt>
+              <dd>This is the name of the iCalendar component in lowercase.</dd>
+              <dt>components: *[][] (optional)</dt>
+              <dd>This contains subcomponents of the iCalendar component which did not convert to standard JSCalendar elements. The value <bcp14>MUST</bcp14> be a list of iCalendar components formatted in jCal as defined in <xref target="RFC7265" section="3.3" sectionFormat="of"/>. The order of the list elements is not significant.
                 </dd>
-                <dt>convertedProperties: String[ICalProperty] (optional)</dt>
-                <dd>
-                  <t>This contains conversion-related information about the component's properties that got partially or fully converted to JSCalendar.  Each key defines the path to a JSCalendar element.  The value for each key contains information about the iCalendar property which converted to the JSCalendar element located at that key. Unless otherwise defined for a specific iCalendar property, the path points to the JSCalendar property that the iCalendar property value converts to.</t>
-                  <t>The key <bcp14>MUST</bcp14> be a valid key of a PatchObject as defined in <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.9" sectionFormat="of"/>.  The key <bcp14>MAY</bcp14> point to the key in a nested object if the element at that key was converted from an iCalendar property of the component for which the "iCalendar" property is set. It <bcp14>MUST NOT</bcp14> point into nested objects otherwise.</t>
-                </dd>
-                <dt>properties: *[][] (optional)</dt>
-                <dd>This contains properties of the iCalendar component which did not convert to standard JSCalendar elements. The value <bcp14>MUST</bcp14> be a list of iCalendar properties formatted in jCal as defined in <xref target="RFC7265" section="3.4" sectionFormat="of"/>. The order of the list elements is not significant.
+              <dt>convertedProperties: String[ICalProperty] (optional)</dt>
+              <dd>
+                <t>This contains conversion-related information about the component's properties that got partially or fully converted to JSCalendar.  Each key defines the path to a JSCalendar element.  The value for each key contains information about the iCalendar property which converted to the JSCalendar element located at that key. Unless otherwise defined for a specific iCalendar property, the path points to the JSCalendar property that the iCalendar property value converts to.</t>
+                <t>The key <bcp14>MUST</bcp14> be a valid key of a PatchObject as defined in <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.9" sectionFormat="of"/>.  The key <bcp14>MAY</bcp14> point to the key in a nested object if the element at that key was converted from an iCalendar property of the component for which the "iCalendar" property is set. It <bcp14>MUST NOT</bcp14> point into nested objects otherwise.</t>
               </dd>
-              </dl>
-              <t>An ICalProperty object has the following properties:</t>
-              <dl>
-                <dt>@type: String</dt>
-                <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "ICalProperty", if set.</dd>
-                <dt>name: String (mandatory)</dt>
-                <dd>This is the name of the iCalendar property in lowercase.</dd>
-                <dt>valueType: String (optional)</dt>
-                <dd>This is the name of the iCalendar property value type in lowercase.</dd>
-                <dt>parameters: String[String|String[]] (optional)</dt>
-                <dd>This contains parameters of the iCalendar property. The value <bcp14>MUST</bcp14> comply with iCalendar parameters formatted in jCal as defined in <xref target="RFC7265" section="3.5" sectionFormat="of"/>.</dd>
-              </dl>
-            </dd>
-          </dl>
-          <t>The example in <xref target="test_jscal_prop_icalendar"/> describes how to convert unknown iCalendar elements to the "iCalendar" property. The X-FOO parameter set on the SUMMARY property illustrates how to preserve an unknown iCalendar parameter on a property that does convert to a standard JSCalendar element. The X-BAR property and X-BAZ component illustrate how to convert entirely unknown iCalendar elements.</t>
-          <figure anchor="test_jscal_prop_icalendar">
-            <name>Converting unknown iCalendar elements to the "iCalendar" property</name>
-            <sourcecode><![CDATA[
+              <dt>properties: *[][] (optional)</dt>
+              <dd>This contains properties of the iCalendar component which did not convert to standard JSCalendar elements. The value <bcp14>MUST</bcp14> be a list of iCalendar properties formatted in jCal as defined in <xref target="RFC7265" section="3.4" sectionFormat="of"/>. The order of the list elements is not significant.
+              </dd>
+            </dl>
+            <t>An ICalProperty object has the following properties:</t>
+            <dl newline="true">
+              <dt>@type: String</dt>
+              <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "ICalProperty", if set.</dd>
+              <dt>name: String (mandatory)</dt>
+              <dd>This is the name of the iCalendar property in lowercase.</dd>
+              <dt>valueType: String (optional)</dt>
+              <dd>This is the name of the iCalendar property value type in lowercase.</dd>
+              <dt>parameters: String[String|String[]] (optional)</dt>
+              <dd>This contains parameters of the iCalendar property. The value <bcp14>MUST</bcp14> comply with iCalendar parameters formatted in jCal as defined in <xref target="RFC7265" section="3.5" sectionFormat="of"/>.</dd>
+            </dl>
+          </dd>
+        </dl>
+        <t>The example in <xref target="test_jscal_prop_icalendar"/> describes how to convert unknown iCalendar elements to the "iCalendar" property. The X-FOO parameter set on the SUMMARY property illustrates how to preserve an unknown iCalendar parameter on a property that does convert to a standard JSCalendar element. The X-BAR property and X-BAZ component illustrate how to convert entirely unknown iCalendar elements.</t>
+        <figure anchor="test_jscal_prop_icalendar">
+          <name>Converting unknown iCalendar elements to the "iCalendar" property</name>
+          <sourcecode><![CDATA[
 --- iCalendar:
 BEGIN:VEVENT
 SUMMARY;X-FOO=bar:test
@@ -4474,25 +4666,41 @@ END:X-BAZ
   "...": ""
 }
 ]]></sourcecode>
-          </figure>
-        </section>
+        </figure>
       </section>
     </section>
     <section anchor="security_considerations">
       <name>Security Considerations</name>
-      <t>The security considerations of <xref target="I-D.ietf-calext-jscalendarbis" sectionFormat="of" section="6"/> and <xref target="RFC5545" sectionFormat="of" section="7"/> apply. In addition, the two formats do not map one-to-one, which introduces the following risks.</t>
-      <t>Conversion does not preserve the exact byte sequence of the source data, which invalidates cryptographic signatures, for example in <xref target="RFC6047">iMIP</xref> messages, so authorization decisions are best made on the original data. Repeated conversion may also not produce identical results, so converting from the original data is preferable.</t>
-      <t>Lossy conversion may drop elements that restrict access to or disclosure of calendar data. For example, choosing a single "privacy" value for recurrences with differing <xref target="ical-prop-class">CLASS</xref> values may disclose private occurrences.</t>
-      <t>The <xref target="ical-prop-jsprop">JSPROP</xref> and <xref target="jscal-prop-icalendar">"iCalendar"</xref> properties preserve elements as opaque data. This content may pass undetected through spam, malware or link filters that operate on one format, and become active after converting back. Such filters should also inspect preserved elements.</t>
-      <t>Representations such as <xref target="ical-prop-description">DESCRIPTION</xref> and <xref target="ical-prop-styled-description">STYLED-DESCRIPTION</xref>, or <xref target="ical-prop-geo">GEO</xref> and <xref target="ical-prop-coordinates">COORDINATES</xref>, may contain conflicting values, so clients of either format may present different content.</t>
+      <t>The security considerations of <xref target="I-D.ietf-calext-jscalendarbis" sectionFormat="of" section="6"/> and <xref target="RFC5545" sectionFormat="of" section="7"/> apply. In addition, the two formats do not map one-to-one, which introduces the following risks:</t>
+      <ul>
+        <li>Conversion does not preserve the exact byte sequence of the source data, which invalidates cryptographic signatures, for example in <xref target="RFC6047">iMIP</xref> messages, so authorization decisions are best made on the original data. Repeated conversion may also not produce identical results, so converting from the original data is preferable.</li>
+        <li>Lossy conversion may drop elements that restrict access to or disclosure of calendar data. For example, choosing a single "privacy" value for recurrences with differing <xref target="ical-prop-class">CLASS</xref> values may disclose private occurrences.</li>
+        <li>The <xref target="ical-prop-jsprop">JSPROP</xref> and <xref target="jscal-prop-icalendar">"iCalendar"</xref> properties preserve elements as opaque data. This content may pass undetected through spam, malware or link filters that operate on one format, and become active after converting back. Such filters should also inspect preserved elements.</li>
+        <li>Representations such as <xref target="ical-prop-description">DESCRIPTION</xref> and <xref target="ical-prop-styled-description">STYLED-DESCRIPTION</xref>, or <xref target="ical-prop-geo">GEO</xref> and <xref target="ical-prop-coordinates">COORDINATES</xref>, may contain conflicting values, so clients of either format may present different content.</li>
+      </ul>
+      <t><xref target="RFC7986"/> describes the security considerations for the COLOR property and its related JSCalendar "color" property.</t>
+      <t>The newly defined iCalendar OWNER participation role (<xref target="param-role-owner"/>) is indicative only: its presence in an iCalendar object does not by itself grant any authorization. Implementations <bcp14>MUST NOT</bcp14> grant a calendar user the ability to make changes to a calendar object based solely on the presence of this role; authorization is determined by the calendaring exchange protocol in use. In the context of <xref target="I-D.ietf-jmap-calendars">JMAP Calendars</xref>, this role is equivalent to the "owner" role of the Participant object. Its semantics in the context of other calendaring exchange protocols, such as <xref target="RFC4791">CalDAV</xref>, are not defined by this document.</t>
     </section>
     <section anchor="IANA">
       <!-- All drafts are required to have an IANA considerations section.  See RFC 8126 for a guide.-->
       <name>IANA Considerations</name>
       <section>
         <name>Changes to the "iCalendar Element Registries"</name>
+        <t>IANA will change the entry for the "VLOCATION" component in the "Components" registry: it will add <xref target="comp-vlocation"/> of this document to the References.</t>
+        <t>IANA will change the entry for the "GEO" property in the "Properties" registry: it will set the Status from "Current" to "Deprecated" and add <xref target="ical-prop-geo-update"/> of this document to the References.</t>
+        <t>IANA will change the entry for the "COLOR" property in the "Properties" registry: it will add <xref target="ical-prop-color-update"/> of this document to the References.</t>
         <t>IANA will add the following entries to the "Properties" registry:</t>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
+          <dt>Property</dt>
+          <dd>COORDINATES</dd>
+          <dt>Status</dt>
+          <dd>Current</dd>
+          <dt>Reference</dt>
+          <dd>
+            <xref target="ical-prop-coordinates-new"/>
+          </dd>
+        </dl>
+        <dl spacing="compact">
           <dt>Property</dt>
           <dd>JSID</dd>
           <dt>Status</dt>
@@ -4502,7 +4710,7 @@ END:X-BAZ
             <xref target="ical-prop-jsid"/>
           </dd>
         </dl>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Property</dt>
           <dd>JSPROP</dd>
           <dt>Status</dt>
@@ -4512,8 +4720,18 @@ END:X-BAZ
             <xref target="ical-prop-jsprop"/>
           </dd>
         </dl>
+        <dl spacing="compact">
+          <dt>Property</dt>
+          <dd>SHOW-WITHOUT-TIME</dd>
+          <dt>Status</dt>
+          <dd>Current</dd>
+          <dt>Reference</dt>
+          <dd>
+            <xref target="ical-prop-show-without-time-new"/>
+          </dd>
+        </dl>
         <t>IANA will add the following entries to the "Parameters" registry:</t>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Parameter</dt>
           <dd>JSID</dd>
           <dt>Status</dt>
@@ -4523,7 +4741,7 @@ END:X-BAZ
             <xref target="ical-param-jsid"/>
           </dd>
         </dl>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Parameter</dt>
           <dd>JSPTR</dd>
           <dt>Status</dt>
@@ -4533,11 +4751,22 @@ END:X-BAZ
             <xref target="ical-param-jsptr"/>
           </dd>
         </dl>
+        <t>IANA will add the following entry to the "Participation Roles" registry:</t>
+        <dl spacing="compact">
+          <dt>Role Type</dt>
+          <dd>OWNER</dd>
+          <dt>Status</dt>
+          <dd>Current</dd>
+          <dt>Reference</dt>
+          <dd>
+            <xref target="param-role-owner"/>
+          </dd>
+        </dl>
       </section>
       <section>
         <name>Changes to the "JSCalendar Registries"</name>
         <t>IANA will add the following entries to the "JSCalendar Properties" registry:</t>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Property Name</dt>
           <dd>components</dd>
           <dt>Property Type</dt>
@@ -4557,7 +4786,7 @@ END:X-BAZ
           <dt>Change Controller</dt>
           <dd>IETF</dd>
         </dl>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Property Name</dt>
           <dd>convertedProperties</dd>
           <dt>Property Type</dt>
@@ -4577,7 +4806,7 @@ END:X-BAZ
           <dt>Change Controller</dt>
           <dd>IETF</dd>
         </dl>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Property Name</dt>
           <dd>iCalendar</dd>
           <dt>Property Type</dt>
@@ -4597,7 +4826,7 @@ END:X-BAZ
           <dt>Change Controller</dt>
           <dd>IETF</dd>
         </dl>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Property Name</dt>
           <dd>iCalendar</dd>
           <dt>Property Type</dt>
@@ -4617,7 +4846,7 @@ END:X-BAZ
           <dt>Change Controller</dt>
           <dd>IETF</dd>
         </dl>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Property Name</dt>
           <dd>name</dd>
           <dt>Property Type</dt>
@@ -4637,7 +4866,7 @@ END:X-BAZ
           <dt>Change Controller</dt>
           <dd>IETF</dd>
         </dl>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Property Name</dt>
           <dd>parameters</dd>
           <dt>Property Type</dt>
@@ -4657,7 +4886,7 @@ END:X-BAZ
           <dt>Change Controller</dt>
           <dd>IETF</dd>
         </dl>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Property Name</dt>
           <dd>properties</dd>
           <dt>Property Type</dt>
@@ -4677,7 +4906,7 @@ END:X-BAZ
           <dt>Change Controller</dt>
           <dd>IETF</dd>
         </dl>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Property Name</dt>
           <dd>valueType</dd>
           <dt>Property Type</dt>
@@ -4698,7 +4927,7 @@ END:X-BAZ
           <dd>IETF</dd>
         </dl>
         <t>IANA will update the following entry in the "JSCalendar Properties" registry. The entry is identified by its Property Name. The values listed for the other fields are appended to the comma-separated values already set for these fields, unchanged fields are omitted.</t>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Property Name</dt>
           <dd>@type</dd>
           <dt>Property Context</dt>
@@ -4709,7 +4938,7 @@ END:X-BAZ
           </dd>
         </dl>
         <t>IANA will add the following entries to the "JSCalendar Types" registry:</t>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Type Name</dt>
           <dd>ICalComponent</dd>
           <dt>Reference/Description</dt>
@@ -4723,7 +4952,7 @@ END:X-BAZ
           <dt>Change Controller</dt>
           <dd>IETF</dd>
         </dl>
-        <dl spacing="compact" newline="true">
+        <dl spacing="compact">
           <dt>Type Name</dt>
           <dd>ICalProperty</dd>
           <dt>Reference/Description</dt>
@@ -4742,7 +4971,6 @@ END:X-BAZ
   </middle>
   <back>
     <displayreference target="I-D.ietf-calext-jscalendarbis" to="JSCALENDAR"/>
-    <displayreference target="I-D.ietf-calext-icalendar-jscalendar-extensions" to="JSCAL-EXT"/>
     <displayreference target="I-D.ietf-jmap-calendars" to="JMAP-CAL"/>
     <references>
       <name>References</name>
@@ -4769,7 +4997,22 @@ END:X-BAZ
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9562.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.10051.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-calext-jscalendarbis.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-calext-icalendar-jscalendar-extensions.xml"/>
+        <reference anchor="CSS3" target="https://www.w3.org/TR/css-color-3/" quoteTitle="true" derivedAnchor="CSS3">
+          <front>
+            <title>CSS Color Module Level 3</title>
+            <author initials="T" surname="Çelik" fullname="Tantek Çelik">
+              <organization showOnFrontPage="true"/>
+            </author>
+            <author initials="C" surname="Lilley" fullname="Chris Lilley">
+              <organization showOnFrontPage="true"/>
+            </author>
+            <author initials="L" surname="Baron" fullname="L. David Baron">
+              <organization showOnFrontPage="true"/>
+            </author>
+            <date month="January" year="2022"/>
+          </front>
+          <refcontent>W3C Recommendation</refcontent>
+        </reference>
         <reference anchor="TZDB" target="https://www.iana.org/time-zones">
           <front>
             <title>IANA Time Zone Database</title>
@@ -4782,6 +5025,7 @@ END:X-BAZ
         <name>Informative References</name>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-jmap-calendars.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8607.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4791.xml"/>
       </references>
     </references>
     <section anchor="appendix-discrepancies">
