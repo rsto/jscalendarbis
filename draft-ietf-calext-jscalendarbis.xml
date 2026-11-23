@@ -90,7 +90,7 @@
         </ul>
         <t>In recent years, many new products and services have appeared that wish to use a JSON representation of calendar data within their APIs. The JSON format for iCalendar data, <xref target="RFC7265">jCal</xref>, is a direct mapping between iCalendar and JSON. In its effort to represent full iCalendar semantics, it inherits all the same pitfalls and uses a complicated JSON structure.</t>
         <t>As a consequence, since the standardization of jCal, the majority of implementations and service providers either kept using iCalendar or came up with their own proprietary JSON representations, which are incompatible with each other and often suffer from common pitfalls, such as storing event start times in UTC (which become incorrect if the time zone's rules change in the future). JSCalendar meets the demand for JSON-formatted calendar data that is free of such known problems and provides a standard representation as an alternative to the proprietary formats.</t>
-        <t>Two additional documents define the relation of JSCalendar and iCalendar: <xref target="I-D.ietf-calext-icalendar-jscalendar-extensions"/> defines new iCalendar properties and parameters. <xref target="I-D.ietf-calext-jscalendar-icalendar"/> defines how to convert JSCalendar data from and to iCalendar.</t>
+        <t><xref target="I-D.ietf-calext-jscalendar-icalendar"/> defines how to convert JSCalendar data from and to iCalendar. It also defines new iCalendar elements to support this conversion.</t>
       </section>
       <section>
         <name>Relation to obsolete RFC 8984</name>
@@ -4271,7 +4271,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <date month="January" year="2024"/>
           </front>
         </reference>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-calext-icalendar-jscalendar-extensions.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-calext-jscalendar-icalendar.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-jmap-calendars.xml"/>
         <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.10051.xml"/>
