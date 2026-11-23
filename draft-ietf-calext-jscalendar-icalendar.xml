@@ -14,7 +14,7 @@
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc iprnotified="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendar-icalendar-30" obsoletes="" updates="5545,jscalendarbis,7986,9073" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="std" consensus="true" docName="draft-ietf-calext-jscalendar-icalendar-30" obsoletes="" updates="5545,7986,9073" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
   <front>
     <title abbrev="JSCalendar">JSCalendar: Converting from and to iCalendar</title>
     <seriesInfo name="Internet-Draft" value="draft-ietf-calext-jscalendar-icalendar-30"/>
@@ -43,9 +43,8 @@
     <keyword>events</keyword>
     <keyword>date</keyword>
     <keyword>time</keyword>
-    <!-- TODO replace any occurrence of "jscalendarbis" with its RFC number -->
     <abstract>
-      <t>This document defines how to convert calendaring information between the JSCalendar and iCalendar data formats. It considers every JSCalendar and iCalendar element registered at IANA at the time of publication, and defines conversion rules for all elements that are common to both formats. It updates the semantics of some iCalendar elements to align with JSCalendar, and extends both formats to support converting arbitrary or unknown JSCalendar and iCalendar elements. This document updates RFC 5545 ("iCalendar") and its extensions RFC 7986 and RFC 9073, as well as jscalendarbis ("JSCalendar").</t>
+      <t>This document defines how to convert calendaring information between the JSCalendar and iCalendar data formats. It considers every JSCalendar and iCalendar element registered at IANA at the time of publication, and defines conversion rules for all elements that are common to both formats. It updates the semantics of some iCalendar elements to align with JSCalendar, and extends both formats to support converting arbitrary or unknown JSCalendar and iCalendar elements. This document updates RFC 5545 ("iCalendar") and its extensions RFC 7986 and RFC 9073.</t>
     </abstract>
   </front>
   <middle>
@@ -4117,11 +4116,9 @@ URL:https://example.com/myurl
       </section>
     </section>
     <section anchor="def_ical">
-      <name>Updates to iCalendar</name>
-      <t>This section updates the iCalendar data format.</t>
+      <name>New iCalendar Definitions</name>
       <section>
         <name>Parameters</name>
-        <t>This section updates the iCalendar parameter definitions.</t>
         <section anchor="def_ical_param_jsid">
           <name>JSID Parameter</name>
           <t>This section defines the new JSID parameter.</t>
@@ -4207,7 +4204,7 @@ ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:jsmith@example.com
       </section>
       <section>
         <name>Properties</name>
-        <t>This section updates the iCalendar property definitions. The new properties defined in this section follow the recommendation of <xref target="RFC7986" section="3"/> that properties not defined in <xref target="RFC5545"/> always include a "VALUE" parameter if the value type is other than TEXT. Accordingly, the new properties with a value type other than TEXT have no default value type.</t>
+        <t>The new properties defined in this section follow the recommendation of <xref target="RFC7986" section="3"/> that properties not defined in <xref target="RFC5545"/> always include a "VALUE" parameter if the value type is other than TEXT. Accordingly, the new properties with a value type other than TEXT have no default value type.</t>
         <section anchor="def_ical_prop_color">
           <name>COLOR Property</name>
           <t>This section modifies the definition of the COLOR property. It allows its value to be a named color or a numeric color. The following definitions replace the definitions of the "COLOR" property, originally specified in <xref target="RFC7986" section="5.9"/> from which the definitions for "Description", "Format Definition" and "Example" differ.</t>
@@ -4544,7 +4541,6 @@ SHOW-WITHOUT-TIME;VALUE=BOOLEAN:TRUE
       </section>
       <section>
         <name>Components</name>
-        <t>This section updates the iCalendar component definitions.</t>
         <section anchor="def_ical_comp_vlocation">
           <name>VLOCATION Component</name>
           <t>This section modifies the definition of the "VLOCATION" component to allow setting the newly defined <xref target="def_ical_prop_coordinates">"COORDINATES" property</xref> at most once in the component. To achieve this, the following additions are made to the "Format Definition" of the "VLOCATION" component, defined in <xref target="RFC9073" section="7.2"/>:</t>
@@ -4563,8 +4559,7 @@ locprop /= *(
       </section>
     </section>
     <section anchor="def_jscal">
-      <name>Updates to JSCalendar</name>
-      <t>This section updates the JSCalendar data format.</t>
+      <name>New JSCalendar Definitions</name>
       <section anchor="def_jscal_prop_icalendar">
         <name>iCalendar Property</name>
         <t>This section defines the new "iCalendar" property.</t>
