@@ -131,7 +131,7 @@
           <ul empty="true" anchor="example-foo-object">
             <li>
               <t>A Foo object has the following properties:</t>
-              <dl spacing="normal">
+              <dl newline="true" spacing="normal">
                 <dt>@type: String.</dt>
                 <dd>The JSCalendar type of the object. The value <bcp14>MUST</bcp14> be "Foo", if set.</dd>
                 <dt>baz: Number (mandatory).</dt>
