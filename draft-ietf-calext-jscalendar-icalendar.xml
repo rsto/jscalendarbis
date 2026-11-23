@@ -2625,7 +2625,7 @@ PRIORITY:3
         <section anchor="i2j_prop_prodid">
           <name>PRODID</name>
           <t>
-              The <xref target="RFC5545" section="3.7.3" sectionFormat="parens">PRODID property</xref> in a VCALENDAR component converts to the Group object's <xref target="I-D.ietf-calext-jscalendarbis" section="3.1.4" sectionFormat="parens">"prodId" property</xref>. Implementations <bcp14>MAY</bcp14> additionally convert it also to the "prodId" property of all calendar objects that are listed in the Group object's "entries" property.</t>
+              The <xref target="RFC5545" section="3.7.3" sectionFormat="parens">PRODID property</xref> in a VCALENDAR component converts to the Group object's <xref target="I-D.ietf-calext-jscalendarbis" section="3.1.4" sectionFormat="parens">"prodId" property</xref>. Implementations <bcp14>MAY</bcp14> additionally convert it also to the "prodId" property of all calendar objects that are listed in the Group object's "entries" property. If a calendar object is represented without an enclosing Group object, then the PRODID property <bcp14>MUST</bcp14> convert to the "prodId" property of that calendar object.</t>
           <t>The property value converts verbatim.</t>
           <t>The following example illustrates how to convert the PRODID property:</t>
           <figure anchor="test_prop_prodid">
@@ -2644,7 +2644,6 @@ BEGIN:VEVENT
   "entries": [
     {
       "@type": "Event",
-      "prodId": "-//BAZ//bam//EN",
       "...": ""
     }
   ],
