@@ -674,7 +674,7 @@ END:PARTICIPANT
           <t>Remarks:</t>
           <ul>
             <li>
-              <t>The ACTION property only converts if its value is EMAIL or DISPLAY.</t>
+              <t>The ACTION property only converts if its value is "EMAIL" or "DISPLAY".</t>
             </li>
           </ul>
           <t>Other properties or components <bcp14>MAY</bcp14> be converted to the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref> of the Alert object. This includes mandatory properties such as <xref target="RFC5545" section="3.8.4.1" sectionFormat="parens">ATTENDEE</xref>, <xref target="RFC5545" section="3.8.1.5" sectionFormat="parens">DESCRIPTION</xref>, or <xref target="RFC5545" section="3.8.1.12" sectionFormat="parens">SUMMARY</xref>.</t>
@@ -1199,10 +1199,10 @@ ACKNOWLEDGED:20241002T114703Z
               </tr>
             </tbody>
           </table>
-          <t>An ACTION property with value AUDIO or any other not listed in <xref target="i2j_prop_action_values"/> does not convert to the "action" property. Instead, the property converts to the <xref target="def_jscal_prop_icalendar">iCalendar/properties property</xref> of the Alert.</t>
-          <t>The following example illustrates how to convert the ACTION property with value DISPLAY:</t>
+          <t>An ACTION property with value "AUDIO" or any other not listed in <xref target="i2j_prop_action_values"/> does not convert to the "action" property. Instead, the property converts to the <xref target="def_jscal_prop_icalendar">iCalendar/properties property</xref> of the Alert.</t>
+          <t>The following example illustrates how to convert the ACTION property with value "DISPLAY":</t>
           <figure anchor="test_prop_action_display">
-            <name>Converting the ACTION property for value DISPLAY</name>
+            <name>Converting the ACTION property for value "DISPLAY"</name>
             <sourcecode><![CDATA[
 --- iCalendar:
 BEGIN:VEVENT
@@ -1220,9 +1220,9 @@ ACTION:DISPLAY
 }
 ]]></sourcecode>
           </figure>
-          <t>The following example illustrates how to convert the ACTION property with value AUDIO:</t>
+          <t>The following example illustrates how to convert the ACTION property with value "AUDIO":</t>
           <figure anchor="test_prop_action_audio">
-            <name>Converting the ACTION property for value AUDIO</name>
+            <name>Converting the ACTION property for value "AUDIO"</name>
             <sourcecode><![CDATA[
 --- iCalendar:
 BEGIN:VEVENT
@@ -1345,7 +1345,7 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
               <tr>
                 <td>CUTYPE</td>
                 <td>kind</td>
-                <td>ROOM converts to "location"</td>
+                <td>"ROOM" converts to "location"</td>
               </tr>
               <tr>
                 <td>DELEGATED-FROM</td>
@@ -1375,7 +1375,7 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
               <tr>
                 <td>ROLE</td>
                 <td>roles</td>
-                <td>OWNER role defined in <xref target="def_ical_param_role"/></td>
+                <td>"OWNER" role defined in <xref target="def_ical_param_role"/></td>
               </tr>
               <tr>
                 <td>RSVP</td>
@@ -1507,9 +1507,9 @@ ORGANIZER:mailto:organizer@example.com
 "organizerCalendarAddress": "mailto:organizer@example.com"
 ]]></sourcecode>
           </figure>
-          <t>The following example illustrates how to convert the ATTENDEE property with the OWNER role:</t>
+          <t>The following example illustrates how to convert the ATTENDEE property with the "OWNER" role:</t>
           <figure anchor="test_prop_attendee_role_owner">
-            <name>Converting the ATTENDEE property with the OWNER role</name>
+            <name>Converting the ATTENDEE property with the "OWNER" role</name>
             <sourcecode><![CDATA[
 --- iCalendar:
 ATTENDEE;RSVP=TRUE:mailto:foo@example.com
@@ -1641,7 +1641,7 @@ CATEGORIES:Meeting
         <section anchor="i2j_prop_class">
           <name>CLASS</name>
           <t>The <xref target="RFC5545" section="3.8.1.3" sectionFormat="parens">CLASS property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.3" sectionFormat="parens">"privacy" property</xref> of its target object.</t>
-          <t>JSCalendar requires all recurrences of a calendar object to have the same "privacy" property value, including recurrence instances for which no base object is given. In contrast, iCalendar supports setting different CLASS property values for recurrence overrides. How to choose the effective CLASS property value for all recurrences when converting to JSCalendar is implementation-specific. One option is to choose the most restrictive classification in any recurrence of a calendar object, where CONFIDENTIAL is the most restrictive, then PRIVATE or an unknown classification, and PUBLIC or the absent CLASS property is the least restrictive.</t>
+          <t>JSCalendar requires all recurrences of a calendar object to have the same "privacy" property value, including recurrence instances for which no base object is given. In contrast, iCalendar supports setting different CLASS property values for recurrence overrides. How to choose the effective CLASS property value for all recurrences when converting to JSCalendar is implementation-specific. One option is to choose the most restrictive classification in any recurrence of a calendar object, where "CONFIDENTIAL" is the most restrictive, then "PRIVATE" or an unknown classification, and "PUBLIC" or the absent CLASS property is the least restrictive.</t>
           <t>The CLASS property values convert as follows:</t>
           <table>
             <name>Values of the CLASS property</name>
@@ -1824,8 +1824,8 @@ CREATED:20240329T133000Z
         </section>
         <section anchor="i2j_prop_description">
           <name>DESCRIPTION</name>
-          <t>The <xref target="RFC5545" section="3.8.1.5" sectionFormat="parens">DESCRIPTION property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.2" sectionFormat="parens">"description" property</xref> of its target object, unless its DERIVED parameter value is TRUE.</t>
-          <t>If the DERIVED parameter value is TRUE, then the property does not convert to the "description" property. Instead, a non-derived STYLED-DESCRIPTION property is expected to contain the description. Implementations <bcp14>MAY</bcp14> preserve the property in the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref>.</t>
+          <t>The <xref target="RFC5545" section="3.8.1.5" sectionFormat="parens">DESCRIPTION property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.2" sectionFormat="parens">"description" property</xref> of its target object, unless its DERIVED parameter value is "TRUE".</t>
+          <t>If the DERIVED parameter value is "TRUE", then the property does not convert to the "description" property. Instead, a non-derived STYLED-DESCRIPTION property is expected to contain the description. Implementations <bcp14>MAY</bcp14> preserve the property in the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref>.</t>
           <t>The following example illustrates how to convert the DESCRIPTION property:</t>
           <figure anchor="test_prop_description">
             <name>Converting the DESCRIPTION property</name>
@@ -2281,10 +2281,10 @@ LINK;LINKREL="https://example.com/linkrel/source";LABEL=Venue;
         </section>
         <section anchor="i2j_prop_location">
           <name>LOCATION</name>
-          <t>The <xref target="RFC5545" section="3.8.1.7" sectionFormat="parens">LOCATION property</xref> converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.5" sectionFormat="parens">Location object</xref>, unless its DERIVED parameter value is TRUE. The converted object is set in the "locations" property of its target object.</t>
+          <t>The <xref target="RFC5545" section="3.8.1.7" sectionFormat="parens">LOCATION property</xref> converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.5" sectionFormat="parens">Location object</xref>, unless its DERIVED parameter value is "TRUE". The converted object is set in the "locations" property of its target object.</t>
           <t>The key of the Location object <bcp14>MUST</bcp14> be the value of the <xref target="def_ical_param_jsid">JSID parameter</xref>, if set. If no JSID parameter is set, then the key <bcp14>MAY</bcp14> be the UUIDv5 generated from the property value (see <xref target="i2j_ids"/>). When converting to iCalendar, implementations <bcp14>MAY</bcp14> omit setting the JSID parameter if the key matches the UUIDv5 of the LOCATION property value and the key is not part of a JSON pointer in any JSPTR parameter value.</t>
           <t>The LOCATION property value converts to the Location object's "title" property.</t>
-          <t>If the calendar component contains multiple VLOCATION components, then the LOCATION property also converts to the "mainLocationId" property of its target object. If the LOCATION property does not have the DERIVED parameter set to TRUE, then the "mainLocationId" is set to the key of the Location object of the LOCATION property. If instead the LOCATION property is derived and its property value matches the NAME property value of a VLOCATION component, then the "mainLocationId" is the identifier of the Location object of that VLOCATION component.</t>
+          <t>If the calendar component contains multiple VLOCATION components, then the LOCATION property also converts to the "mainLocationId" property of its target object. If the LOCATION property does not have the DERIVED parameter set to "TRUE", then the "mainLocationId" is set to the key of the Location object of the LOCATION property. If instead the LOCATION property is derived and its property value matches the NAME property value of a VLOCATION component, then the "mainLocationId" is the identifier of the Location object of that VLOCATION component.</t>
           <t>The following example illustrates how to convert the LOCATION property:</t>
           <figure anchor="test_prop_location">
             <name>Converting the LOCATION property</name>
@@ -2550,7 +2550,7 @@ ATTENDEE;RSVP=TRUE;PARTSTAT=TENTATIVE:mailto:foo@example.com
 }
 ]]></sourcecode>
           </figure>
-          <t>The following example illustrates how to convert the ORGANIZER property with a CN parameter if another participant has the OWNER role:</t>
+          <t>The following example illustrates how to convert the ORGANIZER property with a CN parameter if another participant has the "OWNER" role:</t>
           <figure anchor="test_prop_organizer_cn_other_owner">
             <name>Converting the ORGANIZER property with CN parameter and another owner</name>
             <sourcecode><![CDATA[
@@ -2581,7 +2581,7 @@ ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:foo@example.com
 }
 ]]></sourcecode>
           </figure>
-          <t>The following example illustrates how to convert the ORGANIZER property if another participant has the OWNER role:</t>
+          <t>The following example illustrates how to convert the ORGANIZER property if another participant has the "OWNER" role:</t>
           <figure anchor="test_prop_organizer_other_owner">
             <name>Converting the ORGANIZER property with another owner</name>
             <sourcecode><![CDATA[
@@ -3055,7 +3055,7 @@ SOURCE;VALUE=URI:https://example.com/holidays.ics
           <ul>
             <li>The property value type <bcp14>MUST</bcp14> be TEXT.</li>
             <li>The FMTTYPE parameter either <bcp14>MUST NOT</bcp14> be set, or its value <bcp14>MUST</bcp14> be a <xref target="RFC6838">media type</xref> with top-level type "text".</li>
-            <li>Its DERIVED parameter value <bcp14>MUST NOT</bcp14> be TRUE. If the value is TRUE, then another property in the same component is expected to contain the description.</li>
+            <li>Its DERIVED parameter value <bcp14>MUST NOT</bcp14> be "TRUE". If the value is "TRUE", then another property in the same component is expected to contain the description.</li>
           </ul>
           <t>If these conditions are not met, implementations <bcp14>MAY</bcp14> preserve the property in the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref>.</t>
           <t>Its <xref target="RFC5545" section="3.2.8" sectionFormat="parens">FMTTYPE parameter</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.3" sectionFormat="parens">"descriptionContentType" property</xref>.</t>
@@ -3618,7 +3618,7 @@ URL:https://example.com/myurl
             <t>The "descriptionContentType" property value determines if the "description" property converts to the DESCRIPTION or STYLED-DESCRIPTION property. A description of content type "text/plain" converts to the DESCRIPTION property. Any other description converts to the STYLED-DESCRIPTION property, in which case a plain text version of the rich-text description <bcp14>MAY</bcp14> be set additionally in the DESCRIPTION property, having its DERIVED parameter set to "TRUE". How to derive plain text from rich-text is implementation-specific.</t>
           </li>
           <li>
-            <t>The "privacy" property converts to the CLASS property of the main component and all recurrence overrides. If the property value is "private" and the <xref target="def_jscal_prop_icalendar">iCalendar/properties property</xref> contains a CLASS property with an unknown value, then implementations <bcp14>MAY</bcp14> convert that preserved property rather than setting the PRIVATE classification. In any case they <bcp14>MUST NOT</bcp14> set more than one CLASS property per calendar component.</t>
+            <t>The "privacy" property converts to the CLASS property of the main component and all recurrence overrides. If the property value is "private" and the <xref target="def_jscal_prop_icalendar">iCalendar/properties property</xref> contains a CLASS property with an unknown value, then implementations <bcp14>MAY</bcp14> convert that preserved property rather than setting the "PRIVATE" classification. In any case they <bcp14>MUST NOT</bcp14> set more than one CLASS property per calendar component.</t>
           </li>
           <li>
             <t>The entries in the "recurrenceOverrides" property convert depending on the contents of the PatchObject value. A PatchObject that sets the "excluded" member to "true" converts to an EXDATE property for the date-time of that recurrence instance. An empty PatchObject converts to an RDATE property. Any other PatchObject converts to a recurrence override component in the embedding VCALENDAR component.</t>
@@ -4185,14 +4185,14 @@ JSPROP;JSPTR="example.com:foo":"bar"
         </section>
         <section anchor="def_ical_param_role">
           <name>ROLE Parameter</name>
-          <t>This section modifies the definition of the ROLE parameter, originally defined in <xref target="RFC5545" section="3.2.16"/>. It defines the new OWNER participation role.</t>
+          <t>This section modifies the definition of the ROLE parameter, originally defined in <xref target="RFC5545" section="3.2.16"/>. It defines the new "OWNER" participation role.</t>
           <dl>
             <dt>Value:</dt>
             <dd>OWNER</dd>
             <dt>Purpose:</dt>
             <dd>This participation role indicates that the calendar user is an owner of the calendar object. This signifies they can make changes that affect all calendar users participating in this calendar object (for example, rescheduling the calendar object, adding and removing attendees and roles). The presence of this role is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars"/> for an example of making use of this role.</dd>
             <dt>Conformance:</dt>
-            <dd>This value can be used with the "ROLE" parameter.</dd>
+            <dd>This value can be used with the ROLE parameter.</dd>
             <dt>Example(s):</dt>
             <dd>
               <sourcecode name=""><![CDATA[
@@ -4204,10 +4204,10 @@ ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:jsmith@example.com
       </section>
       <section>
         <name>Properties</name>
-        <t>The new properties defined in this section follow the recommendation of <xref target="RFC7986" section="3"/> that properties not defined in <xref target="RFC5545"/> always include a "VALUE" parameter if the value type is other than TEXT. Accordingly, the new properties with a value type other than TEXT have no default value type.</t>
+        <t>The new properties defined in this section follow the recommendation of <xref target="RFC7986" section="3"/> that properties not defined in <xref target="RFC5545"/> always include a VALUE parameter if the value type is other than TEXT. Accordingly, the new properties with a value type other than TEXT have no default value type.</t>
         <section anchor="def_ical_prop_color">
           <name>COLOR Property</name>
-          <t>This section modifies the definition of the COLOR property. It allows its value to be a named color or a numeric color. The following definitions replace the definitions of the "COLOR" property, originally specified in <xref target="RFC7986" section="5.9"/> from which the definitions for "Description", "Format Definition" and "Example" differ.</t>
+          <t>This section modifies the definition of the COLOR property. It allows its value to be a named color or a numeric color. The following definitions replace the definitions of the COLOR property, originally specified in <xref target="RFC7986" section="5.9"/> from which the definitions for "Description", "Format Definition" and "Example" differ.</t>
           <dl>
             <dt>Property Name:</dt>
             <dd>COLOR</dd>
@@ -4218,7 +4218,7 @@ ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:jsmith@example.com
             <dt>Property Parameters:</dt>
             <dd>IANA and non-standard property parameters can be specified on this property.</dd>
             <dt>Conformance:</dt>
-            <dd>This property can be specified once in an iCalendar object or in "VEVENT", "VTODO", or "VJOURNAL" calendar components.</dd>
+            <dd>This property can be specified once in an iCalendar object or in VEVENT, VTODO, or VJOURNAL calendar components.</dd>
             <dt>Description:</dt>
             <dd>
               <t>This property specifies a color that clients <bcp14>MAY</bcp14> use when presenting the relevant data to a user.  Typically, this would appear as the "background" color of events or tasks. The value is a color name taken from the set of names defined in <xref target="CSS3" section="4.3" relative="#svg-color"/> or an RGB value in six-digit hexadecimal notation, as defined in <xref target="CSS3" section="4.2.1" relative="#rgb-color"/>. Values are case-insensitive.</t>
@@ -4262,10 +4262,10 @@ COLOR:#ffd755
             <dt>Property Parameters:</dt>
             <dd>IANA and non-standard parameters <bcp14>MAY</bcp14> be specified on this property.</dd>
             <dt>Conformance:</dt>
-            <dd>This property can be specified in a "VLOCATION" calendar component.</dd>
+            <dd>This property can be specified in a VLOCATION calendar component.</dd>
             <dt>Description:</dt>
             <dd>
-              <t>This property represents spatial (geographic) coordinates. In contrast to the the "GEO" property, this property allows to represent not only latitude and longitude but also altitude of a location, and to indicate the uncertainty of the coordinates. It improves interoperability with other internet standards making use of spatial information, and is extensible, such as for use with other coordinate reference systems. The property value <bcp14>MUST</bcp14> a URI in the "geo" URI scheme, as defined in <xref target="RFC5870"/> and updates.</t>
+              <t>This property represents spatial (geographic) coordinates. In contrast to the GEO property, this property allows to represent not only latitude and longitude but also altitude of a location, and to indicate the uncertainty of the coordinates. It improves interoperability with other internet standards making use of spatial information, and is extensible, such as for use with other coordinate reference systems. The property value <bcp14>MUST</bcp14> a URI in the "geo" URI scheme, as defined in <xref target="RFC5870"/> and updates.</t>
             </dd>
             <dt>Format Definition:</dt>
             <dd>
@@ -4298,11 +4298,11 @@ COORDINATES;VALUE=URI:geo:48.198634,16.371648;crs=wgs84;u=40
         </section>
         <section anchor="def_ical_prop_geo">
           <name>GEO Property</name>
-          <t>This section deprecates the "GEO" property and introduces the <xref target="def_ical_prop_coordinates">"COORDINATES"</xref> property to replace it. Implementations <bcp14>SHOULD NOT</bcp14> use the "GEO" property to represent spatial coordinates. Instead, they <bcp14>SHOULD</bcp14> specify the "COORDINATES" property in a <xref target="RFC9073" section="7.2" sectionFormat="parens">"VLOCATION" component</xref>. They <bcp14>MAY</bcp14> additionally specify a "GEO" property in a "VEVENT" or "VTODO" component, in which case its <xref target="RFC9073" section="5.3" sectionFormat="parens">"DERIVED" parameter</xref> <bcp14>MUST</bcp14> have value "TRUE".</t>
-          <t>The remainder of this section documents the rationale for deprecating the "GEO" property:</t>
+          <t>This section deprecates the GEO property and introduces the <xref target="def_ical_prop_coordinates">COORDINATES</xref> property to replace it. Implementations <bcp14>SHOULD NOT</bcp14> use the GEO property to represent spatial coordinates. Instead, they <bcp14>SHOULD</bcp14> specify the COORDINATES property in a <xref target="RFC9073" section="7.2" sectionFormat="parens">VLOCATION component</xref>. They <bcp14>MAY</bcp14> additionally specify a GEO property in a VEVENT or VTODO component, in which case its <xref target="RFC9073" section="5.3" sectionFormat="parens">DERIVED parameter</xref> <bcp14>MUST</bcp14> have value "TRUE".</t>
+          <t>The remainder of this section documents the rationale for deprecating the GEO property:</t>
           <t>
-          The "GEO" property definition dates back to 1998, a time at which multiple internet protocols and data formats incorporated spatial coordinates in slightly different formats, making interoperability difficult. This got addressed in 2010 in <xref target="RFC5870"/>, which introduced a Uniform Resource Identifier (URI) for geographic locations. The 'geo' URI scheme not only improves interoperability but also allows for richer information than the "GEO" property value, e.g. it supports specifying the location altitude and the spatial uncertainty of the coordinates.</t>
-          <t>Alternatively to deprecating, this specification could have updated the "GEO" property to allow its property value type to be URI. This turned out to not interoperate, as implementations tended to reject such iCalendar data as invalid. This was regardless if the "GEO" property was specified in a "VEVENT" component, or if it was specified in iCalendar components that were unsupported by the implementation (e.g. an implementation that was unaware of the "VLOCATION" component still rejected the "GEO" property with value type URI in that component as invalid). Introducing a new property turned out to better interoperate with such systems.</t>
+          The GEO property definition dates back to 1998, a time at which multiple internet protocols and data formats incorporated spatial coordinates in slightly different formats, making interoperability difficult. This got addressed in 2010 in <xref target="RFC5870"/>, which introduced a Uniform Resource Identifier (URI) for geographic locations. The 'geo' URI scheme not only improves interoperability but also allows for richer information than the GEO property value, e.g. it supports specifying the location altitude and the spatial uncertainty of the coordinates.</t>
+          <t>Alternatively to deprecating, this specification could have updated the GEO property to allow its property value type to be URI. This turned out to not interoperate, as implementations tended to reject such iCalendar data as invalid. This was regardless if the GEO property was specified in a VEVENT component, or if it was specified in iCalendar components that were unsupported by the implementation (e.g. an implementation that was unaware of the VLOCATION component still rejected the GEO property with value type URI in that component as invalid). Introducing a new property turned out to better interoperate with such systems.</t>
         </section>
         <section anchor="def_ical_prop_jsid">
           <name>JSID Property</name>
@@ -4502,13 +4502,13 @@ JSPROP;JSPTR="links/mylink1/example.com:foo":"bar"
             <dt>Property Parameters:</dt>
             <dd>IANA and non-standard parameters can be specified on this property.</dd>
             <dt>Conformance:</dt>
-            <dd>This property can be specified in a "VEVENT" or "VTODO" calendar component.</dd>
+            <dd>This property can be specified in a VEVENT or VTODO calendar component.</dd>
             <dt>Description:</dt>
             <dd>
               <t>This indicates that the exact time span is not important to display when rendering this calendar object. An example of this is an event that occurs over a full or almost full day, but in contrast to a DATE value is limited to a specific time zone or business hours. While the time component is important for free-busy calculations and checking for scheduling clashes, calendars may choose to display it as an all-day event, or display the object separately to other objects to enhance the user's view of their schedule.</t>
               <t>This property only is for presentation purposes, it does not have any impact on the temporal span or value type of a calendar object.</t>
               <t>This property <bcp14>MAY</bcp14> be specified on VEVENT components where the DTSTART property is of type DATE-TIME, or in VTODO components where either the DTSTART or DUE property is specified and has type DATE-TIME. In all other cases it <bcp14>MUST NOT</bcp14> be set. If this property is set, its property value <bcp14>MUST</bcp14> be "TRUE", e.g. it <bcp14>MUST</bcp14> be omitted rather than having value "FALSE".</t>
-              <t>Implementations that are unaware of the "SHOW-WITHOUT-TIME" property might inadvertently preserve this property when changing a calendar object's temporal type from DATE-TIME to DATE. Implementations <bcp14>SHOULD</bcp14> therefore ignore rather than reject the incorrectly specified SHOW-WITHOUT-TIME property. They <bcp14>MUST NOT</bcp14> preserve the ill-specified property in the calendaring data.</t>
+              <t>Implementations that are unaware of the SHOW-WITHOUT-TIME property might inadvertently preserve this property when changing a calendar object's temporal type from DATE-TIME to DATE. Implementations <bcp14>SHOULD</bcp14> therefore ignore rather than reject the incorrectly specified SHOW-WITHOUT-TIME property. They <bcp14>MUST NOT</bcp14> preserve the ill-specified property in the calendaring data.</t>
             </dd>
             <dt>Format Definition:</dt>
             <dd>
@@ -4543,7 +4543,7 @@ SHOW-WITHOUT-TIME;VALUE=BOOLEAN:TRUE
         <name>Components</name>
         <section anchor="def_ical_comp_vlocation">
           <name>VLOCATION Component</name>
-          <t>This section modifies the definition of the "VLOCATION" component to allow setting the newly defined <xref target="def_ical_prop_coordinates">"COORDINATES" property</xref> at most once in the component. To achieve this, the following additions are made to the "Format Definition" of the "VLOCATION" component, defined in <xref target="RFC9073" section="7.2"/>:</t>
+          <t>This section modifies the definition of the VLOCATION component to allow setting the newly defined <xref target="def_ical_prop_coordinates">COORDINATES property</xref> at most once in the component. To achieve this, the following additions are made to the "Format Definition" of the VLOCATION component, defined in <xref target="RFC9073" section="7.2"/>:</t>
           <sourcecode name=""><![CDATA[
 locprop /= *(
             ;
@@ -4674,16 +4674,16 @@ END:X-BAZ
         <li>Representations such as <xref target="i2j_prop_description">DESCRIPTION</xref> and <xref target="i2j_prop_styled_description">STYLED-DESCRIPTION</xref>, or <xref target="i2j_prop_geo">GEO</xref> and <xref target="i2j_prop_coordinates">COORDINATES</xref>, may contain conflicting values, so clients of either format may present different content.</li>
       </ul>
       <t><xref target="RFC7986"/> describes the security considerations for the COLOR property and its related JSCalendar "color" property.</t>
-      <t>The newly defined iCalendar OWNER participation role (<xref target="def_ical_param_role"/>) is indicative only: its presence in an iCalendar object does not by itself grant any authorization. Implementations <bcp14>MUST NOT</bcp14> grant a calendar user the ability to make changes to a calendar object based solely on the presence of this role; authorization is determined by the calendaring exchange protocol in use. In the context of <xref target="I-D.ietf-jmap-calendars">JMAP Calendars</xref>, this role is equivalent to the "owner" role of the Participant object. Its semantics in the context of other calendaring exchange protocols, such as <xref target="RFC4791">CalDAV</xref>, are not defined by this document.</t>
+      <t>The newly defined iCalendar "OWNER" participation role (<xref target="def_ical_param_role"/>) is indicative only: its presence in an iCalendar object does not by itself grant any authorization. Implementations <bcp14>MUST NOT</bcp14> grant a calendar user the ability to make changes to a calendar object based solely on the presence of this role; authorization is determined by the calendaring exchange protocol in use. In the context of <xref target="I-D.ietf-jmap-calendars">JMAP Calendars</xref>, this role is equivalent to the "owner" role of the Participant object. Its semantics in the context of other calendaring exchange protocols, such as <xref target="RFC4791">CalDAV</xref>, are not defined by this document.</t>
     </section>
     <section>
       <!-- All drafts are required to have an IANA considerations section.  See RFC 8126 for a guide.-->
       <name>IANA Considerations</name>
       <section>
         <name>Changes to the "iCalendar Element Registries"</name>
-        <t>IANA will change the entry for the "VLOCATION" component in the "Components" registry: it will add <xref target="def_ical_comp_vlocation"/> of this document to the References.</t>
-        <t>IANA will change the entry for the "GEO" property in the "Properties" registry: it will set the Status from "Current" to "Deprecated" and add <xref target="def_ical_prop_geo"/> of this document to the References.</t>
-        <t>IANA will change the entry for the "COLOR" property in the "Properties" registry: it will add <xref target="def_ical_prop_color"/> of this document to the References.</t>
+        <t>IANA will change the entry for the VLOCATION component in the "Components" registry: it will add <xref target="def_ical_comp_vlocation"/> of this document to the References.</t>
+        <t>IANA will change the entry for the GEO property in the "Properties" registry: it will set the Status from "Current" to "Deprecated" and add <xref target="def_ical_prop_geo"/> of this document to the References.</t>
+        <t>IANA will change the entry for the COLOR property in the "Properties" registry: it will add <xref target="def_ical_prop_color"/> of this document to the References.</t>
         <t>IANA will add the following entries to the "Properties" registry:</t>
         <dl spacing="compact">
           <dt>Property</dt>
