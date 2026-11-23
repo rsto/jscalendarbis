@@ -2657,7 +2657,7 @@ BEGIN:VEVENT
           <t>
               A <xref target="RFC5545" section="3.8.5.2" sectionFormat="parens">RDATE property</xref> converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.9" sectionFormat="parens">PatchObject value</xref>.  The converted object is set in the "recurrenceOverrides" property of its target object.
           </t>
-          <t>The property value converts to the key in the "recurrenceOverrides" property value, for values of type PERIOD this only applies to the period start. The date-time value <bcp14>MUST</bcp14> be relative to the timezone identified by the target object's <xref target="I-D.ietf-calext-jscalendarbis" section="3.6.2" sectionFormat="parens">"timeZone" property</xref>, see <xref target="i2j_date_time"/> how to convert DATE and DATE-TIME values. The duration of a PERIOD converts to the PatchObject's "duration" property, otherwise the PatchObject value <bcp14>MUST</bcp14> be an empty JSON object. Implementations <bcp14>MAY</bcp14> indicate that the recurrence override was converted from an RDATE in the <xref target="def_jscal_prop_icalendar">iCalendar</xref> property.</t>
+          <t>The property value converts to the key in the "recurrenceOverrides" property value, for values of type PERIOD this only applies to the period start. The date-time value <bcp14>MUST</bcp14> be relative to the timezone identified by the target object's <xref target="I-D.ietf-calext-jscalendarbis" section="3.6.2" sectionFormat="parens">"timeZone" property</xref>, see <xref target="i2j_date_time"/> how to convert DATE and DATE-TIME values. The duration of a PERIOD converts to the PatchObject's "duration" property, otherwise the PatchObject value <bcp14>MUST</bcp14> be an empty JSON object. Implementations <bcp14>MAY</bcp14> indicate that a recurrence override was converted from an RDATE property. If so, they <bcp14>MUST</bcp14> add an entry to the "convertedProperties" property of the target object's <xref target="def_jscal_prop_icalendar">iCalendar</xref> property. The entry key is the JSON pointer to the recurrence override, that is, "recurrenceOverrides/" followed by the recurrence id. The entry value is an ICalProperty object with the "name" property set to "rdate", and with the "valueType" property set to "period" if the RDATE value is of type PERIOD.</t>
           <t>The following example illustrates how to convert the RDATE property with value type DATE-TIME:</t>
           <figure anchor="test_prop_rdate">
             <name>Converting the RDATE property</name>
@@ -3620,7 +3620,7 @@ URL:https://example.com/myurl
             <t>The "privacy" property converts to the CLASS property of the main component and all recurrence overrides. If the property value is "private" and the <xref target="def_jscal_prop_icalendar">iCalendar/properties property</xref> contains a CLASS property with an unknown value, then implementations <bcp14>MAY</bcp14> convert that preserved property rather than setting the "PRIVATE" classification. In any case they <bcp14>MUST NOT</bcp14> set more than one CLASS property per calendar component.</t>
           </li>
           <li>
-            <t>The entries in the "recurrenceOverrides" property convert depending on the contents of the PatchObject value. A PatchObject that sets the "excluded" member to "true" converts to an EXDATE property for the date-time of that recurrence instance. An empty PatchObject converts to an RDATE property. Any other PatchObject converts to a recurrence override component in the embedding VCALENDAR component.</t>
+            <t>The entries in the "recurrenceOverrides" property convert depending on the contents of the PatchObject value. A PatchObject that sets the "excluded" member to "true" converts to an EXDATE property for the date-time of that recurrence instance. An empty PatchObject converts to an RDATE property. A PatchObject for which the "iCalendar/convertedProperties" property contains an entry with name "rdate" also converts to an RDATE property. If that entry has the "valueType" property set to "period", then the RDATE value is of type PERIOD: the recurrence id is the period start, and the PatchObject's "duration" property, or the calendar object's "duration" property if the PatchObject does not set one, is the period duration. Any other PatchObject converts to a recurrence override component in the embedding VCALENDAR component.</t>
           </li>
           <li>
             <t>The "sentBy" property converts to the SENT-BY parameter of the ORGANIZER property with a "mailto" URI value. See <xref target="RFC6068" section="2">the "mailto" URI Scheme specification</xref> for how to percent-encode internationalized email addresses.</t>
@@ -5230,20 +5230,6 @@ END:X-BAZ
             <ul>
               <li>
                 <xref target="RFC9073" section="7.2" sectionFormat="comma">VLOCATION</xref>
-              </li>
-            </ul>
-          </section>
-        </section>
-        <section>
-          <name>Properties by Value Type</name>
-          <t>The following properties convert to a standard JSCalendar element for some other value type, but they do not for the listed value types.</t>
-          <section>
-            <name>
-              <xref target="RFC5545" section="3.8.5.2" sectionFormat="comma">RDATE</xref>
-            </name>
-            <ul>
-              <li>
-                <xref target="RFC5545" section="3.3.9" sectionFormat="comma">PERIOD</xref>
               </li>
             </ul>
           </section>
