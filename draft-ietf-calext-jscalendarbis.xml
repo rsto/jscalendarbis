@@ -90,7 +90,7 @@
         </ul>
         <t>In recent years, many new products and services have appeared that wish to use a JSON representation of calendar data within their APIs. The JSON format for iCalendar data, <xref target="RFC7265">jCal</xref>, is a direct mapping between iCalendar and JSON. In its effort to represent full iCalendar semantics, it inherits all the same pitfalls and uses a complicated JSON structure.</t>
         <t>As a consequence, since the standardization of jCal, the majority of implementations and service providers either kept using iCalendar or came up with their own proprietary JSON representations, which are incompatible with each other and often suffer from common pitfalls, such as storing event start times in UTC (which become incorrect if the time zone's rules change in the future). JSCalendar meets the demand for JSON-formatted calendar data that is free of such known problems and provides a standard representation as an alternative to the proprietary formats.</t>
-        <t><xref target="I-D.ietf-calext-jscalendar-icalendar"/> defines how to convert JSCalendar data from and to iCalendar. It also defines new iCalendar elements to support this conversion.</t>
+        <t>The document <xref target="I-D.ietf-calext-jscalendar-icalendar">JSCalendar: Converting from and to iCalendar</xref> defines how to convert JSCalendar data from and to iCalendar. It also defines new iCalendar elements to support this conversion.</t>
       </section>
       <section>
         <name>Relation to obsolete RFC 8984</name>
@@ -108,10 +108,10 @@
         <t>This section introduces the notations and terminology used to define data types in JSCalendar.</t>
         <t>The underlying format for JSCalendar is JSON, so its data types also build on JSON values. The terms "object"
           and "array" as well as the four primitive types ("strings", "numbers", "booleans", and "null") are to be
-          interpreted as described in <xref target="RFC8259" section="1"/>. All JSCalendar data <bcp14>MUST</bcp14> be
+          interpreted as described in <xref target="RFC8259" section="1">the JSON specification</xref>. All JSCalendar data <bcp14>MUST</bcp14> be
           valid according to the constraints given in <xref target="RFC7493">I-JSON</xref>. Unless otherwise noted, all
           member names in JSON objects and all string values are case-sensitive. Within the context of JSON objects, the
-          term "key" is synonymous with the name of an object member as defined in <xref target="RFC8259" section="4"/>.
+          term "key" is synonymous with the name of an object member as defined in <xref target="RFC8259" section="4">the JSON specification</xref>.
         </t>
         <section anchor="objects-and-properties" numbered="true" toc="default">
           <name>Objects and Properties</name>
@@ -207,7 +207,7 @@
         <t>In addition to the standard JSON data types, the following data types are used in this specification:</t>
         <section anchor="type-Id">
           <name>Id</name>
-          <t>Where "Id" is given as a data type, it means a String of at least 1 and a maximum of 255 octets in size, and it <bcp14>MUST</bcp14> only contain characters from the "URL and Filename Safe" base64url alphabet, as defined in <xref target="RFC4648" section="5"/>, excluding the pad character ("="). This means the allowed characters are the ASCII alphanumeric characters ("A-Za-z0-9"), hyphen ("-"), and underscore ("_").</t>
+          <t>Where "Id" is given as a data type, it means a String of at least 1 and a maximum of 255 octets in size, and it <bcp14>MUST</bcp14> only contain characters from the "URL and Filename Safe" base64url alphabet, as defined in <xref target="RFC4648" section="5">the Base64 Data Encodings specification</xref>, excluding the pad character ("="). This means the allowed characters are the ASCII alphanumeric characters ("A-Za-z0-9"), hyphen ("-"), and underscore ("_").</t>
           <t>In many places in JSCalendar, a JSON map is used where the map keys are of type Id and the map values are all the same type of object. This construction represents an unordered set of objects, with the added advantage that each entry has a name (the corresponding map key). This allows for more concise patching of objects, and, when applicable, for the objects in question to be referenced from other objects within the JSCalendar object.</t>
           <t>Unless otherwise specified for a particular property, there are no uniqueness constraints on an Id value (other than, of course, the requirement that you cannot have two values with the same key within a single JSON map). For example, two Event objects might use the same Ids in their respective "links" properties or, within the same Event object, the same Id could appear in the "participants" and "alerts" properties. These situations do not imply any semantic connections among the objects.</t>
         </section>
@@ -221,7 +221,7 @@
         </section>
         <section anchor="type-UTCDateTime">
           <name>UTCDateTime</name>
-          <t>This is a String in the "date-time" format <xref target="RFC3339"/>, with the further restrictions that any letters <bcp14>MUST</bcp14> be in uppercase, and the time offset <bcp14>MUST</bcp14> be the character "Z". Fractional second values <bcp14>MUST NOT</bcp14> be included.</t>
+          <t>This is a String in the "date-time" format for <xref target="RFC3339">Internet timestamps</xref>, with the further restrictions that any letters <bcp14>MUST</bcp14> be in uppercase, and the time offset <bcp14>MUST</bcp14> be the character "Z". Fractional second values <bcp14>MUST NOT</bcp14> be included.</t>
           <t>For example, "2010-10-10T10:10:10Z" is conformant, but "2010-10-10T10:10:10.0Z" or "2010-10-10T10:10:10.123Z" are invalid.</t>
         </section>
         <section anchor="type-LocalDateTime">
@@ -334,7 +334,7 @@ signed-duration = ["+" / "-"] duration
             <dd>This is the size, in octets, of the resource when fully decoded (i.e., the number of octets in the file the user would download), if known. Note that this is an informational estimate, and implementations must be prepared to handle the actual size being quite different when the resource is fetched.</dd>
             <dt>rel: String (optional; default: "enclosure").</dt>
             <dd>
-              <t>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a link relation type as defined in <xref target="RFC8288" section="2.1" sectionFormat="of"/>.</t>
+              <t>This identifies the relation of the linked resource to the object. If set, the value <bcp14>MUST</bcp14> be a link relation type as defined in <xref target="RFC8288" section="2.1" sectionFormat="of">Web Linking</xref>.</t>
               <t>Links with a rel of "enclosure" <bcp14>MUST</bcp14> be considered by the client to be attachments for download or documents associated with the calendar object.</t>
               <t>Links with a rel of "describedby" <bcp14>MUST</bcp14> be considered by the client to be alternative representations of the calendar object.</t>
               <t>Links with a rel of "icon" <bcp14>MUST</bcp14> be considered by the client to be images that it may use when presenting the calendar data to a user. The "display" property may be set to indicate the purpose of this image.</t>
@@ -372,8 +372,8 @@ signed-duration = ["+" / "-"] duration
         </section>
         <section anchor="email-addresses">
           <name>Email Addresses</name>
-          <t>Several properties require their string value to be an email address. Such a value <bcp14>MUST</bcp14> be a valid "Mailbox" as defined in <xref target="RFC5321" section="4.1.2"/> and extended for internationalized email addresses as defined in <xref target="RFC6531" section="3.3"/>.</t>
-          <t>Some properties contain an email address that originates from an email message, such as the "sentBy" properties, whose values come from the "From" header field (<xref target="RFC5322" section="3.6.2"/>, extended for internationalized email addresses in <xref target="RFC6532"/>). Implementations convert such an address by removing any comments and folding white space. If the result is not a valid email address, then the property <bcp14>MUST NOT</bcp14> be set. If the "From" header field contains more than one mailbox, then which address to use is implementation-specific.</t>
+          <t>Several properties require their string value to be an email address. Such a value <bcp14>MUST</bcp14> be a valid "Mailbox" as defined in <xref target="RFC5321" section="4.1.2">the Simple Mail Transfer Protocol (SMTP) specification</xref> and extended for internationalized email addresses as defined in <xref target="RFC6531" section="3.3">the SMTP Extension for Internationalized Email</xref>.</t>
+          <t>Some properties contain an email address that originates from an email message, such as the "sentBy" properties, whose values come from the "From" header field (<xref target="RFC5322" section="3.6.2">the Internet Message Format</xref>, extended for internationalized email addresses in <xref target="RFC6532"/>). Implementations convert such an address by removing any comments and folding white space. If the result is not a valid email address, then the property <bcp14>MUST NOT</bcp14> be set. If the "From" header field contains more than one mailbox, then which address to use is implementation-specific.</t>
         </section>
       </section>
       <section anchor="validating-jscalendar">
@@ -391,7 +391,7 @@ signed-duration = ["+" / "-"] duration
           <t>
             Implementations <bcp14>MUST</bcp14> validate IANA-registered properties in JSCalendar data, unless they are unknown to the implementation (<xref target="unknown-properties"/>). They <bcp14>MUST</bcp14> reject invalid IANA-registered properties. A property is invalid if its name matches the name of an IANA-registered property but the value violates its definition according to the JSCalendar specification version defined in the <xref target="prop-version">"version"</xref> property.</t>
           <t>JSCalendar objects of version "1.0" <bcp14>MUST</bcp14> be validated according to <xref target="RFC8984"/>. This applies even if the Intended Usage of a property, type, or enumerated value changed in a later version, as the IANA registries only record the current Intended Usage of an item.</t>
-          <t>IANA-registered property names <bcp14>MUST NOT</bcp14> contain ASCII control characters (U+0000 to U+001F, U+007F), the COLON (U+003A), or the QUOTATION MARK (U+0022). They <bcp14>MUST</bcp14> only contain ASCII alphanumeric characters that match the ALPHA and DIGIT rules defined in <xref target="RFC5234" section="B.1"/> or the COMMERCIAL AT (U+0040) character. IANA-registered property names <bcp14>MUST</bcp14> be notated in lower camel case.</t>
+          <t>IANA-registered property names <bcp14>MUST NOT</bcp14> contain ASCII control characters (U+0000 to U+001F, U+007F), the COLON (U+003A), or the QUOTATION MARK (U+0022). They <bcp14>MUST</bcp14> only contain ASCII alphanumeric characters that match the ALPHA and DIGIT rules defined in <xref target="RFC5234" section="B.1">the ABNF specification</xref> or the COMMERCIAL AT (U+0040) character. IANA-registered property names <bcp14>MUST</bcp14> be notated in lower camel case.</t>
         </section>
         <section anchor="reserved-properties">
           <name>Reserved Properties</name>
@@ -416,7 +416,7 @@ signed-duration = ["+" / "-"] duration
           <name>Vendor-Specific Properties</name>
           <t>Vendor-specific property names <bcp14>MUST</bcp14> start with a vendor-specific prefix followed by a name, as produced by the "v-extension" ABNF below. The prefix and name together form the property name. The vendor-specific prefix <bcp14>MUST</bcp14> be a domain name under control of the service or application that sets the property, but it need not resolve in the Domain Name System <xref target="RFC1034"/> <xref target="RFC1035"/>. The prefix "ietf.org" and its subdomain names are reserved for IETF specifications. The name <bcp14>MUST NOT</bcp14> contain the TILDE (U+007E) and SOLIDUS (U+002F) characters, as these require special escaping when encoding a JSON Pointer <xref target="RFC6901"/> for that property.</t>
           <t>Vendor-specific properties <bcp14>MAY</bcp14> be set in any JSCalendar object. Implementations <bcp14>MUST</bcp14> preserve vendor-specific properties in JSCalendar data, irrespective of whether they know their use. They <bcp14>MUST NOT</bcp14> reject the property value as invalid, unless they are in control of the vendor-specific property as outlined in the above paragraph.</t>
-          <t>The ABNF rule "v-extension" formally defines valid vendor-specific property names. Note that the vendor prefix allows for more values than Internationalized Domain Names (IDNs) <xref target="RFC9499"/>; therefore, JSCalendar implementations can simply validate property names without implementing the full set of rules that apply to domain names. The NON-ASCII rule is defined in <xref target="RFC6350" section="3.3"/>.</t>
+          <t>The ABNF rule "v-extension" formally defines valid vendor-specific property names. Note that the vendor prefix allows for more values than Internationalized Domain Names (IDNs) <xref target="RFC9499"/>; therefore, JSCalendar implementations can simply validate property names without implementing the full set of rules that apply to domain names. The NON-ASCII rule is defined in <xref target="RFC6350" section="3.3">the vCard Format Specification</xref>.</t>
           <figure anchor="vendor-property-abnf">
             <name>ABNF Rules for Vendor-Specific Property Names</name>
             <sourcecode name="" type="abnf"><![CDATA[
@@ -525,8 +525,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt>uid: String (mandatory).</dt>
             <dd>
               <t>This is a globally unique identifier used to associate objects representing the same calendar object, group, or other object across different systems, calendars, and views. For recurring calendar objects, the UID is associated with the base object and therefore is the same for all occurrences; the combination of the UID with a "recurrenceId" identifies a particular instance.</t>
-              <t>The generator of the identifier <bcp14>MUST</bcp14> guarantee that the identifier is unique. <xref target="RFC9562"/> describes a range of established algorithms to generate universally unique identifiers (UUIDs). UUID version 4, described in <xref target="RFC9562" section="5.4"/>, is <bcp14>RECOMMENDED</bcp14>.</t>
-              <t>For compatibility with UIDs <xref target="RFC5545"/>, implementations <bcp14>MUST</bcp14> be able to receive and persist values of at least 255 octets for this property, but they <bcp14>MUST NOT</bcp14> truncate values in the middle of a UTF-8 multi-octet sequence.</t>
+              <t>The generator of the identifier <bcp14>MUST</bcp14> guarantee that the identifier is unique. The <xref target="RFC9562">UUID specification</xref> describes a range of established algorithms to generate universally unique identifiers (UUIDs). UUID version 4, described in <xref target="RFC9562" section="5.4"/>, is <bcp14>RECOMMENDED</bcp14>.</t>
+              <t>For compatibility with the iCalendar <xref target="RFC5545" section="3.8.4.7" sectionFormat="parens">UID property</xref>, implementations <bcp14>MUST</bcp14> be able to receive and persist values of at least 255 octets for this property, but they <bcp14>MUST NOT</bcp14> truncate values in the middle of a UTF-8 multi-octet sequence.</t>
             </dd>
           </dl>
         </section>
@@ -585,7 +585,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>sequence: UnsignedInt (optional; default: 0).</dt>
             <dd>
-              <t>This property indicates the revision of the calendar object. For scheduled calendar objects, its value must be incremented according to the rules of the scheduling protocol, e.g., <xref target="I-D.ietf-jmap-calendars"/> or <xref target="RFC5546"/>.</t>
+              <t>This property indicates the revision of the calendar object. For scheduled calendar objects, its value must be incremented according to the rules of the scheduling protocol, e.g., <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref> or <xref target="RFC5546">iTIP</xref>.</t>
             </dd>
           </dl>
         </section>
@@ -753,7 +753,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <dl spacing="normal">
             <dt>color: String (optional).</dt>
             <dd>
-              <t>This is a color clients <bcp14>MAY</bcp14> use when displaying this calendar object. The value is a color name taken from the set of names defined in <xref target="CSS3" section="4.3" relative="#svg-color"/> or an RGB value in six-digit hexadecimal notation, as defined in <xref target="CSS3" section="4.2.1" relative="#rgb-color"/>. Values are case-insensitive.</t>
+              <t>This is a color clients <bcp14>MAY</bcp14> use when displaying this calendar object. The value is a color name taken from the set of names defined in <xref target="CSS3" section="4.3" relative="#svg-color">CSS Color Module Level 3</xref> or an RGB value in six-digit hexadecimal notation, as defined in <xref target="CSS3" section="4.2.1" relative="#rgb-color"/>. Values are case-insensitive.</t>
             </dd>
           </dl>
         </section>
@@ -794,7 +794,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>A calendar object recurs by applying the recurrence rule to its initial date-time. The initial date-time is the value of the <xref target="prop-start">"start"</xref> property, unless the calendar object type defines differently (see <xref target="calendar-objects"/>). If the calendar object does not have an initial date-time, then it <bcp14>MUST NOT</bcp14> have the "recurrenceRule" property set.</t>
             </dd>
           </dl>
-          <t>A RecurrenceRule object is a JSON object mapping of a RECUR value type in iCalendar <xref target="RFC5545"/> <xref target="RFC7529"/> and has the same semantics. It has the following properties:</t>
+          <t>A RecurrenceRule object is a JSON object mapping of a RECUR value type in iCalendar <xref target="RFC5545"/>, including <xref target="RFC7529">Non-Gregorian Recurrence Rules</xref>, and has the same semantics. It has the following properties:</t>
           <dl newline="true">
             <dt>@type: String.</dt>
             <dd>This specifies the type of this object. This <bcp14>MUST</bcp14> be "RecurrenceRule", if set.</dd>
@@ -905,7 +905,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
             </dd>
             <dt>byMonth: String[] (optional).</dt>
             <dd>
-              <t>These are the months in which to repeat. Each entry is a string representation of a number, starting from "1" for the first month in the calendar (e.g., "1" means January with the Gregorian calendar), with an optional "L" suffix (see <xref target="RFC7529"/>) for leap months (this <bcp14>MUST</bcp14> be uppercase, e.g., "3L"). The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
+              <t>These are the months in which to repeat. Each entry is a string representation of a number, starting from "1" for the first month in the calendar (e.g., "1" means January with the Gregorian calendar), with an optional "L" suffix (see iCalendar <xref target="RFC7529">RSCALE</xref>) for leap months (this <bcp14>MUST</bcp14> be uppercase, e.g., "3L"). The array <bcp14>MUST</bcp14> have at least one entry if included.</t>
               <t>This is the BYMONTH part from iCalendar.</t>
             </dd>
             <dt>byYearDay: Int[] (optional).</dt>
@@ -1004,7 +1004,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <t>If a "skip" property is defined and is not "omit", there may be candidates that do not correspond to valid dates (e.g., February 31st in the Gregorian calendar). In this case, the properties <bcp14>MUST</bcp14> be considered in the order above, and:</t>
                 <ol>
                   <li>After applying the "byMonth" filter, if the candidate's month is invalid for the given year, increment it (if "skip" is "forward") or decrement it (if "skip" is "backward") until a valid month is found, incrementing/decrementing the year as well if passing through the beginning/end of the year. This only applies to calendar systems with leap months.</li>
-                  <li>After applying the "byMonthDay" filter, if the day of the month is invalid for the given month and year, change the date to the first day of the next month (if "skip" is "forward") or the last day of the current month (if "skip" is "backward"). This includes dates whose month was changed by the previous step, as per <xref target="RFC7529"/>. Similarly, if a negative "byMonthDay" value refers to a day before the first day of the month (e.g., -31 in a 30-day month), this produces the first day of the month (if "skip" is "forward") or the last day of the previous month (if "skip" is "backward").</li>
+                  <li>After applying the "byMonthDay" filter, if the day of the month is invalid for the given month and year, change the date to the first day of the next month (if "skip" is "forward") or the last day of the current month (if "skip" is "backward"). This includes dates whose month was changed by the previous step, as per iCalendar <xref target="RFC7529">RSCALE</xref>. Similarly, if a negative "byMonthDay" value refers to a day before the first day of the month (e.g., -31 in a 30-day month), this produces the first day of the month (if "skip" is "forward") or the last day of the previous month (if "skip" is "backward").</li>
                   <li>If any valid date produced after applying the skip is already a candidate, eliminate the duplicate. (For example, after adjusting, February 30th and February 31st would both become the same "real" date, so one is eliminated as a duplicate.)</li>
                 </ol>
                 <t>The "skip" property does not adjust "byYearDay" or "byWeekNo" values that do not exist in a particular year (e.g., a "byYearDay" value of 366 in a year with 365 days, or a "byWeekNo" value of 53 in a year with 52 weeks). Such values do not match any date-time in that year, regardless of the "skip" property value.</t>
@@ -1198,7 +1198,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>This is a set of roles that this participant fulfills. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set and at least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
               <dl newline="false">
                 <dt>owner:</dt>
-                <dd>The participant is an owner of the calendar object. This signifies they can make changes that affect all participants (for example, rescheduling the calendar object, adding and removing participants and roles). The presence of this role is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars"/> for an example of making use of this role.</dd>
+                <dd>The participant is an owner of the calendar object. This signifies they can make changes that affect all participants (for example, rescheduling the calendar object, adding and removing participants and roles). The presence of this role is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref> for an example of making use of this role.</dd>
                 <dt>optional:</dt>
                 <dd>The participant's involvement with the calendar object is optional.</dd>
                 <dt>informational:</dt>
@@ -1711,14 +1711,14 @@ jsversion = 1*DIGIT "." 1*DIGIT
       </section>
       <section anchor="json-parsing">
         <name>JSON Parsing</name>
-        <t>The security considerations of <xref target="RFC8259"/> apply to the use of JSON as the data interchange format.</t>
+        <t>The security considerations of <xref target="RFC8259">the JSON specification</xref> apply to the use of JSON as the data interchange format.</t>
         <t>As for any serialization format, parsers need to thoroughly check the syntax of the supplied data. JSON uses opening and closing tags for several types and structures, and it is possible that the end of the supplied data will be reached when scanning for a matching closing tag; this is an error condition, and implementations need to stop scanning at the end of the supplied data.</t>
         <t>JSON also uses a string encoding with some escape sequences to encode special characters within a string. Care is needed when processing these escape sequences to ensure that they are fully formed before the special processing is triggered, with special care taken when the escape sequences appear adjacent to other (non-escaped) special characters or adjacent to the end of data (as in the previous paragraph).</t>
         <t>If parsing JSON into a non-textual structured data format, implementations may need to allocate storage to hold JSON string elements.  Since JSON does not use explicit string lengths, the risk of denial of service due to resource exhaustion is small, but implementations may still wish to place limits on the size of allocations they are willing to make in any given context, to avoid untrusted data causing excessive memory allocation.</t>
       </section>
       <section anchor="uri-values">
         <name>URI Values</name>
-        <t>Several JSCalendar properties contain URIs as values, and processing these properties requires extra care. <xref target="RFC3986" section="7"/> discusses security risks related to URIs.</t>
+        <t>Several JSCalendar properties contain URIs as values, and processing these properties requires extra care. <xref target="RFC3986" section="7">the URI specification</xref> discusses security risks related to URIs.</t>
         <t>Fetching remote resources carries inherent risks. Connections must only be allowed on well-known ports, using allowed protocols (generally, just HTTP/HTTPS on their default ports). The URL must be resolved externally and not allowed to access internal resources. Connecting to an external source reveals IP (and therefore often location) information. Similarly, embedded resources, such as Link objects whose "href" is a "data:" URI, must be treated as untrusted input.</t>
         <t>A maliciously constructed JSCalendar object may contain a very large number of URIs. In the case of published calendars with a large number of subscribers, such objects could be widely distributed. Implementations should be careful to limit the automatic fetching of linked resources to reduce the risk of this being an amplification vector for a denial-of-service attack.</t>
       </section>
@@ -1809,7 +1809,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       </section>
       <section anchor="iana-registry-policy">
         <name>Registry Policy and Change Procedures</name>
-        <t>Registry assignments that introduce <xref target="versioning">backwards-incompatible</xref> changes require the JSCalendar major version to change; other changes only require a change to the minor version. The registry policy for assignments that require the JSCalendar major version to change is Standards Action (<xref target="RFC8126" sectionFormat="comma" section="4.9"/>). The registry policy for other assignments is Specification Required (<xref target="RFC8126" sectionFormat="comma" section="4.6"/>).</t>
+        <t>Registry assignments that introduce <xref target="versioning">backwards-incompatible</xref> changes require the JSCalendar major version to change; other changes only require a change to the minor version. The registry policy for assignments that require the JSCalendar major version to change is Standards Action (<xref target="RFC8126" section="4.9">the IANA Considerations guidelines</xref>). The registry policy for other assignments is Specification Required (<xref target="RFC8126" section="4.6"/>).</t>
         <t>The designated expert (DE) decides if a major or minor version change is required. If a major version change is required, the assignment requires Standards Action, and the RFC that defines the assignment assigns the new major version. If a minor version change is required, then the RFC that defines the assignment assigns the new minor version; if the assignment is not defined in an RFC, the DE assigns the new minor version to the <xref target="iana-version-registry">"JSCalendar Version" registry</xref>.</t>
         <t>Version numbers increment by one, and a major version change resets the minor version to zero. An assignment may apply multiple changes and to more than one registry at once, in which case a single version change is sufficient. If the registry policy is Specification Required, then the DE may decide that it is enough to document the new assignment in the Description item of the respective registry.</t>
         <t>A registration <bcp14>MUST</bcp14> have an intended usage of "common", "reserved", or "obsolete".</t>

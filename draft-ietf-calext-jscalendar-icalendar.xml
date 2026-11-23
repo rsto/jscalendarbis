@@ -54,11 +54,11 @@
         <name>Notational Conventions</name>
         <t>The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>NOT RECOMMENDED</bcp14>", "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119" format="default" sectionFormat="of" derivedContent="RFC2119"/>
           <xref target="RFC8174" format="default" sectionFormat="of" derivedContent="RFC8174"/> when, and only when, they appear in all capitals, as shown here.</t>
-        <t>The ABNF definitions in this document use the notations of <xref target="RFC5234"/>. ABNF rules not defined in this document either are defined in <xref target="RFC5234"/> or <xref target="RFC5545"/>.</t>
+        <t>The ABNF definitions in this document use the notations of <xref target="RFC5234"/>. ABNF rules not defined in this document either are defined in <xref target="RFC5234">the ABNF specification</xref> or in <xref target="RFC5545">iCalendar</xref>.</t>
       </section>
       <section>
         <name>Scope and Goals</name>
-        <t>This document outlines how to convert between the <xref target="RFC5545">iCalendar</xref> and <xref target="I-D.ietf-calext-jscalendarbis">JSCalendar</xref> data formats.  It describes which elements are common to both, but also highlights where the two formats differ. For each common element, it defines a conversion rule and includes an example of how to convert that element. All iCalendar and JSCalendar elements currently registered at IANA are in scope, but not all of these elements are common to both formats.</t>
+        <t>This document outlines how to convert between the <xref target="RFC5545">iCalendar</xref> and <xref target="I-D.ietf-calext-jscalendarbis"/> data formats.  It describes which elements are common to both, but also highlights where the two formats differ. For each common element, it defines a conversion rule and includes an example of how to convert that element. All iCalendar and JSCalendar elements currently registered at IANA are in scope, but not all of these elements are common to both formats.</t>
         <t>For elements that have no counterpart in the other format, it is the goal of this document to define how to preserve them during conversion, but in general it is not the goal to achieve this by defining new standard elements. However, this document does update the definitions of some iCalendar elements where their JSCalendar counterparts more accurately model current practices and standards, such as formatting colors and geospatial coordinates. In addition, this document defines conversion-specific iCalendar and JSCalendar elements to preserve elements that have no equivalent in the other format. See <xref target="def_ical_prop_jsprop"/> for updates to iCalendar, and <xref target="def_jscal_prop_icalendar"/> for JSCalendar. <xref target="appendix_discrepancies"/> further outlines the discrepancies between the two formats.</t>
       </section>
       <section>
@@ -1258,7 +1258,7 @@ ACTION:AUDIO
               The <xref target="RFC5545" section="3.8.1.1" sectionFormat="parens">ATTACH property</xref> converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.11" sectionFormat="parens">Link object</xref>.  The converted object is set in the "links" property of its target object. The "rel" property value is set to "enclosure".
           </t>
           <t>The key of the Link object <bcp14>MUST</bcp14> be the value of the <xref target="def_ical_param_jsid">JSID parameter</xref>, if set. If no JSID parameter is set, then the key <bcp14>MAY</bcp14> be the UUIDv5 generated from the property value (see <xref target="i2j_ids"/>). When converting to iCalendar, implementations <bcp14>MAY</bcp14> omit setting the JSID parameter if the key matches the UUIDv5 of the ATTACH property value and the key is not part of a JSON pointer in any JSPTR parameter value.</t>
-          <t>The ATTACH property value converts to the Link object's "href" property. A value of type URI converts as-is. A value of type BINARY converts to a URI in the "data" URL scheme (<xref target="RFC2397"/>. If the FMTTYPE parameter is set on the ATTACH property, then the parameter value <bcp14>MUST</bcp14> be set in the "mediatype" part of the data URL.</t>
+          <t>The ATTACH property value converts to the Link object's "href" property. A value of type URI converts as-is. A value of type BINARY converts to a URI in the "data" URL scheme (<xref target="RFC2397"/>). If the FMTTYPE parameter is set on the ATTACH property, then the parameter value <bcp14>MUST</bcp14> be set in the "mediatype" part of the data URL.</t>
           <t>The ATTACH property parameters convert as follows:</t>
           <table>
             <name>Parameters of the ATTACH property</name>
@@ -1283,7 +1283,7 @@ ACTION:AUDIO
               </tr>
             </tbody>
           </table>
-          <t>These parameters are defined in <xref target="RFC8607"/>: FILENAME (Section <xref target="RFC8607" section="4.2" sectionFormat="bare"/>), SIZE (Section <xref target="RFC8607" section="4.1" sectionFormat="bare"/>); and in <xref target="RFC5545"/>: FMTTYPE (Section <xref target="RFC5545" section="3.2.8" sectionFormat="bare"/>).</t>
+          <t>These parameters are defined in <xref target="RFC8607">CalDAV Managed Attachments</xref>: FILENAME (Section <xref target="RFC8607" section="4.2" sectionFormat="bare"/>), SIZE (Section <xref target="RFC8607" section="4.1" sectionFormat="bare"/>); and in <xref target="RFC5545">iCalendar</xref>: FMTTYPE (Section <xref target="RFC5545" section="3.2.8" sectionFormat="bare"/>).</t>
           <t>The following example illustrates how to convert the ATTACH property with a URI value:</t>
           <figure anchor="test_prop_attach_uri">
             <name>Converting the ATTACH property with URI value</name>
@@ -1389,7 +1389,7 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
               </tr>
             </tbody>
           </table>
-          <t>These parameters are defined in <xref target="RFC5545"/>: CN (Section <xref target="RFC5545" section="3.2.2" sectionFormat="bare"/>), CUTYPE (Section <xref target="RFC5545" section="3.2.3" sectionFormat="bare"/>), DELEGATED-FROM (Section <xref target="RFC5545" section="3.2.4" sectionFormat="bare"/>), DELEGATED-TO (Section <xref target="RFC5545" section="3.2.5" sectionFormat="bare"/>), MEMBER (Section <xref target="RFC5545" section="3.2.11" sectionFormat="bare"/>), PARTSTAT (Section <xref target="RFC5545" section="3.2.12" sectionFormat="bare"/>), ROLE (Section <xref target="RFC5545" section="3.2.16" sectionFormat="bare"/>), RSVP (Section <xref target="RFC5545" section="3.2.17" sectionFormat="bare"/>), SENT-BY (Section <xref target="RFC5545" section="3.2.18" sectionFormat="bare"/>); and in <xref target="RFC7986"/>: EMAIL (Section <xref target="RFC7986" section="6.2" sectionFormat="bare"/>).</t>
+          <t>These parameters are defined in <xref target="RFC5545">iCalendar</xref>: CN (Section <xref target="RFC5545" section="3.2.2" sectionFormat="bare"/>), CUTYPE (Section <xref target="RFC5545" section="3.2.3" sectionFormat="bare"/>), DELEGATED-FROM (Section <xref target="RFC5545" section="3.2.4" sectionFormat="bare"/>), DELEGATED-TO (Section <xref target="RFC5545" section="3.2.5" sectionFormat="bare"/>), MEMBER (Section <xref target="RFC5545" section="3.2.11" sectionFormat="bare"/>), PARTSTAT (Section <xref target="RFC5545" section="3.2.12" sectionFormat="bare"/>), ROLE (Section <xref target="RFC5545" section="3.2.16" sectionFormat="bare"/>), RSVP (Section <xref target="RFC5545" section="3.2.17" sectionFormat="bare"/>), SENT-BY (Section <xref target="RFC5545" section="3.2.18" sectionFormat="bare"/>); and in <xref target="RFC7986">New Properties for iCalendar</xref>: EMAIL (Section <xref target="RFC7986" section="6.2" sectionFormat="bare"/>).</t>
           <t>The "email" and "sentBy" properties of the Participant object, as well as the "sentBy" property of a calendar object, are email addresses as defined in <xref target="I-D.ietf-calext-jscalendarbis" section="1.6.3"/>. Their equivalent iCalendar parameters convert as follows:</t>
           <ul>
             <li>
@@ -1431,7 +1431,7 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
               </tr>
             </tbody>
           </table>
-          <t>These values are defined in <xref target="RFC5545" section="3.2.12"/>.</t>
+          <t>These values are defined in <xref target="RFC5545" section="3.2.12">iCalendar</xref>.</t>
           <t>The following example illustrates how to convert the ATTENDEE property:</t>
           <figure anchor="test_prop_attendee">
             <name>Converting the ATTENDEE property</name>
@@ -1755,7 +1755,7 @@ CONCEPT:https://example.com/event-types/arts/literature
               </tr>
             </tbody>
           </table>
-          <t>These parameters are defined in <xref target="RFC7986"/>: FEATURE (Section <xref target="RFC7986" section="6.3" sectionFormat="bare"/>), LABEL (Section <xref target="RFC7986" section="6.4" sectionFormat="bare"/>).</t>
+          <t>These parameters are defined in <xref target="RFC7986">New Properties for iCalendar</xref>: FEATURE (Section <xref target="RFC7986" section="6.3" sectionFormat="bare"/>), LABEL (Section <xref target="RFC7986" section="6.4" sectionFormat="bare"/>).</t>
           <t>The following example illustrates how to convert the CONFERENCE property:</t>
           <figure anchor="test_prop_conference">
             <name>Converting the CONFERENCE property</name>
@@ -2180,7 +2180,7 @@ GEO:48.858222;2.2945
               </tr>
             </tbody>
           </table>
-          <t>These parameters are defined in <xref target="RFC7986"/>: DISPLAY (Section <xref target="RFC7986" section="6.1" sectionFormat="bare"/>); and in <xref target="RFC8607"/>: FILENAME (Section <xref target="RFC8607" section="4.2" sectionFormat="bare"/>), SIZE (Section <xref target="RFC8607" section="4.1" sectionFormat="bare"/>); and in <xref target="RFC5545"/>: FMTTYPE (Section <xref target="RFC5545" section="3.2.8" sectionFormat="bare"/>).</t>
+          <t>These parameters are defined in <xref target="RFC7986">New Properties for iCalendar</xref>: DISPLAY (Section <xref target="RFC7986" section="6.1" sectionFormat="bare"/>); and in <xref target="RFC8607">CalDAV Managed Attachments</xref>: FILENAME (Section <xref target="RFC8607" section="4.2" sectionFormat="bare"/>), SIZE (Section <xref target="RFC8607" section="4.1" sectionFormat="bare"/>); and in <xref target="RFC5545">iCalendar</xref>: FMTTYPE (Section <xref target="RFC5545" section="3.2.8" sectionFormat="bare"/>).</t>
           <t>The following example illustrates how to convert the IMAGE property:</t>
           <figure anchor="test_prop_image">
             <name>Converting the IMAGE property</name>
@@ -2257,7 +2257,7 @@ LAST-MODIFIED:20240914T231257Z
               </tr>
             </tbody>
           </table>
-          <t>These parameters are defined in <xref target="RFC5545"/>: FMTTYPE (Section <xref target="RFC5545" section="3.2.8" sectionFormat="bare"/>); and in <xref target="RFC7986"/>: LABEL (Section <xref target="RFC7986" section="6.4" sectionFormat="bare"/>); and in <xref target="RFC9253"/>: LINKREL (Section <xref target="RFC9253" section="6.1" sectionFormat="bare"/>).</t>
+          <t>These parameters are defined in <xref target="RFC5545">iCalendar</xref>: FMTTYPE (Section <xref target="RFC5545" section="3.2.8" sectionFormat="bare"/>); and in <xref target="RFC7986">New Properties for iCalendar</xref>: LABEL (Section <xref target="RFC7986" section="6.4" sectionFormat="bare"/>); and in <xref target="RFC9253">iCalendar Relationships</xref>: LINKREL (Section <xref target="RFC9253" section="6.1" sectionFormat="bare"/>).</t>
           <t>A LINK property with any other value type does not convert to a standard JSCalendar element. Implementations <bcp14>MAY</bcp14> convert it to the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref>.</t>
           <t>The following example illustrates how to convert the LINK property:</t>
           <figure anchor="test_prop_link">
@@ -2489,7 +2489,7 @@ END:VLOCATION
               </tr>
             </tbody>
           </table>
-          <t>These parameters are defined in <xref target="RFC5545"/>: CN (Section <xref target="RFC5545" section="3.2.2" sectionFormat="bare"/>), SENT-BY (Section <xref target="RFC5545" section="3.2.18" sectionFormat="bare"/>); and in <xref target="RFC7986"/>: EMAIL (Section <xref target="RFC7986" section="6.2" sectionFormat="bare"/>).</t>
+          <t>These parameters are defined in <xref target="RFC5545">iCalendar</xref>: CN (Section <xref target="RFC5545" section="3.2.2" sectionFormat="bare"/>), SENT-BY (Section <xref target="RFC5545" section="3.2.18" sectionFormat="bare"/>); and in <xref target="RFC7986">New Properties for iCalendar</xref>: EMAIL (Section <xref target="RFC7986" section="6.2" sectionFormat="bare"/>).</t>
           <t>The EMAIL and SENT-BY parameters convert as described in <xref target="i2j_prop_attendee"/>. In addition, the SENT-BY parameter converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.5" sectionFormat="parens">"sentBy" property</xref> of its target object.</t>
           <t>An ORGANIZER property, an ATTENDEE property, and a PARTICIPANT component in the same iCalendar component all convert to the same Participant object, if their converted "calendarAddress" property values are equal. How to deal with conflicting property values is implementation-specific.</t>
           <t>The following example illustrates how to convert the ORGANIZER property:</t>
@@ -3186,7 +3186,7 @@ TRANSP:TRANSPARENT
               </tr>
             </tbody>
           </table>
-          <t>These parameters are defined in <xref target="RFC5545"/>: RELATED (Section <xref target="RFC5545" section="3.2.14" sectionFormat="bare"/>).</t>
+          <t>These parameters are defined in <xref target="RFC5545">iCalendar</xref>: RELATED (Section <xref target="RFC5545" section="3.2.14" sectionFormat="bare"/>).</t>
           <t>The following example illustrates how to convert the TRIGGER property to an OffsetTrigger object:</t>
           <figure anchor="test_prop_trigger_offset">
             <name>Converting the TRIGGER property to an OffsetTrigger</name>
@@ -3624,7 +3624,7 @@ URL:https://example.com/myurl
             <t>The entries in the "recurrenceOverrides" property convert depending on the contents of the PatchObject value. A PatchObject that sets the "excluded" member to "true" converts to an EXDATE property for the date-time of that recurrence instance. An empty PatchObject converts to an RDATE property. Any other PatchObject converts to a recurrence override component in the embedding VCALENDAR component.</t>
           </li>
           <li>
-            <t>The "sentBy" property converts to the SENT-BY parameter of the ORGANIZER property with a "mailto" URI value. See <xref target="RFC6068" section="2"/> for how to percent-encode internationalized email addresses.</t>
+            <t>The "sentBy" property converts to the SENT-BY parameter of the ORGANIZER property with a "mailto" URI value. See <xref target="RFC6068" section="2">the "mailto" URI Scheme specification</xref> for how to percent-encode internationalized email addresses.</t>
           </li>
           <li>
             <t>The "showWithoutTime" property only converts to the SHOW-WITHOUT-TIME property if the value data types of the properties that convert from LocalDateTime values are of form DATE WITH UTC TIME or DATE WITH LOCAL TIME.</t>
@@ -4030,7 +4030,7 @@ URL:https://example.com/myurl
             <t>The "name", "email" and "sentBy" properties also convert to parameters of the ORGANIZER property, if the Participant converts to the ORGANIZER property.</t>
           </li>
           <li>
-            <t>The "sentBy" property converts to a SENT-BY parameter with a "mailto" URI value. See <xref target="RFC6068" section="2"/> for how to percent-encode internationalized email addresses.</t>
+            <t>The "sentBy" property converts to a SENT-BY parameter with a "mailto" URI value. See <xref target="RFC6068" section="2">the "mailto" URI Scheme specification</xref> for how to percent-encode internationalized email addresses.</t>
           </li>
         </ul>
         <t>The following Participant properties convert to the PARTICIPANT component:</t>
@@ -4190,7 +4190,7 @@ JSPROP;JSPTR="example.com:foo":"bar"
             <dt>Value:</dt>
             <dd>OWNER</dd>
             <dt>Purpose:</dt>
-            <dd>This participation role indicates that the calendar user is an owner of the calendar object. This signifies they can make changes that affect all calendar users participating in this calendar object (for example, rescheduling the calendar object, adding and removing attendees and roles). The presence of this role is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars"/> for an example of making use of this role.</dd>
+            <dd>This participation role indicates that the calendar user is an owner of the calendar object. This signifies they can make changes that affect all calendar users participating in this calendar object (for example, rescheduling the calendar object, adding and removing attendees and roles). The presence of this role is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref> for an example of making use of this role.</dd>
             <dt>Conformance:</dt>
             <dd>This value can be used with the ROLE parameter.</dd>
             <dt>Example(s):</dt>
@@ -4204,10 +4204,10 @@ ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:jsmith@example.com
       </section>
       <section>
         <name>Properties</name>
-        <t>The new properties defined in this section follow the recommendation of <xref target="RFC7986" section="3"/> that properties not defined in <xref target="RFC5545"/> always include a VALUE parameter if the value type is other than TEXT. Accordingly, the new properties with a value type other than TEXT have no default value type.</t>
+        <t>The new properties defined in this section follow the recommendation of <xref target="RFC7986" section="3">New Properties for iCalendar</xref> that properties not defined in <xref target="RFC5545">the iCalendar specification</xref> always include a VALUE parameter if the value type is other than TEXT. Accordingly, the new properties with a value type other than TEXT have no default value type.</t>
         <section anchor="def_ical_prop_color">
           <name>COLOR Property</name>
-          <t>This section modifies the definition of the COLOR property. It allows its value to be a named color or a numeric color. The following definitions replace the definitions of the COLOR property, originally specified in <xref target="RFC7986" section="5.9"/> from which the definitions for "Description", "Format Definition" and "Example" differ.</t>
+          <t>This section modifies the definition of the COLOR property. It allows its value to be a named color or a numeric color. The following definitions replace the definitions of the COLOR property, originally specified in <xref target="RFC7986" section="5.9">New Properties for iCalendar</xref>, from which the definitions for "Description", "Format Definition" and "Example" differ.</t>
           <dl>
             <dt>Property Name:</dt>
             <dd>COLOR</dd>
@@ -4221,7 +4221,7 @@ ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:jsmith@example.com
             <dd>This property can be specified once in an iCalendar object or in VEVENT, VTODO, or VJOURNAL calendar components.</dd>
             <dt>Description:</dt>
             <dd>
-              <t>This property specifies a color that clients <bcp14>MAY</bcp14> use when presenting the relevant data to a user.  Typically, this would appear as the "background" color of events or tasks. The value is a color name taken from the set of names defined in <xref target="CSS3" section="4.3" relative="#svg-color"/> or an RGB value in six-digit hexadecimal notation, as defined in <xref target="CSS3" section="4.2.1" relative="#rgb-color"/>. Values are case-insensitive.</t>
+              <t>This property specifies a color that clients <bcp14>MAY</bcp14> use when presenting the relevant data to a user.  Typically, this would appear as the "background" color of events or tasks. The value is a color name taken from the set of names defined in <xref target="CSS3" section="4.3" relative="#svg-color">CSS Color Module Level 3</xref> or an RGB value in six-digit hexadecimal notation, as defined in <xref target="CSS3" section="4.2.1" relative="#rgb-color"/>. Values are case-insensitive.</t>
             </dd>
             <dt>Format Definition:</dt>
             <dd>
@@ -4391,7 +4391,7 @@ END:VALARM
             <dd>This property can be specified multiple times in any calendar component.</dd>
             <dt>Description:</dt>
             <dd>
-              <t>This property converts an arbitrary JSCalendar property from and to iCalendar.  The iCalendar property value is the JSON-encoded value of the JSCalendar property, represented as a TEXT value.  The JSON value <bcp14>MUST NOT</bcp14> be the null value, and it <bcp14>SHOULD NOT</bcp14> contain insignificant whitespace as defined in <xref target="RFC8259" format="default" sectionFormat="of" derivedContent="RFC8259" section="2"/>.  The value of the JSPTR parameter points to the JSCalendar property within the JSCalendar object and <bcp14>MUST NOT</bcp14> start with the SOLIDUS (U+002F) character.  The pointer <bcp14>MUST NOT</bcp14> reference into an array.</t>
+              <t>This property converts an arbitrary JSCalendar property from and to iCalendar.  The iCalendar property value is the JSON-encoded value of the JSCalendar property, represented as a TEXT value.  The JSON value <bcp14>MUST NOT</bcp14> be the null value, and it <bcp14>SHOULD NOT</bcp14> contain insignificant whitespace as defined in <xref target="RFC8259" section="2">the JSON specification</xref>.  The value of the JSPTR parameter points to the JSCalendar property within the JSCalendar object and <bcp14>MUST NOT</bcp14> start with the SOLIDUS (U+002F) character.  The pointer <bcp14>MUST NOT</bcp14> reference into an array.</t>
               <t>All JSPROP properties in a calendar component together form a <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.9" sectionFormat="parens">PatchObject</xref>: the JSPTR parameter of a JSPROP property corresponds to a key in the PatchObject, the property value corresponds to the JSON value for that key. When converting from iCalendar to JSCalendar, the PatchObject <bcp14>MUST</bcp14> only be applied after all other iCalendar elements of the component have been converted.  Only new properties are allowed to be set, a JSON pointer in the PatchObject that points to an existing property <bcp14>MUST</bcp14> be ignored.</t>
             </dd>
             <dt>Format Definition:</dt>
@@ -4543,7 +4543,7 @@ SHOW-WITHOUT-TIME;VALUE=BOOLEAN:TRUE
         <name>Components</name>
         <section anchor="def_ical_comp_vlocation">
           <name>VLOCATION Component</name>
-          <t>This section modifies the definition of the VLOCATION component to allow setting the newly defined <xref target="def_ical_prop_coordinates">COORDINATES property</xref> at most once in the component. To achieve this, the following additions are made to the "Format Definition" of the VLOCATION component, defined in <xref target="RFC9073" section="7.2"/>:</t>
+          <t>This section modifies the definition of the VLOCATION component to allow setting the newly defined <xref target="def_ical_prop_coordinates">COORDINATES property</xref> at most once in the component. To achieve this, the following additions are made to the "Format Definition" of the VLOCATION component, defined in <xref target="RFC9073" section="7.2">Event Publishing Extensions to iCalendar</xref>:</t>
           <sourcecode name=""><![CDATA[
 locprop /= *(
             ;
@@ -4666,14 +4666,14 @@ END:X-BAZ
     </section>
     <section>
       <name>Security Considerations</name>
-      <t>The security considerations of <xref target="I-D.ietf-calext-jscalendarbis" sectionFormat="of" section="6"/> and <xref target="RFC5545" sectionFormat="of" section="7"/> apply. In addition, the two formats do not map one-to-one, which introduces the following risks:</t>
+      <t>The security considerations of <xref target="I-D.ietf-calext-jscalendarbis" sectionFormat="of" section="6"/> and <xref target="RFC5545" sectionFormat="of" section="7">iCalendar</xref> apply. In addition, the two formats do not map one-to-one, which introduces the following risks:</t>
       <ul>
         <li>Conversion does not preserve the exact byte sequence of the source data, which invalidates cryptographic signatures, for example in <xref target="RFC6047">iMIP</xref> messages, so authorization decisions are best made on the original data. Repeated conversion may also not produce identical results, so converting from the original data is preferable.</li>
         <li>Lossy conversion may drop elements that restrict access to or disclosure of calendar data. For example, choosing a single "privacy" value for recurrences with differing <xref target="i2j_prop_class">CLASS</xref> values may disclose private occurrences.</li>
         <li>The <xref target="def_ical_prop_jsprop">JSPROP</xref> and <xref target="def_jscal_prop_icalendar">"iCalendar"</xref> properties preserve elements as opaque data. This content may pass undetected through spam, malware or link filters that operate on one format, and become active after converting back. Such filters should also inspect preserved elements.</li>
         <li>Representations such as <xref target="i2j_prop_description">DESCRIPTION</xref> and <xref target="i2j_prop_styled_description">STYLED-DESCRIPTION</xref>, or <xref target="i2j_prop_geo">GEO</xref> and <xref target="i2j_prop_coordinates">COORDINATES</xref>, may contain conflicting values, so clients of either format may present different content.</li>
       </ul>
-      <t><xref target="RFC7986"/> describes the security considerations for the COLOR property and its related JSCalendar "color" property.</t>
+      <t><xref target="RFC7986">New Properties for iCalendar</xref> describes the security considerations for the COLOR property and its related JSCalendar "color" property.</t>
       <t>The newly defined iCalendar "OWNER" participation role (<xref target="def_ical_param_role"/>) is indicative only: its presence in an iCalendar object does not by itself grant any authorization. Implementations <bcp14>MUST NOT</bcp14> grant a calendar user the ability to make changes to a calendar object based solely on the presence of this role; authorization is determined by the calendaring exchange protocol in use. In the context of <xref target="I-D.ietf-jmap-calendars">JMAP Calendars</xref>, this role is equivalent to the "owner" role of the Participant object. Its semantics in the context of other calendaring exchange protocols, such as <xref target="RFC4791">CalDAV</xref>, are not defined by this document.</t>
     </section>
     <section>
