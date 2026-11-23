@@ -372,7 +372,7 @@ signed-duration = ["+" / "-"] duration
         </section>
         <section anchor="email-addresses">
           <name>Email Addresses</name>
-          <t>Several properties require their string value to be an email address. Such a value <bcp14>MUST</bcp14> be a valid "Mailbox" as defined in <xref target="RFC5321" section="4.1.2"/>, optionally extended for internationalized email addresses as defined in <xref target="RFC6531" section="3.3"/>.</t>
+          <t>Several properties require their string value to be an email address. Such a value <bcp14>MUST</bcp14> be a valid "Mailbox" as defined in <xref target="RFC5321" section="4.1.2"/> and extended for internationalized email addresses as defined in <xref target="RFC6531" section="3.3"/>.</t>
           <t>Some properties contain an email address that originates from an email message, such as the "sentBy" properties, whose values come from the "From" header field (<xref target="RFC5322" section="3.6.2"/>, extended for internationalized email addresses in <xref target="RFC6532"/>). Implementations convert such an address by removing any comments and folding white space. If the result is not a valid email address, then the property <bcp14>MUST NOT</bcp14> be set. If the "From" header field contains more than one mailbox, then which address to use is implementation-specific.</t>
         </section>
       </section>
