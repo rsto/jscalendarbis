@@ -1719,8 +1719,12 @@ jsversion = 1*DIGIT "." 1*DIGIT
       <section anchor="uri-values">
         <name>URI Values</name>
         <t>Several JSCalendar properties contain URIs as values, and processing these properties requires extra care. <xref target="RFC3986" section="7"/> discusses security risks related to URIs.</t>
-        <t>Fetching remote resources carries inherent risks. Connections must only be allowed on well-known ports, using allowed protocols (generally, just HTTP/HTTPS on their default ports). The URL must be resolved externally and not allowed to access internal resources. Connecting to an external source reveals IP (and therefore often location) information.</t>
+        <t>Fetching remote resources carries inherent risks. Connections must only be allowed on well-known ports, using allowed protocols (generally, just HTTP/HTTPS on their default ports). The URL must be resolved externally and not allowed to access internal resources. Connecting to an external source reveals IP (and therefore often location) information. Similarly, embedded resources, such as Link objects whose "href" is a "data:" URI, must be treated as untrusted input.</t>
         <t>A maliciously constructed JSCalendar object may contain a very large number of URIs. In the case of published calendars with a large number of subscribers, such objects could be widely distributed. Implementations should be careful to limit the automatic fetching of linked resources to reduce the risk of this being an amplification vector for a denial-of-service attack.</t>
+      </section>
+      <section anchor="sec-alerts">
+        <name>Alerts</name>
+        <t>Alerts cause actions without user interaction. For calendar objects from untrusted sources, implementations may choose to discard the alerts and replace them with the user's default alert preferences, if any. Otherwise, they should not perform any alert action other than notifying the user, i.e., as if the alert action were "display".</t>
       </section>
       <section anchor="spam">
         <name>Spam</name>
