@@ -1832,7 +1832,7 @@ CREATED:20240329T133000Z
         </section>
         <section anchor="i2j_prop_description">
           <name>DESCRIPTION</name>
-          <t>The <xref target="RFC5545" section="3.8.1.5" sectionFormat="parens">DESCRIPTION property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.2" sectionFormat="parens">"description" property</xref> of its target object, unless its DERIVED parameter value is "TRUE" and the component contains a non-derived STYLED-DESCRIPTION property, in which case the DESCRIPTION property is ignored.</t>
+          <t>The <xref target="RFC5545" section="3.8.1.5" sectionFormat="parens">DESCRIPTION property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.2" sectionFormat="parens">"description" property</xref> of its target object, unless its DERIVED parameter value is "TRUE" and the component contains a non-derived STYLED-DESCRIPTION property that converts to the "description" property, in which case the DESCRIPTION property is ignored.</t>
           <t>The following example illustrates how to convert the DESCRIPTION property:</t>
           <figure anchor="test_prop_description">
             <name>Converting the DESCRIPTION property</name>
@@ -3065,7 +3065,7 @@ SOURCE;VALUE=URI:https://example.com/holidays.ics
             <li>The FMTTYPE parameter either <bcp14>MUST NOT</bcp14> be set, or its value <bcp14>MUST</bcp14> be a <xref target="RFC6838">media type</xref> with top-level type "text".</li>
           </ul>
           <t>If these conditions are not met, implementations <bcp14>MAY</bcp14> preserve the property in the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref>.</t>
-          <t>A STYLED-DESCRIPTION property with DERIVED parameter value "TRUE" is ignored if the component contains a non-derived DESCRIPTION or STYLED-DESCRIPTION property.</t>
+          <t>A STYLED-DESCRIPTION property with DERIVED parameter value "TRUE" is ignored if the component contains a non-derived DESCRIPTION property, or a non-derived STYLED-DESCRIPTION property that converts to the "description" property.</t>
           <t>Its <xref target="RFC5545" section="3.2.8" sectionFormat="parens">FMTTYPE parameter</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.3" sectionFormat="parens">"descriptionContentType" property</xref>.</t>
           <t>The following example illustrates how to convert the STYLED-DESCRIPTION property:</t>
           <figure anchor="test_prop_styled_description">
