@@ -2212,7 +2212,7 @@ IMAGE;VALUE=URI;DISPLAY=BADGE,THUMBNAIL;FILENAME=An image;
             The <xref target="RFC5545" section="3.8.7.3" sectionFormat="parens">LAST-MODIFIED property</xref> in a VCALENDAR component converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.1.6" sectionFormat="parens">"updated" property</xref> of the Group object.
           </t>
           <t>
-              The <xref target="RFC5545" section="3.8.7.3" sectionFormat="parens">LAST-MODIFIED property</xref> in a component that converts to a calendar object does <em>not</em> convert to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.1.6" sectionFormat="parens">"updated" property</xref> of its target object. Implementations <bcp14>MAY</bcp14> instead preserve the LAST-MODIFIED property in the "iCalendar" property.</t>
+              The <xref target="RFC5545" section="3.8.7.3" sectionFormat="parens">LAST-MODIFIED property</xref> in a component that converts to a calendar object converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.1.6" sectionFormat="parens">"updated" property</xref> of its target object only if the component does not contain a DTSTAMP property. Otherwise, it is ignored. iCalendar implementations often do not distinguish between these two properties, and a preserved LAST-MODIFIED property would likely be stale when converting back to iCalendar.</t>
           <t>The following example illustrates how to convert the LAST-MODIFIED property:</t>
           <figure anchor="test_prop_last_modified">
             <name>Converting the LAST-MODIFIED property</name>
