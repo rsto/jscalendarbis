@@ -522,7 +522,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-uid">
           <name>uid</name>
           <dl spacing="normal">
-            <dt>uid: String (mandatory).</dt>
+            <dt>uid: String (mandatory, unless specified otherwise by the object type).</dt>
             <dd>
               <t>This is a globally unique identifier used to associate objects representing the same calendar object, group, or other object across different systems, calendars, and views. For recurring calendar objects, the UID is associated with the base object and therefore is the same for all occurrences; the combination of the UID with a "recurrenceId" identifies a particular instance.</t>
               <t>The generator of the identifier <bcp14>MUST</bcp14> guarantee that the identifier is unique. The <xref target="RFC9562">UUID specification</xref> describes a range of established algorithms to generate universally unique identifiers (UUIDs). UUID version 4, described in <xref target="RFC9562" section="5.4"/>, is <bcp14>RECOMMENDED</bcp14>.</t>
@@ -574,7 +574,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <section anchor="prop-updated">
           <name>updated</name>
           <dl spacing="normal">
-            <dt>updated: UTCDateTime (mandatory).</dt>
+            <dt>updated: UTCDateTime (mandatory, unless specified otherwise by the object type).</dt>
             <dd>
               <t>This is the date and time the data in this object was last modified (or its creation date/time if not modified since).</t>
             </dd>
@@ -1388,7 +1388,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
       </section>
       <section anchor="jsgroup-props">
         <name>Group Properties</name>
-        <t>Group supports the following common <xref target="jscalendar-props">JSCalendar properties</xref>:</t>
+        <t>The Group object type supports the following common <xref target="jscalendar-props">JSCalendar properties</xref>:</t>
         <ul>
           <li>@type</li>
           <li>categories</li>
@@ -1404,6 +1404,11 @@ jsversion = 1*DIGIT "." 1*DIGIT
           <li>uid</li>
           <li>updated</li>
           <li>version</li>
+        </ul>
+        <t>It refines the common properties as follows:</t>
+        <ul>
+          <li><xref target="prop-uid">uid</xref>: The property is optional.</li>
+          <li><xref target="prop-updated">updated</xref>: The property is optional.</li>
         </ul>
         <t>In addition, the following Group-specific properties are supported:</t>
         <section anchor="prop-entries">
@@ -4647,6 +4652,14 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>
               <t>The property value now does not support "null" values anymore. The property either is set to a time zone identifier, or not at all.</t>
               <t>See <xref target="prop-timeZone" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Group.{uid|updated} -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Group.{uid|updated}</strong>:</dt>
+            <dd>
+              <t>The original definition required these properties to be set for Group objects. They now are optional, for compatibility with the iCalendar VCALENDAR component, for which the UID and LAST-MODIFIED properties are optional.</t>
+              <t>See <xref target="jsgroup-props" sectionFormat="of"/>.</t>
             </dd>
           </dl>
           <!-- Link.display -->
