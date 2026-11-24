@@ -3078,7 +3078,7 @@ STYLED-DESCRIPTION;VALUE=TEXT;FMTTYPE=text/html:
             The <xref target="RFC5545" section="3.8.1.12" sectionFormat="parens">SUMMARY property</xref> in a component other than PARTICIPANT converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.1" sectionFormat="parens">"title" property</xref> of its target object. If the LANGUAGE parameter is set, then the parameter value converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.9" sectionFormat="parens">"locale" property</xref> of the same object.
           </t>
           <t>
-            The <xref target="RFC5545" section="3.8.1.12" sectionFormat="parens">SUMMARY property</xref> in a PARTICIPANT component converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.6" sectionFormat="parens">"name" property</xref> of the Participant object.
+            The <xref target="RFC5545" section="3.8.1.12" sectionFormat="parens">SUMMARY property</xref> in a PARTICIPANT component converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.6" sectionFormat="parens">"name" property</xref> of the Participant object. If the Participant object also converts from an ATTENDEE property with a CN parameter, then which of the two values converts to the "name" property is implementation-specific. The other value is ignored.
           </t>
           <t>The following example illustrates how to convert the SUMMARY property in a VEVENT component:</t>
           <figure anchor="test_prop_summary">
@@ -3938,7 +3938,7 @@ URL:https://example.com/myurl
             <t>Otherwise, it converts to an ATTENDEE property if the "calendarAddress" property is set. The "calendarAddress" converts to the ATTENDEE property value.</t>
           </li>
           <li>
-            <t>It converts to a PARTICIPANT component if any of the Participant properties in <xref target="j2i_participant_to_comp"/> are set. If the Participant object also converts to an ATTENDEE property, then the CALENDAR-ADDRESS property value of the PARTICIPANT component <bcp14>MUST</bcp14> match the ATTENDEE property value.</t>
+            <t>It converts to a PARTICIPANT component if any of the Participant properties in <xref target="j2i_participant_to_comp"/> convert to it. The "name" property converts to the SUMMARY property of the PARTICIPANT component only if the Participant object does not convert to an ATTENDEE property. If the Participant object also converts to an ATTENDEE property, then the CALENDAR-ADDRESS property value of the PARTICIPANT component <bcp14>MUST</bcp14> match the ATTENDEE property value.</t>
           </li>
         </ul>
         <t>The following Participant properties convert to parameters of the ATTENDEE property. How to convert these if the Participant "calendarAddress" property is not set is implementation-specific.</t>
