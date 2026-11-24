@@ -3422,7 +3422,7 @@ URL:https://example.com/myurl
               <td>locale</td>
               <td>LANGUAGE (parameter) of SUMMARY property</td>
               <td>
-                <t><xref target="i2j_prop_summary" format="counter"/>, <xref target="i2j_prop_description" format="counter"/>, <xref target="i2j_prop_styled_description" format="counter"/></t>
+                <t><xref target="i2j_prop_summary" format="counter"/></t>
               </td>
             </tr>
             <tr>
@@ -3743,9 +3743,9 @@ URL:https://example.com/myurl
             </tr>
             <tr>
               <td>locale</td>
-              <td>LANGUAGE (parameter) of either NAME, or DESCRIPTION (in order of preference)</td>
+              <td>LANGUAGE (parameter) of NAME property</td>
               <td>
-                <t><xref target="i2j_prop_name" format="counter"/>, <xref target="i2j_prop_description" format="counter"/></t>
+                <t><xref target="i2j_prop_name" format="counter"/></t>
               </td>
             </tr>
             <tr>
