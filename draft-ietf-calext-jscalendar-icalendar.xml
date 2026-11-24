@@ -4334,7 +4334,7 @@ COLOR:#ffd755
             <dt>Property Parameters:</dt>
             <dd>IANA and non-standard parameters <bcp14>MAY</bcp14> be specified on this property.</dd>
             <dt>Conformance:</dt>
-            <dd>This property can be specified in a VLOCATION calendar component.</dd>
+            <dd>This property can be specified at most once in a VLOCATION calendar component.</dd>
             <dt>Description:</dt>
             <dd>
               <t>This property represents spatial (geographic) coordinates. In contrast to the GEO property, this property allows to represent not only latitude and longitude but also altitude of a location, and to indicate the uncertainty of the coordinates. It improves interoperability with other internet standards making use of spatial information, and is extensible, such as for use with other coordinate reference systems. The property value <bcp14>MUST</bcp14> a URI in the "geo" URI scheme, as defined in <xref target="RFC5870"/> and updates.</t>
@@ -4611,24 +4611,6 @@ SHOW-WITHOUT-TIME;VALUE=BOOLEAN:TRUE
           </dl>
         </section>
       </section>
-      <section>
-        <name>Components</name>
-        <section anchor="def_ical_comp_vlocation">
-          <name>VLOCATION Component</name>
-          <t>This section modifies the definition of the VLOCATION component to allow setting the newly defined <xref target="def_ical_prop_coordinates">COORDINATES property</xref> at most once in the component. To achieve this, the following additions are made to the "Format Definition" of the VLOCATION component, defined in <xref target="RFC9073" section="7.2">Event Publishing Extensions to iCalendar</xref>:</t>
-          <sourcecode name=""><![CDATA[
-locprop /= *(
-            ;
-            ; The following is OPTIONAL
-            ; but MUST NOT occur more than once.
-            ;
-            coord
-            ;
-            )
-]]></sourcecode>
-          <t>The "coord" ABNF is defined in <xref target="def_ical_prop_coordinates"/>.</t>
-        </section>
-      </section>
     </section>
     <section anchor="def_jscal">
       <name>New JSCalendar Definitions</name>
@@ -4754,7 +4736,6 @@ END:X-BAZ
       <name>IANA Considerations</name>
       <section>
         <name>Changes to the "iCalendar Element Registries"</name>
-        <t>IANA will change the entry for the VLOCATION component in the "Components" registry: it will add <xref target="def_ical_comp_vlocation"/> of this document to the References.</t>
         <t>IANA will change the entry for the GEO property in the "Properties" registry: it will set the Status from "Current" to "Deprecated" and add <xref target="def_ical_prop_geo"/> of this document to the References.</t>
         <t>IANA will change the entry for the COLOR property in the "Properties" registry: it will add <xref target="def_ical_prop_color"/> of this document to the References.</t>
         <t>IANA will add the following entries to the "Properties" registry:</t>
