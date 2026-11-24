@@ -4566,12 +4566,13 @@ locprop /= *(
           <dt>Name:</dt>
           <dd>iCalendar</dd>
           <dt>Context:</dt>
-          <dd>Any JSCalendar object</dd>
+          <dd>Any JSCalendar object type that converts to an iCalendar component.</dd>
           <dt>Type:</dt>
           <dd>ICalComponent (optional)</dd>
           <dt>Description</dt>
           <dd>
             <t>This property is specific to conversion between JSCalendar and iCalendar. It contains information about iCalendar data that got converted to this JSCalendar object.  It allows for preserving the name of iCalendar elements, such as a component's name, properties and subcomponents. This specification defines the ICalComponent object type for converting iCalendar components to a JSCalendar object. Future specifications <bcp14>MAY</bcp14> define additional value types for this property.</t>
+            <t>This document defines this property for the Alert, Event, Group, Location and Participant object types. A specification that defines how another JSCalendar object type converts to an iCalendar component can add that type to the Property Context of the "iCalendar" property in the "JSCalendar Properties" registry.</t>
             <t>An ICalComponent object has the following properties:</t>
             <dl newline="true">
               <dt>@type: String</dt>
@@ -4806,7 +4807,7 @@ END:X-BAZ
           <dt>Property Type</dt>
           <dd>ICalComponent</dd>
           <dt>Property Context</dt>
-          <dd>Event, Location, Participant</dd>
+          <dd>Event, Group, Location, Participant</dd>
           <dt>Reference/Description</dt>
           <dd>
             <xref target="def_jscal_prop_icalendar"/>
