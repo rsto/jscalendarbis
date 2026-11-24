@@ -3839,7 +3839,7 @@ URL:https://example.com/myurl
             <t>The "descriptionContentType" property value determines if the "description" property converts to the DESCRIPTION or STYLED-DESCRIPTION property. A description of content type "text/plain" converts to the DESCRIPTION property. Any other description converts to the STYLED-DESCRIPTION property, in which case a plain text version of the rich-text description <bcp14>MAY</bcp14> be set additionally in the DESCRIPTION property, having its DERIVED parameter set to "TRUE".</t>
           </li>
           <li>
-            <t>The "prodId" property value of the Group object is expected to be equal to the "prodId" property value of all the Group entries. They all convert to the same, single PRODID property in the VCALENDAR component.</t>
+            <t>The "prodId" property value of the Group object is expected to be equal to the "prodId" property value of all the Group entries. They all convert to the same, single PRODID property in the VCALENDAR component. If neither the Group object nor any of its entries has the "prodId" property set, then the PRODID property is set to the product identifier of the implementation performing the conversion.</t>
           </li>
           <li>
             <t>The "method" property value in all the Group entries is expected to be equal.</t>
