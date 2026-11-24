@@ -69,8 +69,7 @@
           <t>An iCalendar example contains either an extract or a complete representation of iCalendar data.  It always represents an iCalendar object, even if the example only depicts non-VCALENDAR components or properties. The following rules apply:</t>
           <ul>
             <li>An example that only contains iCalendar properties implicitly represents a VEVENT component having these properties set and that is part of a VCALENDAR component.</li>
-            <li>An example that only contains one or more VEVENT, VTODO, VJOURNAL, FREEBUSY or VTIMEZONE components implicitly represents a VCALENDAR component that contains them. An example that only contains one or more other components implicitly represents a VEVENT component having these components set and that is part of a VCALENDAR components.</li>
-            <li>An example that only contains VEVENT or VTODO components implicitly represents a VCALENDAR component that contains them.</li>
+            <li>An example that only contains one or more VEVENT or VTIMEZONE components implicitly represents a VCALENDAR component that contains them. An example that only contains one or more other components implicitly represents a VEVENT component.</li>
             <li>An example that only contains a VCALENDAR component but no contained components implicitly represents a VCALENDAR component that contains a VEVENT component.</li>
             <li>Implicit components (those without a BEGIN and END, or omitted completely) are assumed to contain all mandatory properties with some value, but the actual value is irrelevant for the example.</li>
           </ul>
@@ -213,7 +212,7 @@ SUMMARY:hello
       </section>
       <section>
         <name>Lossy versus Lossless Conversion</name>
-        <t>This document outlines how to convert iCalendar elements to JSCalendar elements, and the other way round. Many of these can be represented by standard elements in both formats, meaning that they are registered in the iCalendar and JSCalendar IANA registries and differ from the special-purpose elements introduced in <xref target="def_ical"/> and <xref target="def_jscal"/>. Still, a number of elements in either format have no standard counterpart in the other. When converting between between iCalendar and JSCalendar, implementations <bcp14>MAY</bcp14> choose to only convert elements that have standard element in the target format, or aim to preserve as many elements as possible.</t>
+        <t>This document outlines how to convert iCalendar elements to JSCalendar elements, and the other way round. Many of these can be represented by standard elements in both formats, meaning that they are registered in the iCalendar and JSCalendar IANA registries and differ from the special-purpose elements introduced in <xref target="def_ical"/> and <xref target="def_jscal"/>. Still, a number of elements in either format have no standard counterpart in the other. When converting between iCalendar and JSCalendar, implementations <bcp14>MAY</bcp14> choose to only convert elements that have standard element in the target format, or aim to preserve as many elements as possible.</t>
         <t>When to choose between lossy and lossless conversion is implementation-specific. For example:</t>
         <ul>
           <li>For lossy conversion, an implementation that internally stores calendar data in JSCalendar format might only want to convert to a subset of iCalendar elements for <xref target="RFC6047">iMIP scheduling</xref>. In this case, it might not make use any of the conversion-specific iCalendar properties introduced in <xref target="def_ical"/>.</li>
@@ -334,6 +333,13 @@ SUMMARY:hello
                 <td>source</td>
                 <td>
                   <xref target="i2j_prop_source" format="counter"/>
+                </td>
+              </tr>
+              <tr>
+                <td>STYLED-DESCRIPTION</td>
+                <td>description</td>
+                <td>
+                  <xref target="i2j_prop_styled_description" format="counter"/>
                 </td>
               </tr>
               <tr>
@@ -518,7 +524,7 @@ END:VCALENDAR
           <t>If the property value type is <xref target="RFC5545" section="3.3.5" sectionFormat="parens">DATE-TIME in FORM #3: DATE WITH LOCAL TIME AND TIME ZONE REFERENCE</xref> then the timezone identifier is determined by the TZID parameter value as follows:</t>
           <t>If the TZID parameter value is equal to a name in the <xref target="TZDB">IANA Time Zone Database</xref> then the timezone identifier is that verbatim name. Otherwise, how to convert the TZID parameter value is implementation-specific: software libraries such as the <eref target="https://icu.unicode.org/">International Components for Unicode</eref> support converting Microsoft time zone names to IANA time zone identifiers. Alternatively, an implementation might determine the name of an IANA time zone which has identical time zone rules over the time span of the calendar object.</t>
           <t>A <xref target="RFC5545" section="3.6.5" sectionFormat="parens">VTIMEZONE component</xref> whose TZID property value is a name in the <xref target="TZDB">IANA Time Zone Database</xref> does not convert to JSCalendar. If its time zone rules differ from those of the IANA time zone of that name, then how to convert it is implementation-specific.</t>
-          <t>Implementations <bcp14>MAY</bcp14> preserve a TZID parameter set to a non-IANA timezone identifier and its related VTIMEZONE by use of the "convertedProperties" and "components" properties (see <xref target="def_jscal_prop_icalendar"/>), but <bcp14>MUST NOT</bcp14> expect other implementations to consider them when processing the calendar object.</t>
+          <t>Implementations <bcp14>MAY</bcp14> preserve a TZID parameter set to a non-IANA timezone identifier and its related VTIMEZONE by use of the "convertedProperties" and "components" properties in the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref> of the calendar object or of its enclosing Group object, but <bcp14>MUST NOT</bcp14> expect other implementations to consider them when processing the calendar object.</t>
         </section>
         <section anchor="i2j_date_time">
           <name>DATE and DATE-TIME</name>
@@ -3952,7 +3958,7 @@ URL:https://example.com/myurl
         <t>The <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.6" sectionFormat="parens">Participant object</xref> converts to an <xref target="i2j_prop_attendee">ATTENDEE property</xref> and <xref target="i2j_comp_participant">PARTICIPANT component</xref>, unless it is fully represented by the <xref target="i2j_prop_organizer">ORGANIZER property</xref>:</t>
         <ul>
           <li>
-            <t>It if fully represented by the ORGANIZER property if its "calendarAddress" property value matches the "organizerCalendarAddress" property value, and it does not have any role but the "owner" role set, and it only has properties set that convert to ORGANIZER parameters (see <xref target="i2j_prop_organizer_params"/>).
+            <t>It is fully represented by the ORGANIZER property if its "calendarAddress" property value matches the "organizerCalendarAddress" property value, and it does not have any role but the "owner" role set, and it only has properties set that convert to ORGANIZER parameters (see <xref target="i2j_prop_organizer_params"/>).
         </t>
           </li>
           <li>
