@@ -1327,7 +1327,7 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
           <t>
             The <xref target="RFC5545" section="3.8.4.1" sectionFormat="parens">ATTENDEE property</xref> converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.6" sectionFormat="parens">Participant object</xref>.  The converted object is set in the "participants" property of its target object. The property value converts to the Participant object's "calendarAddress" property.</t>
           <t>The key of the Participant object <bcp14>MUST</bcp14> be the value of the <xref target="def_ical_param_jsid">JSID parameter</xref>, if set. If no JSID parameter is set, then the key <bcp14>MAY</bcp14> be the UUIDv5 generated from the property value (see <xref target="i2j_ids"/>). When converting to iCalendar, implementations <bcp14>MAY</bcp14> omit setting the JSID parameter if the key matches the UUIDv5 of the ATTENDEE property value and the key is not part of a JSON pointer in any JSPTR parameter value.</t>
-          <t>An ATTENDEE property and a PARTICIPANT component in the same iCalendar component convert to the same Participant object, if their converted "calendarAddress" property values are equal. How to deal with conflicting values is implementation-specific.</t>
+          <t>An ATTENDEE property and a PARTICIPANT component in the same iCalendar component convert to the same Participant object, if their converted "calendarAddress" property values are equal. How to deal with conflicting values, including different JSID values, is implementation-specific.</t>
           <t>The ATTENDEE property parameters convert as follows:</t>
           <table>
             <name>Parameters of the ATTENDEE property</name>
@@ -2494,7 +2494,7 @@ END:VLOCATION
           </table>
           <t>These parameters are defined in <xref target="RFC5545">iCalendar</xref>: CN (Section <xref target="RFC5545" section="3.2.2" sectionFormat="bare"/>), SENT-BY (Section <xref target="RFC5545" section="3.2.18" sectionFormat="bare"/>); and in <xref target="RFC7986">New Properties for iCalendar</xref>: EMAIL (Section <xref target="RFC7986" section="6.2" sectionFormat="bare"/>).</t>
           <t>The EMAIL and SENT-BY parameters convert as described in <xref target="i2j_prop_attendee"/>. In addition, the SENT-BY parameter converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.5" sectionFormat="parens">"sentBy" property</xref> of its target object.</t>
-          <t>An ORGANIZER property, an ATTENDEE property, and a PARTICIPANT component in the same iCalendar component all convert to the same Participant object, if their converted "calendarAddress" property values are equal. How to deal with conflicting property values is implementation-specific.</t>
+          <t>An ORGANIZER property, an ATTENDEE property, and a PARTICIPANT component in the same iCalendar component all convert to the same Participant object, if their converted "calendarAddress" property values are equal. How to deal with conflicting property values, including different JSID values, is implementation-specific.</t>
           <t>The following example illustrates how to convert the ORGANIZER property:</t>
           <figure anchor="test_prop_organizer">
             <name>Converting the ORGANIZER property</name>
