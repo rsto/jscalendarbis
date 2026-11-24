@@ -3679,6 +3679,9 @@ URL:https://example.com/myurl
           <li>
             <t>If the DTSTART property has value type DATE, then a "duration" property value of "P1D" need not convert to the DTEND or DURATION property. If the "duration" property is not set or its value is zero, then whether to set the DTEND or DURATION property is implementation-specific.</t>
           </li>
+          <li>
+            <t>The "duration" property converts to the DTEND property if the "endTimeZone" property is set. Otherwise, whether it converts to the DTEND or the DURATION property is implementation-specific. If the event recurs and the duration contains days or weeks, then implementations <bcp14>SHOULD</bcp14> use the DURATION property.</t>
+          </li>
         </ul>
         <t>Other properties <bcp14>MAY</bcp14> be converted to <xref target="def_ical_prop_jsprop">JSPROP properties</xref> in the iCalendar component to which the calendar object converts.</t>
       </section>
