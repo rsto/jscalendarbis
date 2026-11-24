@@ -1947,6 +1947,7 @@ DTSTAMP:20240304T132000Z
               The <xref target="RFC5545" section="3.8.2.4" sectionFormat="parens">DTSTART property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.6.1" sectionFormat="parens">"start" property</xref> of its target object.</t>
           <t>See <xref target="i2j_date_time"/> how to convert DATE and DATE-TIME values.</t>
           <t>The <xref target="i2j_tzid">timezone identifier</xref> of the DTSTART property converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.6.2" sectionFormat="parens">"timeZone" property</xref> of its target object.  In addition, if the value type of the DTSTART property is DATE, then the value of the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.4" sectionFormat="parens">"showWithoutTime" property</xref> is "true".</t>
+          <t>In a VEVENT component with neither a DTEND nor a DURATION property, a DTSTART property with value type DATE also converts to the "duration" property value "P1D" (see <xref target="RFC5545" section="3.6.1"/>).</t>
           <t>The following example illustrates how to convert the DTSTART property with a TZID parameter:</t>
           <figure anchor="test_prop_dtstart_tzid">
             <name>Converting the DTSTART property with TZID parameter</name>
@@ -1994,6 +1995,7 @@ DTSTART;VALUE=DATE:20240921
 
 --- JSCalendar:
 "start": "2024-09-21T00:00:00",
+"duration": "P1D",
 "showWithoutTime": true
 ]]></sourcecode>
           </figure>
@@ -3644,7 +3646,7 @@ URL:https://example.com/myurl
               <td>duration</td>
               <td>DURATION, or DTEND</td>
               <td>
-                <t><xref target="i2j_prop_duration" format="counter"/>, <xref target="i2j_prop_dtend" format="counter"/></t>
+                <t><xref target="i2j_prop_duration" format="counter"/>, <xref target="i2j_prop_dtend" format="counter"/>, and remarks below</t>
               </td>
             </tr>
             <tr>
@@ -3667,6 +3669,12 @@ URL:https://example.com/myurl
             </tr>
           </tbody>
         </table>
+        <t>Remarks:</t>
+        <ul>
+          <li>
+            <t>If the DTSTART property has value type DATE, then a "duration" property value of "P1D" need not convert to the DTEND or DURATION property. If the "duration" property is not set or its value is zero, then whether to set the DTEND or DURATION property is implementation-specific.</t>
+          </li>
+        </ul>
         <t>Other properties <bcp14>MAY</bcp14> be converted to <xref target="def_ical_prop_jsprop">JSPROP properties</xref> in the iCalendar component to which the calendar object converts.</t>
       </section>
       <section anchor="j2i_group">
