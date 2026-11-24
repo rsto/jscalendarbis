@@ -1825,8 +1825,7 @@ CREATED:20240329T133000Z
         </section>
         <section anchor="i2j_prop_description">
           <name>DESCRIPTION</name>
-          <t>The <xref target="RFC5545" section="3.8.1.5" sectionFormat="parens">DESCRIPTION property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.2" sectionFormat="parens">"description" property</xref> of its target object, unless its DERIVED parameter value is "TRUE".</t>
-          <t>If the DERIVED parameter value is "TRUE", then the property does not convert to the "description" property. Instead, a non-derived STYLED-DESCRIPTION property is expected to contain the description. Implementations <bcp14>MAY</bcp14> preserve the property in the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref>.</t>
+          <t>The <xref target="RFC5545" section="3.8.1.5" sectionFormat="parens">DESCRIPTION property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.2" sectionFormat="parens">"description" property</xref> of its target object, unless its DERIVED parameter value is "TRUE" and the component contains a non-derived STYLED-DESCRIPTION property, in which case the DESCRIPTION property is ignored.</t>
           <t>The following example illustrates how to convert the DESCRIPTION property:</t>
           <figure anchor="test_prop_description">
             <name>Converting the DESCRIPTION property</name>
@@ -2048,7 +2047,7 @@ EXDATE:20230801T130000Z
         </section>
         <section anchor="i2j_prop_geo">
           <name>GEO</name>
-          <t>A GEO property with the DERIVED parameter value "TRUE" does not convert to JSCalendar. For non-derived GEO properties, the following rules apply:</t>
+          <t>A GEO property with the DERIVED parameter value "TRUE" is ignored if the component contains a VLOCATION component. For all other GEO properties, the following rules apply:</t>
           <t>
             The <xref target="RFC5545" section="3.8.1.6" sectionFormat="parens">GEO property</xref> in a component other than VLOCATION converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.5" sectionFormat="parens">Location object</xref>.  If that component also contains the <xref target="i2j_prop_location">LOCATION property</xref>, then the GEO and LOCATION properties convert to the same Location object.  The converted object is set in the "locations" property of its target object.
           </t>
@@ -2282,7 +2281,7 @@ LINK;LINKREL="https://example.com/linkrel/source";LABEL=Venue;
         </section>
         <section anchor="i2j_prop_location">
           <name>LOCATION</name>
-          <t>The <xref target="RFC5545" section="3.8.1.7" sectionFormat="parens">LOCATION property</xref> converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.5" sectionFormat="parens">Location object</xref>, unless its DERIVED parameter value is "TRUE". The converted object is set in the "locations" property of its target object.</t>
+          <t>The <xref target="RFC5545" section="3.8.1.7" sectionFormat="parens">LOCATION property</xref> converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.5" sectionFormat="parens">Location object</xref>, unless its DERIVED parameter value is "TRUE" and the component contains a VLOCATION component. The converted object is set in the "locations" property of its target object. Apart from determining the "mainLocationId" property as described below, a derived LOCATION property that does not convert to a Location object is ignored.</t>
           <t>The key of the Location object <bcp14>MUST</bcp14> be the value of the <xref target="def_ical_param_jsid">JSID parameter</xref>, if set. If no JSID parameter is set, then the key <bcp14>MAY</bcp14> be the UUIDv5 generated from the property value (see <xref target="i2j_ids"/>). When converting to iCalendar, implementations <bcp14>MAY</bcp14> omit setting the JSID parameter if the key matches the UUIDv5 of the LOCATION property value and the key is not part of a JSON pointer in any JSPTR parameter value.</t>
           <t>The LOCATION property value converts to the Location object's "title" property.</t>
           <t>If the calendar component contains multiple VLOCATION components, then the LOCATION property also converts to the "mainLocationId" property of its target object. If the LOCATION property does not have the DERIVED parameter set to "TRUE", then the "mainLocationId" is set to the key of the Location object of the LOCATION property. If instead the LOCATION property is derived and its property value matches the NAME property value of a VLOCATION component, then the "mainLocationId" is the identifier of the Location object of that VLOCATION component.</t>
@@ -3055,9 +3054,9 @@ SOURCE;VALUE=URI:https://example.com/holidays.ics
           <ul>
             <li>The property value type <bcp14>MUST</bcp14> be TEXT.</li>
             <li>The FMTTYPE parameter either <bcp14>MUST NOT</bcp14> be set, or its value <bcp14>MUST</bcp14> be a <xref target="RFC6838">media type</xref> with top-level type "text".</li>
-            <li>Its DERIVED parameter value <bcp14>MUST NOT</bcp14> be "TRUE". If the value is "TRUE", then another property in the same component is expected to contain the description.</li>
           </ul>
           <t>If these conditions are not met, implementations <bcp14>MAY</bcp14> preserve the property in the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref>.</t>
+          <t>A STYLED-DESCRIPTION property with DERIVED parameter value "TRUE" is ignored if the component contains a non-derived DESCRIPTION or STYLED-DESCRIPTION property.</t>
           <t>Its <xref target="RFC5545" section="3.2.8" sectionFormat="parens">FMTTYPE parameter</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.3" sectionFormat="parens">"descriptionContentType" property</xref>.</t>
           <t>The following example illustrates how to convert the STYLED-DESCRIPTION property:</t>
           <figure anchor="test_prop_styled_description">
@@ -5426,9 +5425,6 @@ END:X-BAZ
             <ul>
               <li>
                 <xref target="RFC5545" section="3.2.1" sectionFormat="comma">ALTREP</xref>
-              </li>
-              <li>
-                <xref target="RFC9073" section="5.3" sectionFormat="comma">DERIVED</xref>
               </li>
               <li>
                 <xref target="RFC5545" section="3.2.10" sectionFormat="comma">LANGUAGE</xref>
