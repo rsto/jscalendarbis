@@ -2932,7 +2932,7 @@ END:VALARM
               </tr>
             </tbody>
           </table>
-          <t>The string values of the FREQ, WKST, RSCALE convert to lowercase.  The UNTIL part converts to a LocalDateTime value relative to the timezone of the target object.</t>
+          <t>The property definitions of the <xref target="I-D.ietf-calext-jscalendarbis" section="3.3.3" sectionFormat="parens">RecurrenceRule object</xref> define how each RRULE part converts, such as which values convert to lowercase and how a BYDAY value converts to an NDay object.  The UNTIL part converts to a LocalDateTime value relative to the timezone of the target object.</t>
           <t>The following example illustrates how to convert the RRULE property:</t>
           <figure anchor="test_prop_rrule">
             <name>Example for converting the RRULE property</name>
@@ -3524,7 +3524,7 @@ URL:https://example.com/myurl
               <td>RRULE</td>
               <td>
                 <t>
-                  <xref target="i2j_prop_rrule" format="counter"/>
+                  <xref target="i2j_prop_rrule" format="counter"/>, and remarks below
                 </t>
               </td>
             </tr>
@@ -3625,6 +3625,9 @@ URL:https://example.com/myurl
           </li>
           <li>
             <t>The entries in the "recurrenceOverrides" property convert depending on the contents of the PatchObject value. A PatchObject that sets the "excluded" member to "true" converts to an EXDATE property for the date-time of that recurrence instance. An empty PatchObject converts to an RDATE property. A PatchObject for which the "iCalendar/convertedProperties" property contains an entry with name "rdate" also converts to an RDATE property. If that entry has the "valueType" property set to "period", then the RDATE value is of type PERIOD: the recurrence id is the period start, and the PatchObject's "duration" property, or the calendar object's "duration" property if the PatchObject does not set one, is the period duration. Any other PatchObject converts to a recurrence override component in the embedding VCALENDAR component.</t>
+          </li>
+          <li>
+            <t>The "until" property of the "recurrenceRule" property converts to an UNTIL value of the same form as the DTSTART property value; if the DTSTART property value is of the form DATE WITH LOCAL TIME AND TIME ZONE REFERENCE, then the UNTIL value <bcp14>MUST</bcp14> be of the form DATE WITH UTC TIME instead.</t>
           </li>
           <li>
             <t>The "sentBy" property converts to the SENT-BY parameter of the ORGANIZER property with a "mailto" URI value. See <xref target="RFC6068" section="2">the "mailto" URI Scheme specification</xref> for how to percent-encode internationalized email addresses.</t>
