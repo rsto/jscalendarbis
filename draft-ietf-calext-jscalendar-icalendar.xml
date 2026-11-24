@@ -1355,7 +1355,7 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
               <tr>
                 <td>CUTYPE</td>
                 <td>kind</td>
-                <td>"ROOM" converts to "location"</td>
+                <td>See below</td>
               </tr>
               <tr>
                 <td>DELEGATED-FROM</td>
@@ -1476,6 +1476,39 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
             </tbody>
           </table>
           <t>These values are defined in <xref target="RFC5545" section="3.2.16">iCalendar</xref>.</t>
+          <t>The CUTYPE parameter values convert to the "kind" property as follows:</t>
+          <table>
+            <name>Converting the CUTYPE parameter to the kind property</name>
+            <thead>
+              <tr>
+                <th>CUTYPE</th>
+                <th>kind</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>INDIVIDUAL</td>
+                <td>individual</td>
+              </tr>
+              <tr>
+                <td>GROUP</td>
+                <td>group</td>
+              </tr>
+              <tr>
+                <td>RESOURCE</td>
+                <td>resource</td>
+              </tr>
+              <tr>
+                <td>ROOM</td>
+                <td>location</td>
+              </tr>
+              <tr>
+                <td>UNKNOWN</td>
+                <td>(not set)</td>
+              </tr>
+            </tbody>
+          </table>
+          <t>These values are defined in <xref target="RFC5545" section="3.2.3">iCalendar</xref>.</t>
           <t>The following example illustrates how to convert the ATTENDEE property:</t>
           <figure anchor="test_prop_attendee">
             <name>Converting the ATTENDEE property</name>
