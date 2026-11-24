@@ -60,6 +60,7 @@
         <name>Scope and Goals</name>
         <t>This document outlines how to convert between the <xref target="RFC5545">iCalendar</xref> and <xref target="I-D.ietf-calext-jscalendarbis"/> data formats.  It describes which elements are common to both, but also highlights where the two formats differ. For each common element, it defines a conversion rule and includes an example of how to convert that element. All iCalendar and JSCalendar elements currently registered at IANA are in scope, but not all of these elements are common to both formats.</t>
         <t>For elements that have no counterpart in the other format, it is the goal of this document to define how to preserve them during conversion, but in general it is not the goal to achieve this by defining new standard elements. However, this document does update the definitions of some iCalendar elements where their JSCalendar counterparts more accurately model current practices and standards, such as formatting colors and geospatial coordinates. In addition, this document defines conversion-specific iCalendar and JSCalendar elements to preserve elements that have no equivalent in the other format. See <xref target="def_ical_prop_jsprop"/> for updates to iCalendar, and <xref target="def_jscal_prop_icalendar"/> for JSCalendar. <xref target="appendix_discrepancies"/> further outlines the discrepancies between the two formats.</t>
+        <t>This document aims to define conversion rules so that multiple implementations produce the same output for the same input. Still, this goal is aspirational, and implementations need to be prepared to handle ambiguity and unexpected elements in either format. Any conversion that neither this document nor a future document specifies is implementation-specific.</t>
       </section>
       <section>
         <name>How to Read the Examples</name>
@@ -213,7 +214,7 @@ SUMMARY:hello
       <section>
         <name>Lossy versus Lossless Conversion</name>
         <t>This document outlines how to convert iCalendar elements to JSCalendar elements, and the other way round. Many of these can be represented by standard elements in both formats, meaning that they are registered in the iCalendar and JSCalendar IANA registries and differ from the special-purpose elements introduced in <xref target="def_ical"/> and <xref target="def_jscal"/>. Still, a number of elements in either format have no standard counterpart in the other. When converting between iCalendar and JSCalendar, implementations <bcp14>MAY</bcp14> choose to only convert elements that have standard element in the target format, or aim to preserve as many elements as possible.</t>
-        <t>When to choose between lossy and lossless conversion is implementation-specific. For example:</t>
+        <t>For example:</t>
         <ul>
           <li>For lossy conversion, an implementation that internally stores calendar data in JSCalendar format might only want to convert to a subset of iCalendar elements for <xref target="RFC6047">iMIP scheduling</xref>. In this case, it might not make use any of the conversion-specific iCalendar properties introduced in <xref target="def_ical"/>.</li>
           <li>For lossless conversion, an implementation that internally stores calendar data in iCalendar format might want to convert without loss to JSCalendar when updating calendar events with <xref target="I-D.ietf-jmap-calendars">JMAP</xref>. For that, it can use the conversion-specific properties defined in <xref target="def_jscal"/>.</li>
@@ -232,7 +233,7 @@ SUMMARY:hello
         </section>
         <section anchor="i2j_comp_vcalendar">
           <name>iCalendar Objects</name>
-          <t><xref target="RFC5545" section="3.4"/> allows for an iCalendar stream to contain one or more iCalendar objects.  In contrast, this specification only defines conversion for streams consisting of a single iCalendar object. Converting streams of multiple iCalendar objects is implementation-specific.  All following sections of this document use the terms "iCalendar object" and "VCALENDAR component" interchangeably.</t>
+          <t><xref target="RFC5545" section="3.4"/> allows for an iCalendar stream to contain one or more iCalendar objects.  In contrast, this specification only defines conversion for streams consisting of a single iCalendar object. All following sections of this document use the terms "iCalendar object" and "VCALENDAR component" interchangeably.</t>
           <t>The <xref target="RFC5545" section="3.4" sectionFormat="parens">VCALENDAR component</xref> converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="2.3" sectionFormat="parens">Group object</xref>.  Its properties convert as follows:</t>
           <table>
             <name>Properties of the VCALENDAR component</name>
@@ -380,7 +381,7 @@ SUMMARY:hello
           </table>
           <t>Any other component that converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="2.1" sectionFormat="parens">calendar object</xref>, as defined in this or another specification, also converts to an entry in the Group object's "entries" property.</t>
           <t>Other properties or components <bcp14>MAY</bcp14> be converted to the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref> of the Group object.</t>
-          <t>The order of elements in the "entries" property is implementation-specific, e.g. entries need not be in the same order as their source components in the iCalendar object.</t>
+          <t>The entries need not be in the same order as their source components in the iCalendar object.</t>
           <t>The following example illustrates how to convert the VCALENDAR component:</t>
           <figure anchor="test_comp_vcalendar">
             <name>Converting the VCALENDAR component</name>
@@ -511,10 +512,10 @@ END:VCALENDAR
         <section anchor="i2j_ids">
           <name>JSCalendar Ids</name>
           <t>JSCalendar generally uses JSON objects to represent a collection of same-typed values. The keys are of type <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.1" sectionFormat="parens">Id</xref>, the values are JSCalendar object types.  If an iCalendar element converts to a value in such a collection then an implementation needs to choose an identifier as key.</t>
-          <t>If the <xref target="def_ical_param_jsid">JSID parameter</xref> or <xref target="def_ical_prop_jsid">JSID property</xref> is set on a property or component, then its value <bcp14>MUST</bcp14> be used as key when converting that element from iCalendar to JSCalendar.  In the absence of the JSID parameter or property, key generation is implementation-specific.</t>
+          <t>If the <xref target="def_ical_param_jsid">JSID parameter</xref> or <xref target="def_ical_prop_jsid">JSID property</xref> is set on a property or component, then its value <bcp14>MUST</bcp14> be used as key when converting that element from iCalendar to JSCalendar.</t>
           <t>Some sections later in this document describe key generation schemes for specific iCalendar elements by making use of <xref target="RFC9562" section="5.5" sectionFormat="parens">UUID Version 5 with SHA1 hash</xref>. The Namespace ID to generate such keys is "7f1e1965-ae73-4454-b088-232c90730ce2". The name to generate such keys is the property value as it appears in the iCalendar data after unfolding content lines, without decoding escaped characters or encoded binary data. These key generation schemes are not mandatory, nor is making use of that particular Namespace ID when using UUID Version 5 (UUIDv5) as keys.</t>
           <t>Irrespective of the key generation scheme, all keys <bcp14>MUST</bcp14> be valid according to the definition of the Id type. For consistency, keys <bcp14>SHOULD</bcp14> be stable such that converting the same iCalendar data to JSCalendar multiple times produces the same keys.</t>
-          <t>When converting from JSCalendar to iCalendar, a JSCalendar object may convert to an iCalendar component that requires a UID property. Implementations <bcp14>MUST</bcp14> set the UID property in that component. How to choose its value is implementation-specific. One approach is the following: if the object's <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref> contains a UID property, then use its value; otherwise, if the object's key is a <xref target="RFC9562">UUID</xref>, then use the key; otherwise, generate a new unique identifier and set the <xref target="def_ical_prop_jsid">JSID property</xref> to the key.</t>
+          <t>When converting from JSCalendar to iCalendar, a JSCalendar object may convert to an iCalendar component that requires a UID property. Implementations <bcp14>MUST</bcp14> set the UID property in that component. One approach is the following: if the object's <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref> contains a UID property, then use its value; otherwise, if the object's key is a <xref target="RFC9562">UUID</xref>, then use the key; otherwise, generate a new unique identifier and set the <xref target="def_ical_prop_jsid">JSID property</xref> to the key.</t>
         </section>
         <section anchor="i2j_tzid">
           <name>Timezone identifiers</name>
@@ -522,8 +523,8 @@ END:VCALENDAR
           <t>If the property value type is <xref target="RFC5545" section="3.3.4" sectionFormat="parens">DATE</xref> or  <xref target="RFC5545" section="3.3.5" sectionFormat="parens">DATE-TIME in FORM #1: DATE WITH LOCAL TIME</xref> then the timezone is not set in JSCalendar.</t>
           <t>If the property value type is <xref target="RFC5545" section="3.3.5" sectionFormat="parens">DATE-TIME in FORM #2: DATE WITH UTC TIME</xref> then the timezone identifier is "Etc/UTC" in JSCalendar.</t>
           <t>If the property value type is <xref target="RFC5545" section="3.3.5" sectionFormat="parens">DATE-TIME in FORM #3: DATE WITH LOCAL TIME AND TIME ZONE REFERENCE</xref> then the timezone identifier is determined by the TZID parameter value as follows:</t>
-          <t>If the TZID parameter value is equal to a name in the <xref target="TZDB">IANA Time Zone Database</xref> then the timezone identifier is that verbatim name. Otherwise, how to convert the TZID parameter value is implementation-specific: software libraries such as the <eref target="https://icu.unicode.org/">International Components for Unicode</eref> support converting Microsoft time zone names to IANA time zone identifiers. Alternatively, an implementation might determine the name of an IANA time zone which has identical time zone rules over the time span of the calendar object.</t>
-          <t>A <xref target="RFC5545" section="3.6.5" sectionFormat="parens">VTIMEZONE component</xref> whose TZID property value is a name in the <xref target="TZDB">IANA Time Zone Database</xref> does not convert to JSCalendar. If its time zone rules differ from those of the IANA time zone of that name, then how to convert it is implementation-specific.</t>
+          <t>If the TZID parameter value is equal to a name in the <xref target="TZDB">IANA Time Zone Database</xref> then the timezone identifier is that verbatim name. Otherwise, implementations might use software libraries such as the <eref target="https://icu.unicode.org/">International Components for Unicode</eref> that support converting Microsoft time zone names to IANA time zone identifiers. Alternatively, an implementation might determine the name of an IANA time zone which has identical time zone rules over the time span of the calendar object.</t>
+          <t>A <xref target="RFC5545" section="3.6.5" sectionFormat="parens">VTIMEZONE component</xref> whose TZID property value is a name in the <xref target="TZDB">IANA Time Zone Database</xref> does not convert to JSCalendar.</t>
           <t>Implementations <bcp14>MAY</bcp14> preserve a TZID parameter set to a non-IANA timezone identifier and its related VTIMEZONE by use of the "convertedProperties" and "components" properties in the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref> of the calendar object or of its enclosing Group object, but <bcp14>MUST NOT</bcp14> expect other implementations to consider them when processing the calendar object.</t>
         </section>
         <section anchor="i2j_date_time">
@@ -1333,7 +1334,7 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
           <t>
             The <xref target="RFC5545" section="3.8.4.1" sectionFormat="parens">ATTENDEE property</xref> converts to a <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.6" sectionFormat="parens">Participant object</xref>.  The converted object is set in the "participants" property of its target object. The property value converts to the Participant object's "calendarAddress" property.</t>
           <t>The key of the Participant object <bcp14>MUST</bcp14> be the value of the <xref target="def_ical_param_jsid">JSID parameter</xref>, if set. If no JSID parameter is set, then the key <bcp14>MAY</bcp14> be the UUIDv5 generated from the property value (see <xref target="i2j_ids"/>). When converting to iCalendar, implementations <bcp14>MAY</bcp14> omit setting the JSID parameter if the key matches the UUIDv5 of the ATTENDEE property value and the key is not part of a JSON pointer in any JSPTR parameter value.</t>
-          <t>An ATTENDEE property and a PARTICIPANT component in the same iCalendar component convert to the same Participant object, if their converted "calendarAddress" property values are equal. How to deal with conflicting values, including different JSID values, is implementation-specific.</t>
+          <t>An ATTENDEE property and a PARTICIPANT component in the same iCalendar component convert to the same Participant object, if their converted "calendarAddress" property values are equal.</t>
           <t>The ATTENDEE property parameters convert as follows:</t>
           <table>
             <name>Parameters of the ATTENDEE property</name>
@@ -1401,10 +1402,10 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
           <t>The "email" and "sentBy" properties of the Participant object, as well as the "sentBy" property of a calendar object, are email addresses as defined in <xref target="I-D.ietf-calext-jscalendarbis" section="1.6.3"/>. Their equivalent iCalendar parameters convert as follows:</t>
           <ul>
             <li>
-              <t>The EMAIL parameter value is an email address. If it is a valid email address as defined for JSCalendar, then it converts to the "email" property without modification. How to convert other EMAIL parameter values is implementation-specific. Implementations <bcp14>MAY</bcp14> preserve them in the <xref target="def_jscal_prop_icalendar">iCalendar property</xref>. The "email" property converts to the EMAIL parameter without modification. In particular, iCalendar parameter values may contain non-ASCII characters (<xref target="RFC5545" section="3.1"/>), so internationalized email addresses need not be percent-encoded or otherwise transformed.</t>
+              <t>The EMAIL parameter value is an email address. If it is a valid email address as defined for JSCalendar, then it converts to the "email" property without modification. Implementations <bcp14>MAY</bcp14> preserve them in the <xref target="def_jscal_prop_icalendar">iCalendar property</xref>. The "email" property converts to the EMAIL parameter without modification. In particular, iCalendar parameter values may contain non-ASCII characters (<xref target="RFC5545" section="3.1"/>), so internationalized email addresses need not be percent-encoded or otherwise transformed.</t>
             </li>
             <li>
-              <t>The SENT-BY parameter value is a calendar user address in the form of a URI. If that URI is a <xref target="RFC6068">"mailto" URI</xref> that contains exactly one "addr-spec" and no header fields, and if that "addr-spec", after decoding any percent-encoded octets as defined in <xref target="RFC6068" section="2"/>, is a valid email address as defined for JSCalendar, then the SENT-BY parameter converts to the "sentBy" property. The property value is that decoded "addr-spec". How to convert other SENT-BY parameter values is implementation-specific. Implementations <bcp14>MAY</bcp14> preserve them in the <xref target="def_jscal_prop_icalendar">iCalendar property</xref>.</t>
+              <t>The SENT-BY parameter value is a calendar user address in the form of a URI. If that URI is a <xref target="RFC6068">"mailto" URI</xref> that contains exactly one "addr-spec" and no header fields, and if that "addr-spec", after decoding any percent-encoded octets as defined in <xref target="RFC6068" section="2"/>, is a valid email address as defined for JSCalendar, then the SENT-BY parameter converts to the "sentBy" property. The property value is that decoded "addr-spec". Implementations <bcp14>MAY</bcp14> preserve them in the <xref target="def_jscal_prop_icalendar">iCalendar property</xref>.</t>
             </li>
           </ul>
           <t>The PARTSTAT parameter values convert to the "participationStatus" property as follows:</t>
@@ -1649,7 +1650,7 @@ CATEGORIES:Meeting
         <section anchor="i2j_prop_class">
           <name>CLASS</name>
           <t>The <xref target="RFC5545" section="3.8.1.3" sectionFormat="parens">CLASS property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.3" sectionFormat="parens">"privacy" property</xref> of its target object.</t>
-          <t>JSCalendar requires all recurrences of a calendar object to have the same "privacy" property value, including recurrence instances for which no base object is given. In contrast, iCalendar supports setting different CLASS property values for recurrence overrides. How to choose the effective CLASS property value for all recurrences when converting to JSCalendar is implementation-specific. One option is to choose the most restrictive classification in any recurrence of a calendar object, where "CONFIDENTIAL" is the most restrictive, then "PRIVATE" or an unknown classification, and "PUBLIC" or the absent CLASS property is the least restrictive.</t>
+          <t>JSCalendar requires all recurrences of a calendar object to have the same "privacy" property value, including recurrence instances for which no base object is given. In contrast, iCalendar supports setting different CLASS property values for recurrence overrides. When converting to JSCalendar, one CLASS property value thus has to be chosen for all recurrences. One option is to choose the most restrictive classification in any recurrence of a calendar object, where "CONFIDENTIAL" is the most restrictive, then "PRIVATE" or an unknown classification, and "PUBLIC" or the absent CLASS property is the least restrictive.</t>
           <t>The CLASS property values convert as follows:</t>
           <table>
             <name>Values of the CLASS property</name>
@@ -2500,7 +2501,7 @@ END:VLOCATION
           </table>
           <t>These parameters are defined in <xref target="RFC5545">iCalendar</xref>: CN (Section <xref target="RFC5545" section="3.2.2" sectionFormat="bare"/>), SENT-BY (Section <xref target="RFC5545" section="3.2.18" sectionFormat="bare"/>); and in <xref target="RFC7986">New Properties for iCalendar</xref>: EMAIL (Section <xref target="RFC7986" section="6.2" sectionFormat="bare"/>).</t>
           <t>The EMAIL and SENT-BY parameters convert as described in <xref target="i2j_prop_attendee"/>. In addition, the SENT-BY parameter converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.5" sectionFormat="parens">"sentBy" property</xref> of its target object.</t>
-          <t>An ORGANIZER property, an ATTENDEE property, and a PARTICIPANT component in the same iCalendar component all convert to the same Participant object, if their converted "calendarAddress" property values are equal. How to deal with conflicting property values, including different JSID values, is implementation-specific.</t>
+          <t>An ORGANIZER property, an ATTENDEE property, and a PARTICIPANT component in the same iCalendar component all convert to the same Participant object, if their converted "calendarAddress" property values are equal.</t>
           <t>The following example illustrates how to convert the ORGANIZER property:</t>
           <figure anchor="test_prop_organizer">
             <name>Converting the ORGANIZER property</name>
@@ -3087,7 +3088,7 @@ STYLED-DESCRIPTION;VALUE=TEXT;FMTTYPE=text/html:
             The <xref target="RFC5545" section="3.8.1.12" sectionFormat="parens">SUMMARY property</xref> in a component other than PARTICIPANT converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.1" sectionFormat="parens">"title" property</xref> of its target object. If the LANGUAGE parameter is set, then the parameter value converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.9" sectionFormat="parens">"locale" property</xref> of the same object.
           </t>
           <t>
-            The <xref target="RFC5545" section="3.8.1.12" sectionFormat="parens">SUMMARY property</xref> in a PARTICIPANT component converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.6" sectionFormat="parens">"name" property</xref> of the Participant object. If the Participant object also converts from an ATTENDEE property with a CN parameter, then which of the two values converts to the "name" property is implementation-specific. The other value is ignored.
+            The <xref target="RFC5545" section="3.8.1.12" sectionFormat="parens">SUMMARY property</xref> in a PARTICIPANT component converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.6" sectionFormat="parens">"name" property</xref> of the Participant object. If the Participant object also converts from an ATTENDEE property with a CN parameter, then only one of the two values converts to the "name" property. The other value is ignored.
           </t>
           <t>The following example illustrates how to convert the SUMMARY property in a VEVENT component:</t>
           <figure anchor="test_prop_summary">
@@ -3353,7 +3354,7 @@ URL:https://example.com/myurl
           <li>Otherwise, it <bcp14>MUST</bcp14> be DATE WITH LOCAL TIME if the "timeZone" property is not set.</li>
           <li>Otherwise, it <bcp14>MUST</bcp14> be DATE WITH LOCAL TIME AND TIME ZONE REFERENCE.</li>
         </ol>
-        <t>If a property in the iCalendar component has a TZID parameter, then the VCALENDAR component <bcp14>MUST</bcp14> contain a VTIMEZONE component for that TZID parameter value (see <xref target="RFC5545" section="3.6.5"/>). How to generate the VTIMEZONE component is implementation-specific. If the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref> of the calendar object or one of its enclosing Groups preserved a VTIMEZONE component for that TZID, then implementations <bcp14>MAY</bcp14> use it.</t>
+        <t>If a property in the iCalendar component has a TZID parameter, then the VCALENDAR component <bcp14>MUST</bcp14> contain a VTIMEZONE component for that TZID parameter value (see <xref target="RFC5545" section="3.6.5"/>). If the <xref target="def_jscal_prop_icalendar">"iCalendar" property</xref> of the calendar object or one of its enclosing Groups preserved a VTIMEZONE component for that TZID, then implementations <bcp14>MAY</bcp14> use it.</t>
         <t>
             The following table defines how to convert the properties that are common to all calendar objects. <xref target="j2i_event_props"/> later in this section defines how to convert properties specific to Event objects.</t>
         <table>
@@ -3631,7 +3632,7 @@ URL:https://example.com/myurl
         <t>Remarks:</t>
         <ul>
           <li>
-            <t>The "descriptionContentType" property value determines if the "description" property converts to the DESCRIPTION or STYLED-DESCRIPTION property. A description of content type "text/plain" converts to the DESCRIPTION property. Any other description converts to the STYLED-DESCRIPTION property, in which case a plain text version of the rich-text description <bcp14>MAY</bcp14> be set additionally in the DESCRIPTION property, having its DERIVED parameter set to "TRUE". How to derive plain text from rich-text is implementation-specific.</t>
+            <t>The "descriptionContentType" property value determines if the "description" property converts to the DESCRIPTION or STYLED-DESCRIPTION property. A description of content type "text/plain" converts to the DESCRIPTION property. Any other description converts to the STYLED-DESCRIPTION property, in which case a plain text version of the rich-text description <bcp14>MAY</bcp14> be set additionally in the DESCRIPTION property, having its DERIVED parameter set to "TRUE".</t>
           </li>
           <li>
             <t>The "privacy" property converts to the CLASS property of the main component and all recurrence overrides. If the property value is "private" and the <xref target="def_jscal_prop_icalendar">iCalendar/properties property</xref> contains a CLASS property with an unknown value, then implementations <bcp14>MAY</bcp14> convert that preserved property rather than setting the "PRIVATE" classification. In any case they <bcp14>MUST NOT</bcp14> set more than one CLASS property per calendar component.</t>
@@ -3695,10 +3696,10 @@ URL:https://example.com/myurl
         <t>Remarks:</t>
         <ul>
           <li>
-            <t>If the DTSTART property has value type DATE, then a "duration" property value of "P1D" need not convert to the DTEND or DURATION property. If the "duration" property is not set or its value is zero, then whether to set the DTEND or DURATION property is implementation-specific.</t>
+            <t>If the DTSTART property has value type DATE, then a "duration" property value of "P1D" need not convert to the DTEND or DURATION property.</t>
           </li>
           <li>
-            <t>The "duration" property converts to the DTEND property if the "endTimeZone" property is set. Otherwise, whether it converts to the DTEND or the DURATION property is implementation-specific. If the event recurs and the duration contains days or weeks, then implementations <bcp14>SHOULD</bcp14> use the DURATION property.</t>
+            <t>The "duration" property converts to the DTEND property if the "endTimeZone" property is set. If the event recurs and the duration contains days or weeks, then implementations <bcp14>SHOULD</bcp14> use the DURATION property.</t>
           </li>
         </ul>
         <t>Other properties <bcp14>MAY</bcp14> be converted to <xref target="def_ical_prop_jsprop">JSPROP properties</xref> in the iCalendar component to which the calendar object converts.</t>
@@ -3830,13 +3831,13 @@ URL:https://example.com/myurl
         <t>Remarks:</t>
         <ul>
           <li>
-            <t>The "descriptionContentType" property value determines if the "description" property converts to the DESCRIPTION or STYLED-DESCRIPTION property. A description of content type "text/plain" converts to the DESCRIPTION property. Any other description converts to the STYLED-DESCRIPTION property, in which case a plain text version of the rich-text description <bcp14>MAY</bcp14> be set additionally in the DESCRIPTION property, having its DERIVED parameter set to "TRUE". How to derive plain text from rich-text is implementation-specific.</t>
+            <t>The "descriptionContentType" property value determines if the "description" property converts to the DESCRIPTION or STYLED-DESCRIPTION property. A description of content type "text/plain" converts to the DESCRIPTION property. Any other description converts to the STYLED-DESCRIPTION property, in which case a plain text version of the rich-text description <bcp14>MAY</bcp14> be set additionally in the DESCRIPTION property, having its DERIVED parameter set to "TRUE".</t>
           </li>
           <li>
-            <t>The "prodId" property value of the Group object is expected to be equal to the "prodId" property value of all the Group entries. They all convert to the same, single PRODID property in the VCALENDAR component. How to convert unequal "prodId" property values is implementation-specific. </t>
+            <t>The "prodId" property value of the Group object is expected to be equal to the "prodId" property value of all the Group entries. They all convert to the same, single PRODID property in the VCALENDAR component.</t>
           </li>
           <li>
-            <t>The "method" property value in all the Group entries is expected to be equal. How to convert entries with unequal "method" property values is implementation-specific.</t>
+            <t>The "method" property value in all the Group entries is expected to be equal.</t>
           </li>
         </ul>
         <t>Other properties <bcp14>MAY</bcp14> be converted to <xref target="def_ical_prop_jsprop">JSPROP properties</xref> in the VCALENDAR component.</t>
@@ -3844,7 +3845,7 @@ URL:https://example.com/myurl
       <section anchor="j2i_link">
         <name>Link</name>
         <t>The <xref target="I-D.ietf-calext-jscalendarbis" section="1.5.11" sectionFormat="parens">Link object</xref> in the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.8" sectionFormat="parens">"links" property</xref> of any JSCalendar object converts to either an <xref target="i2j_prop_attach">ATTACH property</xref> or an <xref target="i2j_prop_image">IMAGE property</xref>, or a <xref target="i2j_prop_link">LINK property</xref>, or an <xref target="i2j_prop_url">URL property</xref>.</t>
-        <t>Which iCalendar property to choose is implementation-specific. As a guideline, stopping at the first matching criteria:</t>
+        <t>As a guideline, stopping at the first matching criterion:</t>
         <ol>
           <li>Choose ATTACH if the "rel" property value is "enclosure".</li>
           <li>Choose IMAGE if the "rel" property value is "icon".</li>
@@ -3910,7 +3911,7 @@ URL:https://example.com/myurl
       </section>
       <section anchor="j2i_location">
         <name>Location</name>
-        <t>The <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.5" sectionFormat="parens">Location object</xref> converts to either a <xref target="i2j_prop_location">LOCATION</xref> or <xref target="i2j_prop_geo">GEO</xref> property, or it converts to a <xref target="i2j_comp_vlocation">VLOCATION component</xref>. Which iCalendar element to choose is implementation-specific. As a guideline:</t>
+        <t>The <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.5" sectionFormat="parens">Location object</xref> converts to either a <xref target="i2j_prop_location">LOCATION</xref> or <xref target="i2j_prop_geo">GEO</xref> property, or it converts to a <xref target="i2j_comp_vlocation">VLOCATION component</xref>. As a guideline:</t>
         <ul>
           <li>If the "iCalendar" property on the Location object is set, or the parent JSCalendar object contains an entry for that Location in the "convertedProperties" property of its "iCalendar" property, then convert the object back to the named iCalendar component or property.</li>
           <li>Choose LOCATION if the key of the Location object in the "locations" property matches the <xref target="I-D.ietf-calext-jscalendarbis" section="3.2.6" sectionFormat="parens">"mainLocationId" property</xref>, or if the "name" property is set and the iCalendar component does not already contain a LOCATION property. The "name" property converts to the LOCATION property value.</li>
@@ -3975,7 +3976,7 @@ URL:https://example.com/myurl
             <t>It converts to a PARTICIPANT component if any of the Participant properties in <xref target="j2i_participant_to_comp"/> convert to it. The "name" property converts to the SUMMARY property of the PARTICIPANT component only if the Participant object does not convert to an ATTENDEE property. If the Participant object also converts to an ATTENDEE property, then the CALENDAR-ADDRESS property value of the PARTICIPANT component <bcp14>MUST</bcp14> match the ATTENDEE property value.</t>
           </li>
         </ul>
-        <t>The following Participant properties convert to parameters of the ATTENDEE property. How to convert these if the Participant "calendarAddress" property is not set is implementation-specific.</t>
+        <t>The following Participant properties convert to parameters of the ATTENDEE property.</t>
         <table>
           <name>Properties of the Participant object that convert to the ATTENDEE property</name>
           <thead>
