@@ -1193,23 +1193,22 @@ jsversion = 1*DIGIT "." 1*DIGIT
                 <dd>a non-human resource other than a location, such as a projector</dd>
               </dl>
             </dd>
-            <dt>roles: String[Boolean] (optional).</dt>
+            <dt>role: String (optional; default: "required").</dt>
             <dd>
-              <t>This is a set of roles that this participant fulfills. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set and at least one role <bcp14>MUST</bcp14> be specified for the participant. The keys in the set <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>):</t>
+              <t>This is the role of the participant in the calendar object. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set. The value <bcp14>MUST</bcp14> be one of the following values, another value registered in the IANA "JSCalendar Enum Values" registry, or a vendor-specific value (see <xref target="vendor-specific-extensions"/>). Any value the implementation does not understand should be treated as "required".</t>
               <dl newline="false">
-                <dt>owner:</dt>
-                <dd>The participant is an owner of the calendar object. This signifies they can make changes that affect all participants (for example, rescheduling the calendar object, adding and removing participants and roles). The presence of this role is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref> for an example of making use of this role.</dd>
-                <dt>optional:</dt>
-                <dd>The participant's involvement with the calendar object is optional.</dd>
-                <dt>informational:</dt>
-                <dd>The participant is copied for informational reasons and is not expected to participate.</dd>
                 <dt>chair:</dt>
                 <dd>The participant is in charge of the calendar object when it occurs.</dd>
                 <dt>required:</dt>
                 <dd>The participation of the participant is required.</dd>
+                <dt>optional:</dt>
+                <dd>The participant's involvement with the calendar object is optional.</dd>
+                <dt>informational:</dt>
+                <dd>The participant is copied for informational reasons and is not expected to participate.</dd>
               </dl>
-              <t>The value for each key in the map <bcp14>MUST</bcp14> be true. It is expected that no more than one of the roles "required", "optional", "informational" and "chair" be present; if more than one are given, they take precedence as follows: "chair" over "required", either of them over "optional", all of them over "informational". Roles that are unknown to the implementation <bcp14>MUST</bcp14> be preserved.</t>
             </dd>
+            <dt>isOwner: Boolean (optional; default: false).</dt>
+            <dd>If true, the participant is an owner of the calendar object. This signifies they can make changes that affect all participants (for example, rescheduling the calendar object, adding and removing participants and changing their roles). This is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref> for an example of making use of this property. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set.</dd>
             <dt>participationStatus: String (optional; default: "needs-action").</dt>
             <dd>
               <t>This is the participation status, if any, of this participant. If this property is set, then the "calendarAddress" property <bcp14>MUST</bcp14> be set.</t>
@@ -1687,10 +1686,8 @@ jsversion = 1*DIGIT "." 1*DIGIT
       "name": "Zoe Zelda",
       "calendarAddress": "mailto:zoe@foobar.example.com",
       "participationStatus": "accepted",
-      "roles": {
-        "owner": true,
-        "chair": true
-      }
+      "role": "chair",
+      "isOwner": true
     }
   },
   "recurrenceOverrides": {
@@ -2091,6 +2088,20 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dl spacing="compact">
               <dt>Property Name</dt>
               <dd>recurrenceRules</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="appendix-obsolete-properties"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>obsolete</dd>
+              <dt>Since Version</dt>
+              <dd>1.0</dd>
+              <dt>Until Version</dt>
+              <dd>1.0</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>roles</dd>
               <dt>Reference/Description</dt>
               <dd>
                 <xref target="appendix-obsolete-properties"/>
@@ -3061,17 +3072,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dt>Since Version</dt>
               <dd>1.0</dd>
             </dl>
-            <!-- roles -->
-            <dl spacing="compact">
-              <dt>Property Name</dt>
-              <dd>roles</dd>
-              <dt>Reference/Description</dt>
-              <dd>
-                <xref target="prop-participants"/>
-              </dd>
-              <dt>Since Version</dt>
-              <dd>1.0</dd>
-            </dl>
             <!-- rscale -->
             <dl spacing="compact">
               <dt>Property Name</dt>
@@ -3355,6 +3355,24 @@ jsversion = 1*DIGIT "." 1*DIGIT
             </dl>
             <dl spacing="compact">
               <dt>Property Name</dt>
+              <dd>isOwner</dd>
+              <dt>Property Type</dt>
+              <dd>Boolean</dd>
+              <dt>Property Context</dt>
+              <dd>Participant</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="prop-participants"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>No</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
               <dd>mainLocationId</dd>
               <dt>Property Type</dt>
               <dd>Id</dd>
@@ -3440,6 +3458,24 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <dd>1.0</dd>
               <dt>Until Version</dt>
               <dd>1.0</dd>
+              <dt>Is Per-User</dt>
+              <dd>No</dd>
+            </dl>
+            <dl spacing="compact">
+              <dt>Property Name</dt>
+              <dd>role</dd>
+              <dt>Property Type</dt>
+              <dd>String</dd>
+              <dt>Property Context</dt>
+              <dd>Participant</dd>
+              <dt>Reference/Description</dt>
+              <dd>
+                <xref target="prop-participants"/>
+              </dd>
+              <dt>Intended Usage</dt>
+              <dd>common</dd>
+              <dt>Since Version</dt>
+              <dd>2.0</dd>
               <dt>Is Per-User</dt>
               <dd>No</dd>
             </dl>
@@ -4096,11 +4132,38 @@ jsversion = 1*DIGIT "." 1*DIGIT
         </section>
         <section anchor="iana-enum-value-roles-changes">
           <name>Changes to the "JSCalendar Enum Values for roles (Context: Participant)" Registry</name>
+          <t>IANA will rename the sub-registry to "JSCalendar Enum Values for role (Context: Participant)" and change its Property Name to "role".</t>
           <t>For the entry with enum value "attendee", IANA will set the following fields:</t>
           <dl spacing="compact">
             <dt>Reference</dt>
             <dd>
-              <xref target="appendix-updated-properties"/>
+              <xref target="appendix-obsolete-properties"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>obsolete</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd>1.0</dd>
+          </dl>
+          <t>For the entry with enum value "contact", IANA will set the following fields:</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="appendix-obsolete-properties"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>obsolete</dd>
+            <dt>Since Version</dt>
+            <dd>1.0</dd>
+            <dt>Until Version</dt>
+            <dd>1.0</dd>
+          </dl>
+          <t>For the entry with enum value "owner", IANA will set the following fields:</t>
+          <dl spacing="compact">
+            <dt>Reference</dt>
+            <dd>
+              <xref target="appendix-obsolete-properties"/>
             </dd>
             <dt>Intended Usage</dt>
             <dd>obsolete</dd>
@@ -4121,6 +4184,23 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>1.0</dd>
             <dt>Until Version</dt>
             <dd/>
+          </dl>
+          <t>IANA will add the following entry:</t>
+          <dl spacing="compact">
+            <dt>Enum Value</dt>
+            <dd>required</dd>
+            <dt>Reference or Description</dt>
+            <dd>
+              <xref target="prop-participants"/>
+            </dd>
+            <dt>Intended Usage</dt>
+            <dd>common</dd>
+            <dt>Since Version</dt>
+            <dd>2.0</dd>
+            <dt>Until Version</dt>
+            <dd/>
+            <dt>Change Controller</dt>
+            <dd>IETF</dd>
           </dl>
         </section>
         <section anchor="iana-enum-value-scheduleAgent-changes">
@@ -4406,6 +4486,18 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <ul>
                 <li>It stated: "Multiple participants may partake in the event at multiple locations."</li>
                 <li>It now states: "Multiple participants may partake in the event."</li>
+              </ul>
+              <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.roles -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.roles</strong>:</dt>
+            <dd>
+              <t>This is incompatible with the iCalendar <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>, which is single-valued and only allowed to be set once on an ATTENDEE property. The newly defined single-valued "role" property replaces it, and the newly defined "isOwner" property replaces its "owner" role. In addition, the following roles got removed:</t>
+              <ul>
+                <li>The "attendee" role. There is no equivalent ROLE value in iCalendar and any Participant with a "calendarAddress" by definition is an ATTENDEE in iCalendar.</li>
+                <li>The "contact" role. This role later got redefined as an enumerated value of the <xref target="RFC9073" section="6.2" sectionFormat="parens">PARTICIPANT-TYPE property</xref>. Defining participant types is left to a future JSCalendar extension.</li>
               </ul>
               <t>See <xref target="RFC8984" section="4.4.6" sectionFormat="of"/>.</t>
             </dd>
@@ -4712,22 +4804,6 @@ jsversion = 1*DIGIT "." 1*DIGIT
               <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
             </dd>
           </dl>
-          <!-- Participant.roles -->
-          <dl newline="true" spacing="normal">
-            <dt><strong>Participant.roles</strong>:</dt>
-            <dd>
-              <t>The original definition was incompatible with iCalendar:</t>
-              <ul>
-                <li>It did not cover the "REQ-PARTICIPANT" value of the <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>. It now defines the new "required" role.</li>
-                <li>The "roles" property is multi-valued but the ROLE parameter is single-valued and only allowed to be set once on an ATTENDEE. For compatibility, a precedence of Participant.roles got defined for converting roles to iCalendar.</li>
-                <li>It was mandatory for a Participant, but the (now reserved) "sendTo" property was not. This was incompatible with iCalendar, which required an ATTENDEE property to set the ROLE parameter. It now is optional, but requires the "calendarAddress" property to be set.</li>
-                <li>It defined a "contact" role, but this role later got redefined as an enumerated value of the <xref target="RFC9073" section="6.2" sectionFormat="parens">PARTICIPANT-TYPE property</xref>. It now removed this role and leaves defining participant types to a future JSCalendar extension.</li>
-                <li>The "attendee" role got removed. There is no equivalent ROLE value in iCalendar and any Participant with a "calendarAddress" by definition is an ATTENDEE in iCalendar.</li>
-                <li>The "owner" role got redefined. It now makes clear that the semantics of the role depend on the calendaring exchange protocol.</li>
-              </ul>
-              <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
-            </dd>
-          </dl>
           <!-- Relation.relation -->
           <dl newline="true" spacing="normal">
             <dt><strong>Relation.relation</strong>:</dt>
@@ -4793,6 +4869,22 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dt><strong>Participant.descriptionContentType</strong>:</dt>
             <dd>
               <t>This is for compatibility with the iCalendar <xref target="RFC9073" section="6.5" sectionFormat="parens">STYLED-DESCRIPTION property</xref> of the PARTICIPANT component.</t>
+              <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.isOwner -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.isOwner</strong>:</dt>
+            <dd>
+              <t>This replaces the "owner" role of the obsoleted "roles" property.</t>
+              <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Participant.role -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Participant.role</strong>:</dt>
+            <dd>
+              <t>This replaces the obsoleted "roles" property. In contrast to it, it is single-valued, like the iCalendar <xref target="RFC5545" section="3.2.16" sectionFormat="parens">ROLE parameter</xref>, and defines the "required" role, which corresponds to the "REQ-PARTICIPANT" value of that parameter.</t>
               <t>See <xref target="prop-participants" sectionFormat="of"/>.</t>
             </dd>
           </dl>
