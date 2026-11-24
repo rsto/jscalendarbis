@@ -2222,7 +2222,7 @@ IMAGE;VALUE=URI;DISPLAY=BADGE,THUMBNAIL;FILENAME=An image;
             The <xref target="RFC5545" section="3.8.7.3" sectionFormat="parens">LAST-MODIFIED property</xref> in a VCALENDAR component converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.1.6" sectionFormat="parens">"updated" property</xref> of the Group object.
           </t>
           <t>
-              The <xref target="RFC5545" section="3.8.7.3" sectionFormat="parens">LAST-MODIFIED property</xref> in a component that converts to a calendar object converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.1.6" sectionFormat="parens">"updated" property</xref> of its target object only if the component does not contain a DTSTAMP property. Otherwise, it is ignored. iCalendar implementations often do not distinguish between these two properties, and a preserved LAST-MODIFIED property would likely be stale when converting back to iCalendar.</t>
+              The <xref target="RFC5545" section="3.8.7.3" sectionFormat="parens">LAST-MODIFIED property</xref> in a component that converts to a calendar object converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.1.6" sectionFormat="parens">"updated" property</xref> of its target object only if the component does not contain a DTSTAMP property. Otherwise, if the VCALENDAR component contains a METHOD property, implementations <bcp14>MAY</bcp14> preserve it in the <xref target="def_jscal_prop_icalendar">iCalendar</xref> property; if not, it is ignored. Without METHOD, the DTSTAMP and LAST-MODIFIED properties are equivalent (see <xref target="RFC5545" section="3.8.7.2"/>), and a preserved LAST-MODIFIED property would likely be stale when converting back to iCalendar.</t>
           <t>The following example illustrates how to convert the LAST-MODIFIED property:</t>
           <figure anchor="test_prop_last_modified">
             <name>Converting the LAST-MODIFIED property</name>
@@ -3615,7 +3615,7 @@ URL:https://example.com/myurl
               <td>updated</td>
               <td>DTSTAMP, and LAST-MODIFIED</td>
               <td>
-                <t><xref target="i2j_prop_dtstamp" format="counter"/>, <xref target="i2j_prop_last_modified" format="counter"/></t>
+                <t><xref target="i2j_prop_dtstamp" format="counter"/>, <xref target="i2j_prop_last_modified" format="counter"/>, and remarks below</t>
               </td>
             </tr>
             <tr>
@@ -3653,6 +3653,9 @@ URL:https://example.com/myurl
           </li>
           <li>
             <t>The "showWithoutTime" property only converts to the SHOW-WITHOUT-TIME property if the value data types of the properties that convert from LocalDateTime values are of form DATE WITH UTC TIME or DATE WITH LOCAL TIME.</t>
+          </li>
+          <li>
+            <t>The "updated" property converts to the DTSTAMP property. It converts to the LAST-MODIFIED property only if the calendar object does not have a "method" property.</t>
           </li>
         </ul>
         <t>Properties specific to the Event object type convert to iCalendar properties as follows:</t>
