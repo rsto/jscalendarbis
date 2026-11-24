@@ -1378,14 +1378,19 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
                 <td/>
               </tr>
               <tr>
-                <td>PARTSTAT</td>
-                <td>participationStatus</td>
+                <td>OWNER</td>
+                <td>isOwner</td>
                 <td/>
               </tr>
               <tr>
+                <td>PARTSTAT</td>
+                <td>participationStatus</td>
+                <td>See below</td>
+              </tr>
+              <tr>
                 <td>ROLE</td>
-                <td>roles</td>
-                <td>"OWNER" role defined in <xref target="def_ical_param_role"/></td>
+                <td>role</td>
+                <td>See below</td>
               </tr>
               <tr>
                 <td>RSVP</td>
@@ -1399,7 +1404,7 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
               </tr>
             </tbody>
           </table>
-          <t>These parameters are defined in <xref target="RFC5545">iCalendar</xref>: CN (Section <xref target="RFC5545" section="3.2.2" sectionFormat="bare"/>), CUTYPE (Section <xref target="RFC5545" section="3.2.3" sectionFormat="bare"/>), DELEGATED-FROM (Section <xref target="RFC5545" section="3.2.4" sectionFormat="bare"/>), DELEGATED-TO (Section <xref target="RFC5545" section="3.2.5" sectionFormat="bare"/>), MEMBER (Section <xref target="RFC5545" section="3.2.11" sectionFormat="bare"/>), PARTSTAT (Section <xref target="RFC5545" section="3.2.12" sectionFormat="bare"/>), ROLE (Section <xref target="RFC5545" section="3.2.16" sectionFormat="bare"/>), RSVP (Section <xref target="RFC5545" section="3.2.17" sectionFormat="bare"/>), SENT-BY (Section <xref target="RFC5545" section="3.2.18" sectionFormat="bare"/>); and in <xref target="RFC7986">New Properties for iCalendar</xref>: EMAIL (Section <xref target="RFC7986" section="6.2" sectionFormat="bare"/>).</t>
+          <t>These parameters are defined in <xref target="RFC5545">iCalendar</xref>: CN (Section <xref target="RFC5545" section="3.2.2" sectionFormat="bare"/>), CUTYPE (Section <xref target="RFC5545" section="3.2.3" sectionFormat="bare"/>), DELEGATED-FROM (Section <xref target="RFC5545" section="3.2.4" sectionFormat="bare"/>), DELEGATED-TO (Section <xref target="RFC5545" section="3.2.5" sectionFormat="bare"/>), MEMBER (Section <xref target="RFC5545" section="3.2.11" sectionFormat="bare"/>), PARTSTAT (Section <xref target="RFC5545" section="3.2.12" sectionFormat="bare"/>), ROLE (Section <xref target="RFC5545" section="3.2.16" sectionFormat="bare"/>), RSVP (Section <xref target="RFC5545" section="3.2.17" sectionFormat="bare"/>), SENT-BY (Section <xref target="RFC5545" section="3.2.18" sectionFormat="bare"/>); and in <xref target="RFC7986">New Properties for iCalendar</xref>: EMAIL (Section <xref target="RFC7986" section="6.2" sectionFormat="bare"/>); and in this document: OWNER (<xref target="def_ical_param_owner"/>).</t>
           <t>The "email" and "sentBy" properties of the Participant object, as well as the "sentBy" property of a calendar object, are email addresses as defined in <xref target="I-D.ietf-calext-jscalendarbis" section="1.6.3"/>. Their equivalent iCalendar parameters convert as follows:</t>
           <ul>
             <li>
@@ -1442,6 +1447,35 @@ ATTACH;ENCODING=BASE64;VALUE=BINARY;FMTTYPE=application/octet-stream:
             </tbody>
           </table>
           <t>These values are defined in <xref target="RFC5545" section="3.2.12">iCalendar</xref>.</t>
+          <t>The ROLE parameter values convert to the "role" property as follows:</t>
+          <table>
+            <name>Converting the ROLE parameter to the role property</name>
+            <thead>
+              <tr>
+                <th>ROLE</th>
+                <th>role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CHAIR</td>
+                <td>chair</td>
+              </tr>
+              <tr>
+                <td>REQ-PARTICIPANT</td>
+                <td>required</td>
+              </tr>
+              <tr>
+                <td>OPT-PARTICIPANT</td>
+                <td>optional</td>
+              </tr>
+              <tr>
+                <td>NON-PARTICIPANT</td>
+                <td>informational</td>
+              </tr>
+            </tbody>
+          </table>
+          <t>These values are defined in <xref target="RFC5545" section="3.2.16">iCalendar</xref>.</t>
           <t>The following example illustrates how to convert the ATTENDEE property:</t>
           <figure anchor="test_prop_attendee">
             <name>Converting the ATTENDEE property</name>
@@ -1463,9 +1497,7 @@ ORGANIZER:mailto:organizer@example.com
   "251d3e9f-d83f-534c-8c45-c2896c75670c": {
     "@type": "Participant",
     "calendarAddress": "mailto:organizer@example.com",
-    "roles": {
-      "owner": true
-    }
+    "isOwner": true
   }
 },
 "organizerCalendarAddress": "mailto:organizer@example.com"
@@ -1517,13 +1549,13 @@ ORGANIZER:mailto:organizer@example.com
 "organizerCalendarAddress": "mailto:organizer@example.com"
 ]]></sourcecode>
           </figure>
-          <t>The following example illustrates how to convert the ATTENDEE property with the "OWNER" role:</t>
-          <figure anchor="test_prop_attendee_role_owner">
-            <name>Converting the ATTENDEE property with the "OWNER" role</name>
+          <t>The following example illustrates how to convert the ATTENDEE property with the OWNER and ROLE parameters:</t>
+          <figure anchor="test_prop_attendee_owner">
+            <name>Converting the ATTENDEE property with the OWNER and ROLE parameters</name>
             <sourcecode><![CDATA[
 --- iCalendar:
 ATTENDEE;RSVP=TRUE:mailto:foo@example.com
-ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:bar@example.com
+ATTENDEE;OWNER=TRUE;ROLE=CHAIR;RSVP=TRUE:mailto:bar@example.com
 ORGANIZER:mailto:organizer@example.com
 
 --- JSCalendar:
@@ -1537,9 +1569,8 @@ ORGANIZER:mailto:organizer@example.com
     "@type": "Participant",
     "calendarAddress": "mailto:bar@example.com",
     "expectReply": true,
-    "roles": {
-      "owner": true
-    }
+    "isOwner": true,
+    "role": "chair"
   }
 },
 "organizerCalendarAddress": "mailto:organizer@example.com"
@@ -2474,7 +2505,7 @@ END:VLOCATION
           <name>ORGANIZER</name>
           <t>
               The <xref target="RFC5545" section="3.8.4.3" sectionFormat="parens">ORGANIZER property</xref> converts to the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.4" sectionFormat="parens">"organizerCalendarAddress" property</xref> of its target object.</t>
-          <t>It also converts to a Participant object in the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.6" sectionFormat="parens">"participants" property</xref>, if any of its parameters convert to a Participant object property (see <xref target="i2j_prop_organizer_params"/>), or if none of the ATTENDEE properties in the iCalendar component have the ROLE parameter set to "OWNER". The ORGANIZER property value converts to the Participant's "calendarAddress" property, the "owner" role is set in Participant "roles" property.</t>
+          <t>It also converts to a Participant object in the <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.6" sectionFormat="parens">"participants" property</xref>, if any of its parameters convert to a Participant object property (see <xref target="i2j_prop_organizer_params"/>), or if none of the ATTENDEE properties in the iCalendar component have the <xref target="def_ical_param_owner">OWNER parameter</xref> set to "TRUE". The ORGANIZER property value converts to the Participant's "calendarAddress" property, and the Participant's "isOwner" property is set to true.</t>
           <t>The key of the Participant object is the value of the <xref target="def_ical_param_jsid">JSID parameter</xref>, if set. If no JSID parameter is set, then the key <bcp14>MAY</bcp14> be the UUIDv5 generated from the ORGANIZER property value (see <xref target="i2j_ids"/>). When converting to iCalendar, implementations <bcp14>MAY</bcp14> omit setting the JSID parameter if the key matches the UUIDv5 of the ORGANIZER property value and the key is not part of a JSON pointer in any JSPTR parameter value.</t>
           <t>The ORGANIZER property parameters convert to the Participant object as follows:</t>
           <table anchor="i2j_prop_organizer_params">
@@ -2517,9 +2548,7 @@ ATTENDEE;RSVP=TRUE:mailto:foo@example.com
   "251d3e9f-d83f-534c-8c45-c2896c75670c": {
     "@type": "Participant",
     "calendarAddress": "mailto:organizer@example.com",
-    "roles": {
-      "owner": true
-    }
+    "isOwner": true
   },
   "59eb121c-e8f2-558a-9049-ef750a5976bd": {
     "@type": "Participant",
@@ -2547,9 +2576,7 @@ ATTENDEE;RSVP=TRUE;PARTSTAT=TENTATIVE:mailto:foo@example.com
     "calendarAddress": "mailto:organizer@example.com",
     "name": "Jane Doe",
     "participationStatus": "accepted",
-    "roles": {
-      "owner": true
-    }
+    "isOwner": true
   },
   "59eb121c-e8f2-558a-9049-ef750a5976bd": {
     "@type": "Participant",
@@ -2561,13 +2588,13 @@ ATTENDEE;RSVP=TRUE;PARTSTAT=TENTATIVE:mailto:foo@example.com
 }
 ]]></sourcecode>
           </figure>
-          <t>The following example illustrates how to convert the ORGANIZER property with a CN parameter if another participant has the "OWNER" role:</t>
+          <t>The following example illustrates how to convert the ORGANIZER property with a CN parameter if another participant is an owner:</t>
           <figure anchor="test_prop_organizer_cn_other_owner">
             <name>Converting the ORGANIZER property with CN parameter and another owner</name>
             <sourcecode><![CDATA[
 --- iCalendar:
 ORGANIZER;CN=Jane Doe:mailto:organizer@example.com
-ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:foo@example.com
+ATTENDEE;OWNER=TRUE;RSVP=TRUE:mailto:foo@example.com
 
 --- JSCalendar:
 "organizerCalendarAddress": "mailto:organizer@example.com",
@@ -2576,29 +2603,25 @@ ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:foo@example.com
     "@type": "Participant",
     "calendarAddress": "mailto:organizer@example.com",
     "name": "Jane Doe",
-    "roles": {
-      "owner": true
-    }
+    "isOwner": true
   },
   "59eb121c-e8f2-558a-9049-ef750a5976bd": {
     "@type": "Participant",
     "calendarAddress": "mailto:foo@example.com",
     "expectReply": true,
-    "roles": {
-      "owner": true
-    },
+    "isOwner": true,
     "...": ""
   }
 }
 ]]></sourcecode>
           </figure>
-          <t>The following example illustrates how to convert the ORGANIZER property if another participant has the "OWNER" role:</t>
+          <t>The following example illustrates how to convert the ORGANIZER property if another participant is an owner:</t>
           <figure anchor="test_prop_organizer_other_owner">
             <name>Converting the ORGANIZER property with another owner</name>
             <sourcecode><![CDATA[
 --- iCalendar:
 ORGANIZER:mailto:organizer@example.com
-ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:foo@example.com
+ATTENDEE;OWNER=TRUE;RSVP=TRUE:mailto:foo@example.com
 
 --- JSCalendar:
 "organizerCalendarAddress": "mailto:organizer@example.com",
@@ -2607,9 +2630,7 @@ ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:foo@example.com
     "@type": "Participant",
     "calendarAddress": "mailto:foo@example.com",
     "expectReply": true,
-    "roles": {
-      "owner": true
-    },
+    "isOwner": true,
     "...": ""
   }
 }
@@ -3971,7 +3992,7 @@ URL:https://example.com/myurl
         <t>The <xref target="I-D.ietf-calext-jscalendarbis" section="3.4.6" sectionFormat="parens">Participant object</xref> converts to an <xref target="i2j_prop_attendee">ATTENDEE property</xref> and <xref target="i2j_comp_participant">PARTICIPANT component</xref>, unless it is fully represented by the <xref target="i2j_prop_organizer">ORGANIZER property</xref>:</t>
         <ul>
           <li>
-            <t>It is fully represented by the ORGANIZER property if its "calendarAddress" property value matches the "organizerCalendarAddress" property value, and it does not have any role but the "owner" role set, and it only has properties set that convert to ORGANIZER parameters (see <xref target="i2j_prop_organizer_params"/>).
+            <t>It is fully represented by the ORGANIZER property if its "calendarAddress" property value matches the "organizerCalendarAddress" property value, and, apart from the "isOwner" property, it only has properties set that convert to ORGANIZER parameters (see <xref target="i2j_prop_organizer_params"/>).
         </t>
           </li>
           <li>
@@ -4020,6 +4041,12 @@ URL:https://example.com/myurl
               </td>
             </tr>
             <tr>
+              <td>isOwner</td>
+              <td>OWNER</td>
+              <td><xref target="i2j_prop_attendee" format="counter"/>, and remarks below
+              </td>
+            </tr>
+            <tr>
               <td>kind</td>
               <td>CUTYPE</td>
               <td>
@@ -4047,9 +4074,10 @@ URL:https://example.com/myurl
               </td>
             </tr>
             <tr>
-              <td>roles</td>
+              <td>role</td>
               <td>ROLE</td>
-              <td><xref target="i2j_prop_attendee" format="counter"/>, and remarks below
+              <td>
+                <xref target="i2j_prop_attendee" format="counter"/>
               </td>
             </tr>
             <tr>
@@ -4063,7 +4091,7 @@ URL:https://example.com/myurl
         <t>Remarks:</t>
         <ul>
           <li>
-            <t>The "owner" role needs not convert to the ROLE parameter of the ATTENDEE property if the Participant object converts to both the ATTENDEE and ORGANIZER property.</t>
+            <t>The "isOwner" property needs not convert to the OWNER parameter of the ATTENDEE property if the Participant object converts to both the ATTENDEE and ORGANIZER property.</t>
           </li>
           <li>
             <t>The "name", "email" and "sentBy" properties also convert to parameters of the ORGANIZER property, if the Participant converts to the ORGANIZER property.</t>
@@ -4222,20 +4250,25 @@ JSPROP;JSPTR="example.com:foo":"bar"
             </dd>
           </dl>
         </section>
-        <section anchor="def_ical_param_role">
-          <name>ROLE Parameter</name>
-          <t>This section modifies the definition of the ROLE parameter, originally defined in <xref target="RFC5545" section="3.2.16"/>. It defines the new "OWNER" participation role.</t>
+        <section anchor="def_ical_param_owner">
+          <name>OWNER Parameter</name>
+          <t>This section defines the new OWNER parameter.</t>
           <dl>
-            <dt>Value:</dt>
+            <dt>Parameter Name:</dt>
             <dd>OWNER</dd>
-            <dt>Purpose:</dt>
-            <dd>This participation role indicates that the calendar user is an owner of the calendar object. This signifies they can make changes that affect all calendar users participating in this calendar object (for example, rescheduling the calendar object, adding and removing attendees and roles). The presence of this role is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref> for an example of making use of this role.</dd>
-            <dt>Conformance:</dt>
-            <dd>This value can be used with the ROLE parameter.</dd>
+            <dt>Format Definition:</dt>
+            <dd>
+              <sourcecode type="abnf"><![CDATA[
+owner-param = "OWNER" "=" ("TRUE" / "FALSE")
+              ; Default is FALSE
+]]></sourcecode>
+            </dd>
+            <dt>Description:</dt>
+            <dd>This parameter can be specified on the ATTENDEE property. It indicates whether the calendar user is an owner of the calendar object. This signifies they can make changes that affect all calendar users participating in this calendar object (for example, rescheduling the calendar object, adding and removing attendees and changing their participation roles). The presence of this parameter is only indicative; its semantics are subject to the calendaring exchange protocol being used. See <xref target="I-D.ietf-jmap-calendars">JMAP for Calendars</xref> for an example of making use of this parameter.</dd>
             <dt>Example(s):</dt>
             <dd>
               <sourcecode name=""><![CDATA[
-ATTENDEE;ROLE=OWNER;RSVP=TRUE:mailto:jsmith@example.com
+ATTENDEE;OWNER=TRUE;RSVP=TRUE:mailto:jsmith@example.com
 ]]></sourcecode>
             </dd>
           </dl>
@@ -4714,7 +4747,7 @@ END:X-BAZ
         <li>Representations such as <xref target="i2j_prop_description">DESCRIPTION</xref> and <xref target="i2j_prop_styled_description">STYLED-DESCRIPTION</xref>, or <xref target="i2j_prop_geo">GEO</xref> and <xref target="i2j_prop_coordinates">COORDINATES</xref>, may contain conflicting values, so clients of either format may present different content.</li>
       </ul>
       <t><xref target="RFC7986">New Properties for iCalendar</xref> describes the security considerations for the COLOR property and its related JSCalendar "color" property.</t>
-      <t>The newly defined iCalendar "OWNER" participation role (<xref target="def_ical_param_role"/>) is indicative only: its presence in an iCalendar object does not by itself grant any authorization. Implementations <bcp14>MUST NOT</bcp14> grant a calendar user the ability to make changes to a calendar object based solely on the presence of this role; authorization is determined by the calendaring exchange protocol in use. In the context of <xref target="I-D.ietf-jmap-calendars">JMAP Calendars</xref>, this role is equivalent to the "owner" role of the Participant object. Its semantics in the context of other calendaring exchange protocols, such as <xref target="RFC4791">CalDAV</xref>, are not defined by this document.</t>
+      <t>The newly defined iCalendar OWNER parameter (<xref target="def_ical_param_owner"/>) is indicative only: its presence in an iCalendar object does not by itself grant any authorization. Implementations <bcp14>MUST NOT</bcp14> grant a calendar user the ability to make changes to a calendar object based solely on the presence of this parameter; authorization is determined by the calendaring exchange protocol in use. In the context of <xref target="I-D.ietf-jmap-calendars">JMAP Calendars</xref>, this parameter is equivalent to the "isOwner" property of the Participant object. Its semantics in the context of other calendaring exchange protocols, such as <xref target="RFC4791">CalDAV</xref>, are not defined by this document.</t>
     </section>
     <section>
       <!-- All drafts are required to have an IANA considerations section.  See RFC 8126 for a guide.-->
@@ -4786,15 +4819,14 @@ END:X-BAZ
             <xref target="def_ical_param_jsptr"/>
           </dd>
         </dl>
-        <t>IANA will add the following entry to the "Participation Roles" registry:</t>
         <dl spacing="compact">
-          <dt>Role Type</dt>
+          <dt>Parameter</dt>
           <dd>OWNER</dd>
           <dt>Status</dt>
           <dd>Current</dd>
           <dt>Reference</dt>
           <dd>
-            <xref target="def_ical_param_role"/>
+            <xref target="def_ical_param_owner"/>
           </dd>
         </dl>
       </section>
