@@ -5082,7 +5082,7 @@ END:X-BAZ
                 <xref target="RFC5545" section="3.8.7.3" sectionFormat="comma">LAST-MODIFIED</xref>
               </li>
               <li>
-                <xref target="RFC9253" section="8.2" sectionFormat="comma">LINK</xref>
+                <xref target="RFC9253" section="8.2" sectionFormat="comma">LINK</xref> (if the value type is not URI).
               </li>
               <li>
                 <xref target="RFC5545" section="3.8.1.7" sectionFormat="comma">LOCATION</xref>
@@ -5159,7 +5159,7 @@ END:X-BAZ
                 <xref target="RFC5545" section="3.7.1" sectionFormat="comma">CALSCALE</xref>
               </li>
               <li>
-                <xref target="RFC9253" section="8.2" sectionFormat="comma">LINK</xref>
+                <xref target="RFC9253" section="8.2" sectionFormat="comma">LINK</xref> (if the value type is not URI).
               </li>
               <li>
                 <xref target="RFC7986" section="5.7" sectionFormat="comma">REFRESH-INTERVAL</xref>
@@ -5181,7 +5181,7 @@ END:X-BAZ
                 <xref target="RFC5545" section="3.8.4.2" sectionFormat="comma">CONTACT</xref>
               </li>
               <li>
-                <xref target="RFC9253" section="8.2" sectionFormat="comma">LINK</xref>
+                <xref target="RFC9253" section="8.2" sectionFormat="comma">LINK</xref> (if the value type is not URI).
               </li>
               <li>
                 <xref target="RFC9253" section="8.3" sectionFormat="comma">REFID</xref>
@@ -5206,7 +5206,7 @@ END:X-BAZ
                 <xref target="RFC5545" section="3.8.1.5" sectionFormat="comma">DESCRIPTION</xref>
               </li>
               <li>
-                <xref target="RFC9253" section="8.2" sectionFormat="comma">LINK</xref>
+                <xref target="RFC9253" section="8.2" sectionFormat="comma">LINK</xref> (if the value type is not URI).
               </li>
               <li>
                 <xref target="RFC5545" section="3.8.4.7" sectionFormat="comma">UID</xref>
@@ -5265,9 +5265,6 @@ END:X-BAZ
                 <xref target="RFC6638" section="7.3" sectionFormat="comma">SCHEDULE-STATUS</xref>
               </li>
               <li>
-                <xref target="RFC5545" section="3.2.18" sectionFormat="comma">SENT-BY</xref>
-              </li>
-              <li>
                 <xref target="RFC5545" section="3.2.10" sectionFormat="comma">LANGUAGE</xref>
               </li>
             </ul>
@@ -5313,8 +5310,6 @@ END:X-BAZ
               <li>
                 <xref target="RFC5545" section="3.2.1" sectionFormat="comma">ALTREP</xref>
               </li>
-              <li><xref target="RFC7986" section="6.1" sectionFormat="comma">DISPLAY</xref> (if the parameter value contains more than one "displayval").
-              </li>
             </ul>
           </section>
           <section>
@@ -5357,9 +5352,6 @@ END:X-BAZ
             <ul>
               <li>
                 <xref target="RFC5545" section="3.2.6" sectionFormat="comma">DIR</xref>
-              </li>
-              <li>
-                <xref target="RFC5545" section="3.2.18" sectionFormat="comma">SENT-BY</xref>
               </li>
               <li>
                 <xref target="RFC5545" section="3.2.10" sectionFormat="comma">LANGUAGE</xref>
