@@ -1345,7 +1345,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
         <name>Event Properties</name>
         <t>The Event <xref target="calendar-objects">calendar object type</xref> refines the common properties as follows:</t>
         <ul>
-          <li><xref target="prop-start">start</xref>: The property is mandatory. It defines when the event starts.</li>
+          <li><xref target="prop-start">start</xref>: The property is mandatory, unless the <xref target="prop-method">"method"</xref> property is set, in which case the presence rules for DTSTART in VEVENT components in <xref target="RFC5546" section="3.2"/> apply. It defines when the event starts.</li>
           <li><xref target="prop-alerts">alerts</xref>: The end of an Event is the date-time obtained by adding the value of its "duration" property to the value of its "start" property.</li>
           <li><xref target="prop-privacy">privacy</xref>: If the Event is private, its "duration" and "endTimeZone" properties <bcp14>MAY</bcp14> be shared.</li>
         </ul>
@@ -4644,6 +4644,14 @@ jsversion = 1*DIGIT "." 1*DIGIT
             <dd>
               <t>The property now requires the "organizerCalendarAddress" property to be set. Its value now is an email address as defined in <xref target="email-addresses"/>: a "Mailbox" as defined in <xref target="RFC5321"/>, which supports internationalized email addresses but, unlike the former "addr-spec" of <xref target="RFC5322"/>, no comments, folding white space, or obsolete syntax.</t>
               <t>See <xref target="prop-sentBy" sectionFormat="of"/>.</t>
+            </dd>
+          </dl>
+          <!-- Event.start -->
+          <dl newline="true" spacing="normal">
+            <dt><strong>Event.start</strong>:</dt>
+            <dd>
+              <t>If the "method" property is set, the property now follows the presence rules for DTSTART in VEVENT components of <xref target="RFC5546"/>.</t>
+              <t>See <xref target="jsevent-props" sectionFormat="of"/>.</t>
             </dd>
           </dl>
           <!-- Event.timeZone -->
