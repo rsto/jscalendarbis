@@ -3890,7 +3890,7 @@ URL:https://example.com/myurl
             <t>The LINKREL parameter is not specified for the ATTACH, IMAGE and URL properties. For interoperability, implementations <bcp14>SHOULD NOT</bcp14> set the LINKREL parameter on these properties. Instead, implementations <bcp14>SHOULD</bcp14> only set the LINKREL parameter on the LINK property, or any future property that explicitly names the LINKREL parameter in its Property Parameters definition. As an exception to this rule, implementations <bcp14>MAY</bcp14> set the LINKREL parameter on ATTACH or IMAGE if the iCalendar property value type is BINARY.</t>
           </li>
           <li>
-            <t>The "title" property converts to the FILENAME parameter for the ATTACH and IMAGE properties. It converts to the LABEL parameter for the LINK and URL properties.</t>
+            <t>The "title" property converts to the FILENAME parameter for the ATTACH and IMAGE properties. It converts to the LABEL parameter for the LINK property.</t>
           </li>
         </ul>
         <t>Other properties <bcp14>MAY</bcp14> be converted to <xref target="def_ical_prop_jsprop">JSPROP properties</xref> in the same component to which the Link object converts to as a property.</t>
