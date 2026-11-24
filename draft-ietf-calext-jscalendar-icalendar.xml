@@ -213,12 +213,13 @@ SUMMARY:hello
       </section>
       <section>
         <name>Lossy versus Lossless Conversion</name>
-        <t>This document outlines how to convert iCalendar elements to JSCalendar elements, and the other way round. Many of these can be represented by standard elements in both formats, meaning that they are registered in the iCalendar and JSCalendar IANA registries and differ from the special-purpose elements introduced in <xref target="def_ical"/> and <xref target="def_jscal"/>. Still, a number of elements in either format have no standard counterpart in the other. When converting between iCalendar and JSCalendar, implementations <bcp14>MAY</bcp14> choose to only convert elements that have standard element in the target format, or aim to preserve as many elements as possible.</t>
+        <t>This document outlines how to convert iCalendar elements to JSCalendar elements, and the other way round. Many of these can be represented by standard elements in both formats, meaning that they are registered in the iCalendar and JSCalendar IANA registries and differ from the special-purpose elements introduced in <xref target="def_ical"/> and <xref target="def_jscal"/>. Still, a number of elements in either format have no standard counterpart in the other. When converting between iCalendar and JSCalendar, implementations <bcp14>MAY</bcp14> choose to only convert elements that have a standard element in the target format, or aim to preserve as many elements as possible.</t>
         <t>For example:</t>
         <ul>
-          <li>For lossy conversion, an implementation that internally stores calendar data in JSCalendar format might only want to convert to a subset of iCalendar elements for <xref target="RFC6047">iMIP scheduling</xref>. In this case, it might not make use any of the conversion-specific iCalendar properties introduced in <xref target="def_ical"/>.</li>
+          <li>For lossy conversion, an implementation that internally stores calendar data in JSCalendar format might only want to convert to a subset of iCalendar elements for <xref target="RFC6047">iMIP scheduling</xref>. In this case, it might not make use of any of the conversion-specific iCalendar properties introduced in <xref target="def_ical"/>.</li>
           <li>For lossless conversion, an implementation that internally stores calendar data in iCalendar format might want to convert without loss to JSCalendar when updating calendar events with <xref target="I-D.ietf-jmap-calendars">JMAP</xref>. For that, it can use the conversion-specific properties defined in <xref target="def_jscal"/>.</li>
         </ul>
+        <t>Irrespective of whether the conversion is lossy or lossless, the result of a conversion <bcp14>MUST</bcp14> be valid according to its data format.</t>
         <t>All the examples in this document illustrate lossless conversion, if not explicitly stated otherwise in the example.</t>
       </section>
     </section>
