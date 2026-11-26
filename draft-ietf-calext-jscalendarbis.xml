@@ -2203,7 +2203,7 @@ jsversion = 1*DIGIT "." 1*DIGIT
           </section>
           <section>
             <name>Reserved Properties</name>
-            <t>IANA will change the Intended Usage from "common" to "reserved" for the following entries in the JSCalendar Properties Registry. For each entry, the Property Name and its changed fields are listed.</t>
+            <t>IANA will change the Intended Usage from "common" to "reserved" and the Property Type to "not applicable" for the following entries in the JSCalendar Properties Registry. For each entry, the Property Name and its other changed fields are listed.</t>
             <dl spacing="compact">
               <dt>Property Name</dt>
               <dd>due</dd>
