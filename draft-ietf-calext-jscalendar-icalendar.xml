@@ -4851,7 +4851,7 @@ END:X-BAZ
           <dt>Property Name</dt>
           <dd>components</dd>
           <dt>Property Type</dt>
-          <dd>*[][]</dd>
+          <dd>not applicable</dd>
           <dt>Property Context</dt>
           <dd>ICalComponent</dd>
           <dt>Reference/Description</dt>
@@ -4859,7 +4859,7 @@ END:X-BAZ
             <xref target="def_jscal_prop_icalendar"/>
           </dd>
           <dt>Intended Usage</dt>
-          <dd>common</dd>
+          <dd>reserved</dd>
           <dt>Since Version</dt>
           <dd>2.0</dd>
           <dt>Is Per-User</dt>
@@ -4871,7 +4871,7 @@ END:X-BAZ
           <dt>Property Name</dt>
           <dd>convertedProperties</dd>
           <dt>Property Type</dt>
-          <dd>String[ICalProperty]</dd>
+          <dd>not applicable</dd>
           <dt>Property Context</dt>
           <dd>ICalComponent</dd>
           <dt>Reference/Description</dt>
@@ -4879,7 +4879,7 @@ END:X-BAZ
             <xref target="def_jscal_prop_icalendar"/>
           </dd>
           <dt>Intended Usage</dt>
-          <dd>common</dd>
+          <dd>reserved</dd>
           <dt>Since Version</dt>
           <dd>2.0</dd>
           <dt>Is Per-User</dt>
@@ -4891,7 +4891,7 @@ END:X-BAZ
           <dt>Property Name</dt>
           <dd>iCalendar</dd>
           <dt>Property Type</dt>
-          <dd>ICalComponent</dd>
+          <dd>not applicable</dd>
           <dt>Property Context</dt>
           <dd>Event, Group, Location, Participant</dd>
           <dt>Reference/Description</dt>
@@ -4899,7 +4899,7 @@ END:X-BAZ
             <xref target="def_jscal_prop_icalendar"/>
           </dd>
           <dt>Intended Usage</dt>
-          <dd>common</dd>
+          <dd>reserved</dd>
           <dt>Since Version</dt>
           <dd>2.0</dd>
           <dt>Is Per-User</dt>
@@ -4911,7 +4911,7 @@ END:X-BAZ
           <dt>Property Name</dt>
           <dd>iCalendar</dd>
           <dt>Property Type</dt>
-          <dd>ICalComponent</dd>
+          <dd>not applicable</dd>
           <dt>Property Context</dt>
           <dd>Alert</dd>
           <dt>Reference/Description</dt>
@@ -4919,7 +4919,7 @@ END:X-BAZ
             <xref target="def_jscal_prop_icalendar"/>
           </dd>
           <dt>Intended Usage</dt>
-          <dd>common</dd>
+          <dd>reserved</dd>
           <dt>Since Version</dt>
           <dd>2.0</dd>
           <dt>Is Per-User</dt>
@@ -4931,7 +4931,7 @@ END:X-BAZ
           <dt>Property Name</dt>
           <dd>name</dd>
           <dt>Property Type</dt>
-          <dd>String</dd>
+          <dd>not applicable</dd>
           <dt>Property Context</dt>
           <dd>ICalComponent, ICalProperty</dd>
           <dt>Reference/Description</dt>
@@ -4939,7 +4939,7 @@ END:X-BAZ
             <xref target="def_jscal_prop_icalendar"/>
           </dd>
           <dt>Intended Usage</dt>
-          <dd>common</dd>
+          <dd>reserved</dd>
           <dt>Since Version</dt>
           <dd>2.0</dd>
           <dt>Is Per-User</dt>
@@ -4951,7 +4951,7 @@ END:X-BAZ
           <dt>Property Name</dt>
           <dd>parameters</dd>
           <dt>Property Type</dt>
-          <dd>String[String|String[]]</dd>
+          <dd>not applicable</dd>
           <dt>Property Context</dt>
           <dd>ICalProperty</dd>
           <dt>Reference/Description</dt>
@@ -4959,7 +4959,7 @@ END:X-BAZ
             <xref target="def_jscal_prop_icalendar"/>
           </dd>
           <dt>Intended Usage</dt>
-          <dd>common</dd>
+          <dd>reserved</dd>
           <dt>Since Version</dt>
           <dd>2.0</dd>
           <dt>Is Per-User</dt>
@@ -4971,7 +4971,7 @@ END:X-BAZ
           <dt>Property Name</dt>
           <dd>properties</dd>
           <dt>Property Type</dt>
-          <dd>*[][]</dd>
+          <dd>not applicable</dd>
           <dt>Property Context</dt>
           <dd>ICalComponent</dd>
           <dt>Reference/Description</dt>
@@ -4979,7 +4979,7 @@ END:X-BAZ
             <xref target="def_jscal_prop_icalendar"/>
           </dd>
           <dt>Intended Usage</dt>
-          <dd>common</dd>
+          <dd>reserved</dd>
           <dt>Since Version</dt>
           <dd>2.0</dd>
           <dt>Is Per-User</dt>
@@ -4991,7 +4991,7 @@ END:X-BAZ
           <dt>Property Name</dt>
           <dd>valueType</dd>
           <dt>Property Type</dt>
-          <dd>String</dd>
+          <dd>not applicable</dd>
           <dt>Property Context</dt>
           <dd>ICalProperty</dd>
           <dt>Reference/Description</dt>
@@ -4999,7 +4999,7 @@ END:X-BAZ
             <xref target="def_jscal_prop_icalendar"/>
           </dd>
           <dt>Intended Usage</dt>
-          <dd>common</dd>
+          <dd>reserved</dd>
           <dt>Since Version</dt>
           <dd>2.0</dd>
           <dt>Is Per-User</dt>
@@ -5027,7 +5027,7 @@ END:X-BAZ
             <xref target="def_jscal_prop_icalendar"/>
           </dd>
           <dt>Intended Usage</dt>
-          <dd>common</dd>
+          <dd>reserved</dd>
           <dt>Since Version</dt>
           <dd>2.0</dd>
           <dt>Change Controller</dt>
@@ -5041,7 +5041,7 @@ END:X-BAZ
             <xref target="def_jscal_prop_icalendar"/>
           </dd>
           <dt>Intended Usage</dt>
-          <dd>common</dd>
+          <dd>reserved</dd>
           <dt>Since Version</dt>
           <dd>2.0</dd>
           <dt>Change Controller</dt>
